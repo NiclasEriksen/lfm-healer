@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=1]
+
+[node name="Game" type="Node"]
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="Actors" type="Node" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource( 1 )]
+
+
