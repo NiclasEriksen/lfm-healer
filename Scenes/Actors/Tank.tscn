@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 10.0
+radius = 16.0
 
 [node name="Tank" type="RigidBody2D" groups=[ "friendly" ]]
 
@@ -58,6 +58,7 @@ shadow/item_mask = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 
+transform/scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]

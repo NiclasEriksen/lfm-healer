@@ -1,10 +1,11 @@
-extends Node
+extends Node2D
 
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
 var dragged_ability = null
 var targeted_heal = load("res://Scenes/Abilities/TargetedHeal.tscn")
+onready var cam = get_node("Camera2D")
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -19,8 +20,9 @@ func _process(dt):
 
 
 func _input(event):
-	if event.type == InputEvent.MOUSE_BUTTON:
-		if event.button_index == BUTTON_LEFT and event.pressed:
+	#event = make_input_local(event)
+	if event.type == InputEvent.SCREEN_TOUCH:
+		if event.pressed:
 			if not dragged_ability:
 				dragged_ability = targeted_heal.instance()
 				dragged_ability.set_pos(event.pos)
@@ -29,10 +31,10 @@ func _input(event):
 				dragged_ability.trigger()
 				dragged_ability = null
 		
-		if event.button_index == BUTTON_LEFT and not event.pressed:
+		if not event.pressed and dragged_ability:
 			dragged_ability.trigger()
 			dragged_ability = null
-	elif event.type == InputEvent.MOUSE_MOTION:
+	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
 			dragged_ability.set_pos(event.pos)
 
