@@ -1,4 +1,4 @@
-extends Node2D
+extends RigidBody2D
 
 onready var root = get_tree().get_root().get_node("Game")
 var stats = null
