@@ -1,14 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Actors/Tank.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
-
-[sub_resource type="CircleShape2D" id=1]
-
-custom_solver_bias = 0.0
-radius = 60.0
 
 [node name="Game" type="Node"]
 
@@ -22,13 +17,17 @@ script/script = ExtResource( 1 )
 
 transform/pos = Vector2( 324.541, 265.815 )
 
+[node name="Tank4" parent="Actors" instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 333.829, 272.449 )
+
 [node name="Tank2" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 442.114, 350.226 )
+transform/pos = Vector2( 316.064, 278.576 )
 
 [node name="Tank3" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 520.495, 268.829 )
+transform/pos = Vector2( 441.548, 253.571 )
 
 [node name="Effects" type="Node" parent="."]
 
@@ -46,26 +45,6 @@ process_mode = 1
 wait_time = 1.0
 one_shot = false
 autostart = true
-
-[node name="Area2D" type="Area2D" parent="."]
-
-transform/pos = Vector2( 431.694, 193.126 )
-input/pickable = true
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/0/trigger = false
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-__meta__ = { "_edit_group_":true }
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
-__meta__ = { "_edit_group_":true }
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

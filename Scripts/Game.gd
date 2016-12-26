@@ -13,7 +13,10 @@ func _ready():
 	set_process_input(true)
 
 func _process(dt):
-	pass
+	var friendlies = get_tree().get_nodes_in_group("friendly")
+	for f in friendlies:
+		f.get_node("Selected").set_enabled(false)
+
 
 func _input(event):
 	if event.type == InputEvent.MOUSE_BUTTON:
