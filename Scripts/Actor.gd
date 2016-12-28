@@ -7,3 +7,6 @@ func _ready():
 	if get_node("StatsModule"):
 		stats = get_node("StatsModule")
 		root.get_node("HUD").add_hpbar(self)
+
+func on_heal():
+	get_node("AnimationPlayer").play("Heal")

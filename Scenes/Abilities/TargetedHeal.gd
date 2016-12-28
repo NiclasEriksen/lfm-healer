@@ -38,4 +38,5 @@ func trigger():
 			).apply_effect(
 				get_node("EffectModule"), null
 				)
+			target.on_heal()
 	queue_free()

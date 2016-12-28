@@ -74,5 +74,6 @@ func trigger():
 			).apply_effect(
 				get_node("EffectModule"), null
 				)
+			target.on_heal()
 	hud.clear_lines()
 	queue_free()
