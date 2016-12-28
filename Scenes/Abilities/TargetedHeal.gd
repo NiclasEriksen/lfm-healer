@@ -21,6 +21,15 @@ func _process(delta):
 		else:
 			target = null
 
+func set_active(val):
+	get_node("Particles2D").set_emitting(val)
+	get_node("Particles2D2").set_emitting(val)
+	if val:
+		get_node("Sprite").show()
+	else:
+		get_node("Sprite").hide()
+	active = val
+
 func trigger():
 	if target:
 		if target.get_node("StatsModule"):

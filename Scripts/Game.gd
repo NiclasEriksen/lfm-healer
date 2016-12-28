@@ -36,6 +36,8 @@ func _input(event):
 			dragged_ability = false
 	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
+			if not dragged_ability.active:
+				dragged_ability.set_active(true)
 			dragged_ability.set_pos(event.pos)
 
 

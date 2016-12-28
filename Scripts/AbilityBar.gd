@@ -14,5 +14,5 @@ func _on_Ability1_button_down():
 	var pos = get_pos() + Vector2(get_node("Ability1").get_size() / 2)
 	game.dragged_ability = game.targeted_heal.instance()
 	game.dragged_ability.set_pos(pos)
-	game.dragged_ability.active = true
+	game.dragged_ability.set_active(false)
 	game.get_node("Effects").add_child(game.dragged_ability)
