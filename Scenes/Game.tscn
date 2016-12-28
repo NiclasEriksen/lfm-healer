@@ -17,6 +17,10 @@ script/script = ExtResource( 1 )
 
 transform/pos = Vector2( 300.567, 113.872 )
 
+[node name="Tank11" parent="Actors" instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 388.681, 310.24 )
+
 [node name="Tank7" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 564.276, 110.448 )
@@ -53,7 +57,7 @@ transform/pos = Vector2( 187.368, 247.029 )
 
 [node name="Tank3" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 441.548, 253.571 )
+transform/pos = Vector2( 441.548, 313.992 )
 
 [node name="Effects" type="Node" parent="."]
 
