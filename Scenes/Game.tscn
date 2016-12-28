@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Actors/Tank.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Actors/Tank.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
 
@@ -12,63 +12,59 @@ script/script = ExtResource( 1 )
 
 [node name="Objects" type="Node" parent="."]
 
-[node name="Healer" parent="Objects" instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 36.3531, 309.002 )
-
 [node name="Actors" type="Node" parent="."]
 
-[node name="Tank" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 300.567, 113.872 )
 
-[node name="Tank11" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank11" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 388.681, 310.24 )
 
-[node name="Tank7" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank7" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 564.276, 110.448 )
 
-[node name="Tank8" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank8" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 732.09, 435.802 )
 transform/scale = Vector2( 1, 1 )
 
-[node name="Tank9" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank9" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 971.825, 476.9 )
 
-[node name="Tank10" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank10" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 827.992, 133.169 )
 transform/scale = Vector2( 1, 1 )
 
-[node name="Tank5" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank5" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 321.526, 353.241 )
 
-[node name="Tank6" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank6" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 208.476, 419.564 )
 
-[node name="Tank4" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank4" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 424.269, 385.499 )
 
-[node name="Tank2" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank2" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 187.368, 247.029 )
 
-[node name="Tank3" parent="Actors" instance=ExtResource( 3 )]
+[node name="Tank3" parent="Actors" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 441.548, 313.992 )
 
 [node name="Effects" type="Node" parent="."]
 
-[node name="HUD" parent="." instance=ExtResource( 4 )]
+[node name="HUD" parent="." instance=ExtResource( 3 )]
 
-[node name="EffectModule" parent="." instance=ExtResource( 5 )]
+[node name="EffectModule" parent="." instance=ExtResource( 4 )]
 
 amount = -1.0
 buff_time = 10.0
@@ -101,6 +97,10 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
+
+[node name="Healer" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 36.3531, 309.002 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

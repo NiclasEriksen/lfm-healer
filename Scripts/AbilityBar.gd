@@ -24,3 +24,8 @@ func _on_Ability1_button_down():
 func _on_Ability2_button_down():
 	var pos = get_node("Ability2").get_global_pos() + Vector2(get_node("Ability2").get_size() / 2)
 	spawn_ability(game.area_heal, pos)
+
+
+func _on_Ability3_button_down():
+	var pos = get_node("Ability3").get_global_pos() + Vector2(get_node("Ability3").get_size() / 2)
+	spawn_ability(game.chain_heal, pos)

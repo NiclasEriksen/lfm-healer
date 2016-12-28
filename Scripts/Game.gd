@@ -6,6 +6,7 @@ extends Node2D
 var dragged_ability = false
 var targeted_heal = load("res://Scenes/Abilities/TargetedHeal.tscn")
 var area_heal = load("res://Scenes/Abilities/AreaHeal.tscn")
+var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
 onready var cam = get_node("Camera2D")
 
 func _ready():

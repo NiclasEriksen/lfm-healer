@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://Scenes/Abilities/ChainHeal.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 24.0
+
+[node name="ChainHeal" type="Node2D"]
+
+script/script = ExtResource( 1 )
+max_jump_range = 200
+max_jumps = 3
+
+[node name="Sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+
+[node name="EffectModule" parent="." instance=ExtResource( 3 )]
+
+amount = 3.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+
