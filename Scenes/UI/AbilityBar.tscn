@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=1]
+[gd_scene load_steps=5 format=1]
 
-[ext_resource path="res://Themes/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/AbilityBar.gd" type="Script" id=1]
+[ext_resource path="res://Themes/main_theme.tres" type="Theme" id=2]
+[ext_resource path="res://Assets/Objects/pot_hp_large.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 30, 30 )
 
 [node name="HBoxContainer" type="HBoxContainer"]
 
@@ -13,23 +20,43 @@ margin/top = 0.0
 margin/right = 40.0
 margin/bottom = 40.0
 alignment = 0
+script/script = ExtResource( 1 )
 
 [node name="Ability1" type="Button" parent="."]
 
 rect/min_size = Vector2( 72, 72 )
 focus/ignore_mouse = false
-focus/stop_mouse = true
+focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 1 )
+theme/theme = ExtResource( 2 )
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 72.0
-margin/bottom = 72.0
+margin/right = 80.0
+margin/bottom = 74.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
+icon = ExtResource( 3 )
 flat = false
+
+[node name="Area2D" type="Area2D" parent="Ability1"]
+
+transform/pos = Vector2( 36, 36 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ability1/Area2D"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
 [node name="Ability2" type="Button" parent="."]
 
@@ -38,15 +65,33 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 1 )
-margin/left = 76.0
+theme/theme = ExtResource( 2 )
+margin/left = 84.0
 margin/top = 0.0
-margin/right = 148.0
-margin/bottom = 72.0
+margin/right = 156.0
+margin/bottom = 74.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 flat = false
+
+[node name="Area2D2" type="Area2D" parent="Ability2"]
+
+transform/pos = Vector2( 36, 36 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ability2/Area2D2"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
 [node name="Ability3" type="Button" parent="."]
 
@@ -55,15 +100,33 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 1 )
-margin/left = 152.0
+theme/theme = ExtResource( 2 )
+margin/left = 160.0
 margin/top = 0.0
-margin/right = 224.0
-margin/bottom = 72.0
+margin/right = 232.0
+margin/bottom = 74.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 flat = false
+
+[node name="Area2D3" type="Area2D" parent="Ability3"]
+
+transform/pos = Vector2( 36, 36 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ability3/Area2D3"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
 [node name="Ability4" type="Button" parent="."]
 
@@ -72,14 +135,34 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 1 )
-margin/left = 228.0
+theme/theme = ExtResource( 2 )
+margin/left = 236.0
 margin/top = 0.0
-margin/right = 300.0
-margin/bottom = 72.0
+margin/right = 308.0
+margin/bottom = 74.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 flat = false
+
+[node name="Area2D4" type="Area2D" parent="Ability4"]
+
+transform/pos = Vector2( 36, 36 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ability4/Area2D4"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="button_down" from="Ability1" to="." method="_on_Ability1_button_down"]
 
 
