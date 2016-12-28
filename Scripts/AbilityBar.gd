@@ -17,10 +17,10 @@ func spawn_ability(ability, pos):
 	game.get_node("Effects").add_child(game.dragged_ability)
 
 func _on_Ability1_button_down():
-	var pos = get_node("Ability1").get_pos() + Vector2(get_node("Ability1").get_size() / 2)
+	var pos = get_node("Ability1").get_global_pos() + Vector2(get_node("Ability1").get_size() / 2)
 	spawn_ability(game.targeted_heal, pos)
 
 
 func _on_Ability2_button_down():
-	var pos = get_node("Ability2").get_pos() + Vector2(get_node("Ability2").get_size() / 2)
+	var pos = get_node("Ability2").get_global_pos() + Vector2(get_node("Ability2").get_size() / 2)
 	spawn_ability(game.area_heal, pos)
