@@ -24,16 +24,16 @@ transform/pos = Vector2( 388.681, 310.24 )
 
 [node name="Tank7" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 564.276, 110.448 )
+transform/pos = Vector2( 410.485, 210.924 )
 
 [node name="Tank8" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 732.09, 435.802 )
+transform/pos = Vector2( 533.188, 429.651 )
 transform/scale = Vector2( 1, 1 )
 
 [node name="Tank9" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 971.825, 476.9 )
+transform/pos = Vector2( 594.525, 366.17 )
 
 [node name="Tank10" parent="Actors" instance=ExtResource( 2 )]
 
@@ -54,7 +54,7 @@ transform/pos = Vector2( 424.269, 385.499 )
 
 [node name="Tank2" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 187.368, 247.029 )
+transform/pos = Vector2( 529.809, 230.625 )
 
 [node name="Tank3" parent="Actors" instance=ExtResource( 2 )]
 

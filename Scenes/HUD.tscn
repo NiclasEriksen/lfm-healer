@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=3]
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -19,21 +19,15 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 
-[node name="HBoxContainer" parent="." instance=ExtResource( 2 )]
-
-anchor/left = 3
-anchor/top = 3
-anchor/right = 3
-anchor/bottom = 3
-margin/left = 168.0
-margin/top = -220.0
-margin/right = -168.0
-margin/bottom = -292.0
-custom_constants/separation = 16
-alignment = 1
-
 [node name="LineDisplay" type="Node2D" parent="."]
 
-script/script = ExtResource( 3 )
+script/script = ExtResource( 2 )
+
+[node name="AbilityBar" parent="." instance=ExtResource( 3 )]
+
+margin/left = 380.0
+margin/top = 524.0
+margin/right = 696.0
+margin/bottom = 604.0
 
 
