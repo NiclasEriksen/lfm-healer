@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=1]
+
+[sub_resource type="NavigationPolygon" id=1]
+
+vertices = Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 88.8441, -0.0638752 )
+polygons = [ IntArray( 0, 1, 2, 3 ) ]
+outlines = [ Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 88.8441, -0.0638752 ) ]
+
+[node name="TestMap" type="Navigation2D"]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+
+navpoly = SubResource( 1 )
+enabled = true
+
+[node name="Position2D" type="Position2D" parent="."]
+
+transform/pos = Vector2( 1008, 310.539 )
+
+
