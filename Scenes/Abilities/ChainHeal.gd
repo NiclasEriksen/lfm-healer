@@ -67,6 +67,11 @@ func set_active(val):
 	active = val
 
 func trigger():
+	var target = get_target()
+	if target:
+		targets = get_chain(target)
+	else:
+		targets = []
 	for target in targets:
 		if target.get_node("StatsModule"):
 			target.get_node(

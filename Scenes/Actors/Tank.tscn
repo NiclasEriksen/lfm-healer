@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Scripts/Actor.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Actors/tank.png" type="Texture" id=2]
@@ -15,18 +15,6 @@ radius = 16.0
 offsets = FloatArray( 0, 0.0818713, 1 )
 colors = ColorArray( 0.193848, 1, 0.1875, 0, 0.158966, 1, 0.152344, 1, 0.302734, 0.605469, 0, 0 )
 
-[sub_resource type="Animation" id=3]
-
-resource/name = "Heal"
-length = 1.0
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("HealParticles:config/emitting")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
-
 [sub_resource type="Animation" id=4]
 
 resource/name = "idle"
@@ -41,7 +29,24 @@ length = 1.0
 loop = false
 step = 0.1
 
-[node name="Tank" type="RigidBody2D" groups=[ "friendly" ]]
+[sub_resource type="Animation" id=3]
+
+resource/name = "Heal"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("HealParticles:config/emitting")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+
+[sub_resource type="CircleShape2D" id=6]
+
+custom_solver_bias = 0.0
+radius = 50.0
+
+[node name="Tank" type="KinematicBody2D" groups=[ "friendly" ]]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -49,21 +54,7 @@ shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
-mode = 0
-mass = 1.0
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-custom_integrator = false
-continuous_cd = 0
-contacts_reported = 0
-contact_monitor = false
-sleeping = false
-can_sleep = true
-velocity/linear = Vector2( 0, 0 )
-velocity/angular = 0.0
-damp_override/linear = -1.0
-damp_override/angular = -1.0
+collision/margin = 0.08
 script/script = ExtResource( 1 )
 
 [node name="Selected" type="Light2D" parent="."]
@@ -97,7 +88,7 @@ texture = ExtResource( 2 )
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]
 
 max_hp = 20
-base_movement_speed = 50
+base_movement_speed = 30
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
@@ -140,12 +131,41 @@ color/color_ramp = SubResource( 2 )
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/Heal = SubResource( 3 )
 anims/idle = SubResource( 4 )
 anims/walk = SubResource( 5 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
+
+[node name="EffectPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/Heal = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="AttackRange" to="." method="_on_AttackRange_body_enter"]
 
 

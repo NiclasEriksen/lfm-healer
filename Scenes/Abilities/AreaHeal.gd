@@ -7,9 +7,9 @@ func _ready():
 
 func _process(delta):
 	if active:
-		targets = get_node("Area2D").get_overlapping_bodies()
-		for target in targets:
-			target.get_node("Selected").set_enabled(true)
+		for target in get_node("Area2D").get_overlapping_bodies():
+			if "friendly" in target.get_groups():
+				target.get_node("Selected").set_enabled(true)
 
 func set_active(val):
 #	get_node("Particles2D").set_emitting(val)
@@ -23,11 +23,12 @@ func set_active(val):
 func trigger():
 	targets = get_node("Area2D").get_overlapping_bodies()
 	for target in targets:
-		if target.get_node("StatsModule"):
-			target.get_node(
-				"StatsModule"
-			).apply_effect(
-				get_node("EffectModule"), null
-				)
-			target.on_heal()
+		if "friendly" in target.get_groups():
+			if target.get_node("StatsModule"):
+				target.get_node(
+					"StatsModule"
+				).apply_effect(
+					get_node("EffectModule"), null
+					)
+				target.on_heal()
 	queue_free()

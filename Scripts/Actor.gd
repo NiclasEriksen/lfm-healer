@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends KinematicBody2D
 
 onready var root = get_tree().get_root().get_node("Game")
 var stats = null
@@ -20,6 +20,8 @@ func _process(dt):
 		testmove((path[0] - get_pos()).normalized() * stats.get("base_movement_speed") * dt)
 		if get_pos().distance_to(path[0]) < 1.0:
 			path.remove(0)
+	elif target_enemy:
+		testmove((target_enemy.get_pos() - get_pos()).normalized() * stats.get("base_movement_speed") * dt)
 	else:
 		teststop()
 		check_in_range()
@@ -31,6 +33,8 @@ func check_target():
 	if target_enemy:
 		if get_pos().distance_to(target_enemy.get_pos()) < 50:
 			teststop()
+		elif get_pos().distance_to(target_enemy.get_pos()) < 250:
+			clear_path()
 	else:
 		check_in_range()
 
@@ -71,7 +75,7 @@ func set_path(p):
 	path = p
 
 func on_heal():
-	get_node("AnimationPlayer").play("Heal")
+	get_node("EffectPlayer").play("Heal")
 
 func testmove(dir):
 	if dir.x > 0:
@@ -81,7 +85,8 @@ func testmove(dir):
 	if dir.x or dir.y:
 		if not get_node("AnimationPlayer").get_current_animation() == "walk":
 			get_node("AnimationPlayer").play("walk")
-		set_pos(get_pos() + dir)
+#		set_pos(get_pos() + dir)
+		move(dir)
 	else:
 		if not get_node("AnimationPlayer").get_current_animation() == "idle":
 			get_node("AnimationPlayer").play("idle")
@@ -91,3 +96,15 @@ func teststop():
 	if not get_node("AnimationPlayer").get_current_animation() == "idle":
 		get_node("AnimationPlayer").play("idle")
 
+func _on_AttackRange_body_enter( body ):
+	if target_enemy:
+		var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
+		if get_pos().distance_to(target_enemy.get_pos()) <= r:
+			return
+	var target_group = "enemy"
+	if "enemy" in get_groups():
+		target_group = "friendly"
+	if target_group in body.get_groups():
+		teststop()
+		target_enemy = body
+		target_enemy_path = body.get_path()

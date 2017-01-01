@@ -7,19 +7,25 @@ func _ready():
 
 func _process(delta):
 	if active:
-		var candidates = get_node("Area2D").get_overlapping_bodies()
-		var closest_candidate = null
-		var closest = 500
-		for f in candidates:
-			var dist = abs(f.get_pos().distance_to(get_pos()))
-			if dist < closest:
-				closest = dist
-				closest_candidate = f
-		if closest_candidate:
-			target = closest_candidate
-			target.get_node("Selected").set_enabled(true)
-		else:
-			target = null
+		set_target()
+
+func set_target():
+	var candidates = get_node("Area2D").get_overlapping_bodies()
+	var closest_candidate = null
+	var closest = 500
+	for f in candidates:
+		if not "friendly" in f.get_groups():
+			continue
+		var dist = abs(f.get_pos().distance_to(get_pos()))
+		if dist < closest:
+			closest = dist
+			closest_candidate = f
+	if closest_candidate:
+		target = closest_candidate
+		target.get_node("Selected").set_enabled(true)
+	else:
+		target = null
+
 
 func set_active(val):
 	get_node("Particles2D").set_emitting(val)
@@ -31,6 +37,7 @@ func set_active(val):
 	active = val
 
 func trigger():
+	set_target()
 	if target:
 		if target.get_node("StatsModule"):
 			target.get_node(
