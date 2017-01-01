@@ -77,19 +77,25 @@ func set_path(p):
 func on_heal():
 	get_node("EffectPlayer").play("Heal")
 
+func on_idle():
+	if not get_node("AnimationPlayer").get_current_animation() == "idle":
+		get_node("AnimationPlayer").play("idle")
+
+func on_walk():
+	if not get_node("AnimationPlayer").get_current_animation() == "walk":
+		get_node("AnimationPlayer").play("walk")
+
 func testmove(dir):
 	if dir.x > 0:
 		get_node("Sprite").set_flip_h(false)
 	elif dir.x < 0:
 		get_node("Sprite").set_flip_h(true)
-	if dir.x or dir.y:
-		if not get_node("AnimationPlayer").get_current_animation() == "walk":
-			get_node("AnimationPlayer").play("walk")
-#		set_pos(get_pos() + dir)
-		move(dir)
+	var moved = move(dir)
+	if moved > dir / 2:
+		on_walk()
 	else:
-		if not get_node("AnimationPlayer").get_current_animation() == "idle":
-			get_node("AnimationPlayer").play("idle")
+		on_idle()
+#		set_pos(get_pos() + dir)
 
 func teststop():
 	clear_path()
