@@ -27,11 +27,12 @@ func _process(dt):
 		check_in_range()
 
 func check_target():
+	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
 	if target_enemy:
 		if not root.get_node("Actors").has_node(target_enemy_path):
 			target_enemy = null
 	if target_enemy:
-		if get_pos().distance_to(target_enemy.get_pos()) < 50:
+		if get_pos().distance_to(target_enemy.get_pos()) < ar:
 			teststop()
 		elif get_pos().distance_to(target_enemy.get_pos()) < 250:
 			clear_path()
@@ -40,10 +41,10 @@ func check_target():
 
 func check_death():
 	if stats.get("hp") <= 0:
-		queue_free()
+		on_death()
 
 func check_in_range():
-	var ar = 50
+	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
 	var target = "enemy"
 	if "enemy" in get_groups():
 		target = "friendly"
@@ -77,6 +78,13 @@ func set_path(p):
 func on_heal():
 	get_node("EffectPlayer").play("Heal")
 
+func on_death():
+	print("Died.")
+	if not get_node("EffectPlayer").get_current_animation() == "die":
+		get_node("EffectPlayer").play("die")
+	set_process(false)
+#	queue_free()
+
 func on_idle():
 	if not get_node("AnimationPlayer").get_current_animation() == "idle":
 		get_node("AnimationPlayer").play("idle")
@@ -95,7 +103,6 @@ func testmove(dir):
 		on_walk()
 	else:
 		on_idle()
-#		set_pos(get_pos() + dir)
 
 func teststop():
 	clear_path()
