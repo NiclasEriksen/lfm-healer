@@ -14,7 +14,7 @@ func on_heal():
 func testmove(dir):
 	if dir.x > 0:
 		get_node("Sprite").set_flip_h(false)
-	else:
+	elif dir.x < 0:
 		get_node("Sprite").set_flip_h(true)
 	if dir.x or dir.y:
 		if not get_node("AnimationPlayer").get_current_animation() == "walk":
