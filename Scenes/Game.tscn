@@ -30,15 +30,15 @@ transform/pos = Vector2( 410.485, 210.924 )
 
 [node name="Tank8" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 533.188, 429.651 )
+transform/pos = Vector2( 214.829, 145.291 )
 
 [node name="Tank9" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 594.525, 366.17 )
+transform/pos = Vector2( 223.621, 236.354 )
 
 [node name="Tank10" parent="Actors" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 827.992, 133.169 )
+transform/pos = Vector2( 348.908, 188.805 )
 
 [node name="Tank5" parent="Actors" instance=ExtResource( 2 )]
 
@@ -62,7 +62,15 @@ transform/pos = Vector2( 441.548, 313.992 )
 
 [node name="TestEnemy" parent="Actors" instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 691.798, 281.74 )
+transform/pos = Vector2( 957.612, 281.74 )
+
+[node name="TestEnemy3" parent="Actors" instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 942.158, 182.832 )
+
+[node name="TestEnemy2" parent="Actors" instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 945.249, 355.921 )
 
 [node name="Effects" type="Node" parent="."]
 

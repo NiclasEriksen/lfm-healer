@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=1]
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://Scenes/Maps/TestMap.gd" type="Script" id=1]
 
 [sub_resource type="NavigationPolygon" id=1]
 
@@ -7,6 +9,8 @@ polygons = [ IntArray( 0, 1, 2, 3 ) ]
 outlines = [ Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 88.8441, -0.0638752 ) ]
 
 [node name="TestMap" type="Navigation2D"]
+
+script/script = ExtResource( 1 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 
