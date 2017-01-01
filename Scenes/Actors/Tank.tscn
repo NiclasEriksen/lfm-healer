@@ -96,6 +96,7 @@ texture = ExtResource( 2 )
 
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]
 
+max_hp = 20
 base_movement_speed = 50
 
 [node name="HPBarPos" type="Position2D" parent="."]

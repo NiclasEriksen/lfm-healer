@@ -21,6 +21,7 @@ func set_active(val):
 	active = val
 
 func trigger():
+	targets = get_node("Area2D").get_overlapping_bodies()
 	for target in targets:
 		if target.get_node("StatsModule"):
 			target.get_node(
