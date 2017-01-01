@@ -42,6 +42,21 @@ func _input(event):
 				dragged_ability.set_active(true)
 			dragged_ability.set_pos(event.pos)
 
+	elif event.type == InputEvent.KEY:
+		if event.pressed:
+			if event.scancode == KEY_LEFT:
+				for e in get_tree().get_nodes_in_group("enemy"):
+					e.testmove(Vector2(-1, 0))
+			if event.scancode == KEY_RIGHT:
+				print("wat")
+				for e in get_tree().get_nodes_in_group("enemy"):
+					e.testmove(Vector2(1, 0))
+		else:
+			if event.scancode == KEY_LEFT or event.scancode == KEY_RIGHT:
+				for e in get_tree().get_nodes_in_group("enemy"):
+					e.testmove(Vector2(0, 0))
+
+
 
 func _on_Timer_timeout():
 	var friendlies = get_tree().get_nodes_in_group("friendly")
