@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://Scripts/Actor.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Actors/tank.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Actors/bedugga_snill.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -21,13 +22,23 @@ resource/name = "idle"
 length = 1.0
 loop = false
 step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 0 ] }
 
 [sub_resource type="Animation" id=5]
 
 resource/name = "walk"
-length = 1.0
-loop = false
+length = 0.6
+loop = true
 step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ 1, 2 ] }
 
 [sub_resource type="Animation" id=3]
 
@@ -59,9 +70,9 @@ tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 2 ), "transitions":FloatArray( 1 ), "values":[ { "args":[  ], "method":"queue_free" } ] }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:transform/scale")
-tracks/2/interp = 1
+tracks/2/interp = 2
 tracks/2/imported = false
-tracks/2/keys = { "times":FloatArray( 0, 2 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ Vector2( 1.5, 1.5 ), Vector2( 1e-05, 1e-05 ) ] }
+tracks/2/keys = { "times":FloatArray( 0, 2 ), "transitions":FloatArray( 1, 2.82843 ), "update":0, "values":[ Vector2( 0.5, 0.5 ), Vector2( 0, 0 ) ] }
 
 [sub_resource type="CircleShape2D" id=6]
 
@@ -77,7 +88,7 @@ colors = ColorArray( 0.800781, 0, 0, 1, 1, 0, 0, 1, 0.757812, 0, 0, 1, 0.632812,
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 19 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -109,10 +120,11 @@ shadow/item_mask = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 
-transform/scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 2 )
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+hframes = 3
 
-[node name="StatsModule" parent="." instance=ExtResource( 3 )]
+[node name="StatsModule" parent="." instance=ExtResource( 4 )]
 
 max_hp = 15
 base_movement_speed = 30
@@ -123,6 +135,7 @@ transform/pos = Vector2( 0, -10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
+transform/pos = Vector2( 0, 19 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -133,7 +146,7 @@ config/amount = 16
 config/lifetime = 2.0
 config/emitting = false
 config/half_extents = Vector2( 20, 8 )
-config/texture = ExtResource( 4 )
+config/texture = ExtResource( 5 )
 params/direction = 180.0
 params/spread = 0.0
 params/linear_velocity = 20.0
@@ -196,6 +209,7 @@ _update_shape_index = 0
 
 [node name="BloodParticles" type="Particles2D" parent="."]
 
+transform/pos = Vector2( -0.487686, 0.487671 )
 config/amount = 64
 config/lifetime = 1.0
 config/emitting = false
