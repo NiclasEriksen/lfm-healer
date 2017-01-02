@@ -19,14 +19,14 @@ colors = ColorArray( 0.193848, 1, 0.1875, 0, 0.158966, 1, 0.152344, 1, 0.302734,
 [sub_resource type="Animation" id=4]
 
 resource/name = "idle"
-length = 1.0
-loop = false
+length = 0.9
+loop = true
 step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 0 ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.3, 0.6 ), "transitions":FloatArray( 1, 1, 1 ), "update":1, "values":[ 0, 1, 2 ] }
 
 [sub_resource type="Animation" id=5]
 
@@ -38,7 +38,7 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ 1, 2 ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4 ), "transitions":FloatArray( 1, 1, 1 ), "update":1, "values":[ 3, 4, 5 ] }
 
 [sub_resource type="Animation" id=3]
 
@@ -122,6 +122,7 @@ shadow/item_mask = 1
 
 transform/scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
+vframes = 2
 hframes = 3
 
 [node name="StatsModule" parent="." instance=ExtResource( 4 )]
