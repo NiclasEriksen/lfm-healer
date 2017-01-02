@@ -7,6 +7,8 @@ var dragged_ability = false
 var targeted_heal = load("res://Scenes/Abilities/TargetedHeal.tscn")
 var area_heal = load("res://Scenes/Abilities/AreaHeal.tscn")
 var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
+var tank_actor = load("res://Scenes/Actors/Tank.tscn")
+var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 onready var cam = get_node("Camera2D")
 
 func _ready():
@@ -14,6 +16,8 @@ func _ready():
 	# Initialization here
 	set_process(true)
 	set_process_input(true)
+	spawn_actor("enemy")
+	spawn_actor("tank")
 
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
@@ -56,10 +60,32 @@ func _input(event):
 				for e in get_tree().get_nodes_in_group("enemy"):
 					e.testmove(Vector2(0, 0))
 
+func spawn_actor(actor_type):
+	var actor = null
+	var p = Vector2(0, 0)
+	if actor_type == "tank":
+		p = get_node("TestMap/FriendlySpawn").get_pos()
+		actor = tank_actor.instance()
+	elif actor_type == "enemy":
+		p = get_node("TestMap/EnemySpawn").get_pos()
+		actor = enemy_actor.instance()
 
+	if actor:
+		print("Spawning actor: ", actor_type)
+		actor.set_pos(p)
+		get_node("Actors").add_child(actor)
+	else:
+		print("No actor by that identifier found: ", actor_type)
 
 func _on_Timer_timeout():
+	spawn_actor("tank")
+	if get_tree().get_nodes_in_group("enemy").size() < 10:
+		spawn_actor("enemy")
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	for f in friendlies:
 		if f.get_node("StatsModule"):
 			f.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)
+#	var enemies = get_tree().get_nodes_in_group("enemy")
+#	for e in enemies:
+#		if e.get_node("StatsModule"):
+#			e.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)

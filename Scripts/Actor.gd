@@ -99,7 +99,7 @@ func testmove(dir):
 	elif dir.x < 0:
 		get_node("Sprite").set_flip_h(true)
 	var moved = move(dir)
-	if moved.length() < dir.length() / 5:
+	if moved.length() < dir.length() / 10:
 		on_walk()
 	else:
 		on_idle()

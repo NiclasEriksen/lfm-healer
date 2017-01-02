@@ -128,7 +128,7 @@ hframes = 3
 [node name="StatsModule" parent="." instance=ExtResource( 4 )]
 
 max_hp = 15
-base_movement_speed = 30
+base_movement_speed = 50
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
