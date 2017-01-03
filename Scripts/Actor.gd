@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 onready var root = get_tree().get_root().get_node("Game")
+var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 var stats = null
 var target_enemy = null
 var target_enemy_path = null
@@ -80,10 +81,11 @@ func on_heal():
 
 func on_death():
 	print("Died.")
-	if not get_node("EffectPlayer").get_current_animation() == "die":
-		get_node("EffectPlayer").play("die")
-	set_process(false)
-#	queue_free()
+	var de = death_effect.instance()
+	de.set_pos(get_pos())
+#	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())
+	root.get_node("Effects").add_child(de)
+	queue_free()
 
 func on_idle():
 	if not get_node("AnimationPlayer").get_current_animation() == "idle":
@@ -111,9 +113,10 @@ func teststop():
 
 func _on_AttackRange_body_enter( body ):
 	if target_enemy:
-		var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-		if get_pos().distance_to(target_enemy.get_pos()) <= r:
-			return
+		if root.get_node("Actors").has_node(target_enemy_path):
+			var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
+			if get_pos().distance_to(target_enemy.get_pos()) <= r:
+				return
 	var target_group = "enemy"
 	if "enemy" in get_groups():
 		target_group = "friendly"

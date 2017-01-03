@@ -79,13 +79,13 @@ func spawn_actor(actor_type):
 
 func _on_Timer_timeout():
 	spawn_actor("tank")
-	if get_tree().get_nodes_in_group("enemy").size() < 10:
-		spawn_actor("enemy")
+#	if get_tree().get_nodes_in_group("enemy").size() < 10:
+	spawn_actor("enemy")
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	for f in friendlies:
 		if f.get_node("StatsModule"):
 			f.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)
-#	var enemies = get_tree().get_nodes_in_group("enemy")
-#	for e in enemies:
-#		if e.get_node("StatsModule"):
-#			e.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for e in enemies:
+		if e.get_node("StatsModule"):
+			e.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)

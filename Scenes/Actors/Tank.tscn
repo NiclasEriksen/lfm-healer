@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://Scripts/Actor.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Actors/tank.png" type="Texture" id=2]
@@ -16,7 +16,7 @@ radius = 16.0
 offsets = FloatArray( 0, 0.0818713, 1 )
 colors = ColorArray( 0.193848, 1, 0.1875, 0, 0.158966, 1, 0.152344, 1, 0.302734, 0.605469, 0, 0 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 
 resource/name = "idle"
 length = 0.9
@@ -28,7 +28,7 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 0.3, 0.6 ), "transitions":FloatArray( 1, 1, 1 ), "update":1, "values":[ 0, 1, 2 ] }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 resource/name = "walk"
 length = 0.6
@@ -40,9 +40,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4 ), "transitions":FloatArray( 1, 1, 1 ), "update":1, "values":[ 3, 4, 5 ] }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 
-resource/name = "Heal"
 length = 1.0
 loop = false
 step = 0.1
@@ -52,37 +51,10 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
-[sub_resource type="Animation" id=9]
-
-resource/name = "die"
-length = 2.0
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("BloodParticles:config/emitting")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/imported = false
-tracks/1/keys = { "times":FloatArray( 2 ), "transitions":FloatArray( 1 ), "values":[ { "args":[  ], "method":"queue_free" } ] }
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:transform/scale")
-tracks/2/interp = 2
-tracks/2/imported = false
-tracks/2/keys = { "times":FloatArray( 0, 2 ), "transitions":FloatArray( 1, 2.82843 ), "update":0, "values":[ Vector2( 0.5, 0.5 ), Vector2( 0, 0 ) ] }
-
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=7]
 
 custom_solver_bias = 0.0
 radius = 50.0
-
-[sub_resource type="ColorRamp" id=8]
-
-offsets = FloatArray( 0, 0.345029, 0.719298, 1 )
-colors = ColorArray( 0.800781, 0, 0, 1, 1, 0, 0, 1, 0.757812, 0, 0, 1, 0.632812, 0, 0, 0 )
 
 [node name="Tank" type="KinematicBody2D" groups=[ "friendly" ]]
 
@@ -172,8 +144,8 @@ color/color_ramp = SubResource( 2 )
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle = SubResource( 4 )
-anims/walk = SubResource( 5 )
+anims/idle = SubResource( 3 )
+anims/walk = SubResource( 4 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -184,8 +156,7 @@ autoplay = ""
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/Heal = SubResource( 3 )
-anims/die = SubResource( 9 )
+anims/Heal = SubResource( 5 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -194,7 +165,7 @@ autoplay = ""
 [node name="AttackRange" type="Area2D" parent="."]
 
 input/pickable = true
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -204,37 +175,9 @@ angular_damp = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
-
-[node name="BloodParticles" type="Particles2D" parent="."]
-
-transform/pos = Vector2( -0.487686, 0.487671 )
-config/amount = 64
-config/lifetime = 1.0
-config/emitting = false
-config/half_extents = Vector2( 5, 15 )
-params/direction = 180.0
-params/spread = 20.0
-params/linear_velocity = 40.0
-params/spin_velocity = 15.0
-params/orbit_velocity = 0.0
-params/gravity_direction = 0.0
-params/gravity_strength = 40.0
-params/radial_accel = 0.0
-params/tangential_accel = 0.0
-params/damping = 0.0
-params/initial_angle = 0.0
-params/initial_size = 0.5
-params/final_size = 2.0
-params/hue_variation = 0.0
-params/anim_speed_scale = 1.0
-params/anim_initial_pos = 0.0
-randomness/direction = 1.0
-randomness/linear_velocity = 0.2
-color/color = Color( 0.871094, 0, 0, 1 )
-color/color_ramp = SubResource( 8 )
 
 [connection signal="body_enter" from="AttackRange" to="." method="_on_AttackRange_body_enter"]
 
