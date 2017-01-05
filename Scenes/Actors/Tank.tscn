@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Actor.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Actors/tank.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Actors/bedugga_snill.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Actors/bedugga_stock.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=5]
 
@@ -51,7 +51,7 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=6]
 
 custom_solver_bias = 0.0
 radius = 50.0
@@ -92,7 +92,6 @@ shadow/item_mask = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 
-transform/scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 vframes = 2
 hframes = 3
@@ -165,7 +164,7 @@ autoplay = ""
 [node name="AttackRange" type="Area2D" parent="."]
 
 input/pickable = true
-shapes/0/shape = SubResource( 7 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -175,7 +174,7 @@ angular_damp = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 

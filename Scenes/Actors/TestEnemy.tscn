@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Actor.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Actors/bedugga.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Actors/bedugga_stock_2.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -66,7 +66,6 @@ base_movement_speed = 50
 
 [node name="Sprite" type="Sprite" parent="."]
 
-transform/scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 vframes = 2
 hframes = 3
