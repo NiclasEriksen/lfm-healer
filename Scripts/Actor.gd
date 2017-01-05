@@ -5,6 +5,8 @@ var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 var stats = null
 var target_enemy = null
 var target_enemy_path = null
+var idle_time = 0
+var idle = false
 var path = []
 
 func _ready():
@@ -26,6 +28,15 @@ func _process(dt):
 	else:
 		teststop()
 		check_in_range()
+	if idle:
+		idle_time += dt
+		if idle_time > 0.5:
+			idle_time = 0
+			move(Vector2(0, rand_range(-10, 10)))
+	else:
+		idle_time = 0
+	set_z(get_pos().y)
+
 
 func check_target():
 	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
@@ -88,10 +99,12 @@ func on_death():
 	queue_free()
 
 func on_idle():
+	idle = true
 	if not get_node("AnimationPlayer").get_current_animation() == "idle":
 		get_node("AnimationPlayer").play("idle")
 
 func on_walk():
+	idle = false
 	if not get_node("AnimationPlayer").get_current_animation() == "walk":
 		get_node("AnimationPlayer").play("walk")
 
