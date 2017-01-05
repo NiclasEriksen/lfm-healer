@@ -16,7 +16,7 @@ func _process(delta):
 	if owner.get_ref():
 		var o = owner.get_ref()
 		var pos = o.get_pos()
-		var val = (o.stats.get("hp") / o.stats.get("max_hp")) * 100.0
+		var val = (o.get_node("StatsModule").get("hp") / o.get_node("StatsModule").get("max_hp")) * 100.0
 		if o.get_node("HPBarPos"):
 			pos = cam.get_viewport().get_canvas_transform().xform(pos + o.get_node("HPBarPos").get_pos())
 			set_pos(pos + o.get_node("HPBarPos").get_pos())

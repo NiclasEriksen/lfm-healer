@@ -22,7 +22,7 @@ func _ready():
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	for f in friendlies:
-		f.get_node("Selected").set_enabled(false)
+		f.get_node("ActorBase").get_node("Selected").set_enabled(false)
 
 
 func _input(event):

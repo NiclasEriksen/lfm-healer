@@ -18,6 +18,7 @@ export(int) var base_armor = 0
 export(int) var base_magic_resist = 0
 export(int) var base_movement_speed = 50
 export(int) var base_attack_speed = 2.0
+export(int) var base_attack_range = 40
 var hp = max_hp
 var mp = max_mp
 var strength = base_strength
@@ -33,6 +34,7 @@ var hit_rate = base_hit_rate
 var armor = base_armor
 var magic_resist = base_magic_resist
 var attack_speed = base_attack_speed
+var attack_range = base_attack_range
 var immobile = false
 
 
@@ -52,6 +54,7 @@ var final_stats = {
 	armor=base_armor,
 	magic_resist=base_magic_resist,
 	attack_speed=base_attack_speed,
+	attack_range=base_attack_range,
 	movement_speed=base_movement_speed,
 }
 

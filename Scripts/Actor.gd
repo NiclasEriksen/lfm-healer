@@ -1,8 +1,10 @@
-extends KinematicBody2D
+extends Node2D
 
 onready var root = get_tree().get_root().get_node("Game")
+export(Texture) var spritesheet = null
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
-var stats = null
+onready var stats = get_parent().get_node("StatsModule")
+onready var parent = get_parent()
 var target_enemy = null
 var target_enemy_path = null
 var direction = Vector2(0, 0)
@@ -14,14 +16,18 @@ var path = []
 
 func _ready():
 	set_process(true)
-	if get_node("StatsModule"):
-		stats = get_node("StatsModule")
-		root.get_node("HUD").add_hpbar(self)
-	if get_node("Selected"):
-		get_node("Selected").set_texture_offset(get_node("CollisionShape2D").get_pos())
+	if get_parent().get_node("StatsModule"):
+		stats = get_parent().get_node("StatsModule")
+		get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("attack_range"))
+		root.get_node("HUD").add_hpbar(get_parent())
+	if get_node("Selected") and get_parent().get_node("CollisionShape2D"):
+		get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
+	if spritesheet:
+		get_node("Sprite").set_texture(spritesheet)
 
 func _process(dt):
-	check_death()
+	if stats:
+		check_death()
 	check_target()
 	if path.size():
 #		stats.get("movement_speed")
@@ -33,32 +39,38 @@ func _process(dt):
 	else:
 		check_in_range()
 
-
 	var rotate_angle = 0
-	if target_enemy.get_pos().y > get_pos().y:
-		rotate_angle = 45
-	else:
-		rotate_angle = -45
+	if target_enemy:
+		if target_enemy.get_pos().y > parent.get_pos().y:
+			rotate_angle = 45
+		else:
+			rotate_angle = -45
 	if direction.x < 0:
 		rotate_angle *= -1
 
 	if idle:
 		idle_time += dt
-		if idle_time > 1.0:
+		if idle_time > 2.0:
 			check_in_range()
-		if idle_time > 0.5:
+		if idle_time > 1.0:
+			rotate_angle *= 2
+		if idle_time > 0.5 and target_enemy:
 #			var nudge_dir = randf()
 			set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
 	else:
 		if idle_time > 0:
 			idle_time -= dt
-			set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
+			if target_enemy:
+				set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
 		else:
 			idle_time = 0
 
-	# set_rot(direction.angle() - deg2rad(90))
 	if not attacking:
-		var movement = direction * stats.get("base_movement_speed") * dt
+		var movement = direction * dt
+		if stats:
+			movement *= stats.get("base_movement_speed")
+		else:
+			movement *= 100
 		var moved = move(movement)
 		if moved.length() < movement.length() / 10:
 			on_walk()
@@ -69,7 +81,7 @@ func _process(dt):
 		flip_cd -= dt
 	update_state()
 	
-	set_z(get_pos().y)
+	get_parent().set_z(get_pos().y)
 
 func set_direction(dir):
 	direction = dir
@@ -95,10 +107,16 @@ func check_death():
 	if stats.get("hp") <= 0:
 		on_death()
 
+func get_pos():
+	return parent.get_pos()
+
+func move(v):
+	return parent.move(v)
+
 func check_in_range():
 	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
 	var target = "enemy"
-	if "enemy" in get_groups():
+	if "enemy" in parent.get_groups():
 		target = "friendly"
 	target_enemy = get_closest_enemy(get_tree().get_nodes_in_group(target))
 	if target_enemy:
@@ -144,7 +162,7 @@ func on_death():
 	de.set_pos(get_pos())
 #	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())
 	root.get_node("Effects").add_child(de)
-	queue_free()
+	parent.queue_free()
 
 func on_idle():
 	idle = true
@@ -177,7 +195,7 @@ func _on_AttackRange_body_enter( body ):
 			if get_pos().distance_to(target_enemy.get_pos()) <= r:
 				return
 	var target_group = "enemy"
-	if "enemy" in get_groups():
+	if "enemy" in parent.get_groups():
 		target_group = "friendly"
 	if target_group in body.get_groups():
 		clear_path()
