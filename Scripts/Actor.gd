@@ -9,6 +9,7 @@ var direction = Vector2(0, 0)
 var flip_cd = 0.0
 var idle_time = 0.0
 var idle = false
+var attacking = false
 var path = []
 
 func _ready():
@@ -56,12 +57,13 @@ func _process(dt):
 			idle_time = 0
 
 	# set_rot(direction.angle() - deg2rad(90))
-	var movement = direction * stats.get("base_movement_speed") * dt
-	var moved = move(movement)
-	if moved.length() < movement.length() / 10:
-		on_walk()
-	else:
-		on_idle()
+	if not attacking:
+		var movement = direction * stats.get("base_movement_speed") * dt
+		var moved = move(movement)
+		if moved.length() < movement.length() / 10:
+			on_walk()
+		else:
+			on_idle()
 	
 	if flip_cd > 0.0:
 		flip_cd -= dt
@@ -80,10 +82,13 @@ func check_target():
 	if target_enemy:
 		if get_pos().distance_to(target_enemy.get_pos()) < ar:
 			clear_path()
-			on_idle()
+			on_attack()
+			# on_idle()
 		elif get_pos().distance_to(target_enemy.get_pos()) < 250:
+			attacking = false
 			clear_path()
 	else:
+		attacking = false
 		check_in_range()
 
 func check_death():
@@ -126,6 +131,12 @@ func set_path(p):
 
 func on_heal():
 	get_node("EffectPlayer").play("Heal")
+
+func on_attack():
+	attacking = true
+	idle = false
+	if not get_node("AnimationPlayer").get_current_animation() == "idle":
+		get_node("AnimationPlayer").play("idle")
 
 func on_death():
 	print("Died.")
