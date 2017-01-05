@@ -5,7 +5,9 @@ var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 var stats = null
 var target_enemy = null
 var target_enemy_path = null
-var idle_time = 0
+var direction = Vector2(0, 0)
+var flip_cd = 0.0
+var idle_time = 0.0
 var idle = false
 var path = []
 
@@ -22,30 +24,53 @@ func _process(dt):
 	check_target()
 	if path.size():
 #		stats.get("movement_speed")
-		testmove((path[0] - get_pos()).normalized() * stats.get("base_movement_speed") * dt)
+		set_direction((path[0] - get_pos()).normalized())
 		if get_pos().distance_to(path[0]) < 1.0:
 			path.remove(0)
 	elif target_enemy:
-		testmove((target_enemy.get_pos() - get_pos()).normalized() * stats.get("base_movement_speed") * dt)
+		set_direction((target_enemy.get_pos() - get_pos()).normalized())
 	else:
-		teststop()
 		check_in_range()
+
+
+	var rotate_angle = 0
+	if target_enemy.get_pos().y > get_pos().y:
+		rotate_angle = 45
+	else:
+		rotate_angle = -45
+	if direction.x < 0:
+		rotate_angle *= -1
+
 	if idle:
 		idle_time += dt
+		if idle_time > 1.0:
+			check_in_range()
 		if idle_time > 0.5:
-			idle_time = 0
-			var nudge_dir = rand_range(-10, 10)
-#			if target_enemy:
-#				if target_enemy.get_pos().y >= get_pos().y:
-#					nudge_dir = 10
-#				else:
-#					nudge_dir = -10
-			var dir = Vector2(0, nudge_dir)
-			testmove(dir)
+#			var nudge_dir = randf()
+			set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
 	else:
-		idle_time = 0
+		if idle_time > 0:
+			idle_time -= dt
+			set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
+		else:
+			idle_time = 0
+
+	# set_rot(direction.angle() - deg2rad(90))
+	var movement = direction * stats.get("base_movement_speed") * dt
+	var moved = move(movement)
+	if moved.length() < movement.length() / 10:
+		on_walk()
+	else:
+		on_idle()
+	
+	if flip_cd > 0.0:
+		flip_cd -= dt
+	update_state()
+	
 	set_z(get_pos().y)
 
+func set_direction(dir):
+	direction = dir
 
 func check_target():
 	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
@@ -54,7 +79,8 @@ func check_target():
 			target_enemy = null
 	if target_enemy:
 		if get_pos().distance_to(target_enemy.get_pos()) < ar:
-			teststop()
+			clear_path()
+			on_idle()
 		elif get_pos().distance_to(target_enemy.get_pos()) < 250:
 			clear_path()
 	else:
@@ -82,7 +108,9 @@ func get_closest_enemy(enemies):
 	var closest = 1000
 	for e in enemies:
 		var dist = abs(e.get_pos().distance_to(get_pos()))
-		if dist < closest:
+		if e == target_enemy:
+			pass
+		elif dist < closest:
 			closest = dist
 			closest_candidate = e
 	return closest_candidate
@@ -117,21 +145,19 @@ func on_walk():
 	if not get_node("AnimationPlayer").get_current_animation() == "walk":
 		get_node("AnimationPlayer").play("walk")
 
-func testmove(dir):
-	if dir.x > 0:
-		get_node("Sprite").set_flip_h(false)
-	elif dir.x < 0:
-		get_node("Sprite").set_flip_h(true)
-	var moved = move(dir)
-	if moved.length() < dir.length() / 10:
-		on_walk()
-	else:
-		on_idle()
-
-func teststop():
-	clear_path()
-	if not get_node("AnimationPlayer").get_current_animation() == "idle":
-		get_node("AnimationPlayer").play("idle")
+func update_state():
+	if flip_cd <= 0.0:
+		flip_cd = 0.3
+		if target_enemy:
+			if target_enemy.get_pos().x > get_pos().x:
+				get_node("Sprite").set_flip_h(false)
+			else:
+				get_node("Sprite").set_flip_h(true)
+		else:
+			if direction.x > 0:
+				get_node("Sprite").set_flip_h(false)
+			elif direction.x < 0:
+				get_node("Sprite").set_flip_h(true)
 
 func _on_AttackRange_body_enter( body ):
 	if target_enemy:
@@ -143,6 +169,6 @@ func _on_AttackRange_body_enter( body ):
 	if "enemy" in get_groups():
 		target_group = "friendly"
 	if target_group in body.get_groups():
-		teststop()
+		clear_path()
 		target_enemy = body
 		target_enemy_path = body.get_path()

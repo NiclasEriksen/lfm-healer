@@ -70,6 +70,8 @@ func spawn_actor(actor_type):
 		p = get_node("TestMap/EnemySpawn").get_pos()
 		actor = enemy_actor.instance()
 
+	p += Vector2(0, rand_range(-32, 32))
+
 	if actor:
 		print("Spawning actor: ", actor_type)
 		actor.set_pos(p)
