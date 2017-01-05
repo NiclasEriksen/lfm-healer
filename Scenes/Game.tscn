@@ -1,14 +1,16 @@
 [gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Maps/TestMap.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Maps/TestMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
 
 script/script = ExtResource( 1 )
+
+[node name="TestMap" parent="." instance=ExtResource( 2 )]
 
 [node name="Objects" type="Node" parent="."]
 
@@ -16,9 +18,9 @@ script/script = ExtResource( 1 )
 
 [node name="Effects" type="Node" parent="."]
 
-[node name="HUD" parent="." instance=ExtResource( 2 )]
+[node name="HUD" parent="." instance=ExtResource( 3 )]
 
-[node name="EffectModule" parent="." instance=ExtResource( 3 )]
+[node name="EffectModule" parent="." instance=ExtResource( 4 )]
 
 amount = -1.0
 buff_time = 10.0
@@ -52,11 +54,9 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
-[node name="Healer" parent="." instance=ExtResource( 4 )]
+[node name="Healer" parent="." instance=ExtResource( 5 )]
 
 transform/pos = Vector2( 36.3531, 309.002 )
-
-[node name="TestMap" parent="." instance=ExtResource( 5 )]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

@@ -14,6 +14,8 @@ func _ready():
 	if get_node("StatsModule"):
 		stats = get_node("StatsModule")
 		root.get_node("HUD").add_hpbar(self)
+	if get_node("Selected"):
+		get_node("Selected").set_texture_offset(get_node("CollisionShape2D").get_pos())
 
 func _process(dt):
 	check_death()
@@ -32,7 +34,14 @@ func _process(dt):
 		idle_time += dt
 		if idle_time > 0.5:
 			idle_time = 0
-			move(Vector2(0, rand_range(-10, 10)))
+			var nudge_dir = rand_range(-10, 10)
+#			if target_enemy:
+#				if target_enemy.get_pos().y >= get_pos().y:
+#					nudge_dir = 10
+#				else:
+#					nudge_dir = -10
+			var dir = Vector2(0, nudge_dir)
+			testmove(dir)
 	else:
 		idle_time = 0
 	set_z(get_pos().y)
