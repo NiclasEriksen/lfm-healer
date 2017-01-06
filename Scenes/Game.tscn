@@ -9,6 +9,7 @@
 [node name="Game" type="Node2D"]
 
 script/script = ExtResource( 1 )
+mapfile = "res://Assets/Maps/debugga.png"
 
 [node name="TestMap" parent="." instance=ExtResource( 2 )]
 

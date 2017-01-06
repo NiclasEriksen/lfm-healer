@@ -1,7 +1,8 @@
+tool
 extends Node2D
 
 onready var root = get_tree().get_root().get_node("Game")
-export(Texture) var spritesheet = null
+export(Texture) var spritesheet = null setget set_sprite_texture
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var parent = get_parent()
@@ -15,22 +16,24 @@ var attacking = false
 var path = []
 
 func _ready():
-	set_process(true)
-	if get_parent().get_node("StatsModule"):
-		if Globals.get("debug_mode"):
-			print("Statsmodule found.")
-		stats = get_parent().get_node("StatsModule")
-		var shape = CircleShape2D.new()
-		shape.set_radius(stats.get("base_attack_range"))
-		get_node("AttackRange/CollisionShape2D").set_shape(shape)
-		root.get_node("HUD").add_hpbar(get_parent())
-	if get_node("Selected") and get_parent().get_node("CollisionShape2D"):
-		get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
-	if spritesheet:
-		get_node("Sprite").set_texture(spritesheet)
+	if not get_tree().is_editor_hint():
+		set_process(true)
+		parent = get_parent()
+		if get_parent().get_node("StatsModule"):
+			if Globals.get("debug_mode"):
+				print("Statsmodule found.")
+			stats = get_parent().get_node("StatsModule")
+			var shape = CircleShape2D.new()
+			shape.set_radius(stats.get("base_attack_range"))
+			get_node("AttackRange/CollisionShape2D").set_shape(shape)
+			root.get_node("HUD").add_hpbar(get_parent())
+		if get_node("Selected") and get_parent().get_node("CollisionShape2D"):
+			get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
+#	if spritesheet:
+#		get_node("Sprite").set_texture(spritesheet)
 
 func _draw():
-	if Globals.get("debug_mode"):
+	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		draw_line(Vector2(0, 0), direction * 30, Color(0.8, 0.4, 0.1), 3.0)
 		if target_enemy:
 			if root.get_node("Actors").has_node(target_enemy_path):
@@ -97,6 +100,11 @@ func _process(dt):
 	get_parent().set_z(get_pos().y)
 	update()
 
+func set_sprite_texture(tex):
+	spritesheet = tex
+	if get_node("Sprite"):
+		get_node("Sprite").set_texture(tex)
+
 func set_direction(dir):
 	direction = dir
 
@@ -122,7 +130,10 @@ func check_death():
 		on_death()
 
 func get_pos():
-	return parent.get_pos()
+	if parent:
+		return parent.get_pos()
+	else:
+		return Vector2(0, 0)
 
 func move(v):
 	return parent.move(v)

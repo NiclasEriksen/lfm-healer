@@ -10,9 +10,13 @@ var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
 var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
+export(String, FILE) var mapfile = null
 onready var cam = get_node("Camera2D")
 
 func _ready():
+	if mapfile:
+		var tex = load(mapfile)
+		get_node("TestMap/Sprite").set_texture(tex)
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
