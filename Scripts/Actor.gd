@@ -19,6 +19,9 @@ func _ready():
 	if not get_tree().is_editor_hint():
 		set_process(true)
 		parent = get_parent()
+		get_node("RayCast2D").add_exception(parent)
+		get_node("RayCast2D").set_pos(parent.get_node("CollisionShape2D").get_pos())
+		get_node("RayCast2D").add_exception(get_node("AttackRange/CollisionShape2D"))
 		if get_parent().get_node("StatsModule"):
 			if Globals.get("debug_mode"):
 				print("Statsmodule found.")
@@ -35,10 +38,14 @@ func _ready():
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		draw_line(Vector2(0, 0), direction * 30, Color(0.8, 0.4, 0.1), 3.0)
+		draw_line(get_node("RayCast2D").get_pos(), get_node("RayCast2D").get_cast_to(), Color(1, 0.7, 0.7))
 		if target_enemy:
 			if root.get_node("Actors").has_node(target_enemy_path):
 				var te_pos = target_enemy.get_pos() - parent.get_pos()
-				draw_line(Vector2(0, 0), te_pos, Color(0.1, 0.4, 0.9, 0.75), 1.0)
+				var col = Color(0.1, 0.4, 0.9, 0.75)
+				if "enemy" in parent.get_groups():
+					col = Color(0.9, 0.1, 0.4, 0.75)
+				draw_line(Vector2(0, 0), te_pos, col, 1.0)
 
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
@@ -55,29 +62,15 @@ func _process(dt):
 	else:
 		check_in_range()
 
-	var rotate_angle = 0
-	if target_enemy:
-		if target_enemy.get_pos().y > parent.get_pos().y:
-			rotate_angle = 45
-		else:
-			rotate_angle = -45
-	if direction.x < 0:
-		rotate_angle *= -1
-
 	if idle:
 		idle_time += dt
+		check_los()
 		if idle_time > 2.0:
+			idle_time = 0
 			check_in_range()
-		if idle_time > 1.0:
-			rotate_angle *= 2
-		if idle_time > 0.5 and target_enemy:
-#			var nudge_dir = randf()
-			set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
 	else:
 		if idle_time > 0:
 			idle_time -= dt
-			if target_enemy:
-				set_direction((target_enemy.get_pos() - get_pos()).normalized().rotated(deg2rad(rotate_angle)))
 		else:
 			idle_time = 0
 
@@ -97,8 +90,30 @@ func _process(dt):
 		flip_cd -= dt
 	update_state()
 	
-	get_parent().set_z(get_pos().y)
+	if not get_tree().is_editor_hint():
+		if parent:
+			parent.set_z(get_pos().y)
 	update()
+
+func check_los():
+	if not get_tree().is_editor_hint():
+		var rc = get_node("RayCast2D")
+		rc.set_enabled(true)
+		for i in range(4):
+			var angle = 45 * (i)
+			if test_angle(rc, angle):
+				set_direction(direction.rotated(deg2rad(angle)).normalized())
+				break
+			if test_angle(rc, angle * -1):
+				set_direction(direction.rotated(deg2rad(angle * -1)).normalized())
+				break
+		rc.set_enabled(false)
+
+func test_angle(rc, a):
+	var dir = direction.rotated(deg2rad(a)) * 50
+	rc.set_cast_to(dir)
+	rc.force_raycast_update()
+	return not rc.is_colliding()
 
 func set_sprite_texture(tex):
 	spritesheet = tex
@@ -136,24 +151,29 @@ func get_pos():
 		return Vector2(0, 0)
 
 func move(v):
-	return parent.move(v)
+	if not get_tree().is_editor_hint():
+		if parent:
+			return parent.move(v)
+	else:
+		return Vector2(0, 0)
 
 func check_in_range():
-	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-	var target = "enemy"
-	if "enemy" in parent.get_groups():
-		target = "friendly"
-	target_enemy = get_closest_enemy(get_tree().get_nodes_in_group(target))
-	if target_enemy:
-		target_enemy_path = target_enemy.get_path()
-		if get_pos().distance_to(target_enemy.get_pos()) > ar:
-			path = root.get_node("TestMap").get_simple_path(get_pos(), target_enemy.get_pos())
-	else:
-		target_enemy_path = null
+	if not get_tree().is_editor_hint():
+		var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
+		var target = "enemy"
+		if "enemy" in parent.get_groups():
+			target = "friendly"
+		target_enemy = get_closest_enemy(get_tree().get_nodes_in_group(target))
+		if target_enemy:
+			target_enemy_path = target_enemy.get_path()
+			if get_pos().distance_to(target_enemy.get_pos()) > ar:
+				path = root.get_node("Map").get_simple_path(get_pos(), target_enemy.get_pos())
+		else:
+			target_enemy_path = null
 
 func get_closest_enemy(enemies):
 	var closest_candidate = null
-	var closest = 1000
+	var closest = 2000
 	for e in enemies:
 		var dist = abs(e.get_pos().distance_to(get_pos()))
 		if e == target_enemy:
@@ -212,6 +232,14 @@ func update_state():
 				get_node("Sprite").set_flip_h(false)
 			elif direction.x < 0:
 				get_node("Sprite").set_flip_h(true)
+	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
+		get_node("State").set_enabled(true)
+		if attacking:
+			get_node("State").set_color(Color(1.0, 0, 0))
+		elif idle:
+			get_node("State").set_color(Color(0.5, 0.5, 0))
+		else:
+			get_node("State").set_color(Color(0, 1, 0))
 
 func _on_AttackRange_body_enter( body ):
 	if target_enemy:

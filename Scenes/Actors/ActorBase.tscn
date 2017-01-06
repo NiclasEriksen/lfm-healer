@@ -63,8 +63,31 @@ spritesheet = null
 
 vframes = 2
 hframes = 3
+frame = 1
 
 [node name="Selected" type="Light2D" parent="."]
+
+enabled = false
+editor_only = false
+texture = ExtResource( 2 )
+offset = Vector2( 0, 0 )
+scale = 0.5
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 0
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="State" type="Light2D" parent="."]
 
 enabled = false
 editor_only = false
@@ -151,6 +174,14 @@ angular_damp = 1.0
 shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+layer_mask = 1
+type_mask = 15
 
 [connection signal="body_enter" from="AttackRange" to="." method="_on_AttackRange_body_enter"]
 

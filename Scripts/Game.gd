@@ -1,8 +1,5 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 var dragged_ability = false
 var targeted_heal = load("res://Scenes/Abilities/TargetedHeal.tscn")
 var area_heal = load("res://Scenes/Abilities/AreaHeal.tscn")
@@ -10,13 +7,9 @@ var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
 var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
-export(String, FILE) var mapfile = null
 onready var cam = get_node("Camera2D")
 
 func _ready():
-	if mapfile:
-		var tex = load(mapfile)
-		get_node("TestMap/Sprite").set_texture(tex)
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
@@ -52,31 +45,17 @@ func _input(event):
 				dragged_ability.set_active(true)
 			dragged_ability.set_pos(event.pos)
 
-	elif event.type == InputEvent.KEY:
-		if event.pressed:
-			if event.scancode == KEY_LEFT:
-				for e in get_tree().get_nodes_in_group("enemy"):
-					e.testmove(Vector2(-1, 0))
-			if event.scancode == KEY_RIGHT:
-				print("wat")
-				for e in get_tree().get_nodes_in_group("enemy"):
-					e.testmove(Vector2(1, 0))
-		else:
-			if event.scancode == KEY_LEFT or event.scancode == KEY_RIGHT:
-				for e in get_tree().get_nodes_in_group("enemy"):
-					e.testmove(Vector2(0, 0))
-
 func spawn_actor(actor_type):
 	var actor = null
 	var p = Vector2(0, 0)
 	if actor_type == "tank":
-		p = get_node("TestMap/FriendlySpawn").get_pos()
+		p = get_node("Map/FriendlySpawn").get_pos()
 		actor = tank_actor.instance()
 	elif actor_type == "enemy":
-		p = get_node("TestMap/EnemySpawn").get_pos()
+		p = get_node("Map/EnemySpawn").get_pos()
 		actor = enemy_actor.instance()
 	elif actor_type == "archer":
-		p = get_node("TestMap/FriendlySpawn").get_pos()
+		p = get_node("Map/FriendlySpawn").get_pos()
 		actor = archer_actor.instance()
 
 	p += Vector2(0, rand_range(-32, 32))

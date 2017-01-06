@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://Scenes/Maps/TestMap.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/debugga.png" type="Texture" id=2]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -9,9 +9,10 @@ vertices = Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 
 polygons = [ IntArray( 0, 1, 2, 3 ) ]
 outlines = [ Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 88.8441, -0.0638752 ) ]
 
-[node name="TestMap" type="Navigation2D"]
+[node name="Map" type="Navigation2D"]
 
 script/script = ExtResource( 1 )
+mapfile = null
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 
