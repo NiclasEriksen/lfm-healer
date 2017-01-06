@@ -25,6 +25,14 @@ func _ready():
 	if spritesheet:
 		get_node("Sprite").set_texture(spritesheet)
 
+func _draw():
+	if Globals.get("debug_mode"):
+		draw_line(Vector2(0, 0), direction * 30, Color(0.8, 0.4, 0.1), 3.0)
+		if target_enemy:
+			if root.get_node("Actors").has_node(target_enemy_path):
+				var te_pos = target_enemy.get_pos() - parent.get_pos()
+				draw_line(Vector2(0, 0), te_pos, Color(0.1, 0.4, 0.9, 0.75), 1.0)
+
 func _process(dt):
 	if stats:
 		check_death()
@@ -82,6 +90,7 @@ func _process(dt):
 	update_state()
 	
 	get_parent().set_z(get_pos().y)
+	update()
 
 func set_direction(dir):
 	direction = dir
