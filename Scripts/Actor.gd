@@ -17,8 +17,12 @@ var path = []
 func _ready():
 	set_process(true)
 	if get_parent().get_node("StatsModule"):
+		if Globals.get("debug_mode"):
+			print("Statsmodule found.")
 		stats = get_parent().get_node("StatsModule")
-		get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("attack_range"))
+		var shape = CircleShape2D.new()
+		shape.set_radius(stats.get("base_attack_range"))
+		get_node("AttackRange/CollisionShape2D").set_shape(shape)
 		root.get_node("HUD").add_hpbar(get_parent())
 	if get_node("Selected") and get_parent().get_node("CollisionShape2D"):
 		get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
@@ -34,6 +38,7 @@ func _draw():
 				draw_line(Vector2(0, 0), te_pos, Color(0.1, 0.4, 0.9, 0.75), 1.0)
 
 func _process(dt):
+	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
 	if stats:
 		check_death()
 	check_target()
@@ -80,7 +85,7 @@ func _process(dt):
 		else:
 			movement *= 100
 		var moved = move(movement)
-		if moved.length() < movement.length() / 10:
+		if moved.length() < movement.length() / 5:
 			on_walk()
 		else:
 			on_idle()
@@ -101,11 +106,11 @@ func check_target():
 		if not root.get_node("Actors").has_node(target_enemy_path):
 			target_enemy = null
 	if target_enemy:
-		if get_pos().distance_to(target_enemy.get_pos()) < ar:
+		if parent.get_pos().distance_to(target_enemy.get_pos()) < ar:
 			clear_path()
 			on_attack()
 			# on_idle()
-		elif get_pos().distance_to(target_enemy.get_pos()) < 250:
+		elif parent.get_pos().distance_to(target_enemy.get_pos()) < 400:
 			attacking = false
 			clear_path()
 	else:

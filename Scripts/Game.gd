@@ -8,6 +8,7 @@ var targeted_heal = load("res://Scenes/Abilities/TargetedHeal.tscn")
 var area_heal = load("res://Scenes/Abilities/AreaHeal.tscn")
 var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
+var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 onready var cam = get_node("Camera2D")
 
@@ -18,6 +19,7 @@ func _ready():
 	set_process_input(true)
 	spawn_actor("enemy")
 	spawn_actor("tank")
+	spawn_actor("archer")
 
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
@@ -69,6 +71,9 @@ func spawn_actor(actor_type):
 	elif actor_type == "enemy":
 		p = get_node("TestMap/EnemySpawn").get_pos()
 		actor = enemy_actor.instance()
+	elif actor_type == "archer":
+		p = get_node("TestMap/FriendlySpawn").get_pos()
+		actor = archer_actor.instance()
 
 	p += Vector2(0, rand_range(-32, 32))
 
@@ -80,7 +85,10 @@ func spawn_actor(actor_type):
 		print("No actor by that identifier found: ", actor_type)
 
 func _on_Timer_timeout():
-	spawn_actor("tank")
+	if randf() > 0.8:
+		spawn_actor("archer")
+	else:
+		spawn_actor("tank")
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
 	spawn_actor("enemy")
 	var friendlies = get_tree().get_nodes_in_group("friendly")
