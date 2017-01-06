@@ -22,7 +22,7 @@ func set_target():
 			closest_candidate = f
 	if closest_candidate:
 		target = closest_candidate
-		target.get_node("Selected").set_enabled(true)
+		target.get_node("ActorBase").get_node("Selected").set_enabled(true)
 	else:
 		target = null
 
@@ -45,5 +45,5 @@ func trigger():
 			).apply_effect(
 				get_node("EffectModule"), null
 				)
-			target.on_heal()
+			target.get_node("ActorBase").on_heal()
 	queue_free()

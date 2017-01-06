@@ -9,7 +9,7 @@ func _process(delta):
 	if active:
 		for target in get_node("Area2D").get_overlapping_bodies():
 			if "friendly" in target.get_groups():
-				target.get_node("Selected").set_enabled(true)
+				target.get_node("ActorBase").get_node("Selected").set_enabled(true)
 
 func set_active(val):
 #	get_node("Particles2D").set_emitting(val)
@@ -30,5 +30,5 @@ func trigger():
 				).apply_effect(
 					get_node("EffectModule"), null
 					)
-				target.on_heal()
+				target.get_node("ActorBase").on_heal()
 	queue_free()

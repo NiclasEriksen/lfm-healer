@@ -53,7 +53,7 @@ func _process(delta):
 		var points = []
 		for t in targets:
 			points.append(t.get_global_pos())
-			t.get_node("Selected").set_enabled(true)
+			t.get_node("ActorBase").get_node("Selected").set_enabled(true)
 		hud.draw_lines(points, Color(0.2,0.9,0.1,0.5))
 #		hud.update()
 
@@ -79,6 +79,6 @@ func trigger():
 			).apply_effect(
 				get_node("EffectModule"), null
 				)
-			target.on_heal()
+			target.get_node("ActorBase").on_heal()
 	hud.clear_lines()
 	queue_free()
