@@ -63,3 +63,4 @@ transform/pos = Vector2( 36.3531, 309.002 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 
+[editable path="HUD"]

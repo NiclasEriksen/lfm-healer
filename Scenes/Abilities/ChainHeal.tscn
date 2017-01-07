@@ -12,8 +12,8 @@ radius = 24.0
 [node name="ChainHeal" type="Node2D"]
 
 script/script = ExtResource( 1 )
-max_jump_range = 200
-max_jumps = 3
+max_jump_range = 250
+max_jumps = 4
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -21,7 +21,7 @@ texture = ExtResource( 2 )
 
 [node name="EffectModule" parent="." instance=ExtResource( 3 )]
 
-amount = 3.0
+amount = 18.0
 
 [node name="Area2D" type="Area2D" parent="."]
 

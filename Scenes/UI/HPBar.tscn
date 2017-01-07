@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scenes/UI/HPBar.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI/hp_bot.png" type="Texture" id=2]
-[ext_resource path="res://Assets/UI/hp_top.png" type="Texture" id=3]
-[ext_resource path="res://Assets/UI/hp_mid.png" type="Texture" id=4]
+[ext_resource path="res://Assets/UI/hp_mid_blue.png" type="Texture" id=2]
+[ext_resource path="res://Assets/UI/hp_bot.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/hp_top.png" type="Texture" id=4]
+[ext_resource path="res://Assets/UI/hp_mid.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
 
@@ -12,15 +13,19 @@ length = 0.3
 loop = false
 step = 0.02
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:transform/scale")
+tracks/0/path = NodePath("TextureProgress:rect/scale")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.06, 0.24 ), "transitions":FloatArray( 1, 0.435275, 1 ), "update":0, "values":[ Vector2( 0.75, 0.75 ), Vector2( 0.8, 0.8 ), Vector2( 0.75, 0.75 ) ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.06, 0.26 ), "transitions":FloatArray( 1, 1, 1 ), "update":0, "values":[ Vector2( 1, 1 ), Vector2( 1, 1.25 ), Vector2( 1, 1 ) ] }
 
 [node name="HPBar" type="Node2D"]
 
 transform/scale = Vector2( 0.75, 0.75 )
 script/script = ExtResource( 1 )
+friendly_scale = Vector2( 1, 1 )
+enemy_scale = Vector2( 0.75, 0.75 )
+friendly_texture = ExtResource( 2 )
+enemy_texture = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -35,19 +40,15 @@ autoplay = ""
 
 [node name="TextureProgress" type="TextureProgress" parent="."]
 
-anchor/left = 3
-anchor/top = 3
-anchor/right = 3
-anchor/bottom = 3
 rect/min_size = Vector2( 32, 32 )
 focus/ignore_mouse = true
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 64.0
-margin/top = 64.0
-margin/right = 0.0
-margin/bottom = 0.0
+margin/left = -32.0
+margin/top = -32.0
+margin/right = 32.0
+margin/bottom = 32.0
 range/min = 0.0
 range/max = 100.0
 range/step = 1.0
@@ -55,9 +56,9 @@ range/page = 0.0
 range/value = 100.0
 range/exp_edit = false
 range/rounded = false
-texture/under = ExtResource( 2 )
-texture/over = ExtResource( 3 )
-texture/progress = ExtResource( 4 )
+texture/under = ExtResource( 3 )
+texture/over = ExtResource( 4 )
+texture/progress = ExtResource( 5 )
 mode = 4
 radial_fill/initial_angle = 300.0
 radial_fill/fill_degrees = 120.0

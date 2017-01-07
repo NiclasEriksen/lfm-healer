@@ -54,8 +54,8 @@ func _process(delta):
 		for t in targets:
 			points.append(t.get_global_pos())
 			t.get_node("ActorBase").get_node("Selected").set_enabled(true)
-		hud.draw_lines(points, Color(0.2,0.9,0.1,0.5))
 #		hud.update()
+		hud.draw_lines(points, Color(0.2,0.9,0.1,0.5))
 
 func set_active(val):
 #	get_node("Particles2D").set_emitting(val)

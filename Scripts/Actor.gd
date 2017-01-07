@@ -6,9 +6,11 @@ export(Texture) var spritesheet = null setget set_sprite_texture
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var parent = get_parent()
+signal attack
 var target_enemy = null
 var target_enemy_path = null
 var direction = Vector2(0, 0)
+var attack_cd = 0.0
 var flip_cd = 0.0
 var state_change_cd = 0.0
 var idle_time = 0.0
@@ -66,7 +68,7 @@ func _process(dt):
 
 	if idle:
 		idle_time += dt
-		#check_los()
+		# check_los()
 		if idle_time > 2.0:
 			idle_time = 0
 			check_in_range()
@@ -85,6 +87,14 @@ func _process(dt):
 	if not get_tree().is_editor_hint():
 		if parent:
 			parent.set_z(get_pos().y)
+	if attack_cd <= 0:
+		if attacking and target_enemy:
+			attack_cd = 0.5
+			if parent.has_node("StatsModule"):
+				attack_cd = parent.get_node("StatsModule").get("base_attack_speed")
+			emit_signal("attack", target_enemy)
+	else:
+		attack_cd -= dt
 	update()
 
 func _fixed_process(dt):
