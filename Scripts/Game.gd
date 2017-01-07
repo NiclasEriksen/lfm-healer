@@ -58,7 +58,7 @@ func spawn_actor(actor_type):
 		p = get_node("Map/FriendlySpawn").get_pos()
 		actor = archer_actor.instance()
 
-	p += Vector2(0, rand_range(-32, 32))
+	p += Vector2(0, rand_range(-200, 200))
 
 	if actor:
 		print("Spawning actor: ", actor_type)

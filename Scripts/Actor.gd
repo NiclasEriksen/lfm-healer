@@ -10,6 +10,7 @@ var target_enemy = null
 var target_enemy_path = null
 var direction = Vector2(0, 0)
 var flip_cd = 0.0
+var state_change_cd = 0.0
 var idle_time = 0.0
 var idle = false
 var attacking = false
@@ -18,6 +19,7 @@ var path = []
 func _ready():
 	if not get_tree().is_editor_hint():
 		set_process(true)
+		set_fixed_process(true)
 		parent = get_parent()
 		get_node("RayCast2D").add_exception(parent)
 		get_node("RayCast2D").set_pos(parent.get_node("CollisionShape2D").get_pos())
@@ -64,7 +66,7 @@ func _process(dt):
 
 	if idle:
 		idle_time += dt
-		check_los()
+		#check_los()
 		if idle_time > 2.0:
 			idle_time = 0
 			check_in_range()
@@ -73,27 +75,38 @@ func _process(dt):
 			idle_time -= dt
 		else:
 			idle_time = 0
-
-	if not attacking:
-		var movement = direction * dt
-		if stats:
-			movement *= stats.get("base_movement_speed")
-		else:
-			movement *= 100
-		var moved = move(movement)
-		if moved.length() < movement.length() / 5:
-			on_walk()
-		else:
-			on_idle()
 	
 	if flip_cd > 0.0:
 		flip_cd -= dt
+	if state_change_cd > 0.0:
+		state_change_cd -= dt
 	update_state()
 	
 	if not get_tree().is_editor_hint():
 		if parent:
 			parent.set_z(get_pos().y)
 	update()
+
+func _fixed_process(dt):
+	if not attacking:
+		var movement = direction
+		if stats:
+			movement *= stats.get("base_movement_speed")
+		else:
+			movement *= 100
+#		if not parent.test_move(parent.get_transform(), movement):
+#			on_walk()
+#		else:
+#			on_idle()
+#		if parent.test_move(parent.get_transform(), movement):
+#			movement = movement.slide(parent.get_collision_normal())
+#			print(parent.get_collision_normal())
+		var moved = parent.move_and_slide(movement)
+		if moved.length() > movement.length() / 10:
+			on_walk()
+		else:
+			on_idle()
+
 
 func check_los():
 	if not get_tree().is_editor_hint():
@@ -211,13 +224,18 @@ func on_death():
 
 func on_idle():
 	idle = true
-	if not get_node("AnimationPlayer").get_current_animation() == "idle":
-		get_node("AnimationPlayer").play("idle")
+	if state_change_cd <= 0:
+		if not get_node("AnimationPlayer").get_current_animation() == "idle":
+			get_node("AnimationPlayer").play("idle")
+		state_change_cd = 0.3
 
 func on_walk():
 	idle = false
-	if not get_node("AnimationPlayer").get_current_animation() == "walk":
-		get_node("AnimationPlayer").play("walk")
+	if state_change_cd <= 0:
+		if not get_node("AnimationPlayer").get_current_animation() == "walk":
+			get_node("AnimationPlayer").play("walk")
+		state_change_cd = 0.3
+
 
 func update_state():
 	if flip_cd <= 0.0:
