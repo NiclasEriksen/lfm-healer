@@ -50,6 +50,4 @@ spritesheet = ExtResource( 4 )
 
 amount = -4.0
 
-[connection signal="attack" from="ActorBase" to="." method="_on_ActorBase_attack"]
-
 

@@ -22,7 +22,7 @@ collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
 alliance = "friendly"
-projectile = null
+projectile = "res://Scenes/Objects/Arrow.tscn"
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
@@ -47,7 +47,5 @@ spritesheet = ExtResource( 4 )
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 
 amount = -5.0
-
-[connection signal="attack" from="ActorBase" to="." method="_on_ActorBase_attack"]
 
 

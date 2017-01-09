@@ -27,7 +27,12 @@ func get_projectile():
 	return projectile
 
 func _on_ActorBase_attack(target):
-	print("No attack method defined for ", self)
+	if Globals.get("debug_mode"):
+		print("No attack method defined for ", self, ", using default.")
+	if target.has_node("StatsModule") and has_node("Attack"):
+		if Globals.get("debug_mode"):
+			print(self, " attacking ", target)
+		target.get_node("StatsModule").apply_effect(get_node("Attack"), null)
 
 func fire_projectile(target):
 	if projectile and has_node("Attack") and target.has_node("StatsModule"):
@@ -42,4 +47,6 @@ func fire_projectile(target):
 		print("Actor tried to shoot a projectile, but none has been configured.")
 
 func _ready():
-	pass
+	# Connect signals
+	if has_node("ActorBase"):
+		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack")
