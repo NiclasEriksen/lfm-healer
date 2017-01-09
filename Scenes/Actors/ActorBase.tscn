@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=1]
 
-[ext_resource path="res://Scripts/Actor.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/ActorBase.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=3]
 
