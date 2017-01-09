@@ -10,7 +10,8 @@ func _ready():
 
 func _on_ActorBase_attack(target):
 	if target.has_node("StatsModule") and has_node("Attack"):
-		# print("Attacking ", target)
+		if Globals.get("debug_mode"):
+			print(self, " attacking ", target)
 		var a = arrow.instance()
 		var dist_scale = get_pos().distance_to(target.get_pos()) / get_node("StatsModule").get("base_attack_range")
 		a.set_pos(get_pos())

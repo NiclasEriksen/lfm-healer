@@ -233,7 +233,8 @@ func on_attack():
 		get_node("AnimationPlayer").play("idle")
 
 func on_death():
-	print("Died.")
+	if Globals.get("debug_mode"):
+		print(self, " died.")
 	var de = death_effect.instance()
 	de.set_pos(get_pos())
 #	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())

@@ -61,7 +61,8 @@ func spawn_actor(actor_type):
 	p += Vector2(0, rand_range(-200, 200))
 
 	if actor:
-		print("Spawning actor: ", actor_type)
+		if Globals.get("debug_mode"):
+			print("Spawning actor: ", actor_type)
 		actor.set_pos(p)
 		get_node("Actors").add_child(actor)
 	else:

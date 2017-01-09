@@ -7,7 +7,7 @@
 
 script/script = ExtResource( 1 )
 flytime = 0.5
-y_offset = Vector2( 0, 0 )
+y_offset = Vector2( 0, 20 )
 
 [node name="Sprite" type="Sprite" parent="."]
 

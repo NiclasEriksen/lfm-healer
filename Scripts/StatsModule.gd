@@ -112,7 +112,8 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 		immobile = true
 	elif get(effectmodule.effect_stat) or get(effectmodule.effect_stat) == 0:
 		# print(effectmodule.effect_stat, effectmodule.amount)
-		set(effectmodule.effect_stat, get(effectmodule.effect_stat) + effectmodule.amount)
+		var amount = effectmodule.amount * rand_range(0.9, 1.1)
+		set(effectmodule.effect_stat, get(effectmodule.effect_stat) + amount)
 	else:
 		print("StatsModule does not recognize that attribute: ", effectmodule.effect_stat)
 
