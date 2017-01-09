@@ -26,8 +26,8 @@ projectile = null
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-max_hp = 28
-base_movement_speed = 60
+max_hp = 30
+base_movement_speed = 65
 base_attack_speed = 0.8
 base_attack_range = 40
 

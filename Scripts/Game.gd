@@ -14,12 +14,40 @@ func _ready():
 	# Initialization here
 	set_process(true)
 	set_process_input(true)
+	newgame()
+
+func newgame():
+	cleanup()
+	spawn_actor("enemy")
+	spawn_actor("enemy")
 	spawn_actor("enemy")
 	spawn_actor("tank")
+	spawn_actor("tank")
+	spawn_actor("tank")
 	spawn_actor("archer")
+	spawn_actor("archer")
+
+func cleanup():
+	dragged_ability = null
+	if Globals.get("debug_mode"):
+		print("Freeing ", get_node("Objects").get_child_count())
+	for o in get_node("Objects").get_children():
+		o.free()
+	if Globals.get("debug_mode"):
+		print("Freeing ", get_node("Actors").get_child_count())
+	for a in get_node("Actors").get_children():
+		a.free()
+	if Globals.get("debug_mode"):
+		print("Freeing ", get_node("Effects").get_child_count())
+	for e in get_node("Effects").get_children():
+		e.free()
 
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
+	if not friendlies.size():
+		print("ALL DED")
+		newgame()
+
 	for f in friendlies:
 		f.get_node("ActorBase").get_node("Selected").set_enabled(false)
 
@@ -69,12 +97,12 @@ func spawn_actor(actor_type):
 		print("No actor by that identifier found: ", actor_type)
 
 func _on_Timer_timeout():
-	rand_seed(randi())
-	if randf() > 0.5:
-		if randf() > 0.8:
-			spawn_actor("archer")
-		else:
-			spawn_actor("tank")
+#	rand_seed(randi())
+#	if randf() > 0.5:
+#		if randf() > 0.8:
+#			spawn_actor("archer")
+#		else:
+#			spawn_actor("tank")
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
 	spawn_actor("enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
