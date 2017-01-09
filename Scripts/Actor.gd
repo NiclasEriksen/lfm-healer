@@ -97,7 +97,6 @@ func _process(dt):
 			emit_signal("attack", target_enemy)
 	else:
 		attack_cd -= dt
-	update()
 
 func _fixed_process(dt):
 	if not attacking:
@@ -118,7 +117,7 @@ func _fixed_process(dt):
 			on_walk()
 		else:
 			on_idle()
-
+	update()
 
 func check_los():
 	if not get_tree().is_editor_hint():
@@ -154,13 +153,16 @@ func check_target():
 		if not root.get_node("Actors").has_node(target_enemy_path):
 			target_enemy = null
 	if target_enemy:
-		if parent.get_pos().distance_to(target_enemy.get_pos()) < ar:
+		var dist = parent.get_pos().distance_to(target_enemy.get_pos())
+		if dist < ar:
 			clear_path()
 			on_attack()
 			# on_idle()
-		elif parent.get_pos().distance_to(target_enemy.get_pos()) < 400:
+		elif dist < 400:
 			attacking = false
 			clear_path()
+		else:
+			attacking = false
 	else:
 		attacking = false
 		check_in_range()
