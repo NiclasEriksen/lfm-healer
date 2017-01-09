@@ -9,6 +9,7 @@ onready var parent = get_parent()
 signal attack
 var target_enemy = null
 var target_enemy_path = null
+var healthy = true
 var direction = Vector2(0, 0)
 var attack_cd = 0.0
 var flip_cd = 0.0
@@ -55,6 +56,7 @@ func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
 	if stats:
 		check_death()
+		check_healthy()
 	check_target()
 	if path.size():
 #		stats.get("movement_speed")
@@ -166,6 +168,12 @@ func check_target():
 func check_death():
 	if stats.get("hp") <= 0:
 		on_death()
+
+func check_healthy():
+	if stats.get("hp") < stats.get("max_hp"):
+		healthy = false
+	else:
+		healthy = true
 
 func get_pos():
 	if parent:

@@ -31,10 +31,11 @@ func get_chain(start_target):
 		var candidate = null
 		for friend in friendlies:
 			if not friend in chain_targets:
-				var dist = abs(friend.get_pos().distance_to(last_target.get_pos()))
-				if dist <= max_jump_range and dist < closest:
-					closest = dist
-					candidate = friend
+				if not friend.get_node("ActorBase").healthy:
+					var dist = abs(friend.get_pos().distance_to(last_target.get_pos()))
+					if dist <= max_jump_range and dist < closest:
+						closest = dist
+						candidate = friend
 		if candidate:
 			last_target = candidate
 			chain_targets.append(candidate)
