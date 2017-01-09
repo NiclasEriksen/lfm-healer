@@ -3,6 +3,8 @@ extends KinematicBody2D
 var alliances = ["friendly", "enemy"]
 export(String, "friendly", "enemy") var alliance = "friendly" setget change_allegiance, get_allegiance
 export(String, FILE, "*.tscn") var projectile = null setget set_projectile, get_projectile
+export(String, FILE, "*.tscn") var hit_effect = null setget set_hit_effect, get_hit_effect
+var hit_effect_scene = null
 var projectile_scene = null
 
 func change_allegiance(a):
@@ -17,6 +19,15 @@ func change_allegiance(a):
 
 func get_allegiance():
 	return alliance
+
+func set_hit_effect(e):
+	if e:
+		hit_effect_scene = load(e)
+	else:
+		hit_effect_scene = load("res://Scenes/Effects/HitSplat.tscn")
+
+func get_hit_effect(e):
+	return hit_effect
 
 func set_projectile(p):
 	projectile = p
@@ -34,6 +45,11 @@ func _on_ActorBase_attack(target):
 			print(self, " attacking ", target)
 		target.get_node("StatsModule").apply_effect(get_node("Attack"), null)
 
+func _on_ActorBase_attack_effect(target):
+	var he = hit_effect_scene.instance()
+	he.set_pos(target.get_pos())
+	get_tree().get_root().get_node("Game/Effects").add_child(he)
+
 func fire_projectile(target):
 	if projectile and has_node("Attack") and target.has_node("StatsModule"):
 		var a = projectile_scene.instance()
@@ -50,3 +66,4 @@ func _ready():
 	# Connect signals
 	if has_node("ActorBase"):
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack")
+		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack_effect")

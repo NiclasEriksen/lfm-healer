@@ -7,6 +7,7 @@ var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var parent = get_parent()
 signal attack
+signal death(pos)
 var target_enemy = null
 var target_enemy_path = null
 var healthy = true
@@ -170,6 +171,7 @@ func check_target():
 func check_death():
 	if stats.get("hp") <= 0:
 		on_death()
+		emit_signal("death", parent.get_pos())
 
 func check_healthy():
 	if stats.get("hp") < stats.get("max_hp"):

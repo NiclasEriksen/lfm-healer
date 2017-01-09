@@ -7,6 +7,7 @@ var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
 var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
+var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 onready var cam = get_node("Camera2D")
 
 func _ready():
@@ -92,9 +93,17 @@ func spawn_actor(actor_type):
 		if Globals.get("debug_mode"):
 			print("Spawning actor: ", actor_type)
 		actor.set_pos(p)
+		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
 		get_node("Actors").add_child(actor)
 	else:
 		print("No actor by that identifier found: ", actor_type)
+
+func on_actor_death(p):
+	print("DIED?!")
+	var ds = death_splat.instance()
+	ds.set_pos(p)
+	get_node("Objects").add_child(ds)
+	
 
 func _on_Timer_timeout():
 #	rand_seed(randi())

@@ -22,6 +22,7 @@ collision/margin = 0.08
 script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = null
+hit_effect = null
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
