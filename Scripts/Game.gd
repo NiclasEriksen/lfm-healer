@@ -73,6 +73,10 @@ func _input(event):
 			if not dragged_ability.active:
 				dragged_ability.set_active(true)
 			dragged_ability.set_pos(event.pos)
+	elif event.type == InputEvent.KEY:
+		if event.pressed and event.scancode == KEY_F12:
+			Globals.set("debug_mode", not Globals.get("debug_mode"))
+
 
 func spawn_actor(actor_type):
 	var actor = null
@@ -113,6 +117,8 @@ func _on_Timer_timeout():
 #		else:
 #			spawn_actor("tank")
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
+	spawn_actor("enemy")
+	spawn_actor("enemy")
 	spawn_actor("enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
 #	for f in friendlies:

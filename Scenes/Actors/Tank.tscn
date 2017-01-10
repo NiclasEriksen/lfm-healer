@@ -9,10 +9,11 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 16.0
+radius = 12.0
 
 [node name="Tank" type="KinematicBody2D"]
 
+transform/pos = Vector2( 0, 1 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 19 )
@@ -27,13 +28,13 @@ hit_effect = null
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-max_hp = 28
+max_hp = 299
 base_movement_speed = 45
-base_attack_range = 40
+base_attack_range = 60
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
-transform/pos = Vector2( 0, -1 )
+transform/pos = Vector2( 0, -6.5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

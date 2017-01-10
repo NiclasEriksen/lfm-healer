@@ -25,9 +25,8 @@ func _ready():
 		set_process(true)
 		set_fixed_process(true)
 		parent = get_parent()
-		get_node("RayCast2D").add_exception(parent)
-		get_node("RayCast2D").set_pos(parent.get_node("CollisionShape2D").get_pos())
-		get_node("RayCast2D").add_exception(get_node("AttackRange/CollisionShape2D"))
+		setup_raycast()
+		check_los()
 		if get_parent().get_node("StatsModule"):
 			if Globals.get("debug_mode"):
 				print("Statsmodule found.")
@@ -44,7 +43,8 @@ func _ready():
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		draw_line(Vector2(0, 0), direction * 30, Color(0.8, 0.4, 0.1), 3.0)
-		draw_line(get_node("RayCast2D").get_pos(), get_node("RayCast2D").get_cast_to(), Color(1, 0.7, 0.7))
+		for rc in ["RayCast2DLeft", "RayCast2DCenter", "RayCast2DRight"]:
+			draw_line(get_node(rc).get_pos(), get_node(rc).get_cast_to(), Color(1, 0.7, 0.7))
 		if target_enemy:
 			if root.get_node("Actors").has_node(target_enemy_path):
 				var te_pos = target_enemy.get_pos() - parent.get_pos()
@@ -71,7 +71,7 @@ func _process(dt):
 
 	if idle:
 		idle_time += dt
-		# check_los()
+		#check_los()
 		if idle_time > 2.0:
 			idle_time = 0
 			check_in_range()
@@ -112,7 +112,6 @@ func _fixed_process(dt):
 #			on_idle()
 #		if parent.test_move(parent.get_transform(), movement):
 #			movement = movement.slide(parent.get_collision_normal())
-#			print(parent.get_collision_normal())
 		var moved = parent.move_and_slide(movement)
 		if moved.length() > movement.length() / 5:
 			on_walk()
@@ -120,19 +119,55 @@ func _fixed_process(dt):
 			on_idle()
 	update()
 
+func setup_raycast():
+	for rc in ["RayCast2DLeft", "RayCast2DCenter", "RayCast2DRight"]:
+		get_node(rc).add_exception(parent)
+		get_node(rc).set_pos(parent.get_node("CollisionShape2D").get_pos())
+		get_node(rc).add_exception(get_node("AttackRange/CollisionShape2D"))
+
+
 func check_los():
 	if not get_tree().is_editor_hint():
-		var rc = get_node("RayCast2D")
-		rc.set_enabled(true)
+		var rcc = get_node("RayCast2DCenter")
+		var rcl = get_node("RayCast2DLeft")
+		var rcr = get_node("RayCast2DRight")
+		var r = parent.get_node("CollisionShape2D").get_shape().get_radius()
+		for rc in [rcc, rcl, rcr]:
+			rc.set_enabled(true)
 		for i in range(4):
-			var angle = 45 * (i)
-			if test_angle(rc, angle):
-				set_direction(direction.rotated(deg2rad(angle)).normalized())
-				break
-			if test_angle(rc, angle * -1):
-				set_direction(direction.rotated(deg2rad(angle * -1)).normalized())
-				break
-		rc.set_enabled(false)
+			var angle = direction.angle() * 2 + PI / 8 * i
+			var success = true
+			rcl.set_pos((rcc.get_pos() - Vector2(r, 0).rotated(angle)))
+			rcr.set_pos((rcc.get_pos() + Vector2(r, 0).rotated(angle)))
+			rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(angle)))
+			rcl.set_cast_to((rcl.get_pos() + Vector2(0, 2*r).rotated(angle)))
+			rcr.set_cast_to((rcr.get_pos() + Vector2(0, 2*r).rotated(angle)))
+			for rc in [rcl, rcc, rcr]:
+				rc.force_raycast_update()
+				if rc.is_colliding():
+					success = false
+					break
+			if success:
+				print("yay")
+				set_direction(Vector2(cos(angle), sin(angle)))
+
+			success = true
+			var opp_angle = -angle
+			rcl.set_pos((rcc.get_pos() - Vector2(r, 0).rotated(opp_angle)))
+			rcr.set_pos((rcc.get_pos() + Vector2(r, 0).rotated(opp_angle)))
+			rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
+			rcl.set_cast_to((rcl.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
+			rcr.set_cast_to((rcr.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
+			for rc in [rcl, rcc, rcr]:
+				rc.force_raycast_update()
+				if rc.is_colliding():
+					success = false
+					break
+			if success:
+				set_direction(Vector2(cos(angle), sin(angle)))
+		rcc.set_enabled(false)
+		rcl.set_enabled(false)
+		rcr.set_enabled(false)
 
 func test_angle(rc, a):
 	var dir = direction.rotated(deg2rad(a)) * 50

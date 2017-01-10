@@ -30,9 +30,11 @@ hit_effect = null
 primary_stat = "agi"
 base_movement_speed = 55
 base_attack_speed = 2.5
-base_attack_range = 400
+base_attack_range = 600
 
 [node name="HPBarPos" type="Position2D" parent="."]
+
+transform/pos = Vector2( 0, -2.66667 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

@@ -175,7 +175,23 @@ shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="RayCast2DLeft" type="RayCast2D" parent="."]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+layer_mask = 1
+type_mask = 15
+
+[node name="RayCast2DCenter" type="RayCast2D" parent="."]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+layer_mask = 1
+type_mask = 15
+
+[node name="RayCast2DRight" type="RayCast2D" parent="."]
 
 enabled = false
 exclude_parent = true
