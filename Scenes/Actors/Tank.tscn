@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/Actors/Tank.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Actors/bedugga_stock.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Actors/tank.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -45,6 +45,7 @@ _update_shape_index = 0
 
 [node name="ActorBase" parent="." instance=ExtResource( 3 )]
 
+transform/pos = Vector2( 0, 1 )
 spritesheet = ExtResource( 4 )
 
 [node name="Attack" parent="." instance=ExtResource( 5 )]
