@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Themes/main_theme.tres" type="Theme" id=1]
-[ext_resource path="res://Scripts/AbilityBar.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Objects/pot_hp_large.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Objects/area_heal.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/UI/AbilityBar.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/AbilityBar.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Objects/pot_hp_large.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Objects/area_heal.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=6]
 
 [node name="AbilityBar" type="Panel"]
 
@@ -17,6 +18,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 316.0
 margin/bottom = 80.0
+script/script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 
@@ -30,7 +32,7 @@ margin/top = 4.0
 margin/right = 308.0
 margin/bottom = 76.0
 alignment = 0
-script/script = ExtResource( 2 )
+script/script = ExtResource( 3 )
 
 [node name="Ability1" type="Button" parent="HBoxContainer"]
 
@@ -52,7 +54,7 @@ flat = false
 [node name="Sprite" type="Sprite" parent="HBoxContainer/Ability1"]
 
 transform/pos = Vector2( 36, 36 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="Ability2" type="Button" parent="HBoxContainer"]
 
@@ -75,7 +77,7 @@ flat = false
 
 transform/pos = Vector2( 36, 36 )
 transform/scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="Ability3" type="Button" parent="HBoxContainer"]
 
@@ -97,7 +99,7 @@ flat = false
 [node name="Sprite3" type="Sprite" parent="HBoxContainer/Ability3"]
 
 transform/pos = Vector2( 36, 36 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 
 [node name="Ability4" type="Button" parent="HBoxContainer"]
 
@@ -116,10 +118,18 @@ enabled_focus_mode = 2
 shortcut = null
 flat = false
 
+[connection signal="button_down" from="HBoxContainer/Ability1" to="." method="_on_Ability1_button_down"]
+
 [connection signal="button_down" from="HBoxContainer/Ability1" to="HBoxContainer" method="_on_Ability1_button_down"]
+
+[connection signal="button_down" from="HBoxContainer/Ability2" to="." method="_on_Ability2_button_down"]
 
 [connection signal="button_down" from="HBoxContainer/Ability2" to="HBoxContainer" method="_on_Ability2_button_down"]
 
+[connection signal="button_down" from="HBoxContainer/Ability3" to="." method="_on_Ability3_button_down"]
+
 [connection signal="button_down" from="HBoxContainer/Ability3" to="HBoxContainer" method="_on_Ability3_button_down"]
+
+[connection signal="button_down" from="HBoxContainer/Ability4" to="." method="_on_Ability4_button_down"]
 
 

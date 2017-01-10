@@ -1,9 +1,12 @@
 extends Node2D
 
 var dragged_ability = false
-var targeted_heal = load("res://Scenes/Abilities/TargetedHeal.tscn")
-var area_heal = load("res://Scenes/Abilities/AreaHeal.tscn")
-var chain_heal = load("res://Scenes/Abilities/ChainHeal.tscn")
+var spells = [
+	load("res://Scenes/Abilities/TargetedHeal.tscn"),
+	load("res://Scenes/Abilities/AreaHeal.tscn"),
+	load("res://Scenes/Abilities/ChainHeal.tscn"),
+	null
+]
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
 var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
@@ -19,14 +22,18 @@ func _ready():
 
 func newgame():
 	cleanup()
-	spawn_actor("enemy")
-	spawn_actor("enemy")
-	spawn_actor("enemy")
-	spawn_actor("tank")
-	spawn_actor("tank")
-	spawn_actor("tank")
-	spawn_actor("archer")
-	spawn_actor("archer")
+	spawn_actor("enemy", "enemy")
+	spawn_actor("enemy", "enemy")
+	spawn_actor("enemy", "enemy")
+	spawn_actor("enemy", "enemy")
+	spawn_actor("archer", "enemy")
+	spawn_actor("archer", "enemy")
+	spawn_actor("tank", "friendly")
+	spawn_actor("tank", "friendly")
+	spawn_actor("tank", "friendly")
+	spawn_actor("tank", "friendly")
+	spawn_actor("archer", "friendly")
+	spawn_actor("archer", "friendly")
 
 func cleanup():
 	dragged_ability = null
@@ -46,12 +53,11 @@ func cleanup():
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	if not friendlies.size():
-		print("ALL DED")
+		print("All friendly players dead, restarting.")
 		newgame()
 
 	for f in friendlies:
 		f.get_node("ActorBase").get_node("Selected").set_enabled(false)
-
 
 func _input(event):
 	#event = make_input_local(event)
@@ -78,24 +84,26 @@ func _input(event):
 			Globals.set("debug_mode", not Globals.get("debug_mode"))
 
 
-func spawn_actor(actor_type):
+func spawn_actor(actor_type, alliance):
 	var actor = null
 	var p = Vector2(0, 0)
 	if actor_type == "tank":
-		p = get_node("Map/FriendlySpawn").get_pos()
 		actor = tank_actor.instance()
 	elif actor_type == "enemy":
-		p = get_node("Map/EnemySpawn").get_pos()
 		actor = enemy_actor.instance()
 	elif actor_type == "archer":
-		p = get_node("Map/FriendlySpawn").get_pos()
 		actor = archer_actor.instance()
 
+	if alliance == "friendly":
+		p = get_node("Map/FriendlySpawn").get_pos()
+	elif alliance == "enemy":
+		p = get_node("Map/EnemySpawn").get_pos()
 	p += Vector2(0, rand_range(-200, 200))
 
 	if actor:
 		if Globals.get("debug_mode"):
 			print("Spawning actor: ", actor_type)
+		actor.change_allegiance(alliance)
 		actor.set_pos(p)
 		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
 		get_node("Actors").add_child(actor)
@@ -103,7 +111,6 @@ func spawn_actor(actor_type):
 		print("No actor by that identifier found: ", actor_type)
 
 func on_actor_death(p):
-	print("DIED?!")
 	var ds = death_splat.instance()
 	ds.set_pos(p)
 	get_node("Objects").add_child(ds)
@@ -117,14 +124,20 @@ func _on_Timer_timeout():
 #		else:
 #			spawn_actor("tank")
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
-	spawn_actor("enemy")
-	spawn_actor("enemy")
-	spawn_actor("enemy")
+	spawn_actor("enemy", "enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
 #	for f in friendlies:
-#		if f.get_node("StatsModule"):
-#			f.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)
-#	var enemies = get_tree().get_nodes_in_group("enemy")
-#	for e in enemies:
-#		if e.get_node("StatsModule"):
-#			e.get_node("StatsModule").apply_effect(get_node("EffectModule"), null)
+	# t.set_wait_time(1.0)
+
+
+func _on_AbilityBar_ability_tapped(slot):
+	var pos = get_global_mouse_pos()
+	var spell = self.spells[slot - 1]
+	spawn_ability(spell, pos)
+
+
+func spawn_ability(ability, pos):
+	self.dragged_ability = ability.instance()
+	self.dragged_ability.set_pos(pos)
+	self.dragged_ability.set_active(false)
+	self.get_node("Effects").add_child(self.dragged_ability)

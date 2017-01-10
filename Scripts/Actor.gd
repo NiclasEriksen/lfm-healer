@@ -15,7 +15,7 @@ func change_allegiance(a):
 	for a in alliances:
 		if not a == alliance:
 			if is_in_group(a):
-				remove_from_group(a, true)
+				remove_from_group(a)
 
 func get_allegiance():
 	return alliance

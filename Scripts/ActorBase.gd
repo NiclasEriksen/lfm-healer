@@ -71,7 +71,6 @@ func _process(dt):
 
 	if idle:
 		idle_time += dt
-		#check_los()
 		if idle_time > 2.0:
 			idle_time = 0
 			check_in_range()
@@ -112,10 +111,14 @@ func _fixed_process(dt):
 #			on_idle()
 #		if parent.test_move(parent.get_transform(), movement):
 #			movement = movement.slide(parent.get_collision_normal())
+#		if idle:
+#			check_los()
 		var moved = parent.move_and_slide(movement)
 		if moved.length() > movement.length() / 5:
 			on_walk()
 		else:
+			# check_los()
+			parent.move_and_slide(direction * moved.length())
 			on_idle()
 	update()
 
@@ -148,23 +151,22 @@ func check_los():
 					success = false
 					break
 			if success:
-				print("yay")
 				set_direction(Vector2(cos(angle), sin(angle)))
-
-			success = true
-			var opp_angle = -angle
-			rcl.set_pos((rcc.get_pos() - Vector2(r, 0).rotated(opp_angle)))
-			rcr.set_pos((rcc.get_pos() + Vector2(r, 0).rotated(opp_angle)))
-			rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
-			rcl.set_cast_to((rcl.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
-			rcr.set_cast_to((rcr.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
-			for rc in [rcl, rcc, rcr]:
-				rc.force_raycast_update()
-				if rc.is_colliding():
-					success = false
-					break
-			if success:
-				set_direction(Vector2(cos(angle), sin(angle)))
+			else:
+				success = true
+				var opp_angle = -angle
+				rcl.set_pos((rcc.get_pos() - Vector2(r, 0).rotated(opp_angle)))
+				rcr.set_pos((rcc.get_pos() + Vector2(r, 0).rotated(opp_angle)))
+				rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
+				rcl.set_cast_to((rcl.get_pos() + Vector2(0, 3*r).rotated(opp_angle)))
+				rcr.set_cast_to((rcr.get_pos() + Vector2(0, 3*r).rotated(opp_angle)))
+				for rc in [rcl, rcc, rcr]:
+					rc.force_raycast_update()
+					if rc.is_colliding():
+						success = false
+						break
+				if success:
+					set_direction(Vector2(cos(angle), sin(angle)))
 		rcc.set_enabled(false)
 		rcl.set_enabled(false)
 		rcr.set_enabled(false)
