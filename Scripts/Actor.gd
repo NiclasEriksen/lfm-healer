@@ -43,12 +43,13 @@ func _on_ActorBase_attack(target):
 	if target.has_node("StatsModule") and has_node("Attack"):
 		if Globals.get("debug_mode"):
 			print(self, " attacking ", target)
-		target.get_node("StatsModule").apply_effect(get_node("Attack"), null)
+		var sm = null
+		if has_node("StatsModule"):
+			sm = get_node("StatsModule")
+		target.get_node("StatsModule").apply_effect(get_node("Attack"), sm)
 
 func _on_ActorBase_attack_effect(target):
-	var he = hit_effect_scene.instance()
-	he.set_pos(target.get_pos())
-	get_tree().get_root().get_node("Game/Effects").add_child(he)
+	pass
 
 func fire_projectile(target):
 	if projectile and has_node("Attack") and target.has_node("StatsModule"):

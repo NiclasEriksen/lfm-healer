@@ -97,7 +97,6 @@ func _process(delta):
 			print("Applying tick.")
 			var e = effect_module.new()
 			e.amount = wr.amount * (wr.tick_interval / wr.time)
-			print(e.amount)
 			e.effect_stat = wr.effect_stat
 			e.effect_type = wr.effect_type
 			apply_effect(e, null)
@@ -127,8 +126,14 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 	elif get(effectmodule.effect_stat) or get(effectmodule.effect_stat) == 0:
 		# print(effectmodule.effect_stat, effectmodule.amount)
 		var amount = effectmodule.amount * rand_range(0.9, 1.1)
-		if amount > 0 and effectmodule.effect_stat == "hp" and get_parent().has_node("ActorBase"):
-			get_parent().get_node("ActorBase").on_heal()
+		if get_parent().has_node("ActorBase"):
+			if amount > 0 and effectmodule.effect_stat == "hp":
+				get_parent().get_node("ActorBase").on_heal()
+			elif amount < 0 and effectmodule.effect_stat == "hp":
+				var tar = null
+				if originmodule:
+					tar = originmodule.get_parent()
+				get_parent().get_node("ActorBase").on_hit(tar)
 		set(effectmodule.effect_stat, get(effectmodule.effect_stat) + amount)
 	else:
 		print("StatsModule does not recognize that attribute: ", effectmodule.effect_stat)

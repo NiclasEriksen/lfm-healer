@@ -342,3 +342,19 @@ func _on_AttackRange_body_enter( body ):
 func _on_ActorBase_attack(tar):
 	get_node("EffectPlayer").play("attack")
 
+func on_hit(tar):
+	var he = null
+	if parent.hit_effect_scene:
+		he = parent.hit_effect_scene.instance()
+	if he:
+		he.set_z(parent.get_z())
+		he.set_pos(self.get_pos())
+		get_tree().get_root().get_node("Game/Effects").add_child(he)
+
+		if he.has_node("Particles2D") and tar:
+#			he.set_rot(tar.get_pos().angle_to(get_pos()))
+			he.get_node("Particles2D").set_param(
+				he.get_node("Particles2D").PARAM_DIRECTION,
+				get_pos().angle_to(tar.get_pos()) - PI / 2
+			)
+#			he.set_rot(tar.get_pos().angle_to(get_pos()))
