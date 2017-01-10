@@ -89,12 +89,12 @@ func _process(delta):
 		var buff_result = [false, false]
 		buff_result = wr.buff_update(delta)
 		if not buff_result[0]:
-			print("Removing buff.")
+#			print("Removing buff.")
 			if wr.effect_type == "stun":
 				immobile = false
 			wr.queue_free()
 		elif buff_result[1]:
-			print("Applying tick.")
+#			print("Applying tick.")
 			var e = effect_module.new()
 			e.amount = wr.amount * (wr.tick_interval / wr.time)
 			e.effect_stat = wr.effect_stat
@@ -118,7 +118,7 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 		buff.tick_interval = effectmodule.get("tick_interval")
 		buff.time = effectmodule.get("time")
 		add_child(buff)
-		print("Added buff.")
+#		print("Added buff.")
 		return
 		
 	if effectmodule.effect_type == "stun":
