@@ -7,8 +7,6 @@ func _ready():
 	
 func _process(dt):
 	if game.dragged_ability:
-		get_node("Sprite").set_rot(
-			get_pos().angle_to_point(game.dragged_ability.get_pos()) + PI
-		)
+		get_node("Sprite").set_rot(get_pos().angle_to_point(game.dragged_ability.get_pos()) + PI)
 	else:
 		get_node("Sprite").set_rot(PI / 2)
