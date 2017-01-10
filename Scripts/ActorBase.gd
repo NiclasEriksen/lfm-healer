@@ -95,6 +95,7 @@ func _process(dt):
 			if parent.has_node("StatsModule"):
 				attack_cd = parent.get_node("StatsModule").get("base_attack_speed")
 			emit_signal("attack", target_enemy)
+			
 	else:
 		attack_cd -= dt
 
@@ -270,8 +271,8 @@ func on_heal():
 func on_attack():
 	attacking = true
 	idle = false
-	if not get_node("AnimationPlayer").get_current_animation() == "idle":
-		get_node("AnimationPlayer").play("idle")
+	get_node("AnimationPlayer").play("idle")
+
 
 func on_death():
 	if Globals.get("debug_mode"):
@@ -285,16 +286,18 @@ func on_death():
 func on_idle():
 	idle = true
 	if state_change_cd <= 0:
-		if not get_node("AnimationPlayer").get_current_animation() == "idle":
+		if not get_node("AnimationPlayer").get_current_animation() == "idle" or not get_node("AnimationPlayer").get_current_animation() == "attack":
+			get_node("Sprite").set_rot(0)
 			get_node("AnimationPlayer").play("idle")
-		state_change_cd = 0.3
+			state_change_cd = 0.3
 
 func on_walk():
 	idle = false
 	if state_change_cd <= 0:
-		if not get_node("AnimationPlayer").get_current_animation() == "walk":
+		if not get_node("AnimationPlayer").get_current_animation() == "walk" or not get_node("AnimationPlayer").get_current_animation() == "attack":
+			get_node("Sprite").set_rot(0)
 			get_node("AnimationPlayer").play("walk")
-		state_change_cd = 0.3
+			state_change_cd = 0.3
 
 
 func update_state():
@@ -302,14 +305,18 @@ func update_state():
 		flip_cd = 0.3
 		if target_enemy:
 			if target_enemy.get_pos().x > get_pos().x:
-				get_node("Sprite").set_flip_h(false)
+				set_scale(Vector2(1, 1))
+#				get_node("Sprite").set_flip_h(false)
 			else:
-				get_node("Sprite").set_flip_h(true)
+				set_scale(Vector2(-1, 1))
+#				get_node("Sprite").set_flip_h(true)
 		else:
 			if direction.x > 0:
-				get_node("Sprite").set_flip_h(false)
+				set_scale(Vector2(-1, 1))
+#				get_node("Sprite").set_flip_h(false)
 			elif direction.x < 0:
-				get_node("Sprite").set_flip_h(true)
+				set_scale(Vector2(1, 1))
+#				get_node("Sprite").set_flip_h(true)
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)
 		if attacking:
@@ -332,3 +339,7 @@ func _on_AttackRange_body_enter( body ):
 		clear_path()
 		target_enemy = body
 		target_enemy_path = body.get_path()
+
+func _on_ActorBase_attack(tar):
+	get_node("EffectPlayer").play("attack")
+

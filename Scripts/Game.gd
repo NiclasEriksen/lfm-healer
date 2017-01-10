@@ -137,7 +137,8 @@ func _on_AbilityBar_ability_tapped(slot):
 
 
 func spawn_ability(ability, pos):
-	self.dragged_ability = ability.instance()
-	self.dragged_ability.set_pos(pos)
-	self.dragged_ability.set_active(false)
-	self.get_node("Effects").add_child(self.dragged_ability)
+	if ability:
+		self.dragged_ability = ability.instance()
+		self.dragged_ability.set_pos(pos)
+		self.dragged_ability.set_active(false)
+		self.get_node("Effects").add_child(self.dragged_ability)

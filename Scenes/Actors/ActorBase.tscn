@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Scripts/ActorBase.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Animations/attack.tres" type="Animation" id=4]
 
 [sub_resource type="ColorRamp" id=1]
 
@@ -140,6 +141,7 @@ color/color_ramp = SubResource( 1 )
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
+anims/attack = ExtResource( 4 )
 anims/idle = SubResource( 2 )
 anims/walk = SubResource( 3 )
 playback/active = true
@@ -153,6 +155,7 @@ playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/Heal = SubResource( 4 )
+anims/attack = ExtResource( 4 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -198,6 +201,8 @@ exclude_parent = true
 cast_to = Vector2( 0, 50 )
 layer_mask = 1
 type_mask = 15
+
+[connection signal="attack" from="." to="." method="_on_ActorBase_attack"]
 
 [connection signal="body_enter" from="AttackRange" to="." method="_on_AttackRange_body_enter"]
 
