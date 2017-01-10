@@ -3,6 +3,7 @@ extends Node2D
 
 onready var root = get_tree().get_root().get_node("Game")
 export(Texture) var spritesheet = null setget set_sprite_texture
+export(Vector2) var tile_dimensions = Vector2(3, 2) setget set_tile_dimensions
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var parent = get_parent()
@@ -179,8 +180,16 @@ func test_angle(rc, a):
 
 func set_sprite_texture(tex):
 	spritesheet = tex
-	if get_node("Sprite"):
+	if has_node("Sprite"):
 		get_node("Sprite").set_texture(tex)
+		get_node("Sprite").set_hframes(int(tile_dimensions.x))
+		get_node("Sprite").set_vframes(int(tile_dimensions.y))
+
+func set_tile_dimensions(td):
+	tile_dimensions = td
+	if has_node("Sprite"):
+		get_node("Sprite").set_hframes(int(tile_dimensions.x))
+		get_node("Sprite").set_vframes(int(tile_dimensions.y))
 
 func set_direction(dir):
 	direction = dir
@@ -270,7 +279,8 @@ func on_heal():
 func on_attack():
 	attacking = true
 	idle = false
-	get_node("AnimationPlayer").play("idle")
+	if not get_node("AnimationPlayer").get_current_animation() == "idle":
+		get_node("AnimationPlayer").play("idle")
 
 
 func on_death():
@@ -293,8 +303,9 @@ func on_idle():
 func on_walk():
 	idle = false
 	if state_change_cd <= 0:
-		if not get_node("AnimationPlayer").get_current_animation() == "walk" or not get_node("AnimationPlayer").get_current_animation() == "attack":
+		if not get_node("AnimationPlayer").get_current_animation() == "walk" and not get_node("AnimationPlayer").get_current_animation() == "attack":
 			get_node("Sprite").set_rot(0)
+			print("walk")
 			get_node("AnimationPlayer").play("walk")
 			state_change_cd = 0.3
 
