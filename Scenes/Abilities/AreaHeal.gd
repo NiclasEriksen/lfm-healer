@@ -1,6 +1,7 @@
 extends Node2D
 var targets = []
 var active = false
+var healeffect = load("res://Scenes/Effects/HealEffect1.tscn")
 
 func _ready():
 	set_process(true)
@@ -30,4 +31,13 @@ func trigger():
 				).apply_effect(
 					get_node("BuffModule"), null
 					)
+				target.get_node(
+					"StatsModule"
+				).apply_effect(
+					get_node("EffectModule"), null
+					)
+				var he = healeffect.instance()
+				he.set_pos(target.get_pos())
+				get_tree().get_root().get_node("Game/Effects").add_child(he)
+
 	queue_free()

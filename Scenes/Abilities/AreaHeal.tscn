@@ -33,7 +33,7 @@ _update_shape_index = 0
 
 [node name="EffectModule" parent="." instance=ExtResource( 2 )]
 
-amount = 100.0
+amount = 10.0
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -41,8 +41,8 @@ texture = ExtResource( 3 )
 
 [node name="BuffModule" parent="." instance=ExtResource( 4 )]
 
-amount = 60.0
-time = 10.0
-tick_interval = 0.75
+amount = 35.0
+time = 7.0
+tick_interval = 0.7
 
 

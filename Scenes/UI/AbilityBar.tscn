@@ -120,15 +120,9 @@ flat = false
 
 [connection signal="button_down" from="HBoxContainer/Ability1" to="." method="_on_Ability1_button_down"]
 
-[connection signal="button_down" from="HBoxContainer/Ability1" to="HBoxContainer" method="_on_Ability1_button_down"]
-
 [connection signal="button_down" from="HBoxContainer/Ability2" to="." method="_on_Ability2_button_down"]
 
-[connection signal="button_down" from="HBoxContainer/Ability2" to="HBoxContainer" method="_on_Ability2_button_down"]
-
 [connection signal="button_down" from="HBoxContainer/Ability3" to="." method="_on_Ability3_button_down"]
-
-[connection signal="button_down" from="HBoxContainer/Ability3" to="HBoxContainer" method="_on_Ability3_button_down"]
 
 [connection signal="button_down" from="HBoxContainer/Ability4" to="." method="_on_Ability4_button_down"]
 
