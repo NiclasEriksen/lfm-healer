@@ -32,7 +32,7 @@ func _process(delta):
 		elif "friendly" in o.get_groups():
 			set_scale(friendly_scale)
 		var pos = o.get_pos()
-		var val = (o.get_node("StatsModule").get("hp") / o.get_node("StatsModule").get("max_hp")) * 100.0
+		var val = (o.get_node("StatsModule").get("hp") / o.get_node("StatsModule").get_actual("max_hp")) * 100.0
 		if o.get_node("HPBarPos"):
 			pos = cam.get_viewport().get_canvas_transform().xform(pos + o.get_node("HPBarPos").get_pos())
 			set_pos(pos + o.get_node("HPBarPos").get_pos())

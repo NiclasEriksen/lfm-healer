@@ -32,7 +32,7 @@ func _ready():
 				print("Statsmodule found.")
 			stats = get_parent().get_node("StatsModule")
 			var shape = CircleShape2D.new()
-			shape.set_radius(stats.get("base_attack_range"))
+			shape.set_radius(stats.get_actual("attack_range"))
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
 			root.get_node("HUD").add_hpbar(get_parent())
 		if get_node("Selected") and get_parent().get_node("CollisionShape2D"):
@@ -89,21 +89,20 @@ func _process(dt):
 	if not get_tree().is_editor_hint():
 		if parent:
 			parent.set_z(get_pos().y)
-	if attack_cd <= 0:
-		if attacking and target_enemy:
-			attack_cd = 0.5
-			if parent.has_node("StatsModule"):
-				attack_cd = parent.get_node("StatsModule").get("base_attack_speed")
-			emit_signal("attack", target_enemy)
-			
+	if self.attack_cd <= 0:
+		if self.attacking and self.target_enemy:
+			self.attack_cd = 0.5
+			if self.stats:
+				self.attack_cd = self.stats.get_actual("attack_speed")
+			emit_signal("attack", self.target_enemy)
 	else:
-		attack_cd -= dt
+		self.attack_cd -= dt
 
 func _fixed_process(dt):
 	if not attacking:
 		var movement = direction
 		if stats:
-			movement *= stats.get("base_movement_speed")
+			movement *= stats.get_actual("movement_speed")
 		else:
 			movement *= 100
 #		if not parent.test_move(parent.get_transform(), movement):

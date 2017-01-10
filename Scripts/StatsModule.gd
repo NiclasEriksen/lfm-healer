@@ -1,4 +1,6 @@
 extends Node
+var buff_module = load("res://Scripts/BuffModule.gd")
+var effect_module = load("res://Scripts/EffectModule.gd")
 
 export(int) var level = 1
 export(String, "str", "int", "agi") var primary_stat = "str"
@@ -38,26 +40,7 @@ var attack_range = base_attack_range
 var immobile = false
 
 
-var final_stats = {
-	hp=max_hp,
-	mp=max_mp,
-	strength=base_strength,
-	agility=base_agility,
-	intelligence=base_intelligence,
-	spirit=base_spirit,
-	stamina=base_stamina,
-	damage=base_damage,
-	spell_power=base_spell_power,
-	phys_crit=base_phys_crit,
-	spell_crit=base_spell_crit,
-	hit_rate=base_hit_rate,
-	armor=base_armor,
-	magic_resist=base_magic_resist,
-	attack_speed=base_attack_speed,
-	attack_range=base_attack_range,
-	movement_speed=base_movement_speed,
-}
-
+var final_stats = {}
 var active_effects = []
 
 #TODO
@@ -69,6 +52,28 @@ var active_effects = []
 
 
 func _ready():
+	self.final_stats = {
+		hp=max_hp,
+		mp=max_mp,
+		max_hp=max_hp,
+		max_mp=max_mp,
+		strength=base_strength,
+		agility=base_agility,
+		intelligence=base_intelligence,
+		spirit=base_spirit,
+		stamina=base_stamina,
+		damage=base_damage,
+		spell_power=base_spell_power,
+		phys_crit=base_phys_crit,
+		spell_crit=base_spell_crit,
+		hit_rate=base_hit_rate,
+		armor=base_armor,
+		magic_resist=base_magic_resist,
+		attack_speed=base_attack_speed,
+		attack_range=base_attack_range,
+		movement_speed=base_movement_speed,
+	}
+
 	self.hp = self.max_hp
 	self.mp = self.max_mp
 	set_process(true)
@@ -80,16 +85,21 @@ func _process(delta):
 	if mp > max_mp:
 		mp = max_mp
 	check_negatives()
-	for e in active_effects:
+	for wr in get_children():
 		var buff_result = [false, false]
-		buff_result = e.buff_update(delta)
+		buff_result = wr.buff_update(delta)
 		if not buff_result[0]:
-			if e.effect_type == "stun":
-				immobile = false
-			active_effects.erase(e)
 			print("Removing buff.")
+			if wr.effect_type == "stun":
+				immobile = false
+			wr.queue_free()
 		elif buff_result[1]:
 			print("Applying tick.")
+			var e = effect_module.new()
+			e.amount = wr.amount * (wr.tick_interval / wr.time)
+			print(e.amount)
+			e.effect_stat = wr.effect_stat
+			e.effect_type = wr.effect_type
 			apply_effect(e, null)
 
 func _fixed_process(delta):
@@ -104,15 +114,21 @@ func check_negatives():
 
 func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and another optional statsmodule for calculating final effects.
 	if effectmodule.is_buff:
-		if not effectmodule in active_effects:
-			active_effects.append(effectmodule)
-			print("Added buff.")
-			return
+		var buff = buff_module.new()
+		buff.amount = effectmodule.get("amount")
+		buff.tick_interval = effectmodule.get("tick_interval")
+		buff.time = effectmodule.get("time")
+		add_child(buff)
+		print("Added buff.")
+		return
+		
 	if effectmodule.effect_type == "stun":
 		immobile = true
 	elif get(effectmodule.effect_stat) or get(effectmodule.effect_stat) == 0:
 		# print(effectmodule.effect_stat, effectmodule.amount)
 		var amount = effectmodule.amount * rand_range(0.9, 1.1)
+		if amount > 0 and effectmodule.effect_stat == "hp" and get_parent().has_node("ActorBase"):
+			get_parent().get_node("ActorBase").on_heal()
 		set(effectmodule.effect_stat, get(effectmodule.effect_stat) + amount)
 	else:
 		print("StatsModule does not recognize that attribute: ", effectmodule.effect_stat)

@@ -53,7 +53,7 @@ func _on_ActorBase_attack_effect(target):
 func fire_projectile(target):
 	if projectile and has_node("Attack") and target.has_node("StatsModule"):
 		var a = projectile_scene.instance()
-		var dist_scale = get_pos().distance_to(target.get_pos()) / get_node("StatsModule").get("base_attack_range")
+		var dist_scale = get_pos().distance_to(target.get_pos()) / get_node("StatsModule").get_actual("attack_range")
 		a.set_pos(get_pos())
 		a.init(target, get_node("Attack"))
 		a.flytime = a.flytime * dist_scale
