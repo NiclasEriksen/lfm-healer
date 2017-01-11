@@ -279,8 +279,9 @@ func on_heal():
 func on_attack():
 	attacking = true
 	idle = false
-	if not get_node("AnimationPlayer").get_current_animation() == "idle":
-		get_node("AnimationPlayer").play("idle")
+	if not get_node("AnimationPlayer").get_current_animation() == "attack" or not get_node("AnimationPlayer").is_playing():
+		if not get_node("AnimationPlayer").get_current_animation() == "idle":
+			get_node("AnimationPlayer").play("idle")
 
 
 func on_death():
@@ -305,7 +306,6 @@ func on_walk():
 	if state_change_cd <= 0:
 		if not get_node("AnimationPlayer").get_current_animation() == "walk" and not get_node("AnimationPlayer").get_current_animation() == "attack":
 			get_node("Sprite").set_rot(0)
-			print("walk")
 			get_node("AnimationPlayer").play("walk")
 			state_change_cd = 0.3
 
@@ -351,7 +351,7 @@ func _on_AttackRange_body_enter( body ):
 		target_enemy_path = body.get_path()
 
 func _on_ActorBase_attack(tar):
-	get_node("EffectPlayer").play("attack")
+	get_node("AnimationPlayer").play("attack")
 
 func on_hit(tar):
 	var he = null
