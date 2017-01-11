@@ -13,11 +13,9 @@ func _ready():
 	set_process(true)
 
 func _process(dt):
-	if target:
-		if target.get_ref():
-			# var target_node = target.get_ref()
-			# target_pos = target_node.get_pos()
-			if flown >= flytime:
+	if flown >= flytime:
+		if target:
+			if target.get_ref():
 				if effect_module and alliance:
 					if effect_module.get_ref():
 							var targets = get_node("Area2D").get_overlapping_bodies()
@@ -31,9 +29,6 @@ func _process(dt):
 										if not target in targets:
 											em.set_amount(em.get_amount() / 2)
 										target.get_node("StatsModule").apply_effect(em, null)
-										
-						# print("And doing dmg!")
-
 	if flown < flytime:
 		var t = flown / flytime
 		var newpos = start_pos + (target_pos - start_pos) * t

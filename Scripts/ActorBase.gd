@@ -32,7 +32,7 @@ func _ready():
 		parent = get_parent()
 		setup_raycast()
 		check_los()
-		if get_parent().get_node("StatsModule"):
+		if get_parent().has_node("StatsModule"):
 			if Globals.get("debug_mode"):
 				print("Statsmodule found.")
 			stats = get_parent().get_node("StatsModule")
@@ -40,7 +40,7 @@ func _ready():
 			shape.set_radius(stats.get_actual("attack_range"))
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
 			root.get_node("HUD").add_hpbar(get_parent())
-		if get_node("Selected") and get_parent().get_node("CollisionShape2D"):
+		if has_node("Selected") and get_parent().has_node("CollisionShape2D"):
 			get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
 #	if spritesheet:
 #		get_node("Sprite").set_texture(spritesheet)
