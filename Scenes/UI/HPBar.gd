@@ -28,7 +28,7 @@ func _process(delta):
 	if owner.get_ref():
 		var o = owner.get_ref()
 		if not o.has_node("StatsModule"):
-			queue_free()
+			remove()
 			return
 		if "enemy" in o.get_groups():
 			set_scale(enemy_scale)
@@ -47,4 +47,8 @@ func _process(delta):
 			get_node("TextureProgress").set_value(val)
 			get_node("AnimationPlayer").play("val_change")
 	else:
-		queue_free()
+		remove()
+
+func remove():
+	if not get_node("AnimationPlayer").get_current_animation() == "remove":
+		get_node("AnimationPlayer").play("remove")

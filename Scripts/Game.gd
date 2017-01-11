@@ -37,6 +37,7 @@ func newgame():
 
 func cleanup():
 	dragged_ability = null
+	get_node("HUD").clear()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Objects").get_child_count())
 	for o in get_node("Objects").get_children():

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scenes/Actors/Archer.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Actors/crossbower.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -57,6 +58,13 @@ texture = ExtResource( 4 )
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 
 amount = -5.0
+
+[node name="DebuffNOTWERKING" parent="." instance=ExtResource( 6 )]
+
+effect_stat = "movement_speed"
+amount = -25.0
+time = 5.0
+tick_interval = 5.0
 
 
 [editable path="ActorBase"]

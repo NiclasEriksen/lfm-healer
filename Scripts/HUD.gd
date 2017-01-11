@@ -5,6 +5,9 @@ var hp_bar_scn = preload("res://Scenes/UI/HPBar.tscn")
 func _ready():
 	pass
 
+func clear():
+	for hpb in get_node("HPBars").get_children():
+		hpb.free()
 
 func draw_lines(p, col):
 	get_node("LineDisplay").points = p

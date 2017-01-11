@@ -2,7 +2,7 @@ extends Node
 
 export(String, "physical", "fire", "water", "life", "earth", "death", "stun") var effect_type = "physical"
 export(String, "hp", "mp", "movement_speed") var effect_stat = "hp"
-export(float) var amount = 0
+export(float) var amount = 0.0
 var is_buff = true
 export(float, 0, 60, 0.1) var time = 1.0
 export(float, 0, 10, 0.05) var tick_interval = 0.3

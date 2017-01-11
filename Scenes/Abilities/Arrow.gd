@@ -21,6 +21,11 @@ func _process(dt):
 				if effect_module:
 					if effect_module.get_ref() and target.get_ref().has_node("StatsModule"):
 						target.get_ref().get_node("StatsModule").apply_effect(effect_module.get_ref(), null)
+				if dot_module:
+					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
+						var dm = dot_module.get_ref().duplicate()
+						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
+
 						# print("And doing dmg!")
 				# print("There!")
 	if flown < flytime:

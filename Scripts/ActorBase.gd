@@ -100,6 +100,9 @@ func _process(dt):
 				self.attack_cd = 0.5
 				if self.stats:
 					self.attack_cd = self.stats.get_actual("attack_speed")
+					# print(self.attack_cd)
+				else:
+					print("No statsmodule?! ", self)
 				emit_signal("attack", self.target_enemy)
 		else:
 			self.attack_cd -= dt

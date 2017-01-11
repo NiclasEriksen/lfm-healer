@@ -129,11 +129,14 @@ func _process(delta):
 			wr.queue_free()
 		elif buff_result[1]:
 #			print("Applying tick.")
-			var e = effect_module.new()
-			e.amount = wr.amount * (wr.tick_interval / wr.time)
-			e.effect_stat = wr.effect_stat
-			e.effect_type = wr.effect_type
-			apply_effect(e, null)
+			if not wr.effect_stat == "movement_speed" and not wr.effect_stat == "attack_speed":
+				var e = effect_module.new()
+				e.amount = wr.amount * (wr.tick_interval / wr.time)
+				e.effect_stat = wr.effect_stat
+				e.effect_type = wr.effect_type
+				apply_effect(e, null)
+			else:
+				print(wr.effect_stat)
 
 func _fixed_process(delta):
 	pass
@@ -148,6 +151,7 @@ func check_negatives():
 func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and another optional statsmodule for calculating final effects.
 	if effectmodule.is_buff:
 		var buff = buff_module.new()
+		buff.effect_stat = effectmodule.get("effect_stat")
 		buff.amount = effectmodule.get("amount")
 		buff.tick_interval = effectmodule.get("tick_interval")
 		buff.time = effectmodule.get("time")
@@ -175,7 +179,16 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 
 func get_actual(stat):
 	if final_stats.has(stat):
+		for effect in get_children():
+			if effect.is_buff and effect.effect_stat == "movement_speed":
+				#print("stat: ", final_stats[stat])
+				#print(final_stats[stat] + effect.amount)
+#				return final_stats[stat] + effect.amount
+				# print(final_stats[stat])
+				return final_stats[stat]
 		return final_stats[stat]
+	else:
+		print("STAT NOT FOUND! ", stat)
 
 func get_base(stat):
 	pass
