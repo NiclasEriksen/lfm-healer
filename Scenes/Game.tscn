@@ -35,7 +35,7 @@ autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-transform/pos = Vector2( 513.488, 302.186 )
+transform/pos = Vector2( 400, 240 )
 anchor_mode = 1
 rotating = false
 current = true

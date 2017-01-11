@@ -21,11 +21,11 @@ enabled = true
 
 [node name="EnemySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 1005, 310.539 )
+transform/pos = Vector2( 780, 240 )
 
 [node name="FriendlySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 100.432, 303.689 )
+transform/pos = Vector2( 100.432, 240 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
