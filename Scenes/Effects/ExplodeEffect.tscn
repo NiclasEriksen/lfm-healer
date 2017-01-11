@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Assets/Effects/smoke_large.png" type="Texture" id=1]
 
@@ -8,13 +8,18 @@ script/source = "extends Node2D\n\n# class member variables go here, for example
 
 [sub_resource type="ColorRamp" id=2]
 
-offsets = FloatArray( 0, 0.508772, 0.988304 )
-colors = ColorArray( 0.984375, 0.138428, 0, 1, 0.933594, 0.571758, 0.0072937, 1, 0.941406, 0.00367737, 0.00367737, 0 )
+offsets = FloatArray( 0, 0.169591, 1 )
+colors = ColorArray( 1, 0.581451, 0.175781, 1, 1, 1, 1, 0.736157, 1, 0.988281, 0.988281, 0 )
 
 [sub_resource type="ColorRamp" id=3]
 
 offsets = FloatArray( 0, 0.467836, 1 )
 colors = ColorArray( 1, 0.857178, 0.296875, 1, 1, 0.304688, 0, 1, 0.257812, 0, 0, 0 )
+
+[sub_resource type="ColorRamp" id=6]
+
+offsets = FloatArray( 0.00584795, 0.233918, 1 )
+colors = ColorArray( 0.257812, 0.00100708, 0.00100708, 1, 1, 0, 0, 1, 1, 0.65625, 0, 0 )
 
 [sub_resource type="Animation" id=4]
 
@@ -47,6 +52,11 @@ tracks/4/path = NodePath("Particles2D2:config/emitting")
 tracks/4/interp = 1
 tracks/4/imported = false
 tracks/4/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Particles2D3:config/emitting")
+tracks/5/interp = 1
+tracks/5/imported = false
+tracks/5/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [sub_resource type="Animation" id=5]
 
@@ -90,36 +100,40 @@ script/script = SubResource( 1 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 
+visibility/opacity = 0.5
 transform/pos = Vector2( 0, 19 )
-config/amount = 64
-config/lifetime = 0.7
+config/amount = 8
+config/lifetime = 0.9
 config/emitting = false
 config/half_extents = Vector2( 15, -16 )
+config/explosiveness = 0.3
+config/texture = ExtResource( 1 )
 params/direction = 180.0
 params/spread = 180.0
-params/linear_velocity = 120.0
-params/spin_velocity = 0.0
+params/linear_velocity = 10.0
+params/spin_velocity = 1.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
 params/gravity_strength = 0.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
-params/damping = 100.0
+params/damping = 40.0
 params/initial_angle = 0.0
-params/initial_size = 3.0
-params/final_size = 2.0
-params/hue_variation = 0.0
+params/initial_size = 0.3
+params/final_size = 0.6
+params/hue_variation = 0.2
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/direction = 1.0
 randomness/spread = 1.0
-randomness/linear_velocity = 1.0
+randomness/linear_velocity = 0.2
+randomness/final_size = 0.5
 color/color_ramp = SubResource( 2 )
 
 [node name="Particles2D2" type="Particles2D" parent="."]
 
 transform/pos = Vector2( 0, 9 )
-config/amount = 64
+config/amount = 128
 config/lifetime = 0.7
 config/emitting = false
 config/half_extents = Vector2( 5, 20 )
@@ -145,6 +159,33 @@ randomness/linear_velocity = 1.0
 randomness/spin_velocity = 1.0
 color/color_ramp = SubResource( 3 )
 
+[node name="Particles2D3" type="Particles2D" parent="."]
+
+transform/pos = Vector2( 0, 9 )
+config/amount = 92
+config/lifetime = 0.7
+config/emitting = false
+config/half_extents = Vector2( 30, -20 )
+params/direction = 180.0
+params/spread = 0.0
+params/linear_velocity = 120.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 40.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 90.0
+params/initial_angle = 0.0
+params/initial_size = 3.0
+params/final_size = 4.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/spread = 1.0
+randomness/linear_velocity = 0.5
+color/color_ramp = SubResource( 6 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 playback/process_mode = 1
@@ -165,7 +206,7 @@ editor_only = false
 texture = ExtResource( 1 )
 offset = Vector2( 0, 0 )
 scale = 0.0
-color = Color( 0.988281, 0.955256, 0.142838, 1 )
+color = Color( 0.992188, 0.538424, 0.00775146, 1 )
 energy = 1.0
 mode = 0
 range/height = 0.0
