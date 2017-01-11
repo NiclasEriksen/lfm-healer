@@ -27,10 +27,10 @@ hit_effect = null
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-max_hp = 30
-base_movement_speed = 65
+level = 2
+max_hp = 18.0
+base_movement_speed = 45.0
 base_attack_speed = 0.8
-base_attack_range = 60
 
 [node name="HPBarPos" type="Position2D" parent="."]
 

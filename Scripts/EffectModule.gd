@@ -7,7 +7,7 @@ var is_buff = false
 
 
 func set_amount(a):
-	amount = a
+	amount = float(a)
 
 func get_amount():
 	return amount

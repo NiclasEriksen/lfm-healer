@@ -2,6 +2,10 @@ extends Node
 var buff_module = load("res://Scripts/BuffModule.gd")
 var effect_module = load("res://Scripts/EffectModule.gd")
 
+var lvl_scale = 1.2
+var str_scale = 1.1
+var int_scale = 1.1
+var agi_scale = 1.1
 export(int) var level = 1
 export(String, "str", "int", "agi") var primary_stat = "str"
 export(int) var base_strength = 0
@@ -9,18 +13,18 @@ export(int) var base_intelligence = 0
 export(int) var base_agility = 0
 export(int) var base_spirit = 0
 export(int) var base_stamina = 0
-export(int) var max_hp = 10.0 # Replace with base
-export(int) var max_mp = 5.0  # Replace with base
+export(float) var max_hp = 10.0 # Replace with base
+export(float) var max_mp = 5.0  # Replace with base
 export(float) var base_damage = 1.0
 export(float) var base_spell_power = 0.0
 export(float) var base_phys_crit = 0.0
 export(float) var base_spell_crit = 0.0
-export(int) var base_hit_rate = 0
-export(int) var base_armor = 0
-export(int) var base_magic_resist = 0
-export(int) var base_movement_speed = 50
+export(float) var base_hit_rate = 0.0
+export(float) var base_armor = 0.0
+export(float) var base_magic_resist = 0.0
+export(float) var base_movement_speed = 50.0
 export(float) var base_attack_speed = 2.0
-export(int) var base_attack_range = 40
+export(float) var base_attack_range = 40.0
 var hp = max_hp
 var mp = max_mp
 var strength = base_strength
@@ -52,32 +56,62 @@ var active_effects = []
 
 
 func _ready():
+	self.update_final_stats()
+	self.hp = self.max_hp
+	self.mp = self.max_mp
+	set_process(true)
+	set_fixed_process(true)
+
+func get_str_scale():
+	if primary_stat == "str":
+		return lvl_scale * str_scale
+	else:
+		return lvl_scale
+
+func get_int_scale():
+	if primary_stat == "int":
+		return lvl_scale * int_scale
+	else:
+		return lvl_scale
+
+func get_agi_scale():
+	if primary_stat == "agi":
+		return lvl_scale * agi_scale
+	else:
+		return lvl_scale
+
+func scale_stat(stat, scal):
+	var bonus = 0.0 + stat
+	if level > 1:
+		bonus *= pow(scal, level - 1)
+	# print(level, "--", scal, "--", stat, "--", bonus)
+	return bonus
+
+func update_final_stats():
 	self.final_stats = {
-		hp=max_hp,
-		mp=max_mp,
-		max_hp=max_hp,
-		max_mp=max_mp,
+		hp=scale_stat(max_hp, get_str_scale()),
+		mp=scale_stat(max_mp, get_int_scale()),
+		max_hp=scale_stat(max_hp, get_str_scale()),
+		max_mp=scale_stat(max_mp, get_int_scale()),
 		strength=base_strength,
 		agility=base_agility,
 		intelligence=base_intelligence,
 		spirit=base_spirit,
 		stamina=base_stamina,
-		damage=base_damage,
-		spell_power=base_spell_power,
-		phys_crit=base_phys_crit,
-		spell_crit=base_spell_crit,
+		damage=scale_stat(base_damage, max(get_str_scale(), get_agi_scale())),
+		spell_power=scale_stat(base_spell_power, get_int_scale()),
+		phys_crit=scale_stat(base_phys_crit, get_agi_scale()),
+		spell_crit=scale_stat(base_spell_crit, get_int_scale()),
 		hit_rate=base_hit_rate,
-		armor=base_armor,
-		magic_resist=base_magic_resist,
+		armor=scale_stat(base_armor, get_str_scale()),
+		magic_resist=scale_stat(base_magic_resist, get_str_scale()),
 		attack_speed=base_attack_speed,
 		attack_range=base_attack_range,
 		movement_speed=base_movement_speed,
 	}
+	max_hp = final_stats["max_hp"]
+	max_mp = final_stats["max_mp"]
 
-	self.hp = self.max_hp
-	self.mp = self.max_mp
-	set_process(true)
-	set_fixed_process(true)
 
 func _process(delta):
 	if hp > max_hp:

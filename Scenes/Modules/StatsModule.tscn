@@ -18,10 +18,11 @@ base_damage = 1.0
 base_spell_power = 0.0
 base_phys_crit = 0.0
 base_spell_crit = 0.0
-base_hit_rate = 0
-base_armor = 0
-base_magic_resist = 0
-base_movement_speed = 90
+base_hit_rate = 0.0
+base_armor = 0.0
+base_magic_resist = 0.0
+base_movement_speed = 50.0
 base_attack_speed = 2.0
+base_attack_range = 40.0
 
 
