@@ -57,7 +57,10 @@ func fire_projectile(target):
 		var dist_scale = get_pos().distance_to(target.get_pos()) / get_node("StatsModule").get_actual("attack_range")
 		a.set_pos(get_pos())
 		a.set_alliance(get_allegiance())
-		a.init(target, get_node("Attack"))
+		if has_node("Debuff"):
+			a.init(target, get_node("Attack"), get_node("Debuff"))
+		else:
+			a.init(target, get_node("Attack"), null)
 		a.flytime = a.flytime * dist_scale
 		a.y_offset = a.y_offset * dist_scale
 		get_tree().get_root().get_node("Game/Objects").add_child(a)

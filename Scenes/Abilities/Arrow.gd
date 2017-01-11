@@ -5,6 +5,7 @@ var start_pos = Vector2(0, 0)
 var target = null
 var target_pos = Vector2(0, 0)
 var effect_module = null
+var dot_module = null
 var alliance = null
 export(Vector2) var y_offset = Vector2(0, 0)
 
@@ -36,7 +37,7 @@ func _process(dt):
 		queue_free()
 
 
-func init(t, em):
+func init(t, em, dm):
 	var a = (t.get_pos() - get_pos()).angle() + PI / 2
 	get_node("Sprite").set_rot(a)
 	start_pos = get_pos()
@@ -46,6 +47,8 @@ func init(t, em):
 		get_node("Trail").set_emit_timeout(flytime / 2)
 		get_node("Trail").set_lifetime(flytime / 2)
 	effect_module = weakref(em)
+	if dm:
+		dot_module = weakref(dm)
 
 func set_alliance(a):
 	alliance = a

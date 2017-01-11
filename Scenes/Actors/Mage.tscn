@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scenes/Actors/Mage.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Actors/crossbower_red.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -35,10 +36,11 @@ base_attack_range = 300.0
 [node name="Attack" parent="." instance=ExtResource( 3 )]
 
 effect_type = "fire"
-amount = -9.0
+amount = -6.0
 
 [node name="ActorBase" parent="." instance=ExtResource( 4 )]
 
+editor/display_folded = true
 spritesheet = ExtResource( 5 )
 has_death_anim = true
 
@@ -57,6 +59,13 @@ transform/pos = Vector2( 0, 22 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
+
+[node name="Debuff" parent="." instance=ExtResource( 6 )]
+
+effect_type = "fire"
+amount = -6.0
+time = 3.0
+tick_interval = 0.5
 
 
 [editable path="ActorBase"]

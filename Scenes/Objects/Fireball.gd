@@ -5,6 +5,7 @@ var start_pos = Vector2(0, 0)
 var target = null
 var target_pos = Vector2(0, 0)
 var effect_module = null
+var dot_module = null
 var alliance = null
 var explode_effect = load("res://Scenes/Effects/ExplodeEffect.tscn")
 export(Vector2) var y_offset = Vector2(0, 0)
@@ -29,9 +30,16 @@ func _process(dt):
 										if not target in targets:
 											em.set_amount(em.get_amount() / 2)
 										target.get_node("StatsModule").apply_effect(em, null)
+										if dot_module:
+											var dm = dot_module.get_ref().duplicate()
+											target.get_node("StatsModule").apply_effect(dm, null)
 	if flown < flytime:
 		var t = flown / flytime
 		var newpos = start_pos + (target_pos - start_pos) * t
+		var x_osc = PI * t
+		var a = (target_pos - start_pos).angle() + PI + cos(x_osc) * (PI / 12) + PI / 2
+		set_rot(a)
+
 #		var x_osc = PI * t
 #		var yoff = (sin(x_osc) * y_offset).rotated(newpos.angle())
 #		newpos -= yoff
@@ -49,7 +57,7 @@ func explode(p):
 	ef.set_pos(p)
 	get_tree().get_root().get_node("Game/Effects").add_child(ef)
 
-func init(t, em):
+func init(t, em, dm):
 #	var a = (t.get_pos() - get_pos()).angle() + PI / 2
 #	get_node("Sprite").set_rot(a)
 	start_pos = get_pos()
@@ -59,6 +67,8 @@ func init(t, em):
 		get_node("Trail").set_emit_timeout(flytime / 2)
 		get_node("Trail").set_lifetime(flytime / 2)
 	effect_module = weakref(em)
+	if dm:
+		dot_module = weakref(dm)
 
 func set_alliance(a):
 	alliance = a

@@ -171,6 +171,7 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 		set(effectmodule.effect_stat, get(effectmodule.effect_stat) + amount)
 	else:
 		print("StatsModule does not recognize that attribute: ", effectmodule.effect_stat)
+	update_final_stats()
 
 func get_actual(stat):
 	if final_stats.has(stat):

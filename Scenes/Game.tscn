@@ -56,7 +56,7 @@ drag_margin/bottom = 0.2
 
 [node name="Healer" parent="." instance=ExtResource( 5 )]
 
-transform/pos = Vector2( 36.3531, 309.002 )
+transform/pos = Vector2( 36.3531, 240 )
 
 [connection signal="ability_tapped" from="HUD/AbilityBar" to="." method="_on_AbilityBar_ability_tapped"]
 

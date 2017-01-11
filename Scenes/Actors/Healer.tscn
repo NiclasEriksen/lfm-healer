@@ -10,6 +10,7 @@ script/script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
+transform/rot = 90.0
 texture = ExtResource( 2 )
 
 
