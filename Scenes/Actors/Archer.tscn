@@ -35,7 +35,7 @@ base_attack_range = 320.0
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
-transform/pos = Vector2( 0, -7.66667 )
+transform/pos = Vector2( 0, -34.6667 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

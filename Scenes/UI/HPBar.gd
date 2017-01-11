@@ -1,6 +1,6 @@
 extends Node2D
 var owner = null
-export(Vector2) var friendly_scale = Vector2(1.5, 1.5)
+export(Vector2) var friendly_scale = Vector2(1, 1)
 export(Vector2) var enemy_scale = Vector2(0.75, 0.75)
 export(Texture) var friendly_texture = null
 export(Texture) var enemy_texture = null
@@ -37,7 +37,7 @@ func _process(delta):
 		var pos = o.get_pos()
 		var val = (o.get_node("StatsModule").get("hp") / o.get_node("StatsModule").get_actual("max_hp")) * 100.0
 		if o.get_node("HPBarPos"):
-			pos = cam.get_viewport().get_canvas_transform().xform(pos + o.get_node("HPBarPos").get_pos())
+			pos = cam.get_viewport().get_canvas_transform().xform(pos)
 			set_pos(pos + o.get_node("HPBarPos").get_pos())
 			#print(pos, o.get_node("HPBarPos").get_pos())
 		else:
