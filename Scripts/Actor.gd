@@ -56,6 +56,7 @@ func fire_projectile(target):
 		var a = projectile_scene.instance()
 		var dist_scale = get_pos().distance_to(target.get_pos()) / get_node("StatsModule").get_actual("attack_range")
 		a.set_pos(get_pos())
+		a.set_alliance(get_allegiance())
 		a.init(target, get_node("Attack"))
 		a.flytime = a.flytime * dist_scale
 		a.y_offset = a.y_offset * dist_scale

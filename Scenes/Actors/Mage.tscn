@@ -41,6 +41,11 @@ amount = -12.0
 spritesheet = ExtResource( 5 )
 has_death_anim = true
 
+[node name="Sprite" parent="ActorBase"]
+
+texture = ExtResource( 5 )
+frame = 6
+
 [node name="HPBarPos" type="Position2D" parent="."]
 
 transform/pos = Vector2( 0, -9 )
@@ -53,3 +58,4 @@ trigger = false
 _update_shape_index = 0
 
 
+[editable path="ActorBase"]

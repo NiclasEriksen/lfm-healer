@@ -5,6 +5,7 @@ var start_pos = Vector2(0, 0)
 var target = null
 var target_pos = Vector2(0, 0)
 var effect_module = null
+var alliance = null
 export(Vector2) var y_offset = Vector2(0, 0)
 
 func _ready():
@@ -45,6 +46,9 @@ func init(t, em):
 		get_node("Trail").set_emit_timeout(flytime / 2)
 		get_node("Trail").set_lifetime(flytime / 2)
 	effect_module = weakref(em)
+
+func set_alliance(a):
+	alliance = a
 
 func fly():
 	pass

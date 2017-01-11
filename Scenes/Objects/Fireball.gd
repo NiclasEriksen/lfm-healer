@@ -5,6 +5,8 @@ var start_pos = Vector2(0, 0)
 var target = null
 var target_pos = Vector2(0, 0)
 var effect_module = null
+var alliance = null
+var explode_effect = load("res://Scenes/Effects/ExplodeEffect.tscn")
 export(Vector2) var y_offset = Vector2(0, 0)
 
 func _ready():
@@ -13,14 +15,25 @@ func _ready():
 func _process(dt):
 	if target:
 		if target.get_ref():
-			var target_node = target.get_ref()
-			target_pos = target_node.get_pos()
+			# var target_node = target.get_ref()
+			# target_pos = target_node.get_pos()
 			if flown >= flytime:
-				if effect_module:
-					if effect_module.get_ref() and target.get_ref().has_node("StatsModule"):
-						target.get_ref().get_node("StatsModule").apply_effect(effect_module.get_ref(), null)
+				if effect_module and alliance:
+					if effect_module.get_ref():
+							var targets = get_node("Area2D").get_overlapping_bodies()
+							var blast_targets = get_node("BlastZone").get_overlapping_bodies()
+							for target in blast_targets:
+								if alliance in target.get_groups():
+									pass
+								else:
+									if target.has_node("StatsModule"):
+										var em = effect_module.get_ref().duplicate()
+										if not target in targets:
+											em.set_amount(em.get_amount() / 2)
+										target.get_node("StatsModule").apply_effect(em, null)
+										
 						# print("And doing dmg!")
-				# print("There!")
+
 	if flown < flytime:
 		var t = flown / flytime
 		var newpos = start_pos + (target_pos - start_pos) * t
@@ -32,8 +45,14 @@ func _process(dt):
 #		get_node("Sprite").set_rot(a)
 		flown += dt
 	else:
+		explode(get_pos())
 		queue_free()
 
+
+func explode(p):
+	var ef = explode_effect.instance()
+	ef.set_pos(p)
+	get_tree().get_root().get_node("Game/Effects").add_child(ef)
 
 func init(t, em):
 #	var a = (t.get_pos() - get_pos()).angle() + PI / 2
@@ -45,6 +64,9 @@ func init(t, em):
 		get_node("Trail").set_emit_timeout(flytime / 2)
 		get_node("Trail").set_lifetime(flytime / 2)
 	effect_module = weakref(em)
+
+func set_alliance(a):
+	alliance = a
 
 func fly():
 	pass

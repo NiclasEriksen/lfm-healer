@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=1]
 
-[ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=1]
 
 [sub_resource type="GDScript" id=1]
 
@@ -9,12 +9,12 @@ script/source = "extends Node2D\n\n# class member variables go here, for example
 [sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.508772, 1 )
-colors = ColorArray( 0.988281, 0.945002, 0.830002, 1, 0.871094, 0.766886, 0.48999, 1, 1, 1, 1, 0 )
+colors = ColorArray( 0.984375, 0.138428, 0, 1, 0.933594, 0.571758, 0.0072937, 1, 1, 1, 1, 0 )
 
 [sub_resource type="ColorRamp" id=3]
 
-offsets = FloatArray( 0, 0.432749, 1 )
-colors = ColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+offsets = FloatArray( 0, 0.467836, 1 )
+colors = ColorArray( 1, 0.913725, 0.831373, 1, 1, 0.304688, 0, 1, 0.296875, 0, 0, 0 )
 
 [sub_resource type="Animation" id=4]
 
@@ -61,10 +61,11 @@ script/script = SubResource( 1 )
 transform/pos = Vector2( 0, 19 )
 config/amount = 64
 config/lifetime = 1.0
+config/emitting = false
 config/half_extents = Vector2( 15, -16 )
 params/direction = 180.0
-params/spread = 0.0
-params/linear_velocity = 50.0
+params/spread = 180.0
+params/linear_velocity = 100.0
 params/spin_velocity = 0.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
@@ -78,6 +79,9 @@ params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
+randomness/direction = 1.0
+randomness/spread = 1.0
+randomness/linear_velocity = 1.0
 color/color_ramp = SubResource( 2 )
 
 [node name="Particles2D2" type="Particles2D" parent="."]
@@ -85,26 +89,28 @@ color/color_ramp = SubResource( 2 )
 transform/pos = Vector2( 0, 9 )
 config/amount = 64
 config/lifetime = 1.0
+config/emitting = false
 config/half_extents = Vector2( 5, 20 )
 params/direction = 0.0
-params/spread = 0.0
-params/linear_velocity = 30.0
-params/spin_velocity = 0.0
-params/orbit_velocity = 0.0
+params/spread = 180.0
+params/linear_velocity = 80.0
+params/spin_velocity = 1.0
+params/orbit_velocity = 1.0
 params/gravity_direction = 180.0
 params/gravity_strength = 40.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 30.0
 params/initial_angle = 0.0
-params/initial_size = 3.0
-params/final_size = 1.0
+params/initial_size = 4.0
+params/final_size = 3.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/direction = 1.0
 randomness/spread = 1.0
 randomness/linear_velocity = 1.0
+randomness/spin_velocity = 1.0
 color/color_ramp = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -120,12 +126,13 @@ autoplay = ""
 
 [node name="Light2D" type="Light2D" parent="."]
 
-enabled = true
+visibility/opacity = 0.0
+enabled = false
 editor_only = false
 texture = ExtResource( 1 )
 offset = Vector2( 0, 0 )
 scale = 0.0
-color = Color( 0.774611, 0.910156, 0.47641, 1 )
+color = Color( 0.792969, 0.229218, 0.0991211, 1 )
 energy = 1.0
 mode = 0
 range/height = 0.0
