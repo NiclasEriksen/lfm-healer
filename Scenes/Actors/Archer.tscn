@@ -47,17 +47,12 @@ _update_shape_index = 0
 [node name="ActorBase" parent="." instance=ExtResource( 3 )]
 
 spritesheet = ExtResource( 4 )
-has_attack_anim = true
-has_death_anim = false
-has_special_anim = false
-tile_dimensions = Vector2( 5, 5 )
+has_death_anim = true
 
 [node name="Sprite" parent="ActorBase"]
 
 texture = ExtResource( 4 )
-vframes = 5
-hframes = 5
-frame = 2
+frame = 19
 
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 

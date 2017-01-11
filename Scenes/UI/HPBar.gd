@@ -27,6 +27,9 @@ func register(owner):
 func _process(delta):
 	if owner.get_ref():
 		var o = owner.get_ref()
+		if not o.has_node("StatsModule"):
+			queue_free()
+			return
 		if "enemy" in o.get_groups():
 			set_scale(enemy_scale)
 		elif "friendly" in o.get_groups():

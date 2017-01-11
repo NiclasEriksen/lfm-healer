@@ -22,6 +22,7 @@ var state_change_cd = 0.0
 var idle_time = 0.0
 var idle = false
 var attacking = false
+var enabled = true
 var path = []
 
 func _ready():
@@ -59,51 +60,52 @@ func _draw():
 
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
-	if stats:
-		check_death()
-		check_healthy()
-	check_target()
-	if path.size():
-#		stats.get("movement_speed")
-		set_direction((path[0] - get_pos()).normalized())
-		if get_pos().distance_to(path[0]) < 1.0:
-			path.remove(0)
-	elif target_enemy:
-		set_direction((target_enemy.get_pos() - get_pos()).normalized())
-	else:
-		check_in_range()
-
-	if idle:
-		idle_time += dt
-		if idle_time > 2.0:
-			idle_time = 0
-			check_in_range()
-	else:
-		if idle_time > 0:
-			idle_time -= dt
+	if enabled:
+		if stats:
+			check_death()
+			check_healthy()
+		check_target()
+		if path.size():
+	#		stats.get("movement_speed")
+			set_direction((path[0] - get_pos()).normalized())
+			if get_pos().distance_to(path[0]) < 1.0:
+				path.remove(0)
+		elif target_enemy:
+			set_direction((target_enemy.get_pos() - get_pos()).normalized())
 		else:
-			idle_time = 0
+			check_in_range()
 	
-	if flip_cd > 0.0:
-		flip_cd -= dt
-	if state_change_cd > 0.0:
-		state_change_cd -= dt
-	update_state()
-	
-	if not get_tree().is_editor_hint():
-		if parent:
-			parent.set_z(get_pos().y)
-	if self.attack_cd <= 0:
-		if self.attacking and self.target_enemy:
-			self.attack_cd = 0.5
-			if self.stats:
-				self.attack_cd = self.stats.get_actual("attack_speed")
-			emit_signal("attack", self.target_enemy)
-	else:
-		self.attack_cd -= dt
+		if idle:
+			idle_time += dt
+			if idle_time > 2.0:
+				idle_time = 0
+				check_in_range()
+		else:
+			if idle_time > 0:
+				idle_time -= dt
+			else:
+				idle_time = 0
+		
+		if flip_cd > 0.0:
+			flip_cd -= dt
+		if state_change_cd > 0.0:
+			state_change_cd -= dt
+		update_state()
+		
+		if not get_tree().is_editor_hint():
+			if parent:
+				parent.set_z(get_pos().y)
+		if self.attack_cd <= 0:
+			if self.attacking and self.target_enemy:
+				self.attack_cd = 0.5
+				if self.stats:
+					self.attack_cd = self.stats.get_actual("attack_speed")
+				emit_signal("attack", self.target_enemy)
+		else:
+			self.attack_cd -= dt
 
 func _fixed_process(dt):
-	if not attacking:
+	if not attacking and enabled:
 		var movement = direction
 		if stats:
 			movement *= stats.get_actual("movement_speed")
@@ -220,7 +222,10 @@ func check_target():
 func check_death():
 	if stats.get("hp") <= 0:
 		on_death()
-		emit_signal("death", parent.get_pos())
+		var p = parent.get_pos()
+		if parent.has_node("CollisionShape2D"):
+			p += parent.get_node("CollisionShape2D").get_pos()
+		emit_signal("death", p)
 
 func check_healthy():
 	if stats.get("hp") < stats.get("max_hp"):
@@ -286,15 +291,25 @@ func on_attack():
 		if not get_node("AnimationPlayer").get_current_animation() == "idle":
 			get_node("AnimationPlayer").play("idle")
 
-
 func on_death():
+	enabled = false
+	parent.get_node("StatsModule").queue_free()
+	parent.get_node("CollisionShape2D").queue_free()
+	for g in parent.get_groups():
+		parent.remove_from_group(g)
 	if Globals.get("debug_mode"):
 		print(self, " died.")
 	var de = death_effect.instance()
 	de.set_pos(get_pos())
-#	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())
+	if has_death_anim:
+		var tex = get_node("Sprite").get_texture()
+		var hf = get_node("Sprite").get_hframes()
+		var vf = get_node("Sprite").get_vframes()
+		de.set_texture(tex, hf, vf)
+	#	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())
 	root.get_node("Effects").add_child(de)
 	parent.queue_free()
+
 
 func on_idle():
 	idle = true

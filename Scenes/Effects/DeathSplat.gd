@@ -1,7 +1,7 @@
 extends Sprite
 
 # class member variables go here, for example:
-export(float) var linger_time = 30.0
+export(float) var linger_time = 60.0
 var lingered = 0.0
 # var b = "textvar"
 

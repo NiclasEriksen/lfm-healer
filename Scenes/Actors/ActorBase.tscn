@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Scripts/ActorBase.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=2]
@@ -21,7 +21,29 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4, 0.6, 0.8 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":1, "values":[ 10, 11, 12, 13, 5 ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4, 0.6, 0.8 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":1, "values":[ 10, 11, 12, 13, 14 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ Vector2( 0, 0 ) ] }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:transform/rot")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ 0.0 ] }
+
+[sub_resource type="Animation" id=8]
+
+resource/name = "death"
+length = 0.7
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4, 0.5, 0.6 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":1, "values":[ 15, 16, 17, 18, 19 ] }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:transform/pos")
 tracks/1/interp = 1
@@ -89,7 +111,7 @@ tile_dimensions = Vector2( 5, 5 )
 
 vframes = 5
 hframes = 5
-frame = 3
+frame = 19
 
 [node name="Selected" type="Light2D" parent="."]
 
@@ -167,6 +189,7 @@ playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/attack = SubResource( 7 )
+anims/death = SubResource( 8 )
 anims/idle = SubResource( 2 )
 anims/walk = ExtResource( 4 )
 playback/active = true
