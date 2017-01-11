@@ -15,8 +15,8 @@ radius = 75.0
 
 [sub_resource type="ColorRamp" id=3]
 
-offsets = FloatArray( 0, 1 )
-colors = ColorArray( 1, 0, 0.0588236, 1, 0.519531, 0, 0, 0 )
+offsets = FloatArray( 0, 0.549708, 1 )
+colors = ColorArray( 1, 0, 0.0588236, 1, 1, 0.585938, 0, 0.727686, 0.519531, 0, 0, 0 )
 
 [node name="Fireball" type="Node2D"]
 
@@ -70,7 +70,7 @@ config/lifetime = 2.0
 config/half_extents = Vector2( 1, 1 )
 config/local_space = false
 params/direction = 0.0
-params/spread = 20.0
+params/spread = 30.0
 params/linear_velocity = 0.0
 params/spin_velocity = 0.0
 params/orbit_velocity = 0.0
@@ -80,11 +80,13 @@ params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
 params/initial_angle = 0.0
-params/initial_size = 2.0
+params/initial_size = 3.0
 params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
+randomness/direction = 0.2
+randomness/spread = 0.5
 color/color_ramp = SubResource( 3 )
 
 

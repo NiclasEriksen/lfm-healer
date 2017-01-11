@@ -111,7 +111,7 @@ tile_dimensions = Vector2( 5, 5 )
 
 vframes = 5
 hframes = 5
-frame = 19
+frame = 5
 
 [node name="Selected" type="Light2D" parent="."]
 
