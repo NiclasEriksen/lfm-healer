@@ -80,12 +80,15 @@ radius = 50.0
 
 script/script = ExtResource( 1 )
 spritesheet = null
-tile_dimensions = Vector2( 3, 2 )
+has_attack_anim = true
+has_death_anim = false
+has_special_anim = false
+tile_dimensions = Vector2( 5, 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
-vframes = 2
-hframes = 3
+vframes = 5
+hframes = 5
 frame = 3
 
 [node name="Selected" type="Light2D" parent="."]

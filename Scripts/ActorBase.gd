@@ -3,7 +3,10 @@ extends Node2D
 
 onready var root = get_tree().get_root().get_node("Game")
 export(Texture) var spritesheet = null setget set_sprite_texture
-export(Vector2) var tile_dimensions = Vector2(3, 2) setget set_tile_dimensions
+export(bool) var has_attack_anim = true
+export(bool) var has_death_anim = false
+export(bool) var has_special_anim = false
+export(Vector2) var tile_dimensions = Vector2(5, 5) setget set_tile_dimensions
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var parent = get_parent()
@@ -351,7 +354,10 @@ func _on_AttackRange_body_enter( body ):
 		target_enemy_path = body.get_path()
 
 func _on_ActorBase_attack(tar):
-	get_node("AnimationPlayer").play("attack")
+	if has_attack_anim:
+		get_node("AnimationPlayer").play("attack")
+	else:
+		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
 	var he = null

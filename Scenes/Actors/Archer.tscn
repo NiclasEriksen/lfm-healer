@@ -15,7 +15,7 @@ radius = 16.0
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 9 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 19 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -39,7 +39,7 @@ transform/pos = Vector2( 0, -2.66667 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 0, 9 )
+transform/pos = Vector2( 1, 19 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -47,11 +47,16 @@ _update_shape_index = 0
 [node name="ActorBase" parent="." instance=ExtResource( 3 )]
 
 spritesheet = ExtResource( 4 )
-tile_dimensions = Vector2( 5, 3 )
+has_attack_anim = true
+has_death_anim = false
+has_special_anim = false
+tile_dimensions = Vector2( 5, 5 )
 
 [node name="Sprite" parent="ActorBase"]
 
 texture = ExtResource( 4 )
+vframes = 5
+hframes = 5
 frame = 2
 
 [node name="Attack" parent="." instance=ExtResource( 5 )]
