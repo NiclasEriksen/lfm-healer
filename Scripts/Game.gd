@@ -56,6 +56,11 @@ func _process(dt):
 	if not friendlies.size():
 		print("All friendly players dead, restarting.")
 		newgame()
+	else:
+		var enemies = get_tree().get_nodes_in_group("enemy")
+		if not enemies.size():
+			print("All enemy players dead, restarting.")
+			newgame()
 
 	for f in friendlies:
 		f.get_node("ActorBase").get_node("Selected").set_enabled(false)
