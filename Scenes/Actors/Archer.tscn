@@ -31,11 +31,11 @@ primary_stat = "agi"
 max_hp = 20
 base_movement_speed = 55
 base_attack_speed = 2.5
-base_attack_range = 600
+base_attack_range = 550
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
-transform/pos = Vector2( 0, -2.66667 )
+transform/pos = Vector2( 0, -7.66667 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
@@ -46,13 +46,13 @@ _update_shape_index = 0
 
 [node name="ActorBase" parent="." instance=ExtResource( 3 )]
 
+editor/display_folded = true
 spritesheet = ExtResource( 4 )
 has_death_anim = true
 
 [node name="Sprite" parent="ActorBase"]
 
 texture = ExtResource( 4 )
-frame = 19
 
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 

@@ -9,6 +9,7 @@ var spells = [
 ]
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
 var archer_actor = load("res://Scenes/Actors/Archer.tscn")
+var mage_actor = load("res://Scenes/Actors/Mage.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 onready var cam = get_node("Camera2D")
@@ -31,7 +32,7 @@ func newgame():
 	spawn_actor("tank", "friendly")
 	spawn_actor("tank", "friendly")
 	spawn_actor("tank", "friendly")
-	spawn_actor("tank", "friendly")
+	spawn_actor("mage", "friendly")
 	spawn_actor("archer", "friendly")
 	spawn_actor("archer", "friendly")
 
@@ -93,6 +94,8 @@ func spawn_actor(actor_type, alliance):
 		actor = enemy_actor.instance()
 	elif actor_type == "archer":
 		actor = archer_actor.instance()
+	elif actor_type == "mage":
+		actor = mage_actor.instance()
 
 	if alliance == "friendly":
 		p = get_node("Map/FriendlySpawn").get_pos()

@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://Scenes/Actors/Mage.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Actors/crossbower_red.png" type="Texture" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 12.0
+
+[node name="Mage" type="KinematicBody2D"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 22 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+alliance = "friendly"
+projectile = "res://Scenes/Objects/Fireball.tscn"
+hit_effect = null
+
+[node name="StatsModule" parent="." instance=ExtResource( 2 )]
+
+base_movement_speed = 40
+base_attack_speed = 2.5
+base_attack_range = 650
+
+[node name="Attack" parent="." instance=ExtResource( 3 )]
+
+effect_type = "fire"
+amount = -12.0
+
+[node name="ActorBase" parent="." instance=ExtResource( 4 )]
+
+spritesheet = ExtResource( 5 )
+has_death_anim = true
+
+[node name="HPBarPos" type="Position2D" parent="."]
+
+transform/pos = Vector2( 0, -9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+transform/pos = Vector2( 0, 22 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+
