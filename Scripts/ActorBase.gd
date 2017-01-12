@@ -223,7 +223,7 @@ func check_target():
 			clear_path()
 			on_attack()
 			# on_idle()
-		elif dist < ar * 3 and not idle:
+		elif dist < 80:
 			attacking = false
 			clear_path()
 		else:
