@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Maps/Map.tscn" type="PackedScene" id=2]
@@ -6,10 +6,16 @@
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=5]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
 points = Vector2Array( 79.379, 5.79266, 89.8906, 26.5238, 93.6864, 76.1619, 78.503, 91.0533, 12.8056, 91.0533, 2.586, 73.242, 9.88571, 17.4722, 25.3611, 7.25259 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 10.0
+height = 20.0
 
 [node name="Game" type="Node2D"]
 
@@ -65,9 +71,12 @@ transform/pos = Vector2( 36.3531, 240 )
 
 transform/pos = Vector2( 370, 180 )
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
+shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -1.22772, 27.0102 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1.64217, 0, 0, 1.38002, -84.0622, 28.6633 )
+shapes/1/trigger = false
 collision/layers = 1
 collision/mask = 1
 constant_linear_velocity = Vector2( 0, 0 )
@@ -82,6 +91,14 @@ build_mode = 0
 polygon = Vector2Array( 79.379, 5.79266, 89.8906, 26.5238, 93.6864, 76.1619, 78.503, 91.0533, 12.8056, 91.0533, 2.586, 73.242, 9.88571, 17.4722, 25.3611, 7.25259 )
 shape_range = Vector2( 0, 0 )
 trigger = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+
+transform/pos = Vector2( -84.0622, 28.6633 )
+transform/scale = Vector2( 1.64217, 1.38002 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 1
 
 [connection signal="ability_tapped" from="HUD/AbilityBar" to="." method="_on_AbilityBar_ability_tapped"]
 

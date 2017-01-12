@@ -16,6 +16,9 @@ var target_enemy = null
 var target_enemy_path = null
 var healthy = true
 var direction = Vector2(0, 0)
+var RAYCAST_LENGTH = 30
+var AVOIDANCE_FORCE = 0.5
+var adjusted_angle = 0.0
 var attack_cd = 0.0
 var flip_cd = 0.0
 var state_change_cd = 0.0
@@ -42,20 +45,23 @@ func _ready():
 			root.get_node("HUD").add_hpbar(get_parent())
 		if has_node("Selected") and get_parent().has_node("CollisionShape2D"):
 			get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
+		if has_node("State") and get_parent().has_node("CollisionShape2D"):
+			get_node("State").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
 #	if spritesheet:
 #		get_node("Sprite").set_texture(spritesheet)
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		draw_line(Vector2(0, 0), (direction * 30) * get_scale(), Color(0.8, 0.4, 0.1), 3.0)
+		draw_line(Vector2(0, 0), ((direction * 30) * get_scale()).rotated(adjusted_angle), Color(0.9, 0.1, 0.1), 3.0)
 		for rc in ["RayCast2DLeft", "RayCast2DCenter", "RayCast2DRight"]:
 			var col = Color(1, 0.7, 0.7)
 			if get_node(rc).is_colliding():
 				col = Color(1, 0.4, 0.4)
-			draw_line(get_node(rc).get_pos() * get_scale(), get_node(rc).get_cast_to() * get_scale(), col)
+			draw_line(get_node(rc).get_pos(), get_node(rc).get_cast_to(), col)
 		if target_enemy:
 			if root.get_node("Actors").has_node(target_enemy_path):
-				var te_pos = target_enemy.get_pos() - parent.get_pos()
+				var te_pos = target_enemy.get_body_pos() - parent.get_body_pos()
 				var col = Color(0.1, 0.4, 0.9, 0.75)
 				if "enemy" in parent.get_groups():
 					col = Color(0.9, 0.1, 0.4, 0.75)
@@ -66,7 +72,7 @@ func _draw():
 func draw_path():
 	var start = Vector2(0, 0)
 	for p in path:
-		var p_rel = (p - parent.get_pos())
+		var p_rel = (p - parent.get_body_pos())
 #		print(parent.get_pos(), "  ", p, "  ", p_rel)
 		draw_line(start * get_scale(), p_rel * get_scale(), Color(0.3, 0.3, 0.3, 0.5), 3.0)
 		start = p_rel
@@ -80,11 +86,11 @@ func _process(dt):
 		check_target()
 		if path.size():
 	#		stats.get("movement_speed")
-			set_direction((path[0] - get_pos()).normalized())
-			if get_pos().distance_to(path[0]) < 1.0:
+			set_direction((path[0] - parent.get_body_pos()).normalized())
+			if parent.get_body_pos().distance_to(path[0]) < 1.0:
 				path.remove(0)
 		elif target_enemy:
-			set_direction((target_enemy.get_pos() - get_pos()).normalized())
+			set_direction((target_enemy.get_body_pos() - parent.get_body_pos()).normalized())
 		else:
 			check_in_range()
 	
@@ -107,7 +113,7 @@ func _process(dt):
 		
 		if not get_tree().is_editor_hint():
 			if parent:
-				parent.set_z(get_pos().y)
+				parent.set_z(parent.get_body_pos().y)
 		if self.attack_cd <= 0:
 			if self.attacking and self.target_enemy:
 				self.attack_cd = 0.5
@@ -156,7 +162,7 @@ func setup_raycast():
 
 
 func check_los():
-	var adjusted_dir = direction
+	adjusted_angle = 0
 	if not get_tree().is_editor_hint():
 		var rcc = get_node("RayCast2DCenter")
 		var rcl = get_node("RayCast2DLeft")
@@ -167,32 +173,32 @@ func check_los():
 #		for i in range(4):
 		var angle = direction.angle()
 		var success = true
-		print(Vector2(0, 1).rotated(PI))
 		rcl.set_pos(rcc.get_pos())
 		rcr.set_pos(rcc.get_pos())
-		rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(angle)))
-		rcr.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle - PI / 8))
-		rcl.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle + PI / 8))
+		rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(angle) * get_scale()))
+		rcr.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle - PI / 8) * get_scale())
+		rcl.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle + PI / 8) * get_scale())
 		for rc in [rcl, rcc, rcr]:
 			rc.force_raycast_update()
 #				if rc.is_colliding():
 		if not rcr.is_colliding() == rcl.is_colliding() and rcc.is_colliding():
 			if rcr.is_colliding():
-				adjusted_dir = direction.rotated(PI / 2)
+				adjusted_angle = PI / 2
 			elif rcl.is_colliding():
-				adjusted_dir = direction.rotated(-(PI / 2))
-		elif rcc.is_colliding() and not rcl.is_colliding() and not rcr.is_colliding():
-			adjusted_dir *= -1
-		elif rcr.is_colliding() and rcl.is_colliding():
-			if randf() > 0.5:
-				adjusted_dir = direction.rotated(-(PI / 2))
-			else:
-				adjusted_dir = direction.rotated(PI / 2)
+				adjusted_angle = -(PI / 2)
+#		elif rcc.is_colliding() and not rcl.is_colliding() and not rcr.is_colliding():
+#			pass
+		elif rcc.is_colliding() and rcr.is_colliding() and rcl.is_colliding():
+			adjusted_angle = PI + rand_range(-(PI / 8), PI / 8)
+#			if randf() > 0.5:
+#				adjusted_angle = -(PI / 2)
+#			else:
+#				adjusted_angle = PI / 2
 		elif rcr.is_colliding():
-			adjusted_dir = direction.rotated(PI / 4)
+			adjusted_angle = PI / 4
 		elif rcl.is_colliding():
-			adjusted_dir = direction.rotated(-(PI / 4))
-	return adjusted_dir
+			adjusted_angle = -(PI / 4)
+	return direction.rotated(adjusted_angle)
 
 func test_angle(rc, a):
 	var dir = direction.rotated(deg2rad(a)) * 50
@@ -222,7 +228,7 @@ func check_target():
 		if not root.get_node("Actors").has_node(target_enemy_path):
 			target_enemy = null
 	if target_enemy:
-		var dist = parent.get_pos().distance_to(target_enemy.get_pos())
+		var dist = parent.get_body_pos().distance_to(target_enemy.get_body_pos())
 		if dist < ar:
 			clear_path()
 			on_attack()
@@ -239,10 +245,7 @@ func check_target():
 func check_death():
 	if stats.get("hp") <= 0:
 		on_death()
-		var p = parent.get_pos()
-		if parent.has_node("CollisionShape2D"):
-			p += parent.get_node("CollisionShape2D").get_pos()
-		emit_signal("death", p)
+		emit_signal("death", parent.get_body_pos())
 
 func check_healthy():
 	if stats.get("hp") < stats.get("max_hp"):
@@ -252,7 +255,7 @@ func check_healthy():
 
 func get_pos():
 	if parent:
-		return parent.get_pos()
+		return parent.get_body_pos()
 	else:
 		return Vector2(0, 0)
 
@@ -272,8 +275,8 @@ func check_in_range():
 		target_enemy = get_closest_enemy(get_tree().get_nodes_in_group(target))
 		if target_enemy:
 			target_enemy_path = target_enemy.get_path()
-			if get_pos().distance_to(target_enemy.get_pos()) > ar:
-				path = root.get_node("Map").get_simple_path(parent.get_pos(), target_enemy.get_pos())
+			if parent.get_body_pos().distance_to(target_enemy.get_body_pos()) > ar:
+				path = root.get_node("Map").get_simple_path(parent.get_body_pos(), target_enemy.get_body_pos())
 		else:
 			target_enemy_path = null
 
@@ -281,7 +284,7 @@ func get_closest_enemy(enemies):
 	var closest_candidate = null
 	var closest = 2000
 	for e in enemies:
-		var dist = abs(e.get_pos().distance_to(get_pos()))
+		var dist = abs(e.get_body_pos().distance_to(parent.get_body_pos()))
 		if e == target_enemy:
 			pass
 		elif dist < closest:
@@ -349,7 +352,7 @@ func update_state():
 	if flip_cd <= 0.0:
 		flip_cd = 0.3
 		if target_enemy:
-			if target_enemy.get_pos().x > get_pos().x:
+			if target_enemy.get_body_pos().x > parent.get_body_pos().x:
 				set_scale(Vector2(1, 1))
 #				get_node("Sprite").set_flip_h(false)
 			else:
@@ -375,7 +378,7 @@ func _on_AttackRange_body_enter( body ):
 	if target_enemy:
 		if root.get_node("Actors").has_node(target_enemy_path):
 			var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-			if get_pos().distance_to(target_enemy.get_pos()) <= r:
+			if parent.get_body_pos().distance_to(target_enemy.get_body_pos()) <= r:
 				return
 	var target_group = "enemy"
 	if "enemy" in parent.get_groups():
@@ -404,6 +407,6 @@ func on_hit(tar):
 #			he.set_rot(tar.get_pos().angle_to(get_pos()))
 			he.get_node("Particles2D").set_param(
 				he.get_node("Particles2D").PARAM_DIRECTION,
-				get_pos().angle_to(tar.get_pos()) - PI / 2
+				parent.get_body_pos().angle_to(tar.get_body_pos()) - PI / 2
 			)
 #			he.set_rot(tar.get_pos().angle_to(get_pos()))
