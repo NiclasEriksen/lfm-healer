@@ -16,8 +16,8 @@ var target_enemy = null
 var target_enemy_path = null
 var healthy = true
 var direction = Vector2(0, 0)
-var RAYCAST_LENGTH = 30
-var AVOIDANCE_FORCE = 0.5
+onready var RAYCAST_LENGTH = 3 * get_parent().get_node("CollisionShape2D").get_shape().get_radius()
+var AVOIDANCE_FORCE = 0.8
 var adjusted_angle = 0.0
 var attack_cd = 0.0
 var flip_cd = 0.0
@@ -54,7 +54,7 @@ func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		draw_line(Vector2(0, 0), (direction * 30) * get_scale(), Color(0.8, 0.4, 0.1), 3.0)
 		draw_line(Vector2(0, 0), ((direction * 30) * get_scale()).rotated(adjusted_angle), Color(0.9, 0.1, 0.1), 3.0)
-		for rc in ["RayCast2DLeft", "RayCast2DCenter", "RayCast2DRight"]:
+		for rc in ["RayCast2DCenter"]:
 			var col = Color(1, 0.7, 0.7)
 			if get_node(rc).is_colliding():
 				col = Color(1, 0.4, 0.4)
@@ -129,8 +129,8 @@ func _process(dt):
 func _fixed_process(dt):
 	var adjusted = direction
 	if not attacking and enabled:
-		if not path.size() or (idle and path.size()):
-			adjusted = check_los()
+#		if not path.size() or (idle and path.size()):
+		adjusted = check_los()
 		var movement = adjusted
 		if stats:
 			movement *= stats.get_actual("movement_speed")
@@ -154,7 +154,7 @@ func _fixed_process(dt):
 	update()
 
 func setup_raycast():
-	for rc in ["RayCast2DLeft", "RayCast2DCenter", "RayCast2DRight"]:
+	for rc in ["RayCast2DCenter"]:
 		get_node(rc).set_enabled(true)
 		get_node(rc).add_exception(parent)
 		get_node(rc).set_pos(parent.get_node("CollisionShape2D").get_pos())
@@ -165,39 +165,25 @@ func check_los():
 	adjusted_angle = 0
 	if not get_tree().is_editor_hint():
 		var rcc = get_node("RayCast2DCenter")
-		var rcl = get_node("RayCast2DLeft")
-		var rcr = get_node("RayCast2DRight")
-		var r = parent.get_node("CollisionShape2D").get_shape().get_radius()
-#		for rc in [rcc, rcl, rcr]:
-#			rc.set_enabled(true)
-#		for i in range(4):
-		var angle = direction.angle()
-		var success = true
-		rcl.set_pos(rcc.get_pos())
-		rcr.set_pos(rcc.get_pos())
-		rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(angle) * get_scale()))
-		rcr.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle - PI / 8) * get_scale())
-		rcl.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle + PI / 8) * get_scale())
-		for rc in [rcl, rcc, rcr]:
-			rc.force_raycast_update()
-#				if rc.is_colliding():
-		if not rcr.is_colliding() == rcl.is_colliding() and rcc.is_colliding():
-			if rcr.is_colliding():
-				adjusted_angle = PI / 2
-			elif rcl.is_colliding():
-				adjusted_angle = -(PI / 2)
-#		elif rcc.is_colliding() and not rcl.is_colliding() and not rcr.is_colliding():
-#			pass
-		elif rcc.is_colliding() and rcr.is_colliding() and rcl.is_colliding():
-			adjusted_angle = PI + rand_range(-(PI / 8), PI / 8)
-#			if randf() > 0.5:
-#				adjusted_angle = -(PI / 2)
-#			else:
-#				adjusted_angle = PI / 2
-		elif rcr.is_colliding():
-			adjusted_angle = PI / 4
-		elif rcl.is_colliding():
-			adjusted_angle = -(PI / 4)
+		rcc.set_cast_to(direction * get_scale() * RAYCAST_LENGTH)
+		rcc.force_raycast_update()
+		if rcc.is_colliding():
+			var c = rcc.get_collider()
+			if c == target_enemy:
+				return direction
+#			var a = parent.get_body_pos().angle_to(c.get_pos())
+			var a = Vector2(0, 0)
+			var realpos = parent.get_body_pos() + rcc.get_cast_to()
+			if c extends KinematicBody2D:
+				a.x = realpos.x - c.get_body_pos().x
+				a.y = realpos.y - c.get_body_pos().y
+			else:
+				a.x = realpos.x - c.get_pos().x
+				a.y = realpos.y - c.get_pos().y
+			a = a.normalized() * get_scale()
+			print("d:", direction.angle(), " a.a:", a.angle(), " v.a:", realpos.angle_to(c.get_pos()))
+			adjusted_angle = direction.angle() - a.angle() * AVOIDANCE_FORCE
+
 	return direction.rotated(adjusted_angle)
 
 func test_angle(rc, a):
