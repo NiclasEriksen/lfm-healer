@@ -4,6 +4,7 @@ export(String, "physical", "fire", "water", "life", "earth", "death", "stun") va
 export(String, "hp", "mp", "movement_speed") var effect_stat = "hp"
 export(float) var amount = 0.0
 var is_buff = true
+var is_status = false
 export(float, 0, 60, 0.1) var time = 1.0
 export(float, 0, 10, 0.05) var tick_interval = 0.3
 var tick_timer = 0.0

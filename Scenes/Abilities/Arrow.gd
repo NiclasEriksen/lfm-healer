@@ -6,6 +6,7 @@ var target = null
 var target_pos = Vector2(0, 0)
 var effect_module = null
 var dot_module = null
+var status_module = null
 var alliance = null
 export(Vector2) var y_offset = Vector2(0, 0)
 
@@ -22,6 +23,10 @@ func _process(dt):
 					if effect_module.get_ref() and target.get_ref().has_node("StatsModule"):
 						target.get_ref().get_node("StatsModule").apply_effect(effect_module.get_ref(), null)
 				if dot_module:
+					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
+						var dm = dot_module.get_ref().duplicate()
+						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
+				if status_module:
 					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
 						var dm = dot_module.get_ref().duplicate()
 						target.get_ref().get_node("StatsModule").apply_effect(dm, null)

@@ -120,8 +120,22 @@ func _process(delta):
 		mp = max_mp
 	check_negatives()
 	for wr in get_children():
+		if wr.is_buff:
+			handle_buff(wr, delta)
+		elif wr.is_effect:
+			handle_status(wr, delta)
+
+func handle_status(wr, dt):
+	var status_result = wr.status_update(dt)
+	if status_result:
+		print(wr)
+	else:
+		print("Removing status.")
+		wr.queue_free()
+
+func handle_buff(wr, dt):
 		var buff_result = [false, false]
-		buff_result = wr.buff_update(delta)
+		buff_result = wr.buff_update(dt)
 		if not buff_result[0]:
 #			print("Removing buff.")
 			if wr.effect_type == "stun":
@@ -178,15 +192,15 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 	update_final_stats()
 
 func get_actual(stat):
+	var return_stat = stat
 	if final_stats.has(stat):
+		return_stat = final_stats[stat]
 		for effect in get_children():
-			if effect.is_buff and effect.effect_stat == "movement_speed":
-				#print("stat: ", final_stats[stat])
-				#print(final_stats[stat] + effect.amount)
-#				return final_stats[stat] + effect.amount
-				# print(final_stats[stat])
-				return final_stats[stat]
-		return final_stats[stat]
+			if effect.is_status and effect.effect_stat == stat:
+				return_stat += effect.amount
+		if return_stat < 0:
+			return_stat = 0
+		return return_stat
 	else:
 		print("STAT NOT FOUND! ", stat)
 

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://Scripts/StatusEffect.gd" type="Script" id=1]
+
+[node name="StatusEffect" type="Node"]
+
+script/script = ExtResource( 1 )
+effect_type = "physical"
+effect_stat = "hp"
+amount = 0.0
+time = 1.0
+
+

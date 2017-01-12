@@ -32,7 +32,7 @@ max_hp = 25.0
 base_damage = 6.0
 base_armor = 1.0
 base_magic_resist = 1.0
-base_movement_speed = 40.0
+base_movement_speed = 42.0
 base_attack_speed = 2.1
 
 [node name="HPBarPos" type="Position2D" parent="."]
@@ -48,7 +48,6 @@ _update_shape_index = 0
 
 [node name="ActorBase" parent="." instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 0, 1 )
 spritesheet = ExtResource( 4 )
 has_attack_anim = false
 tile_dimensions = Vector2( 5, 3 )

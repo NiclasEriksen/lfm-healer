@@ -1,16 +1,22 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Scenes/Actors/Mage.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/Actors/crossbower_red.png" type="Texture" id=5]
-[ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Effects/smoke_large.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Actors/crossbower_red.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 12.0
+
+[sub_resource type="ColorRamp" id=2]
+
+offsets = FloatArray( 0, 0.22807, 0.532164, 1 )
+colors = ColorArray( 0.28125, 0, 0, 1, 0.742188, 0.10437, 0.10437, 1, 0.917969, 0.36791, 0.00358582, 1, 1, 0.75, 0, 0 )
 
 [node name="Mage" type="KinematicBody2D"]
 
@@ -26,28 +32,51 @@ alliance = "friendly"
 projectile = "res://Scenes/Objects/Fireball.tscn"
 hit_effect = null
 
-[node name="StatsModule" parent="." instance=ExtResource( 2 )]
+[node name="Light2D" type="Light2D" parent="."]
+
+transform/pos = Vector2( 0, 28 )
+enabled = true
+editor_only = false
+texture = ExtResource( 2 )
+offset = Vector2( 0, 0 )
+scale = 0.2
+color = Color( 0.867188, 0.0135498, 0.0735712, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 0
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="StatsModule" parent="." instance=ExtResource( 3 )]
 
 primary_stat = "int"
 max_hp = 12.0
-base_movement_speed = 30.0
-base_attack_speed = 3.0
+base_movement_speed = 35.0
+base_attack_speed = 3.5
 base_attack_range = 300.0
 
-[node name="Attack" parent="." instance=ExtResource( 3 )]
+[node name="Attack" parent="." instance=ExtResource( 4 )]
 
 effect_type = "fire"
-amount = -6.0
+amount = -5.0
 
-[node name="ActorBase" parent="." instance=ExtResource( 4 )]
+[node name="ActorBase" parent="." instance=ExtResource( 5 )]
 
 editor/display_folded = true
-spritesheet = ExtResource( 5 )
+spritesheet = ExtResource( 6 )
 has_death_anim = true
 
 [node name="Sprite" parent="ActorBase"]
 
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 frame = 7
 
 [node name="HPBarPos" type="Position2D" parent="."]
@@ -61,12 +90,38 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="Debuff" parent="." instance=ExtResource( 6 )]
+[node name="Debuff" parent="." instance=ExtResource( 7 )]
 
 effect_type = "fire"
-amount = -6.0
-time = 3.0
+amount = -5.0
+time = 2.5
 tick_interval = 0.5
+
+[node name="Particles2D" type="Particles2D" parent="."]
+
+transform/pos = Vector2( 2, 33 )
+config/amount = 64
+config/lifetime = 2.0
+config/half_extents = Vector2( 14, -6 )
+params/direction = 180.0
+params/spread = 0.0
+params/linear_velocity = 40.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.1
+params/gravity_direction = 180.0
+params/gravity_strength = 9.8
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 2.0
+params/final_size = 0.8
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/direction = 0.2
+randomness/orbit_velocity = 0.3
+color/color_ramp = SubResource( 2 )
 
 
 [editable path="ActorBase"]

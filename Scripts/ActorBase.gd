@@ -47,16 +47,26 @@ func _ready():
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
-		draw_line(Vector2(0, 0), direction * 30, Color(0.8, 0.4, 0.1), 3.0)
+		draw_line(Vector2(0, 0), (direction * 30) * get_scale(), Color(0.8, 0.4, 0.1), 3.0)
 		for rc in ["RayCast2DLeft", "RayCast2DCenter", "RayCast2DRight"]:
-			draw_line(get_node(rc).get_pos(), get_node(rc).get_cast_to(), Color(1, 0.7, 0.7))
+			draw_line(get_node(rc).get_pos() * get_scale(), get_node(rc).get_cast_to() * get_scale(), Color(1, 0.7, 0.7))
 		if target_enemy:
 			if root.get_node("Actors").has_node(target_enemy_path):
 				var te_pos = target_enemy.get_pos() - parent.get_pos()
 				var col = Color(0.1, 0.4, 0.9, 0.75)
 				if "enemy" in parent.get_groups():
 					col = Color(0.9, 0.1, 0.4, 0.75)
-				draw_line(Vector2(0, 0), te_pos, col, 1.0)
+				draw_line(Vector2(0, 0), te_pos * get_scale(), col, 1.0)
+		if path.size():
+			draw_path()
+
+func draw_path():
+	var start = Vector2(0, 0)
+	for p in path:
+		var p_rel = (p - parent.get_pos())
+#		print(parent.get_pos(), "  ", p, "  ", p_rel)
+		draw_line(start * get_scale(), p_rel * get_scale(), Color(0.3, 0.3, 0.3, 0.5), 3.0)
+		start = p_rel
 
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
@@ -213,7 +223,7 @@ func check_target():
 			clear_path()
 			on_attack()
 			# on_idle()
-		elif dist < 400:
+		elif dist < ar * 3 and not idle:
 			attacking = false
 			clear_path()
 		else:
@@ -259,7 +269,7 @@ func check_in_range():
 		if target_enemy:
 			target_enemy_path = target_enemy.get_path()
 			if get_pos().distance_to(target_enemy.get_pos()) > ar:
-				path = root.get_node("Map").get_simple_path(get_pos(), target_enemy.get_pos())
+				path = root.get_node("Map").get_simple_path(parent.get_pos(), target_enemy.get_pos())
 		else:
 			target_enemy_path = null
 

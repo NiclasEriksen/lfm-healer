@@ -40,16 +40,19 @@ func cleanup():
 	get_node("HUD").clear()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Objects").get_child_count())
-	for o in get_node("Objects").get_children():
-		o.free()
+	if get_node("Objects").get_child_count():
+		for o in get_node("Objects").get_children():
+			o.free()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Actors").get_child_count())
-	for a in get_node("Actors").get_children():
-		a.free()
+	if get_node("Actors").get_child_count():
+		for a in get_node("Actors").get_children():
+			a.free()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Effects").get_child_count())
-	for e in get_node("Effects").get_children():
-		e.free()
+	if get_node("Effects").get_child_count():
+		for e in get_node("Effects").get_children():
+			e.free()
 
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
@@ -107,7 +110,7 @@ func spawn_actor(actor_type, alliance):
 		p = get_node("Map/FriendlySpawn").get_pos()
 	elif alliance == "enemy":
 		p = get_node("Map/EnemySpawn").get_pos()
-	p += Vector2(0, rand_range(-200, 200))
+	p += Vector2(0, rand_range(-150, 150))
 
 	if actor:
 		if Globals.get("debug_mode"):
