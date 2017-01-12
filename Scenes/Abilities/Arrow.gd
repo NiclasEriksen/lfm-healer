@@ -17,7 +17,7 @@ func _process(dt):
 	if target:
 		if target.get_ref():
 			var target_node = target.get_ref()
-			target_pos = target_node.get_pos()
+			target_pos = target_node.get_body_pos()
 			if flown >= flytime:
 				if effect_module:
 					if effect_module.get_ref() and target.get_ref().has_node("StatsModule"):

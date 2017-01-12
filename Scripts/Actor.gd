@@ -59,8 +59,8 @@ func get_body_pos():
 func fire_projectile(target):
 	if projectile and has_node("Attack") and target.has_node("StatsModule"):
 		var a = projectile_scene.instance()
-		var dist_scale = get_pos().distance_to(target.get_pos()) / get_node("StatsModule").get_actual("attack_range")
-		a.set_pos(get_pos())
+		var dist_scale = get_body_pos().distance_to(target.get_body_pos()) / get_node("StatsModule").get_actual("attack_range")
+		a.set_pos(get_body_pos())
 		a.set_alliance(get_allegiance())
 		if has_node("Debuff"):
 			a.init(target, get_node("Attack"), get_node("Debuff"))

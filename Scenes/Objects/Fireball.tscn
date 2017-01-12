@@ -11,7 +11,7 @@ radius = 45.0
 [sub_resource type="CircleShape2D" id=2]
 
 custom_solver_bias = 0.0
-radius = 75.0
+radius = 85.0
 
 [sub_resource type="ColorRamp" id=3]
 

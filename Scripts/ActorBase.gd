@@ -16,8 +16,9 @@ var target_enemy = null
 var target_enemy_path = null
 var healthy = true
 var direction = Vector2(0, 0)
-onready var RAYCAST_LENGTH = 3 * get_parent().get_node("CollisionShape2D").get_shape().get_radius()
-var AVOIDANCE_FORCE = 0.8
+#onready var RAYCAST_LENGTH = 3 * get_parent().get_node("CollisionShape2D").get_shape().get_radius()
+var RAYCAST_LENGTH = 60
+var AVOIDANCE_FORCE = 0.2
 var adjusted_angle = 0.0
 var attack_cd = 0.0
 var flip_cd = 0.0
@@ -165,6 +166,7 @@ func check_los():
 	adjusted_angle = 0
 	if not get_tree().is_editor_hint():
 		var rcc = get_node("RayCast2DCenter")
+		rcc.set_pos(parent.get_node("CollisionShape2D").get_pos())
 		rcc.set_cast_to(direction * get_scale() * RAYCAST_LENGTH)
 		rcc.force_raycast_update()
 		if rcc.is_colliding():
@@ -180,17 +182,11 @@ func check_los():
 			else:
 				a.x = realpos.x - c.get_pos().x
 				a.y = realpos.y - c.get_pos().y
-			a = a.normalized() * get_scale()
+			a = a.normalized()
 			print("d:", direction.angle(), " a.a:", a.angle(), " v.a:", realpos.angle_to(c.get_pos()))
 			adjusted_angle = direction.angle() - a.angle() * AVOIDANCE_FORCE
 
 	return direction.rotated(adjusted_angle)
-
-func test_angle(rc, a):
-	var dir = direction.rotated(deg2rad(a)) * 50
-	rc.set_cast_to(dir)
-	rc.force_raycast_update()
-	return not rc.is_colliding()
 
 func set_sprite_texture(tex):
 	spritesheet = tex
