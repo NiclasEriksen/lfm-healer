@@ -121,10 +121,11 @@ func _process(dt):
 			self.attack_cd -= dt
 
 func _fixed_process(dt):
+	var adjusted = direction
 	if not attacking and enabled:
-		if not path.size():
-			check_los()
-		var movement = direction
+		if not path.size() or (idle and path.size()):
+			adjusted = check_los()
+		var movement = adjusted
 		if stats:
 			movement *= stats.get_actual("movement_speed")
 		else:
@@ -142,7 +143,7 @@ func _fixed_process(dt):
 			on_walk()
 		else:
 			# check_los()
-			parent.move_and_slide(direction * moved.length())
+			parent.move_and_slide(adjusted * moved.length())
 			on_idle()
 	update()
 
@@ -155,6 +156,7 @@ func setup_raycast():
 
 
 func check_los():
+	var adjusted_dir = direction
 	if not get_tree().is_editor_hint():
 		var rcc = get_node("RayCast2DCenter")
 		var rcl = get_node("RayCast2DLeft")
@@ -165,45 +167,32 @@ func check_los():
 #		for i in range(4):
 		var angle = direction.angle()
 		var success = true
-		rcl.set_pos((rcc.get_pos() - Vector2(r, 0).rotated(angle)))
-		rcr.set_pos((rcc.get_pos() + Vector2(r, 0).rotated(angle)))
+		print(Vector2(0, 1).rotated(PI))
+		rcl.set_pos(rcc.get_pos())
+		rcr.set_pos(rcc.get_pos())
 		rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(angle)))
-		rcl.set_cast_to((rcl.get_pos() + Vector2(0, 2*r).rotated(angle)))
-		rcr.set_cast_to((rcr.get_pos() + Vector2(0, 2*r).rotated(angle)))
+		rcr.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle - PI / 8))
+		rcl.set_cast_to(rcc.get_pos() + Vector2(0, 3*r).rotated(angle + PI / 8))
 		for rc in [rcl, rcc, rcr]:
 			rc.force_raycast_update()
 #				if rc.is_colliding():
-		if rcr.is_colliding() and rcl.is_colliding() and rcc.is_colliding():
-			direction *= -1
+		if not rcr.is_colliding() == rcl.is_colliding() and rcc.is_colliding():
+			if rcr.is_colliding():
+				adjusted_dir = direction.rotated(PI / 2)
+			elif rcl.is_colliding():
+				adjusted_dir = direction.rotated(-(PI / 2))
+		elif rcc.is_colliding() and not rcl.is_colliding() and not rcr.is_colliding():
+			adjusted_dir *= -1
 		elif rcr.is_colliding() and rcl.is_colliding():
-			pass
+			if randf() > 0.5:
+				adjusted_dir = direction.rotated(-(PI / 2))
+			else:
+				adjusted_dir = direction.rotated(PI / 2)
 		elif rcr.is_colliding():
-			direction = direction.rotated(angle - PI / 4)
+			adjusted_dir = direction.rotated(PI / 4)
 		elif rcl.is_colliding():
-			direction = direction.rotated(angle + PI / 4)
-			
-#					success = false
-#					break
-#			if success:
-#				set_direction(Vector2(cos(angle), sin(angle)))
-#			else:
-#				success = true
-#				var opp_angle = -angle
-#				rcl.set_pos((rcc.get_pos() - Vector2(r, 0).rotated(opp_angle)))
-#				rcr.set_pos((rcc.get_pos() + Vector2(r, 0).rotated(opp_angle)))
-#				rcc.set_cast_to((rcc.get_pos() + Vector2(0, 2*r).rotated(opp_angle)))
-#				rcl.set_cast_to((rcl.get_pos() + Vector2(0, 3*r).rotated(opp_angle)))
-#				rcr.set_cast_to((rcr.get_pos() + Vector2(0, 3*r).rotated(opp_angle)))
-#				for rc in [rcl, rcc, rcr]:
-#					rc.force_raycast_update()
-#					if rc.is_colliding():
-#						success = false
-#						break
-#				if success:
-#					set_direction(Vector2(cos(angle), sin(angle)))
-#		rcc.set_enabled(false)
-#		rcl.set_enabled(false)
-#		rcr.set_enabled(false)
+			adjusted_dir = direction.rotated(-(PI / 4))
+	return adjusted_dir
 
 func test_angle(rc, a):
 	var dir = direction.rotated(deg2rad(a)) * 50
