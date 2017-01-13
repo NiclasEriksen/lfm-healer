@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://Scripts/MoveModule.gd" type="Script" id=1]
+
+[node name="MoveModule" type="Node2D"]
+
+script/script = ExtResource( 1 )
+AVOID_COLLISION = false
+AVOID_FORCE = 0.5
+RAYCAST_LENGTH = 60.0
+
+[node name="Timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+layer_mask = 1
+type_mask = 15
+
+

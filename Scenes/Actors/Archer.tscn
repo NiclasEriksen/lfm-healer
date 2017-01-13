@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Scenes/Actors/Archer.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Modules/StatusEffect.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -72,6 +73,10 @@ tick_interval = 5.0
 effect_stat = "movement_speed"
 amount = -20.0
 time = 2.0
+
+[node name="MoveModule" parent="." instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 0, 18 )
 
 
 [editable path="ActorBase"]
