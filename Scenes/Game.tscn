@@ -82,6 +82,8 @@ polygon = Vector2Array( -38.1201, -43.0969, 38.5421, -45.083, 39.3366, 44.2901, 
 shape_range = Vector2( 0, 0 )
 trigger = false
 
+[connection signal="spell_cd_changed" from="." to="HUD" method="_on_Game_spell_cd_changed"]
+
 [connection signal="ability_tapped" from="HUD/AbilityBar" to="." method="_on_AbilityBar_ability_tapped"]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

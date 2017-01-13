@@ -11,6 +11,17 @@ func _ready():
 	pass
 
 
+func update_spell_cd(id, val):
+	var box = get_node("HBoxContainer")
+	if id == 1:
+		box.get_node("Ability1").get_node("ProgressBar").set_val(val)
+	if id == 2:
+		box.get_node("Ability2").get_node("ProgressBar").set_val(val)
+	if id == 3:
+		box.get_node("Ability3").get_node("ProgressBar").set_val(val)
+	if id == 4:
+		box.get_node("Ability4").get_node("ProgressBar").set_val(val)
+
 func _on_Ability1_button_down():
 	emit_signal("ability_tapped", 1)
 

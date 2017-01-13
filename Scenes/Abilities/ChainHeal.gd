@@ -5,6 +5,13 @@ onready var hud = get_tree().get_root().get_node("Game").get_node("HUD")
 var healeffect = load("res://Scenes/Effects/HealEffect2.tscn")
 export var max_jump_range = 200
 export var max_jumps = 3
+var slot = 0
+
+func get_slot():
+	return slot
+
+func set_slot(s):
+	slot = s
 
 func _ready():
 	set_process(true)

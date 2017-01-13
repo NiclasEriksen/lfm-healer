@@ -13,8 +13,18 @@ var mage_actor = load("res://Scenes/Actors/Mage.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 onready var cam = get_node("Camera2D")
+var spell1_cd = 0.0
+var spell2_cd = 0.0
+var spell3_cd = 0.0
+var spell4_cd = 0.0
+var max_spell1_cd = 0.0
+var max_spell2_cd = 1.5
+var max_spell3_cd = 3.0
+var max_spell4_cd = 2.0
+signal spell_cd_changed(spell_id, pts)
 
 func _ready():
+	var i = 1
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
@@ -68,6 +78,27 @@ func _process(dt):
 
 	for f in friendlies:
 		f.get_node("ActorBase").get_node("Selected").set_enabled(false)
+	
+	if spell1_cd > 0:
+		emit_signal("spell_cd_changed", 1, spell1_cd / max_spell1_cd * 100)
+		spell1_cd -= dt
+	else:
+		spell1_cd = 0
+	if spell2_cd > 0:
+		emit_signal("spell_cd_changed", 2, spell2_cd / max_spell2_cd * 100)
+		spell2_cd -= dt
+	else:
+		spell2_cd = 0
+	if spell3_cd > 0:
+		emit_signal("spell_cd_changed", 3, spell3_cd / max_spell3_cd * 100)
+		spell3_cd -= dt
+	else:
+		spell3_cd = 0
+	if spell4_cd > 0:
+		emit_signal("spell_cd_changed", 4, spell4_cd / max_spell4_cd * 100)
+		spell4_cd -= dt
+	else:
+		spell4_cd = 0
 
 func _input(event):
 	#event = make_input_local(event)
@@ -82,6 +113,15 @@ func _input(event):
 #				dragged_ability = null
 		
 		if not event.pressed and dragged_ability:
+			var i = dragged_ability.get_slot()
+			if i == 1:
+				spell1_cd = max_spell1_cd
+			elif i == 2:
+				spell2_cd = max_spell2_cd
+			elif i == 3:
+				spell3_cd = max_spell3_cd
+			elif i == 4:
+				spell4_cd = max_spell4_cd
 			dragged_ability.trigger()
 			dragged_ability = false
 	elif event.type == InputEvent.SCREEN_DRAG:
@@ -150,13 +190,29 @@ func _on_Timer_timeout():
 
 func _on_AbilityBar_ability_tapped(slot):
 	var pos = get_global_mouse_pos()
+	if slot == 1:
+		if spell1_cd > 0:
+			return
+	elif slot == 2:
+		if spell2_cd > 0:
+			return
+	elif slot == 3:
+		if spell3_cd > 0:
+			return
+	elif slot == 4:
+		if spell4_cd > 0:
+			return
+
 	var spell = self.spells[slot - 1]
-	spawn_ability(spell, pos)
+	if spell:
+		spell = spell.instance()
+		spell.set_slot(slot)
+		spawn_ability(spell, pos)
 
 
 func spawn_ability(ability, pos):
-	if ability:
-		self.dragged_ability = ability.instance()
-		self.dragged_ability.set_pos(pos)
-		self.dragged_ability.set_active(false)
-		self.get_node("Effects").add_child(self.dragged_ability)
+	dragged_ability = ability
+	self.dragged_ability.set_pos(pos)
+	self.dragged_ability.set_active(false)
+	
+	self.get_node("Effects").add_child(self.dragged_ability)

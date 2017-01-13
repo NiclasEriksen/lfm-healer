@@ -2,6 +2,13 @@ extends Node2D
 var targets = []
 var active = false
 var healeffect = load("res://Scenes/Effects/HealEffect1.tscn")
+var slot = 0
+
+func get_slot():
+	return slot
+
+func set_slot(s):
+	slot = s
 
 func _ready():
 	set_process(true)

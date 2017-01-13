@@ -37,3 +37,8 @@ func _on_Button2_pressed():
 
 func _on_RestartButton_pressed():
 	get_tree().get_root().get_node("Game").newgame()
+
+
+func _on_Game_spell_cd_changed( spell_id, pts ):
+	if has_node("AbilityBar"):
+		get_node("AbilityBar").update_spell_cd(spell_id, pts)
