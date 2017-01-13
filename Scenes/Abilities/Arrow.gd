@@ -40,6 +40,7 @@ func _process(dt):
 		var yoff = (sin(x_osc) * y_offset).rotated(newpos.angle())
 		newpos -= yoff
 		set_pos(newpos)
+		set_z(newpos.y)
 		var a = (target_pos - start_pos).angle() + PI + cos(x_osc) * (PI / 12) + PI / 2
 		get_node("Sprite").set_rot(a)
 		flown += dt

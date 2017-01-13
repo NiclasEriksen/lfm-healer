@@ -27,3 +27,13 @@ func add_hpbar(owner):
 
 func _on_Button_pressed():
 	Globals.set("debug_mode", not Globals.get("debug_mode"))
+
+
+func _on_Button2_pressed():
+	get_tree().set_pause(
+		not get_tree().is_paused()
+	)
+
+
+func _on_RestartButton_pressed():
+	get_tree().get_root().get_node("Game").newgame()

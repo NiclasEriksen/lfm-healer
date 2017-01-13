@@ -44,6 +44,7 @@ func _process(dt):
 #		var yoff = (sin(x_osc) * y_offset).rotated(newpos.angle())
 #		newpos -= yoff
 		set_pos(newpos)
+		set_z(newpos.y)
 #		var a = (target_pos - start_pos).angle() + PI + cos(x_osc) * (PI / 12) + PI / 2
 #		get_node("Sprite").set_rot(a)
 		flown += dt
@@ -55,6 +56,9 @@ func _process(dt):
 func explode(p):
 	var ef = explode_effect.instance()
 	ef.set_pos(p)
+	if target.get_ref():
+		ef.set_z(target.get_ref().get_z())
+
 	get_tree().get_root().get_node("Game/Effects").add_child(ef)
 
 func init(t, em, dm):

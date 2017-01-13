@@ -196,7 +196,7 @@ func on_death():
 	if Globals.get("debug_mode"):
 		print(self, " died.")
 	var de = death_effect.instance()
-	de.set_pos(parent.get_pos())
+	de.set_pos(parent.get_body_pos())
 	if has_death_anim:
 		var tex = get_node("Sprite").get_texture()
 		var hf = get_node("Sprite").get_hframes()
@@ -273,7 +273,7 @@ func on_hit(tar):
 		he = parent.hit_effect_scene.instance()
 	if he:
 		he.set_z(parent.get_z())
-		he.set_pos(self.get_pos())
+		he.set_pos(parent.get_body_pos())
 		get_tree().get_root().get_node("Game/Effects").add_child(he)
 
 		if he.has_node("Particles2D") and tar:

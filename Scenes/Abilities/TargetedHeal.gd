@@ -48,6 +48,7 @@ func trigger():
 				)
 			target.get_node("ActorBase").on_heal()
 			var he = healeffect.instance()
-			he.set_pos(target.get_pos())
+			he.set_pos(target.get_body_pos())
+			he.set_z(target.get_z())
 			get_tree().get_root().get_node("Game/Effects").add_child(he)
 	queue_free()
