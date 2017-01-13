@@ -82,7 +82,7 @@ AVOID_FORCE = 0.5
 RAYCAST_LENGTH = 50.0
 STALL_TRESHOLD = 0.2
 PATH_REACH_TRESHOLD = 10.0
-stats_node = null
+stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
 
 

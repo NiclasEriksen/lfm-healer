@@ -119,7 +119,8 @@ func _fixed_process(dt):
 		if AVOID_COLLISION:
 			dir = steer(dir)
 		move(dir)
-		parent.set_z(parent.get_body_pos().y)
+		if not get_tree().is_editor_hint():
+			parent.set_z(parent.get_body_pos().y)
 
 func move(dir):
 	if stats:
