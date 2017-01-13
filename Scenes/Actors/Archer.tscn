@@ -32,7 +32,7 @@ hit_effect = null
 
 primary_stat = "agi"
 max_hp = 15.0
-base_movement_speed = 38.0
+base_movement_speed = 190.0
 base_attack_speed = 2.75
 base_attack_range = 320.0
 

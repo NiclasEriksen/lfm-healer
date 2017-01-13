@@ -23,3 +23,7 @@ func add_hpbar(owner):
 	hpb.register(owner)
 	get_node("HPBars").add_child(hpb)
 
+
+
+func _on_Button_pressed():
+	Globals.set("debug_mode", not Globals.get("debug_mode"))

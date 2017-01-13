@@ -60,7 +60,7 @@ shadow/item_mask = 1
 
 primary_stat = "int"
 max_hp = 12.0
-base_movement_speed = 35.0
+base_movement_speed = 180.0
 base_attack_speed = 3.5
 base_attack_range = 300.0
 

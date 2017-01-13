@@ -30,7 +30,7 @@ hit_effect = null
 
 level = 2
 max_hp = 18.0
-base_movement_speed = 45.0
+base_movement_speed = 225.0
 base_attack_speed = 1.2
 
 [node name="HPBarPos" type="Position2D" parent="."]
@@ -64,13 +64,5 @@ STALL_TRESHOLD = 0.2
 PATH_REACH_TRESHOLD = 10.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
-
-[connection signal="cleared_target" from="ActorBase" to="MoveModule" method="_on_ActorBase_cleared_target"]
-
-[connection signal="targeted_enemy" from="ActorBase" to="MoveModule" method="_on_ActorBase_targeted_enemy"]
-
-[connection signal="moved" from="MoveModule" to="ActorBase" method="_on_MoveModule_moved"]
-
-[connection signal="stalled" from="MoveModule" to="ActorBase" method="_on_MoveModule_stalled"]
 
 

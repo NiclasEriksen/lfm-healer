@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=4]
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -29,5 +30,31 @@ margin/left = 242.0
 margin/top = 404.0
 margin/right = 558.0
 margin/bottom = 484.0
+
+[node name="Button" type="Button" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 12.0
+margin/top = 12.0
+margin/right = 37.0
+margin/bottom = 37.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+
+[node name="Sprite" type="Sprite" parent="Button"]
+
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+offset = Vector2( 25, 25 )
+vframes = 10
+hframes = 11
+frame = 18
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 
 

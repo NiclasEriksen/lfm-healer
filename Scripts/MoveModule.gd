@@ -14,7 +14,7 @@ var parent = null
 var target = null
 var stats = null
 export(NodePath) var stats_node = null setget set_stat_node, get_stat_node
-export(float) var BASE_MOVEMENT_SPEED = 50 setget set_base_ms, get_base_ms
+export(float) var BASE_MOVEMENT_SPEED = 250 setget set_base_ms, get_base_ms
 var raycast = null
 var path = []
 
@@ -71,7 +71,8 @@ func get_walk_path():
 func set_stat_node(s):
 	stats_node = s
 	if s:
-		stats = get_node(s)
+		if has_node(s):
+			stats = get_node(s)
 
 func get_stat_node():
 	return stats_node
@@ -118,15 +119,15 @@ func _fixed_process(dt):
 		set_direction(dir)
 		if AVOID_COLLISION:
 			dir = steer(dir)
-		move(dir)
 		if not get_tree().is_editor_hint():
+			move(dir, dt)
 			parent.set_z(parent.get_body_pos().y)
 
-func move(dir):
+func move(dir, dt):
 	if stats:
-		dir *= get_node(get_stat_node()).get_actual("movement_speed")
+		dir *= get_node(get_stat_node()).get_actual("movement_speed") * 10 * dt
 	else:
-		dir *= BASE_MOVEMENT_SPEED
+		dir *= BASE_MOVEMENT_SPEED * dt
 
 	if parent:
 		var moved = parent.move_and_slide(dir)
