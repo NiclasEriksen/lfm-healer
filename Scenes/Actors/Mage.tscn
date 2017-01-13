@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Scenes/Actors/Mage.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Effects/smoke_large.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Actors/crossbower_red.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -77,7 +78,7 @@ has_death_anim = true
 [node name="Sprite" parent="ActorBase"]
 
 texture = ExtResource( 6 )
-frame = 7
+frame = 1
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
@@ -122,6 +123,17 @@ params/anim_initial_pos = 0.0
 randomness/direction = 0.2
 randomness/orbit_velocity = 0.3
 color/color_ramp = SubResource( 2 )
+
+[node name="MoveModule" parent="." instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 0, 24 )
+AVOID_COLLISION = false
+AVOID_FORCE = 0.5
+RAYCAST_LENGTH = 60.0
+STALL_TRESHOLD = 0.2
+PATH_REACH_TRESHOLD = 10.0
+stats_node = null
+BASE_MOVEMENT_SPEED = 50
 
 
 [editable path="ActorBase"]

@@ -97,6 +97,7 @@ func _input(event):
 func spawn_actor(actor_type, alliance):
 	var actor = null
 	var p = Vector2(0, 0)
+	var p_to = Vector2(0, 0)
 	if actor_type == "tank":
 		actor = tank_actor.instance()
 	elif actor_type == "enemy":
@@ -108,8 +109,10 @@ func spawn_actor(actor_type, alliance):
 
 	if alliance == "friendly":
 		p = get_node("Map/FriendlySpawn").get_pos()
+		p_to= get_node("Map/EnemySpawn").get_pos()
 	elif alliance == "enemy":
 		p = get_node("Map/EnemySpawn").get_pos()
+		p_to = get_node("Map/FriendlySpawn").get_pos()
 	p += Vector2(0, rand_range(-150, 150))
 
 	if actor:
@@ -117,6 +120,10 @@ func spawn_actor(actor_type, alliance):
 			print("Spawning actor: ", actor_type)
 		actor.change_allegiance(alliance)
 		actor.set_pos(p)
+		if actor.has_node("MoveModule"):
+			var path = get_node("Map").get_simple_path(p, p_to)
+			print(path, "  ", p, "  ", p_to)
+			actor.get_node("MoveModule").set_walk_path(path)
 		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
 		get_node("Actors").add_child(actor)
 	else:

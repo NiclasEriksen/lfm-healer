@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scenes/Actors/TestEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Actors/bedugga_stock_2.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -15,7 +16,7 @@ radius = 10.0
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 7 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 18 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -38,7 +39,7 @@ transform/pos = Vector2( 0, -33 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 0, 7 )
+transform/pos = Vector2( 0, 18 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -52,5 +53,24 @@ tile_dimensions = Vector2( 5, 3 )
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 
 amount = -4.0
+
+[node name="MoveModule" parent="." instance=ExtResource( 6 )]
+
+transform/pos = Vector2( 0, 18 )
+AVOID_COLLISION = true
+AVOID_FORCE = 0.5
+RAYCAST_LENGTH = 60.0
+STALL_TRESHOLD = 0.2
+PATH_REACH_TRESHOLD = 10.0
+stats_node = NodePath("../StatsModule")
+BASE_MOVEMENT_SPEED = 50
+
+[connection signal="cleared_target" from="ActorBase" to="MoveModule" method="_on_ActorBase_cleared_target"]
+
+[connection signal="targeted_enemy" from="ActorBase" to="MoveModule" method="_on_ActorBase_targeted_enemy"]
+
+[connection signal="moved" from="MoveModule" to="ActorBase" method="_on_MoveModule_moved"]
+
+[connection signal="stalled" from="MoveModule" to="ActorBase" method="_on_MoveModule_stalled"]
 
 

@@ -77,3 +77,8 @@ func _ready():
 	if has_node("ActorBase"):
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack")
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack_effect")
+		if has_node("MoveModule"):
+			get_node("MoveModule").connect("moved", get_node("ActorBase"), "_on_MoveModule_moved")
+			get_node("MoveModule").connect("stalled", get_node("ActorBase"), "_on_MoveModule_stalled")
+			get_node("ActorBase").connect("targeted_enemy", get_node("MoveModule"), "_on_ActorBase_targeted_enemy")
+			get_node("ActorBase").connect("cleared_target", get_node("MoveModule"), "_on_ActorBase_cleared_target")
