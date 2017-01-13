@@ -36,6 +36,8 @@ func _process(delta):
 			set_scale(friendly_scale)
 		var pos = o.get_pos()
 		var val = (o.get_node("StatsModule").get("hp") / o.get_node("StatsModule").get_actual("max_hp")) * 100.0
+		if val < 1:
+			print(o.get_node("StatsModule").get("hp"), "   ", o.get_node("StatsModule").get_actual("max_hp"))
 		if o.get_node("HPBarPos"):
 			pos = cam.get_viewport().get_canvas_transform().xform(pos)
 			set_pos(pos + o.get_node("HPBarPos").get_pos())

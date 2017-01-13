@@ -2,11 +2,11 @@ extends Node
 var buff_module = load("res://Scripts/BuffModule.gd")
 var effect_module = load("res://Scripts/EffectModule.gd")
 
-var lvl_scale = 1.2
+var lvl_scale = 1.05
 var str_scale = 1.1
 var int_scale = 1.1
 var agi_scale = 1.1
-export(int) var level = 1
+export(int) var level = 1 setget set_level, get_level
 export(String, "str", "int", "agi") var primary_stat = "str"
 export(int) var base_strength = 0
 export(int) var base_intelligence = 0
@@ -53,12 +53,16 @@ var active_effects = []
 # instead of setting base stat directly, most cases should be handled by passing modifier objects
 # such as stats on gear, talent traits etc.
 
+func set_level(lvl):
+	level = lvl
 
+func get_level():
+	return level
 
 func _ready():
 	self.update_final_stats()
-	self.hp = self.max_hp
-	self.mp = self.max_mp
+	hp = get_actual("max_hp")
+	mp = get_actual("max_mp")
 	set_process(true)
 	set_fixed_process(true)
 
@@ -84,7 +88,6 @@ func scale_stat(stat, scal):
 	var bonus = 0.0 + stat
 	if level > 1:
 		bonus *= pow(scal, level - 1)
-	# print(level, "--", scal, "--", stat, "--", bonus)
 	return bonus
 
 func update_final_stats():
@@ -109,15 +112,13 @@ func update_final_stats():
 		attack_range=base_attack_range,
 		movement_speed=base_movement_speed,
 	}
-	max_hp = final_stats["max_hp"]
-	max_mp = final_stats["max_mp"]
 
 
 func _process(delta):
-	if hp > max_hp:
-		hp = max_hp
-	if mp > max_mp:
-		mp = max_mp
+	if hp > get_actual("max_hp"):
+		hp = get_actual("max_hp")
+	if mp > get_actual("max_mp"):
+		mp = get_actual("max_mp")
 	check_negatives()
 	for wr in get_children():
 		if wr.is_buff:
@@ -134,23 +135,23 @@ func handle_status(wr, dt):
 		wr.queue_free()
 
 func handle_buff(wr, dt):
-		var buff_result = [false, false]
-		buff_result = wr.buff_update(dt)
-		if not buff_result[0]:
+	var buff_result = [false, false]
+	buff_result = wr.buff_update(dt)
+	if not buff_result[0]:
 #			print("Removing buff.")
-			if wr.effect_type == "stun":
-				immobile = false
-			wr.queue_free()
-		elif buff_result[1]:
+		if wr.effect_type == "stun":
+			immobile = false
+		wr.queue_free()
+	elif buff_result[1]:
 #			print("Applying tick.")
-			if not wr.effect_stat == "movement_speed" and not wr.effect_stat == "attack_speed":
-				var e = effect_module.new()
-				e.amount = wr.amount * (wr.tick_interval / wr.time)
-				e.effect_stat = wr.effect_stat
-				e.effect_type = wr.effect_type
-				apply_effect(e, null)
-			else:
-				print(wr.effect_stat)
+		if not wr.effect_stat == "movement_speed" and not wr.effect_stat == "attack_speed":
+			var e = effect_module.new()
+			e.amount = wr.amount * (wr.tick_interval / wr.time)
+			e.effect_stat = wr.effect_stat
+			e.effect_type = wr.effect_type
+			apply_effect(e, null)
+		else:
+			print(wr.effect_stat)
 
 func _fixed_process(delta):
 	pass

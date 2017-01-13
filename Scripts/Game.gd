@@ -83,21 +83,29 @@ func _process(dt):
 		emit_signal("spell_cd_changed", 1, spell1_cd / max_spell1_cd * 100)
 		spell1_cd -= dt
 	else:
+		if spell1_cd < 0:
+			emit_signal("spell_cd_changed", 1, 0)
 		spell1_cd = 0
 	if spell2_cd > 0:
 		emit_signal("spell_cd_changed", 2, spell2_cd / max_spell2_cd * 100)
 		spell2_cd -= dt
 	else:
+		if spell2_cd < 0:
+			emit_signal("spell_cd_changed", 2, 0)
 		spell2_cd = 0
 	if spell3_cd > 0:
 		emit_signal("spell_cd_changed", 3, spell3_cd / max_spell3_cd * 100)
 		spell3_cd -= dt
 	else:
+		if spell3_cd < 0:
+			emit_signal("spell_cd_changed", 3, 0)
 		spell3_cd = 0
 	if spell4_cd > 0:
 		emit_signal("spell_cd_changed", 4, spell4_cd / max_spell4_cd * 100)
 		spell4_cd -= dt
 	else:
+		if spell4_cd < 0:
+			emit_signal("spell_cd_changed", 4, 0)
 		spell4_cd = 0
 
 func _input(event):
@@ -142,6 +150,7 @@ func spawn_actor(actor_type, alliance):
 		actor = tank_actor.instance()
 	elif actor_type == "enemy":
 		actor = enemy_actor.instance()
+		actor.get_node("StatsModule").set_level(10)
 	elif actor_type == "archer":
 		actor = archer_actor.instance()
 	elif actor_type == "mage":
