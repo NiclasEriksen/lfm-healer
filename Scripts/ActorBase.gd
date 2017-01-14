@@ -273,7 +273,7 @@ func on_hit(tar):
 	if parent.hit_effect_scene:
 		he = parent.hit_effect_scene.instance()
 	if he:
-		he.set_z(parent.get_z())
+		he.set_z(parent.get_z() + 1)
 		he.set_pos(parent.get_body_pos())
 		get_tree().get_root().get_node("Game/Effects").add_child(he)
 

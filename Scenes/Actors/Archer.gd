@@ -7,6 +7,5 @@ func _ready():
 	pass
 
 
-
 func _on_ActorBase_attack(target):
 	fire_projectile(target)
