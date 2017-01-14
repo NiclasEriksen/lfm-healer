@@ -28,7 +28,7 @@ hit_effect = null
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-level = 2
+level = 5
 max_hp = 15.0
 base_movement_speed = 225.0
 base_attack_speed = 1.2

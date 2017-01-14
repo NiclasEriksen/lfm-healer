@@ -8,7 +8,7 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 24.0
+radius = 32.0
 
 [node name="ChainHeal" type="Node2D"]
 

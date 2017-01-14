@@ -150,12 +150,12 @@ func spawn_actor(actor_type, alliance):
 		actor = tank_actor.instance()
 	elif actor_type == "enemy":
 		actor = enemy_actor.instance()
-		actor.get_node("StatsModule").set_level(10)
 	elif actor_type == "archer":
 		actor = archer_actor.instance()
 	elif actor_type == "mage":
 		actor = mage_actor.instance()
 
+#	actor.get_node("StatsModule").set_level(10)
 	if alliance == "friendly":
 		p = get_node("Map/FriendlySpawn").get_pos()
 		p_to= get_node("Map/EnemySpawn").get_pos()
@@ -198,6 +198,8 @@ func _on_Timer_timeout():
 
 
 func _on_AbilityBar_ability_tapped(slot):
+	if get_tree().is_paused():
+		return
 	var pos = get_global_mouse_pos()
 	if slot == 1:
 		if spell1_cd > 0:
