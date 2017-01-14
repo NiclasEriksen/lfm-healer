@@ -184,7 +184,7 @@ func on_attack():
 	attacking = true
 	idle = false
 	if not get_node("AnimationPlayer").get_current_animation() == "attack" or not get_node("AnimationPlayer").is_playing():
-		if not get_node("AnimationPlayer").get_current_animation() == "idle":
+		if not get_node("AnimationPlayer").get_current_animation() in ["idle", "hit"]:
 			get_node("AnimationPlayer").play("idle")
 
 func on_death():
@@ -268,6 +268,7 @@ func _on_ActorBase_attack(tar):
 		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
+	get_node("EffectPlayer").play("hit")
 	var he = null
 	if parent.hit_effect_scene:
 		he = parent.hit_effect_scene.instance()
@@ -280,7 +281,7 @@ func on_hit(tar):
 #			he.set_rot(tar.get_pos().angle_to(get_pos()))
 			he.get_node("Particles2D").set_param(
 				he.get_node("Particles2D").PARAM_DIRECTION,
-				parent.get_body_pos().angle_to(tar.get_body_pos()) - PI / 2
+				parent.get_body_pos().angle_to(tar.get_body_pos())
 			)
 
 func _on_MoveModule_stalled():
