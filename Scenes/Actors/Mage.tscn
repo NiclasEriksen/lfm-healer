@@ -23,7 +23,7 @@ colors = ColorArray( 0.28125, 0, 0, 1, 0.742188, 0.10437, 0.10437, 1, 0.917969, 
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 22 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 15 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -85,7 +85,7 @@ transform/pos = Vector2( 0, -35 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 0, 22 )
+transform/pos = Vector2( 0, 15 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -99,28 +99,29 @@ tick_interval = 0.5
 
 [node name="Particles2D" type="Particles2D" parent="."]
 
-transform/pos = Vector2( 2, 33 )
-config/amount = 64
-config/lifetime = 2.0
-config/half_extents = Vector2( 14, -6 )
+transform/pos = Vector2( -2, 33 )
+config/amount = 80
+config/lifetime = 1.0
+config/half_extents = Vector2( 18, -2 )
+config/local_space = false
 params/direction = 180.0
 params/spread = 0.0
-params/linear_velocity = 40.0
+params/linear_velocity = 90.0
 params/spin_velocity = 0.0
-params/orbit_velocity = 0.1
+params/orbit_velocity = 0.3
 params/gravity_direction = 180.0
 params/gravity_strength = 9.8
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
 params/initial_angle = 0.0
-params/initial_size = 2.0
+params/initial_size = 2.5
 params/final_size = 0.8
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/direction = 0.2
-randomness/orbit_velocity = 0.3
+randomness/orbit_velocity = 1.0
 color/color_ramp = SubResource( 2 )
 
 [node name="MoveModule" parent="." instance=ExtResource( 8 )]

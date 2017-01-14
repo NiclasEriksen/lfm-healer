@@ -8,22 +8,21 @@ script/source = "extends Node2D\n\n# class member variables go here, for example
 
 [sub_resource type="ColorRamp" id=2]
 
-offsets = FloatArray( 0, 0.169591, 1 )
-colors = ColorArray( 1, 0.581451, 0.175781, 1, 1, 1, 1, 0.736157, 1, 0.988281, 0.988281, 0 )
+offsets = FloatArray( 0, 0.169591, 0.204678, 0.239766, 0.397661, 0.988304 )
+colors = ColorArray( 0.789063, 0.12068, 0, 1, 0.804688, 0.299941, 0.0534363, 1, 0.992188, 0.727396, 0.352692, 1, 0.316406, 0.0612091, 0.0111237, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
 [sub_resource type="ColorRamp" id=3]
 
 offsets = FloatArray( 0, 0.467836, 1 )
 colors = ColorArray( 1, 0.857178, 0.296875, 1, 1, 0.304688, 0, 1, 0.257812, 0, 0, 0 )
 
-[sub_resource type="ColorRamp" id=6]
+[sub_resource type="ColorRamp" id=4]
 
 offsets = FloatArray( 0.00584795, 0.233918, 1 )
 colors = ColorArray( 0.257812, 0.00100708, 0.00100708, 1, 1, 0, 0, 1, 1, 0.65625, 0, 0 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
-resource/name = "explode"
 length = 1.2
 loop = false
 step = 0.1
@@ -48,7 +47,7 @@ tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 
 length = 1.2
 loop = false
@@ -111,7 +110,7 @@ params/damping = 40.0
 params/initial_angle = 0.0
 params/initial_size = 0.3
 params/final_size = 0.6
-params/hue_variation = 0.2
+params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/direction = 1.0
@@ -125,7 +124,6 @@ color/color_ramp = SubResource( 2 )
 transform/pos = Vector2( 0, 9 )
 config/amount = 128
 config/lifetime = 0.7
-config/emitting = false
 config/half_extents = Vector2( 5, 20 )
 params/direction = 0.0
 params/spread = 180.0
@@ -133,7 +131,7 @@ params/linear_velocity = 120.0
 params/spin_velocity = 1.0
 params/orbit_velocity = 1.0
 params/gravity_direction = 180.0
-params/gravity_strength = 40.0
+params/gravity_strength = 200.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 90.0
@@ -147,6 +145,7 @@ randomness/direction = 1.0
 randomness/spread = 1.0
 randomness/linear_velocity = 1.0
 randomness/spin_velocity = 1.0
+randomness/gravity_direction = 0.3
 color/color_ramp = SubResource( 3 )
 
 [node name="Particles2D3" type="Particles2D" parent="."]
@@ -154,15 +153,14 @@ color/color_ramp = SubResource( 3 )
 transform/pos = Vector2( 0, 9 )
 config/amount = 92
 config/lifetime = 0.7
-config/emitting = false
 config/half_extents = Vector2( 30, -20 )
 params/direction = 180.0
 params/spread = 0.0
-params/linear_velocity = 120.0
+params/linear_velocity = 150.0
 params/spin_velocity = 0.0
-params/orbit_velocity = 0.0
+params/orbit_velocity = 1.0
 params/gravity_direction = 0.0
-params/gravity_strength = 40.0
+params/gravity_strength = 300.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 90.0
@@ -174,15 +172,16 @@ params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/spread = 1.0
 randomness/linear_velocity = 0.5
-color/color_ramp = SubResource( 6 )
+randomness/orbit_velocity = 1.0
+color/color_ramp = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/explode = SubResource( 4 )
-anims/heal = SubResource( 5 )
+anims/explode = SubResource( 5 )
+anims/heal = SubResource( 6 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
