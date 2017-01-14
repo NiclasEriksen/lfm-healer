@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Actors/crossbower_red.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Actors/mage.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=8]
 
@@ -73,7 +73,6 @@ amount = -5.0
 
 editor/display_folded = true
 spritesheet = ExtResource( 6 )
-has_death_anim = true
 
 [node name="Sprite" parent="ActorBase"]
 
