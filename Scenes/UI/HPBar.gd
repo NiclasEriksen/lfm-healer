@@ -42,6 +42,7 @@ func _process(delta):
 			#print(pos, o.get_node("HPBarPos").get_pos())
 		else:
 			set_pos(pos)
+		set_z(pos.y)
 		if not old_val == val:
 			self.old_val = val
 			get_node("TextureProgress").set_value(val)
