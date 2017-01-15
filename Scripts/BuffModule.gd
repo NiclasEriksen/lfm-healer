@@ -11,6 +11,12 @@ var tick_timer = 0.0
 var buff_timer = 0.0
 
 
+func set_amount(a):
+	amount = float(a)
+
+func get_amount():
+	return amount
+
 func _ready():
 	pass
 

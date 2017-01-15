@@ -31,7 +31,8 @@ hit_effect = null
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
 primary_stat = "agi"
-max_hp = 15.0
+max_hp = 16.0
+base_damage = 7.0
 base_movement_speed = 190.0
 base_attack_speed = 2.75
 base_attack_range = 320.0

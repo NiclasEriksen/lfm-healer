@@ -3,7 +3,7 @@ var buff_module = load("res://Scripts/BuffModule.gd")
 var effect_module = load("res://Scripts/EffectModule.gd")
 
 var lvl_scale = 1.05
-var str_scale = 1.1
+var str_scale = 1.05
 var int_scale = 1.1
 var agi_scale = 1.1
 export(int) var level = 1 setget set_level, get_level
@@ -112,6 +112,12 @@ func update_final_stats():
 		attack_range=base_attack_range,
 		movement_speed=base_movement_speed,
 	}
+	if get_parent().has_node("Attack"):
+		var am = get_parent().get_node("Attack")
+		am.set_amount(-get_actual("damage"))
+	if get_parent().has_node("Debuff"):
+		var dm = get_parent().get_node("Debuff")
+		dm.set_amount(-get_actual("damage"))
 
 
 func _process(delta):
@@ -171,6 +177,7 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 		buff.tick_interval = effectmodule.get("tick_interval")
 		buff.time = effectmodule.get("time")
 		add_child(buff)
+		update_final_stats()
 #		print("Added buff.")
 		return
 		

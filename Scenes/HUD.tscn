@@ -90,6 +90,32 @@ vframes = 10
 hframes = 11
 frame = 18
 
+[node name="ChillMode" type="Button" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 165.0
+margin/top = 16.0
+margin/right = 197.0
+margin/bottom = 48.0
+toggle_mode = true
+click_on_press = true
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+
+[node name="Sprite" type="Sprite" parent="ChillMode"]
+
+transform/pos = Vector2( -0.902499, 0 )
+transform/scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+offset = Vector2( 25, 25 )
+vframes = 10
+hframes = 11
+frame = 74
+
 [node name="HPBars" type="CanvasLayer" parent="."]
 
 layer = 1
@@ -113,5 +139,9 @@ margin/bottom = 486.0
 [connection signal="pressed" from="RestartButton" to="." method="_on_RestartButton_pressed"]
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+
+[connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]
+
+[connection signal="toggled" from="ChillMode" to="." method="_on_ChillMode_toggled"]
 
 

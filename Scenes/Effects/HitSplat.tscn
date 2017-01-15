@@ -20,24 +20,25 @@ tracks/1/type = "value"
 tracks/1/path = NodePath("Particles2D:config/emitting")
 tracks/1/interp = 1
 tracks/1/imported = false
-tracks/1/keys = { "times":FloatArray( 0, 0.2 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/1/keys = { "times":FloatArray( 0, 0.1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [node name="HitEffect" type="Node2D"]
 
 [node name="Particles2D" type="Particles2D" parent="."]
 
 transform/pos = Vector2( -0.487686, 0.487671 )
-config/amount = 32
-config/lifetime = 0.3
+config/amount = 64
+config/lifetime = 0.4
 config/emitting = false
 config/half_extents = Vector2( 5, 15 )
+config/local_space = false
 params/direction = 180.0
-params/spread = 30.0
+params/spread = 45.0
 params/linear_velocity = 90.0
 params/spin_velocity = 15.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
-params/gravity_strength = 30.0
+params/gravity_strength = 250.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0

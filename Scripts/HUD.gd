@@ -24,11 +24,6 @@ func add_hpbar(owner):
 	get_node("HPBars").add_child(hpb)
 
 
-
-func _on_Button_pressed():
-	Globals.set("debug_mode", not Globals.get("debug_mode"))
-
-
 func _on_Button2_pressed():
 	get_tree().set_pause(
 		not get_tree().is_paused()
@@ -42,3 +37,11 @@ func _on_RestartButton_pressed():
 func _on_Game_spell_cd_changed( spell_id, pts ):
 	if has_node("AbilityBar"):
 		get_node("AbilityBar").update_spell_cd(spell_id, pts)
+
+
+func _on_ChillMode_toggled( pressed ):
+	Globals.set("chill_mode", pressed)
+
+
+func _on_Button_toggled( pressed ):
+	Globals.set("debug_mode", pressed)

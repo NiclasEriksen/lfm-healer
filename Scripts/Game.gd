@@ -55,14 +55,14 @@ func cleanup():
 			o.free()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Actors").get_child_count())
-	if get_node("Actors").get_child_count():
-		for a in get_node("Actors").get_children():
-			a.free()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Effects").get_child_count())
 	if get_node("Effects").get_child_count():
 		for e in get_node("Effects").get_children():
 			e.free()
+	if get_node("Actors").get_child_count():
+		for a in get_node("Actors").get_children():
+			a.free()
 
 func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
@@ -122,6 +122,8 @@ func _input(event):
 		
 		if not event.pressed and dragged_ability:
 			var i = dragged_ability.get_slot()
+			if Globals.get("chill_mode"):
+				i = 0	# No cooldowns.
 			if i == 1:
 				spell1_cd = max_spell1_cd
 			elif i == 2:
@@ -157,6 +159,9 @@ func spawn_actor(actor_type, alliance):
 
 #	actor.get_node("StatsModule").set_level(10)
 	if alliance == "friendly":
+		if Globals.get("chill_mode") and actor:
+			# Triple level
+			actor.get_node("StatsModule").set_level(10)
 		p = get_node("Map/FriendlySpawn").get_pos()
 		p_to= get_node("Map/EnemySpawn").get_pos()
 	elif alliance == "enemy":
@@ -191,6 +196,9 @@ func _on_Timer_timeout():
 #		else:
 #			spawn_actor("tank")
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
+	if Globals.get("chill_mode"):
+		if randf() > 0.75:
+			return
 	spawn_actor("enemy", "enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
 #	for f in friendlies:

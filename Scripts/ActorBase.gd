@@ -275,14 +275,14 @@ func on_hit(tar):
 	if he:
 		he.set_z(parent.get_z() + 1)
 		he.set_pos(parent.get_body_pos())
-		get_tree().get_root().get_node("Game/Effects").add_child(he)
 
 		if he.has_node("Particles2D") and tar:
-#			he.set_rot(tar.get_pos().angle_to(get_pos()))
 			he.get_node("Particles2D").set_param(
 				he.get_node("Particles2D").PARAM_DIRECTION,
-				parent.get_body_pos().angle_to(tar.get_body_pos())
+				(parent.get_body_pos() - tar.get_body_pos()).angle()
 			)
+
+		get_tree().get_root().get_node("Game/Effects").add_child(he)
 
 func _on_MoveModule_stalled():
 	on_idle()
