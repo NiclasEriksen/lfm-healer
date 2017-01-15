@@ -33,6 +33,8 @@ func _ready():
 
 func newgame():
 	cleanup()
+	if has_node("HUD"):
+		get_node("HUD").flash_message("Begynner", "nei men se der ja")
 	spawn_actor("enemy", "enemy")
 	spawn_actor("enemy", "enemy")
 	spawn_actor("enemy", "enemy")
