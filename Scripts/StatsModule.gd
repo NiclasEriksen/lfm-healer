@@ -43,6 +43,7 @@ var magic_resist = base_magic_resist
 var attack_speed = base_attack_speed
 var attack_range = base_attack_range
 var immobile = false
+var stunned = false setget set_stunned, is_stunned
 
 
 var final_stats = {}
@@ -59,6 +60,12 @@ func set_level(lvl):
 
 func get_level():
 	return level
+
+func set_stunned(val):
+	stunned = val
+
+func is_stunned():
+	return stunned
 
 func _ready():
 	self.update_final_stats()
@@ -127,6 +134,7 @@ func _process(delta):
 	if mp > get_actual("max_mp"):
 		mp = get_actual("max_mp")
 	check_negatives()
+	stunned = false
 	for wr in get_children():
 		if wr.is_buff:
 			handle_buff(wr, delta)
@@ -136,9 +144,11 @@ func _process(delta):
 func handle_status(wr, dt):
 	var status_result = wr.status_update(dt)
 	if status_result:
-		pass	# Do nothing if it's still running
+		if wr.get_effect_type() == "stun":
+			stunned = true
 	else:
-		print("Removing status.")
+		if Globals.get("debug_mode"):
+			print("Removing status.")
 		wr.queue_free()
 
 func handle_buff(wr, dt):
@@ -215,7 +225,7 @@ func get_actual(stat):
 		return_stat = final_stats[stat]
 		var total_change = 0
 		for effect in get_children():
-			if effect.is_status and effect.effect_stat == stat:
+			if effect.is_status and effect.get_effect_type() == stat:
 				total_change += effect.get_effect_amount(return_stat)
 		return_stat += total_change
 		if return_stat < 0:

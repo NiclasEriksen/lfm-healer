@@ -6,7 +6,7 @@
 
 script/source = "extends Node2D\n\n# class member variables go here, for example:\n# var a = 2\n# var b = \"textvar\"\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tget_node(\"AnimationPlayer\").play(\"heal\")\n"
 
-[sub_resource type="ColorRamp" id=2]
+[sub_resource type="ColorRamp" id=4]
 
 offsets = FloatArray( 0, 0.508772, 1 )
 colors = ColorArray( 1, 0.986572, 0.785156, 1, 1, 0.980347, 0.820312, 1, 1, 1, 1, 0 )
@@ -70,7 +70,7 @@ params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
-color/color_ramp = SubResource( 2 )
+color/color_ramp = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -85,7 +85,7 @@ autoplay = ""
 
 [node name="Light2D" type="Light2D" parent="."]
 
-visibility/opacity = 0.5
+visibility/opacity = 0.0
 enabled = false
 editor_only = false
 texture = ExtResource( 1 )

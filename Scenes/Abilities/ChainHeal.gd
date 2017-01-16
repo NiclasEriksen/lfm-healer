@@ -2,7 +2,7 @@ extends Node2D
 var targets = []
 var active = false
 onready var hud = get_tree().get_root().get_node("Game").get_node("HUD")
-var healeffect = load("res://Scenes/Effects/HealEffect2.tscn")
+var healeffect = load("res://Scenes/Effects/NatureHealEffect.tscn")
 export var max_jump_range = 200
 export var max_jumps = 3
 var slot = 0

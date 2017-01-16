@@ -107,6 +107,9 @@ func _draw():
 
 func _fixed_process(dt):
 	if parent:
+		if parent.has_node("StatsModule"):
+			if parent.get_node("StatsModule").is_stunned():
+				return
 		if parent.has_node("ActorBase"):
 			if parent.get_node("ActorBase").attacking:
 				return

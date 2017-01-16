@@ -71,11 +71,11 @@ tick_interval = 5.0
 
 [node name="StatusEffect" parent="." instance=ExtResource( 7 )]
 
-effect_stat = "movement_speed"
+effect_type = "stun"
 apply_as = "percentage"
 amount = -60.0
 stacking = false
-time = 1.5
+time = 10.0
 
 [node name="MoveModule" parent="." instance=ExtResource( 8 )]
 

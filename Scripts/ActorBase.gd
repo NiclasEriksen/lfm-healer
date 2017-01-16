@@ -59,30 +59,33 @@ func _draw():
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
 	if enabled:
+		var stunned = false
 		if stats:
 			check_death()
 			check_healthy()
+			stunned = stats.is_stunned()
 		check_target()
-		if target_enemy:
-			if target_enemy.get_ref():
-				if movement:
-					movement.set_direction((target_enemy.get_ref().get_body_pos() - parent.get_body_pos()).normalized())
+		if not stunned:
+			if target_enemy:
+				if target_enemy.get_ref():
+					if movement:
+						movement.set_direction((target_enemy.get_ref().get_body_pos() - parent.get_body_pos()).normalized())
+				else:
+					target_enemy = null
+					emit_signal("cleared_target")
 			else:
-				target_enemy = null
-				emit_signal("cleared_target")
-		else:
-			check_in_range()
-
-		if idle:
-			idle_time += dt
-			if idle_time > 2.0:
-				idle_time = 0
 				check_in_range()
-		else:
-			if idle_time > 0:
-				idle_time -= dt
+
+			if idle:
+				idle_time += dt
+				if idle_time > 2.0:
+					idle_time = 0
+					check_in_range()
 			else:
-				idle_time = 0
+				if idle_time > 0:
+					idle_time -= dt
+				else:
+					idle_time = 0
 		
 		if flip_cd > 0.0:
 			flip_cd -= dt
@@ -90,7 +93,7 @@ func _process(dt):
 			state_change_cd -= dt
 		update_state()
 
-		if attack_cd <= 0:
+		if attack_cd <= 0 and not stunned:
 			if target_enemy:
 				if attacking and target_enemy.get_ref():
 					attack_cd = 0.5
@@ -230,17 +233,26 @@ func on_walk():
 			get_node("AnimationPlayer").play("walk")
 			state_change_cd = 0.3
 
+func on_stunned():
+	get_node("AnimationPlayer").stop()
+	get_node("AnimationPlayer").set_current_animation("idle")
 
 func update_state():
-	if flip_cd <= 0.0:
-		flip_cd = 0.3
-		if target_enemy:
-			if target_enemy.get_ref():
-				var te = target_enemy.get_ref()
-				if te.get_body_pos().x > parent.get_body_pos().x:
-					set_scale(Vector2(1, 1))
-				else:
-					set_scale(Vector2(-1, 1))
+	var stunned = false
+	if stats:
+		stunned = stats.is_stunned()
+	if not stunned:
+		if flip_cd <= 0.0:
+			flip_cd = 0.3
+			if target_enemy:
+				if target_enemy.get_ref():
+					var te = target_enemy.get_ref()
+					if te.get_body_pos().x > parent.get_body_pos().x:
+						set_scale(Vector2(1, 1))
+					else:
+						set_scale(Vector2(-1, 1))
+	else:
+		on_stunned()
 	
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)
