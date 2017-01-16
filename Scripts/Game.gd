@@ -34,7 +34,7 @@ func _ready():
 func newgame():
 	cleanup()
 	if has_node("HUD"):
-		get_node("HUD").flash_message("Begynner", "nei men se der ja")
+		get_node("HUD").flash_message("Begynner", "nei men se der ja", 3)
 	spawn_actor("enemy", "enemy")
 	spawn_actor("enemy", "enemy")
 	spawn_actor("enemy", "enemy")
@@ -111,30 +111,21 @@ func _process(dt):
 		spell4_cd = 0
 
 func _input(event):
-	#event = make_input_local(event)
 	if event.type == InputEvent.SCREEN_TOUCH:
-#		if event.pressed:
-#			if not dragged_ability:
-#				dragged_ability = targeted_heal.instance()
-#				dragged_ability.set_pos(event.pos)
-#				get_node("Effects").add_child(dragged_ability)
-#			else:
-#				dragged_ability.trigger()
-#				dragged_ability = null
-		
 		if not event.pressed and dragged_ability:
 			var i = dragged_ability.get_slot()
 			if Globals.get("chill_mode"):
 				i = 0	# No cooldowns.
-			if i == 1:
-				spell1_cd = max_spell1_cd
-			elif i == 2:
-				spell2_cd = max_spell2_cd
-			elif i == 3:
-				spell3_cd = max_spell3_cd
-			elif i == 4:
-				spell4_cd = max_spell4_cd
-			dragged_ability.trigger()
+			var hit = dragged_ability.trigger()
+			if hit:
+				if i == 1:
+					spell1_cd = max_spell1_cd
+				elif i == 2:
+					spell2_cd = max_spell2_cd
+				elif i == 3:
+					spell3_cd = max_spell3_cd
+				elif i == 4:
+					spell4_cd = max_spell4_cd
 			dragged_ability = false
 	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
@@ -159,7 +150,6 @@ func spawn_actor(actor_type, alliance):
 	elif actor_type == "mage":
 		actor = mage_actor.instance()
 
-#	actor.get_node("StatsModule").set_level(10)
 	if alliance == "friendly":
 		if Globals.get("chill_mode") and actor:
 			# Triple level

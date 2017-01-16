@@ -30,12 +30,14 @@ func _on_Button2_pressed():
 		not get_tree().is_paused()
 	)
 
-func flash_message(title, sub):
+func flash_message(title, sub, duration):
+	if not duration:
+		duration = 5
 	if currently_flashing:
 		if currently_flashing.get_ref():
 			currently_flashing.get_ref().queue_free()
 	var tf = titleflash.instance()
-	tf.set_duration(5)
+	tf.set_duration(duration)
 	tf.set_pos(Vector2(400, 80))
 	tf.set_main_text(title)
 	tf.set_sub_text(sub)

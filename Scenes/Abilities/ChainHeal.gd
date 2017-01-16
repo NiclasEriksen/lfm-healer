@@ -76,12 +76,14 @@ func set_active(val):
 	active = val
 
 func trigger():
+	var targets_hit = false
 	var target = get_target()
 	if target:
 		targets = get_chain(target)
 	else:
 		targets = []
 	for target in targets:
+		targets_hit = true
 		if target.get_node("StatsModule"):
 			target.get_node(
 				"StatsModule"
@@ -95,3 +97,4 @@ func trigger():
 			get_tree().get_root().get_node("Game/Effects").add_child(he)
 	hud.clear_lines()
 	queue_free()
+	return targets_hit

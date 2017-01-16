@@ -46,7 +46,9 @@ func set_active(val):
 
 func trigger():
 	set_target()
+	var targets_hit = false
 	if target:
+		targets_hit = true
 		if target.get_node("StatsModule"):
 			target.get_node(
 				"StatsModule"
@@ -59,3 +61,4 @@ func trigger():
 			he.set_z(target.get_z())
 			get_tree().get_root().get_node("Game/Effects").add_child(he)
 	queue_free()
+	return targets_hit

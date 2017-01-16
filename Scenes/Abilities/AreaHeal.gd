@@ -30,9 +30,11 @@ func set_active(val):
 
 func trigger():
 	targets = get_node("Area2D").get_overlapping_bodies()
+	var targets_hit = false
 	for target in targets:
 		if "friendly" in target.get_groups():
 			if target.has_node("StatsModule"):
+				targets_hit = true
 				target.get_node(
 					"StatsModule"
 				).apply_effect(
@@ -49,3 +51,4 @@ func trigger():
 				get_tree().get_root().get_node("Game/Effects").add_child(he)
 
 	queue_free()
+	return targets_hit
