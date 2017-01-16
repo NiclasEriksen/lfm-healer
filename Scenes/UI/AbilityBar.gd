@@ -12,16 +12,20 @@ func _ready():
 
 
 func update_spell_cd(id, val):
-	var box = get_node("HBoxContainer")
+	var a_node = null
 	if id == 1:
-		box.get_node("Ability1").get_node("ProgressBar").set_val(val)
+		a_node = get_node("HBoxContainer/Ability1")
 	if id == 2:
-		box.get_node("Ability2").get_node("ProgressBar").set_val(val)
+		a_node = get_node("HBoxContainer/Ability2")
 	if id == 3:
-		box.get_node("Ability3").get_node("ProgressBar").set_val(val)
+		a_node = get_node("HBoxContainer/Ability3")
 	if id == 4:
-		box.get_node("Ability4").get_node("ProgressBar").set_val(val)
+		a_node = get_node("HBoxContainer/Ability4")
 
+	if a_node:
+		a_node.get_node("ProgressBar").set_val(val)
+		if val == 0:
+			a_node.get_node("AnimationPlayer").play("ready")
 func _on_Ability1_button_down():
 	emit_signal("ability_tapped", 1)
 

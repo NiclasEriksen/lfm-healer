@@ -9,6 +9,9 @@ func set_slot(s):
 	slot = s
 
 func _ready():
+	var d = get_node("Area2D/CollisionShape2D").get_shape().get_radius() * 2
+	var s = d / get_node("Sprite").get_texture().get_width()
+	get_node("Sprite").set_scale(Vector2(s, s))
 	set_process(true)
 
 func _process(delta):

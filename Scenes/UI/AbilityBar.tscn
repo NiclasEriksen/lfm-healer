@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Themes/main_theme.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/AbilityBar.gd" type="Script" id=2]
@@ -7,6 +7,18 @@
 [ext_resource path="res://Assets/UI/cooldown_mid.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Objects/area_heal.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=7]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "ready"
+length = 0.6
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/scale")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.6 ), "transitions":FloatArray( 0.482968, 2.82843, 1 ), "update":0, "values":[ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ] }
 
 [node name="AbilityBar" type="Panel"]
 
@@ -51,6 +63,17 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 flat = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/Ability1"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/ready = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 [node name="Sprite" type="Sprite" parent="HBoxContainer/Ability1"]
 
@@ -98,10 +121,20 @@ enabled_focus_mode = 2
 shortcut = null
 flat = false
 
-[node name="Sprite2" type="Sprite" parent="HBoxContainer/Ability2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/Ability2"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/ready = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Sprite" type="Sprite" parent="HBoxContainer/Ability2"]
 
 transform/pos = Vector2( 36, 36 )
-transform/scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 6 )
 
 [node name="ProgressBar" type="TextureProgress" parent="HBoxContainer/Ability2"]
@@ -145,7 +178,18 @@ enabled_focus_mode = 2
 shortcut = null
 flat = false
 
-[node name="Sprite3" type="Sprite" parent="HBoxContainer/Ability3"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/Ability3"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/ready = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Sprite" type="Sprite" parent="HBoxContainer/Ability3"]
 
 transform/pos = Vector2( 36, 36 )
 texture = ExtResource( 7 )
@@ -191,6 +235,17 @@ enabled_focus_mode = 2
 shortcut = null
 flat = false
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/Ability4"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/ready = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
 [node name="ProgressBar" type="TextureProgress" parent="HBoxContainer/Ability4"]
 
 focus/ignore_mouse = true
@@ -214,6 +269,8 @@ texture/progress = ExtResource( 5 )
 mode = 3
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="HBoxContainer/Ability4"]
 
 [connection signal="button_down" from="HBoxContainer/Ability1" to="." method="_on_Ability1_button_down"]
 
