@@ -73,7 +73,7 @@ tick_interval = 5.0
 
 effect_stat = "movement_speed"
 apply_as = "percentage"
-amount = -70.0
+amount = -60.0
 stacking = false
 time = 1.5
 

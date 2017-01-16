@@ -183,9 +183,10 @@ func on_heal():
 func on_attack():
 	attacking = true
 	idle = false
+	get_node("AnimationPlayer").set_speed(1)
+
 	if not get_node("AnimationPlayer").get_current_animation() == "attack" or not get_node("AnimationPlayer").is_playing():
 		if not get_node("AnimationPlayer").get_current_animation() == "idle":
-			get_node("AnimationPlayer").set_speed(1)
 			get_node("AnimationPlayer").play("idle")
 
 func on_death():
@@ -210,22 +211,22 @@ func on_death():
 
 func on_idle():
 	idle = true
+	get_node("AnimationPlayer").set_speed(1)
 	if state_change_cd <= 0:
 		if not get_node("AnimationPlayer").get_current_animation() == "idle" or not get_node("AnimationPlayer").get_current_animation() == "attack":
 			get_node("Sprite").set_rot(0)
 			get_node("AnimationPlayer").play("idle")
-			get_node("AnimationPlayer").set_speed(1)
 			state_change_cd = 0.3
 
 func on_walk():
 	idle = false
 	if state_change_cd <= 0:
+		if parent and not get_node("AnimationPlayer").get_current_animation() == "attack":
+			if parent.has_node("StatsModule"):
+				var ms = parent.get_node("StatsModule").get_actual("movement_speed") / 180.0
+				get_node("AnimationPlayer").set_speed(ms)
 		if not get_node("AnimationPlayer").get_current_animation() == "walk" and not get_node("AnimationPlayer").get_current_animation() == "attack":
 			get_node("Sprite").set_rot(0)
-			if parent:
-				if parent.has_node("StatsModule"):
-					var ms = parent.get_node("StatsModule").get_actual("movement_speed") / 180.0
-					get_node("AnimationPlayer").set_speed(ms)
 			get_node("AnimationPlayer").play("walk")
 			state_change_cd = 0.3
 
