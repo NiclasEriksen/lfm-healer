@@ -109,11 +109,9 @@ tile_dimensions = Vector2( 5, 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
-transform/pos = Vector2( -4, -2 )
-transform/rot = 10.0
 vframes = 5
 hframes = 5
-frame = 19
+frame = 14
 
 [node name="Selected" type="Light2D" parent="."]
 
@@ -195,7 +193,7 @@ anims/death = SubResource( 3 )
 anims/idle = SubResource( 4 )
 anims/walk = ExtResource( 4 )
 playback/active = true
-playback/speed = 1.0
+playback/speed = 5.0
 blend_times = [  ]
 autoplay = ""
 
