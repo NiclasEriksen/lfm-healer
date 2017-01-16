@@ -41,8 +41,8 @@ texture = ExtResource( 3 )
 
 [node name="BuffModule" parent="." instance=ExtResource( 4 )]
 
-amount = 35.0
-time = 7.0
-tick_interval = 0.7
+amount = 15.0
+time = 5.0
+tick_interval = 0.25
 
 

@@ -6,7 +6,6 @@ export(float) var amount = 0 setget set_amount, get_amount
 var is_buff = false
 var is_status = false
 
-
 func set_amount(a):
 	amount = float(a)
 
