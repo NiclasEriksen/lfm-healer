@@ -64,8 +64,11 @@ func fire_projectile(target):
 		a.set_alliance(get_allegiance())
 		if has_node("Debuff"):
 			a.init(target, get_node("Attack"), get_node("Debuff"))
+		elif has_node("StatusEffect"):
+			a.init(target, get_node("Attack"), get_node("StatusEffect"))
 		else:
 			a.init(target, get_node("Attack"), null)
+		a.set_owner(self)
 		a.flytime = a.flytime * dist_scale
 		a.y_offset = a.y_offset * dist_scale
 		get_tree().get_root().get_node("Game/Objects").add_child(a)

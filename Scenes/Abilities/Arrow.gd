@@ -8,12 +8,19 @@ var effect_module = null
 var dot_module = null
 var status_module = null
 var alliance = null
+var owner = null setget set_owner, get_owner
 export(Vector2) var y_offset = Vector2(0, 0)
 
-func _ready():
-	set_process(true)
+func set_owner(o):
+	owner = weakref(o)
 
-func _process(dt):
+func get_owner():
+	return owner.get_ref()
+
+func _ready():
+	set_fixed_process(true)
+
+func _fixed_process(dt):
 	if target:
 		if target.get_ref():
 			var target_node = target.get_ref()
@@ -25,25 +32,23 @@ func _process(dt):
 				if dot_module:
 					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
 						var dm = dot_module.get_ref().duplicate()
+						if owner.get_ref():
+							dm.set_unique_ref(owner.get_ref().get_instance_ID())
 						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
 				if status_module:
 					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
 						var dm = dot_module.get_ref().duplicate()
+						if owner.get_ref():
+							dm.set_unique_ref(owner.get_ref().get_instance_ID())
+							print("owner!")
+						else:
+							print("no owner?!")
 						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
 
 						# print("And doing dmg!")
 				# print("There!")
 	if flown < flytime:
-		var t = flown / flytime
-		var newpos = start_pos + (target_pos - start_pos) * t
-		var x_osc = PI * t
-		var yoff = (sin(x_osc) * y_offset).rotated(newpos.angle())
-		newpos -= yoff
-		set_pos(newpos)
-		set_z(newpos.y)
-		var a = (target_pos - start_pos).angle() + PI + cos(x_osc) * (PI / 12) + PI / 2
-		get_node("Sprite").set_rot(a)
-		flown += dt
+		fly(dt)
 	else:
 		queue_free()
 
@@ -64,5 +69,14 @@ func init(t, em, dm):
 func set_alliance(a):
 	alliance = a
 
-func fly():
-	pass
+func fly(dt):
+	var t = flown / flytime
+	var newpos = start_pos + (target_pos - start_pos) * t
+	var x_osc = PI * t
+	var yoff = (sin(x_osc) * y_offset).rotated(newpos.angle())
+	newpos -= yoff
+	set_pos(newpos)
+	set_z(newpos.y)
+	var a = (target_pos - start_pos).angle() + PI + cos(x_osc) * (PI / 12) + PI / 2
+	get_node("Sprite").set_rot(a)
+	flown += dt

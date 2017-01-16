@@ -25,6 +25,7 @@ export(float) var base_magic_resist = 0.0
 export(float) var base_movement_speed = 250.0
 export(float) var base_attack_speed = 2.0
 export(float) var base_attack_range = 40.0
+var MIN_MOVEMENT_SPEED = 20.0
 var hp = max_hp
 var mp = max_mp
 var strength = base_strength
@@ -129,13 +130,13 @@ func _process(delta):
 	for wr in get_children():
 		if wr.is_buff:
 			handle_buff(wr, delta)
-		elif wr.is_effect:
+		elif wr.is_status:
 			handle_status(wr, delta)
 
 func handle_status(wr, dt):
 	var status_result = wr.status_update(dt)
 	if status_result:
-		print(wr)
+		pass	# Do nothing if it's still running
 	else:
 		print("Removing status.")
 		wr.queue_free()
@@ -180,6 +181,15 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 		update_final_stats()
 #		print("Added buff.")
 		return
+	elif effectmodule.is_status:
+		if not effectmodule.get_stacking():
+			for se in get_children():
+				if se.is_status:
+					if se.get_unique_ref():
+						if se.get_unique_ref() == effectmodule.get_unique_ref():
+							se.queue_free()
+		add_child(effectmodule)
+		return
 		
 	if effectmodule.effect_type == "stun":
 		immobile = true
@@ -203,11 +213,16 @@ func get_actual(stat):
 	var return_stat = stat
 	if final_stats.has(stat):
 		return_stat = final_stats[stat]
+		var total_change = 0
 		for effect in get_children():
 			if effect.is_status and effect.effect_stat == stat:
-				return_stat += effect.amount
+				total_change += effect.get_effect_amount(return_stat)
+		return_stat += total_change
 		if return_stat < 0:
 			return_stat = 0
+		if stat == "movement_speed":
+			if return_stat < MIN_MOVEMENT_SPEED:
+				return MIN_MOVEMENT_SPEED
 		return return_stat
 	else:
 		print("STAT NOT FOUND! ", stat)
