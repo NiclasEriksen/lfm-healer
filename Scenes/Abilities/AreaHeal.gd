@@ -3,6 +3,7 @@ var targets = []
 var active = false
 var healeffect = load("res://Scenes/Effects/HealEffect1.tscn")
 var slot = 0
+var z_offset = 0
 
 func get_slot():
 	return slot
@@ -11,10 +12,13 @@ func set_slot(s):
 	slot = s
 
 func _ready():
+	if has_node("Area2D/CollisionShape2D"):
+		z_offset = get_node("Area2D/CollisionShape2D").get_shape().get_radius()
 	set_process(true)
 
 func _process(delta):
 	if active:
+		set_z(get_pos().y + z_offset)
 		for target in get_node("Area2D").get_overlapping_bodies():
 			if "friendly" in target.get_groups():
 				target.get_node("ActorBase").get_node("Selected").set_enabled(true)

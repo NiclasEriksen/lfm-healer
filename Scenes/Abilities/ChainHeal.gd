@@ -6,7 +6,7 @@ var healeffect = load("res://Scenes/Effects/NatureHealEffect.tscn")
 export var max_jump_range = 200
 export var max_jumps = 3
 var slot = 0
-
+var z_offset = 0
 func get_slot():
 	return slot
 
@@ -14,6 +14,8 @@ func set_slot(s):
 	slot = s
 
 func _ready():
+	if has_node("Area2D/CollisionShape2D"):
+		z_offset = get_node("Area2D/CollisionShape2D").get_shape().get_radius()
 	set_process(true)
 
 func get_target():
@@ -54,6 +56,7 @@ func get_chain(start_target):
 
 func _process(delta):
 	if active:
+		set_z(get_pos().y + z_offset)
 		var target = get_target()
 		if target:
 			targets = get_chain(target)

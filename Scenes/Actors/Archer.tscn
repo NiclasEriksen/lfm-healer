@@ -75,7 +75,7 @@ effect_type = "stun"
 apply_as = "percentage"
 amount = -60.0
 stacking = false
-time = 10.0
+time = 1.5
 
 [node name="MoveModule" parent="." instance=ExtResource( 8 )]
 
