@@ -297,7 +297,7 @@ func on_hit(tar):
 
 		if he.has_node("Particles2D") and tar:
 			he.get_node("Particles2D").set_param(
-				he.get_node("Particles2D").PARAM_DIRECTION,
+				0,
 				(parent.get_body_pos() - tar.get_body_pos()).angle()
 			)
 

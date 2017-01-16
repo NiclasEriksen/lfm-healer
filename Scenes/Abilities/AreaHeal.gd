@@ -1,9 +1,6 @@
-extends Node2D
+extends "res://Scenes/Abilities/AbilityBase.gd"
 var targets = []
-var active = false
 var healeffect = load("res://Scenes/Effects/HealEffect1.tscn")
-var slot = 0
-var z_offset = 0
 
 func get_slot():
 	return slot
@@ -12,25 +9,14 @@ func set_slot(s):
 	slot = s
 
 func _ready():
-	if has_node("Area2D/CollisionShape2D"):
-		z_offset = get_node("Area2D/CollisionShape2D").get_shape().get_radius()
 	set_process(true)
 
 func _process(delta):
 	if active:
-		set_z(get_pos().y + z_offset)
 		for target in get_node("Area2D").get_overlapping_bodies():
 			if "friendly" in target.get_groups():
 				target.get_node("ActorBase").get_node("Selected").set_enabled(true)
 
-func set_active(val):
-#	get_node("Particles2D").set_emitting(val)
-#	get_node("Particles2D2").set_emitting(val)
-	if val:
-		get_node("Sprite").show()
-	else:
-		get_node("Sprite").hide()
-	active = val
 
 func trigger():
 	targets = get_node("Area2D").get_overlapping_bodies()

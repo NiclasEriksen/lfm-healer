@@ -1,21 +1,11 @@
-extends Node2D
+extends "res://Scenes/Abilities/AbilityBase.gd"
 var targets = []
-var active = false
 onready var hud = get_tree().get_root().get_node("Game").get_node("HUD")
 var healeffect = load("res://Scenes/Effects/NatureHealEffect.tscn")
 export var max_jump_range = 200
 export var max_jumps = 3
-var slot = 0
-var z_offset = 0
-func get_slot():
-	return slot
-
-func set_slot(s):
-	slot = s
 
 func _ready():
-	if has_node("Area2D/CollisionShape2D"):
-		z_offset = get_node("Area2D/CollisionShape2D").get_shape().get_radius()
 	set_process(true)
 
 func get_target():
@@ -56,7 +46,6 @@ func get_chain(start_target):
 
 func _process(delta):
 	if active:
-		set_z(get_pos().y + z_offset)
 		var target = get_target()
 		if target:
 			targets = get_chain(target)
@@ -68,15 +57,6 @@ func _process(delta):
 			t.get_node("ActorBase").get_node("Selected").set_enabled(true)
 #		hud.update()
 		hud.draw_lines(points, Color(0.2,0.9,0.1,0.5))
-
-func set_active(val):
-#	get_node("Particles2D").set_emitting(val)
-#	get_node("Particles2D2").set_emitting(val)
-	if val:
-		get_node("Sprite").show()
-	else:
-		get_node("Sprite").hide()
-	active = val
 
 func trigger():
 	var targets_hit = false

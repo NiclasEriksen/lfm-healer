@@ -25,6 +25,11 @@ tracks/1/path = NodePath("Particles2D2:config/emitting")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Particles2D:config/emitting")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [sub_resource type="ColorRamp" id=4]
 
@@ -37,7 +42,6 @@ script/script = SubResource( 3 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 
-visibility/visible = false
 transform/pos = Vector2( 0, 9 )
 config/amount = 64
 config/lifetime = 0.6
