@@ -11,8 +11,13 @@ func clear():
 	for hpb in get_node("HPBars").get_children():
 		hpb.free()
 
-func draw_lines(p, col):
-	get_node("LineDisplay").points = p
+func draw_lines(points, col):
+	var adj_p = []
+	for p in points:
+		adj_p.append(
+			p / get_tree().get_root().get_node("Game/Camera2D")
+		)
+	get_node("LineDisplay").points = adj_p
 	get_node("LineDisplay").line_color = col
 	get_node("LineDisplay").update()
 
@@ -38,7 +43,9 @@ func flash_message(title, sub, duration):
 			currently_flashing.get_ref().queue_free()
 	var tf = titleflash.instance()
 	tf.set_duration(duration)
-	tf.set_pos(Vector2(400, 80))
+	var rw = Globals.get("display/width")
+	var rh = Globals.get("display/height")
+	tf.set_pos(Vector2(rw / 2, rh / 6))
 	tf.set_main_text(title)
 	tf.set_sub_text(sub)
 	currently_flashing = weakref(tf)

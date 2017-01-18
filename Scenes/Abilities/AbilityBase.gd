@@ -29,3 +29,7 @@ func set_active(val):
 	else:
 		get_node("Sprite").hide()
 	active = val
+
+func get_game_pos(p):
+	var t = get_tree().get_root().get_node("Game/Camera2D").get_global_transform()
+	return t.xform(get_pos())

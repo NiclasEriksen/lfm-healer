@@ -1,19 +1,19 @@
 [gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Maps/bricks.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Maps/debug_grass_16.png" type="Texture" id=2]
 
 [sub_resource type="NavigationPolygon" id=1]
 
-vertices = Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 88.8441, -0.0638752 )
+vertices = Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 29.6, 0.627045 )
 polygons = [ IntArray( 0, 1, 2, 3 ) ]
-outlines = [ Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 88.8441, -0.0638752 ) ]
+outlines = [ Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 29.6, 0.627045 ) ]
 
 [sub_resource type="NavigationPolygon" id=2]
 
-vertices = Vector2Array( 795.355, 62.9335, 797.736, 1.39862, 797.736, 421.754, 790.355, 5.93362, 473.355, 308.933, 57.6931, 425.835, 356.975, 306.122, 53.612, 1.39862, 67.356, 15.9336, 464.355, 195.933, 115.356, 62.9335, 362.356, 198.933, 54.4051, 83.8704 )
-polygons = [ IntArray( 0, 1, 2 ), IntArray( 1, 0, 3 ), IntArray( 4, 2, 5, 6 ), IntArray( 7, 1, 3, 8 ), IntArray( 0, 2, 4, 9 ), IntArray( 10, 0, 9, 11 ), IntArray( 10, 11, 6, 5, 12 ), IntArray( 12, 5, 7 ), IntArray( 7, 8, 12 ) ]
-outlines = [ Vector2Array( 53.612, 1.39862, 57.6931, 425.835, 797.736, 421.754, 797.736, 1.39862 ), Vector2Array( 54.4051, 83.8704, 115.356, 62.9335, 797.752, 62.8894, 790.355, 5.93362, 67.356, 15.9336 ), Vector2Array( 383.167, 187.568, 444.716, 191.563, 477.957, 205.967, 483.497, 291.286, 452.472, 318.987, 385.99, 320.095, 354.965, 299.042, 354.287, 213.74 ) ]
+vertices = Vector2Array( 360.028, 206.37, 512.454, -0.00574303, 512.298, 288.738, 336.505, 243.86, 348.42, 85.7744, 328.419, 168.146, 325.397, 116.878, 249.765, 156.384, 248.666, 129.847, 171.11, 168.881, 172.476, 115.798, 321.598, 58.9523, 27.047, -0.747543, 250.885, 45.2974, 171.394, 61.3907, 153.838, 87.2374, 27.9041, 287.51, 143.911, 205.635, 163.024, 242.39, 245.354, 257.827 )
+polygons = [ IntArray( 0, 1, 2, 3 ), IntArray( 4, 1, 0, 5, 6 ), IntArray( 6, 5, 7, 8 ), IntArray( 8, 7, 9, 10 ), IntArray( 1, 4, 11 ), IntArray( 12, 1, 11, 13 ), IntArray( 12, 13, 14 ), IntArray( 12, 14, 15 ), IntArray( 16, 12, 15, 10, 9, 17 ), IntArray( 16, 17, 18 ), IntArray( 16, 18, 19 ), IntArray( 2, 16, 19 ), IntArray( 2, 19, 3 ) ]
+outlines = [ Vector2Array( 27.047, -0.747543, 27.9041, 287.51, 512.298, 288.738, 512.454, -0.00574303 ), Vector2Array( 171.11, 168.881, 249.765, 156.384, 328.419, 168.146, 360.028, 206.37, 336.505, 243.86, 245.354, 257.827, 163.024, 242.39, 143.911, 205.635 ), Vector2Array( 153.838, 87.2374, 171.394, 61.3907, 250.885, 45.2974, 321.598, 58.9523, 348.42, 85.7744, 325.397, 116.878, 248.666, 129.847, 172.476, 115.798 ) ]
 
 [node name="Map" type="Navigation2D"]
 
@@ -33,11 +33,11 @@ enabled = true
 
 [node name="EnemySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 780, 240 )
+transform/pos = Vector2( 460.8, 144 )
 
 [node name="FriendlySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 100.432, 240 )
+transform/pos = Vector2( 64, 144 )
 
 [node name="Sprite" type="Sprite" parent="."]
 

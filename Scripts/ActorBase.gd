@@ -112,10 +112,15 @@ func _fixed_process(dt):
 
 func set_sprite_texture(tex):
 	spritesheet = tex
-	if has_node("Sprite"):
-		get_node("Sprite").set_texture(tex)
-		get_node("Sprite").set_hframes(int(tile_dimensions.x))
-		get_node("Sprite").set_vframes(int(tile_dimensions.y))
+	if not has_node("Sprite"):
+		pass
+	else:
+		var s = get_node("Sprite")
+		s.set_texture(tex)
+		s.set_hframes(int(tile_dimensions.x))
+		s.set_vframes(int(tile_dimensions.y))
+#		var scale = 320 / tex.get_width()
+#		s.set_scale(Vector2(scale, scale))
 
 func set_tile_dimensions(td):
 	tile_dimensions = td
@@ -226,7 +231,7 @@ func on_walk():
 	if state_change_cd <= 0:
 		if parent and not get_node("AnimationPlayer").get_current_animation() == "attack":
 			if parent.has_node("StatsModule"):
-				var ms = parent.get_node("StatsModule").get_actual("movement_speed") / 180.0
+				var ms = parent.get_node("StatsModule").get_actual("movement_speed") / 80
 				get_node("AnimationPlayer").set_speed(ms)
 		if not get_node("AnimationPlayer").get_current_animation() == "walk" and not get_node("AnimationPlayer").get_current_animation() == "attack":
 			get_node("Sprite").set_rot(0)

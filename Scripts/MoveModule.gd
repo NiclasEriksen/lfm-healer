@@ -4,9 +4,9 @@ extends Node2D
 var direction = Vector2(0, 0)
 export(bool) var AVOID_COLLISION = false setget set_avoid_collision, get_avoid_collision
 export(float, 0, 1, 0.1) var AVOID_FORCE = 0.5 setget set_avoid_force, get_avoid_force
-export(float, 1, 128, 1) var RAYCAST_LENGTH = 60.0 setget set_raycast_length, get_raycast_length
+export(float, 1, 128, 1) var RAYCAST_LENGTH = 30.0 setget set_raycast_length, get_raycast_length
 export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.2 setget set_stall_treshold, get_stall_treshold
-export(float) var PATH_REACH_TRESHOLD = 10.0 setget set_reach_treshold, get_reach_treshold
+export(float) var PATH_REACH_TRESHOLD = 8.0 setget set_reach_treshold, get_reach_treshold
 signal stalled
 signal moved
 var stalling = false

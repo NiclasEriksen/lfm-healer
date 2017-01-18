@@ -33,9 +33,9 @@ hit_effect = null
 primary_stat = "agi"
 max_hp = 16.0
 base_damage = 7.0
-base_movement_speed = 190.0
+base_movement_speed = 95.0
 base_attack_speed = 2.75
-base_attack_range = 320.0
+base_attack_range = 165.0
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
@@ -82,7 +82,7 @@ time = 1.5
 transform/pos = Vector2( 0, 21 )
 AVOID_COLLISION = true
 AVOID_FORCE = 0.5
-RAYCAST_LENGTH = 50.0
+RAYCAST_LENGTH = 30.0
 STALL_TRESHOLD = 0.2
 PATH_REACH_TRESHOLD = 10.0
 stats_node = NodePath("../StatsModule")

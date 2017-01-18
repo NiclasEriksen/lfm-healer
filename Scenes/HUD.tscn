@@ -129,10 +129,10 @@ script/script = ExtResource( 3 )
 
 [node name="AbilityBar" parent="." instance=ExtResource( 4 )]
 
-margin/left = 242.0
-margin/top = 406.0
-margin/right = 558.0
-margin/bottom = 486.0
+margin/left = 482.0
+margin/top = 645.0
+margin/right = 798.0
+margin/bottom = 725.0
 
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
 

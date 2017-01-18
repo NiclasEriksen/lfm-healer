@@ -24,7 +24,6 @@ var max_spell4_cd = 2.0
 signal spell_cd_changed(spell_id, pts)
 
 func _ready():
-	var i = 1
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
@@ -111,6 +110,7 @@ func _process(dt):
 		spell4_cd = 0
 
 func _input(event):
+	event = make_input_local(event)
 	if event.type == InputEvent.SCREEN_TOUCH:
 		if not event.pressed and dragged_ability:
 			var i = dragged_ability.get_slot()
@@ -135,6 +135,14 @@ func _input(event):
 	elif event.type == InputEvent.KEY:
 		if event.pressed and event.scancode == KEY_F12:
 			Globals.set("debug_mode", not Globals.get("debug_mode"))
+		elif event.pressed and event.scancode == KEY_PLUS:
+			get_node("Camera2D").zoom_in()
+		elif event.pressed and event.scancode == KEY_MINUS:
+			get_node("Camera2D").zoom_out()
+#		elif event.pressed and event.scancode == KEY_UP:
+#			get_node("Camera2D").set_pos(get_node("Camera2D").get_pos() + Vector2(0, -50))
+#		elif event.pressed and event.scancode == KEY_DOWN:
+#			get_node("Camera2D").set_pos(get_node("Camera2D").get_pos() + Vector2(0, 50))
 
 
 func spawn_actor(actor_type, alliance):
@@ -159,7 +167,8 @@ func spawn_actor(actor_type, alliance):
 	elif alliance == "enemy":
 		p = get_node("Map/EnemySpawn").get_pos()
 		p_to = get_node("Map/FriendlySpawn").get_pos()
-	p += Vector2(0, rand_range(-150, 150))
+	var scr_h = Globals.get("render_height")
+	p += Vector2(0, rand_range(-(scr_h / 4), scr_h / 4))
 
 	if actor:
 		if Globals.get("debug_mode"):
@@ -200,7 +209,7 @@ func _on_Timer_timeout():
 func _on_AbilityBar_ability_tapped(slot):
 	if get_tree().is_paused():
 		return
-	var pos = get_global_mouse_pos()
+	var pos = get_local_mouse_pos()
 	if slot == 1:
 		if spell1_cd > 0:
 			return
@@ -220,6 +229,9 @@ func _on_AbilityBar_ability_tapped(slot):
 		spell.set_slot(slot)
 		spawn_ability(spell, pos)
 
+func get_game_pos(p):
+	var t = get_node("Camera2D").get_global_transform()
+	return t.xform(p)
 
 func spawn_ability(ability, pos):
 	dragged_ability = ability

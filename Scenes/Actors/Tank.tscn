@@ -10,14 +10,14 @@
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 12.0
+radius = 9.0
 
 [node name="Tank" type="KinematicBody2D"]
 
 transform/pos = Vector2( 0, 1 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 22 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 18 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -33,8 +33,9 @@ max_hp = 25.0
 base_damage = 4.0
 base_armor = 1.0
 base_magic_resist = 1.0
-base_movement_speed = 210.0
+base_movement_speed = 105.0
 base_attack_speed = 2.1
+base_attack_range = 25.0
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
@@ -42,7 +43,7 @@ transform/pos = Vector2( 0, -45.5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 1, 22 )
+transform/pos = Vector2( 0, 18 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -62,9 +63,9 @@ amount = -7.0
 transform/pos = Vector2( 2, 20 )
 AVOID_COLLISION = true
 AVOID_FORCE = 0.5
-RAYCAST_LENGTH = 60.0
+RAYCAST_LENGTH = 30.0
 STALL_TRESHOLD = 0.2
-PATH_REACH_TRESHOLD = 10.0
+PATH_REACH_TRESHOLD = 8.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
 

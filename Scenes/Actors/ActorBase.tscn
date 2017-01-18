@@ -79,14 +79,14 @@ tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "updat
 
 [sub_resource type="Animation" id=5]
 
-length = 1.0
+length = 0.6
 loop = false
 step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("HealParticles:config/emitting")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 1 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.6 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [sub_resource type="CircleShape2D" id=6]
 
@@ -159,7 +159,7 @@ shadow/item_mask = 1
 
 [node name="HealParticles" type="Particles2D" parent="."]
 
-config/amount = 16
+config/amount = 24
 config/lifetime = 2.0
 config/emitting = false
 config/half_extents = Vector2( 20, 8 )

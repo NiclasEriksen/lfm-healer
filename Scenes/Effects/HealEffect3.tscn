@@ -61,6 +61,7 @@ script/script = SubResource( 1 )
 transform/pos = Vector2( 0, 19 )
 config/amount = 64
 config/lifetime = 1.0
+config/emitting = false
 config/half_extents = Vector2( 15, -16 )
 params/direction = 180.0
 params/spread = 0.0
@@ -85,6 +86,7 @@ color/color_ramp = SubResource( 2 )
 transform/pos = Vector2( 0, 9 )
 config/amount = 64
 config/lifetime = 1.0
+config/emitting = false
 config/half_extents = Vector2( 5, 20 )
 params/direction = 0.0
 params/spread = 0.0
@@ -120,7 +122,8 @@ autoplay = ""
 
 [node name="Light2D" type="Light2D" parent="."]
 
-enabled = true
+visibility/opacity = 0.0
+enabled = false
 editor_only = false
 texture = ExtResource( 1 )
 offset = Vector2( 0, 0 )
