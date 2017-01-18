@@ -16,7 +16,7 @@ radius = 6.0
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 9 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 11 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -40,7 +40,7 @@ transform/pos = Vector2( 0, -33 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 0, 9 )
+transform/pos = Vector2( 0, 11 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -49,6 +49,7 @@ _update_shape_index = 0
 
 spritesheet = ExtResource( 4 )
 has_death_anim = true
+STEALTH_OPACITY = 0.3
 
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 
@@ -56,11 +57,11 @@ amount = -4.0
 
 [node name="MoveModule" parent="." instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 0, 8 )
+transform/pos = Vector2( 0, 10 )
 AVOID_COLLISION = true
 AVOID_FORCE = 0.5
 RAYCAST_LENGTH = 30.0
-STALL_TRESHOLD = 0.2
+STALL_TRESHOLD = 0.1
 PATH_REACH_TRESHOLD = 10.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50

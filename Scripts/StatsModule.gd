@@ -23,6 +23,7 @@ export(float) var base_hit_rate = 0.0
 export(float) var base_armor = 0.0
 export(float) var base_magic_resist = 0.0
 export(float) var base_movement_speed = 100.0
+export(float) var stealth_speed_increase = 30.0 setget set_stealth_speed_increase, get_stealth_speed_increase
 export(float) var base_attack_speed = 2.0
 export(float) var base_attack_range = 20.0
 var MIN_MOVEMENT_SPEED = 20.0
@@ -73,6 +74,12 @@ func set_stealthed(val):
 
 func is_stealthed():
 	return stealthed
+
+func set_stealth_speed_increase(val):
+	stealth_speed_increase = val
+
+func get_stealth_speed_increase():
+	return stealth_speed_increase
 
 func _ready():
 	self.update_final_stats()
@@ -238,6 +245,8 @@ func get_actual(stat):
 		if return_stat < 0:
 			return_stat = 0
 		if stat == "movement_speed":
+			if is_stealthed():
+				return_stat += get_stealth_speed_increase()
 			if return_stat < MIN_MOVEMENT_SPEED:
 				return MIN_MOVEMENT_SPEED
 		return return_stat

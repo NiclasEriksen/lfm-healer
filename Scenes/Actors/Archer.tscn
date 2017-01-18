@@ -128,6 +128,7 @@ primary_stat = "agi"
 max_hp = 16.0
 base_damage = 7.0
 base_movement_speed = 95.0
+stealth_speed_increase = 30.0
 base_attack_speed = 2.75
 base_attack_range = 100.0
 stealthed = false
