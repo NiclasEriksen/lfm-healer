@@ -7,12 +7,12 @@
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=6]
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
+[sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589, 88.9373, -1.44037, 60.4103, 24.4329, 1.36606, 33.0574, -62.9855, 24.4329, -88.1954, 0.549866 )
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=2]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589, 88.9373, -1.44037, 60.4103, 24.4329, 1.36606, 33.0574, -62.9855, 24.4329, -88.1954, 0.549866 )
@@ -72,7 +72,7 @@ transform/pos = Vector2( 36.3531, 240 )
 
 transform/pos = Vector2( 249.172, 208.046 )
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
+shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -93,7 +93,7 @@ trigger = false
 
 transform/pos = Vector2( 249.172, 87.0459 )
 input/pickable = false
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
