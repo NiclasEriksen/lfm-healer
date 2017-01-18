@@ -19,14 +19,13 @@
 custom_solver_bias = 0.0
 radius = 4.0
 
-[sub_resource type="ColorRamp" id=8]
+[sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.0818713, 1 )
 colors = ColorArray( 0.193848, 1, 0.1875, 0, 0.158966, 1, 0.152344, 1, 0.302734, 0.605469, 0, 0 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 
-resource/name = "attack"
 length = 0.5
 loop = false
 step = 0.1
@@ -46,9 +45,8 @@ tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ 0.0 ] }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 
-resource/name = "death"
 length = 0.7
 loop = false
 step = 0.1
@@ -68,7 +66,7 @@ tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ 0.0 ] }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
 length = 1.0
 loop = true
@@ -89,7 +87,7 @@ tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ 0.0 ] }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 
 length = 0.6
 loop = false
@@ -100,12 +98,12 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 0.6 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=7]
 
 custom_solver_bias = 0.0
 radius = 50.0
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=8]
 
 custom_solver_bias = 0.0
 radius = 50.0
@@ -131,7 +129,8 @@ max_hp = 16.0
 base_damage = 7.0
 base_movement_speed = 95.0
 base_attack_speed = 2.75
-base_attack_range = 165.0
+base_attack_range = 100.0
+stealthed = false
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
@@ -152,6 +151,7 @@ has_attack_anim = true
 has_death_anim = true
 has_special_anim = false
 tile_dimensions = Vector2( 5, 5 )
+STEALTH_OPACITY = 0.3
 
 [node name="Sprite" type="Sprite" parent="ActorBase"]
 
@@ -229,16 +229,16 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/initial_size = 0.25
-color/color_ramp = SubResource( 8 )
+color/color_ramp = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ActorBase"]
 
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/attack = SubResource( 2 )
-anims/death = SubResource( 3 )
-anims/idle = SubResource( 4 )
+anims/attack = SubResource( 3 )
+anims/death = SubResource( 4 )
+anims/idle = SubResource( 5 )
 anims/walk = ExtResource( 7 )
 playback/active = true
 playback/speed = 5.0
@@ -250,7 +250,7 @@ autoplay = ""
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/Heal = SubResource( 5 )
+anims/Heal = SubResource( 6 )
 anims/attack = ExtResource( 8 )
 anims/hit = ExtResource( 9 )
 playback/active = true
@@ -261,7 +261,7 @@ autoplay = ""
 [node name="AttackRange" type="Area2D" parent="ActorBase"]
 
 input/pickable = true
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -271,7 +271,7 @@ angular_damp = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActorBase/AttackRange"]
 
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 trigger = false
 _update_shape_index = 0
 

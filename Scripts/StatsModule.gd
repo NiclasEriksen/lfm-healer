@@ -44,7 +44,8 @@ var attack_speed = base_attack_speed
 var attack_range = base_attack_range
 var immobile = false
 var stunned = false setget set_stunned, is_stunned
-
+export var stealthed = false setget set_stealthed, is_stealthed
+signal stealth_broken
 
 var final_stats = {}
 var active_effects = []
@@ -66,6 +67,12 @@ func set_stunned(val):
 
 func is_stunned():
 	return stunned
+
+func set_stealthed(val):
+	stealthed = val
+
+func is_stealthed():
+	return stealthed
 
 func _ready():
 	self.update_final_stats()
@@ -250,3 +257,7 @@ func dmg_modifier():
 
 func armor_modifier():
 	return armor
+
+
+func _on_StatsModule_stealth_broken():
+	set_stealthed(false)

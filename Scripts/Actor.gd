@@ -7,6 +7,7 @@ export(String, FILE, "*.tscn") var hit_effect = null setget set_hit_effect, get_
 var hit_effect_scene = null
 var projectile_scene = null
 
+
 func change_allegiance(a):
 	if Globals.get("debug_mode"):
 		print("Setting alliance to ", a)

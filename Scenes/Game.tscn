@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Maps/Map.tscn" type="PackedScene" id=2]
@@ -16,6 +16,12 @@ points = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589
 
 custom_solver_bias = 0.0
 points = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589, 88.9373, -1.44037, 60.4103, 24.4329, 1.36606, 33.0574, -62.9855, 24.4329, -88.1954, 0.549866 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+
+closed = true
+cull_mode = 0
+polygon = Vector2Array(  )
 
 [node name="Game" type="Node2D"]
 
@@ -109,6 +115,11 @@ build_mode = 0
 polygon = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589, 88.9373, -1.44037, 60.4103, 24.4329, 1.36606, 33.0574, -62.9855, 24.4329, -88.1954, 0.549866 )
 shape_range = Vector2( 0, 0 )
 trigger = false
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+
+occluder = SubResource( 3 )
+light_mask = 1
 
 [connection signal="spell_cd_changed" from="." to="HUD" method="_on_Game_spell_cd_changed"]
 

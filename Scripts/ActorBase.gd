@@ -7,6 +7,7 @@ export(bool) var has_attack_anim = true
 export(bool) var has_death_anim = false
 export(bool) var has_special_anim = false
 export(Vector2) var tile_dimensions = Vector2(5, 5) setget set_tile_dimensions
+export(float, 0, 1, 0.05) var STEALTH_OPACITY = 0.3 setget set_stealth_opacity, get_stealth_opacity
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var movement = get_parent().get_node("MoveModule")
@@ -26,6 +27,12 @@ var idle = false
 var attacking = false
 var enabled = true
 
+func set_stealth_opacity(v):
+	STEALTH_OPACITY = v
+
+func get_stealth_opacity():
+	return STEALTH_OPACITY
+
 func _ready():
 	if not get_tree().is_editor_hint():
 		set_process(true)
@@ -37,6 +44,7 @@ func _ready():
 			if Globals.get("debug_mode"):
 				print("Statsmodule found.")
 			stats = get_parent().get_node("StatsModule")
+			stats.connect("stealth_broken", self, "on_stealth_broken")
 			var shape = CircleShape2D.new()
 			shape.set_radius(stats.get_actual("attack_range"))
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
@@ -180,6 +188,12 @@ func get_closest_enemy(enemies):
 		if target_enemy:
 			if e == target_enemy.get_ref():
 				continue
+		if e.has_node("StatsModule") and parent.has_node("StatsModule"):
+			if e.get_node("StatsModule").is_stealthed() and dist > get_node("AttackRange/CollisionShape2D").get_shape().get_radius() / 5:
+				continue
+			elif e.get_node("StatsModule").is_stealthed():
+				print("broken")
+				e.get_node("StatsModule").emit_signal("stealth_broken")
 		if dist < closest:
 			closest = dist
 			closest_candidate = e
@@ -189,6 +203,8 @@ func on_heal():
 	get_node("EffectPlayer").play("Heal")
 
 func on_attack():
+	if stats:
+		stats.emit_signal("stealth_broken")
 	attacking = true
 	idle = false
 	get_node("AnimationPlayer").set_speed(1)
@@ -245,8 +261,10 @@ func on_stunned():
 
 func update_state():
 	var stunned = false
+	var stealthed = false
 	if stats:
 		stunned = stats.is_stunned()
+		stealthed = stats.is_stealthed()
 	if not stunned:
 		if flip_cd <= 0.0:
 			flip_cd = 0.3
@@ -259,7 +277,12 @@ func update_state():
 						set_scale(Vector2(-1, 1))
 	else:
 		on_stunned()
-	
+
+	if stealthed:
+		set_opacity(STEALTH_OPACITY)
+	else:
+		set_opacity(1.0)
+
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)
 		if attacking:
@@ -272,15 +295,25 @@ func update_state():
 		get_node("State").set_enabled(false)
 
 func _on_AttackRange_body_enter( body ):
+	var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
 	if target_enemy:
 		if target_enemy.get_ref():
-			var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-			if parent.get_body_pos().distance_to(target_enemy.get_ref().get_body_pos()) <= r:
+			var dist = parent.get_body_pos().distance_to(target_enemy.get_ref().get_body_pos())
+			if dist <= r:
 				return
 	var target_group = "enemy"
 	if "enemy" in parent.get_groups():
 		target_group = "friendly"
 	if target_group in body.get_groups():
+		var estats = null
+		if body.has_node("StatsModule"):
+			estats = body.get_node("StatsModule")
+		if estats:
+			var dist = parent.get_body_pos().distance_to(body.get_body_pos())
+			if estats.is_stealthed() and dist >= r / 3:
+				return
+			elif estats.is_stealthed():
+				estats.emit_signal("stealth_broken")
 		if movement:
 			movement.set_walk_path([])
 		target_enemy = weakref(body)
@@ -293,6 +326,8 @@ func _on_ActorBase_attack(tar):
 		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
+	if stats:
+		stats.emit_signal("stealth_broken")
 	get_node("EffectPlayer").play("hit")
 	var he = null
 	if parent.hit_effect_scene:
@@ -308,6 +343,9 @@ func on_hit(tar):
 			)
 
 		get_tree().get_root().get_node("Game/Effects").add_child(he)
+
+func on_stealth_broken():
+	set_opacity(1)
 
 func _on_MoveModule_stalled():
 	on_idle()
