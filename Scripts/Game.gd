@@ -40,10 +40,14 @@ func newgame():
 	spawn_actor("archer", "enemy")
 	spawn_actor("archer", "enemy")
 	spawn_actor("mage", "enemy")
-	spawn_actor("tank", "friendly")
-	spawn_actor("tank", "friendly")
-	spawn_actor("tank", "friendly")
+#	spawn_actor("tank", "friendly")
+#	spawn_actor("tank", "friendly")
+#	spawn_actor("tank", "friendly")
 	spawn_actor("mage", "friendly")
+	spawn_actor("archer", "friendly")
+	spawn_actor("archer", "friendly")
+	spawn_actor("archer", "friendly")
+	spawn_actor("archer", "friendly")
 	spawn_actor("archer", "friendly")
 
 func cleanup():

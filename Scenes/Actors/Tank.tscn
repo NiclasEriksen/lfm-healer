@@ -54,6 +54,12 @@ spritesheet = ExtResource( 4 )
 has_attack_anim = false
 tile_dimensions = Vector2( 5, 3 )
 
+[node name="Sprite" parent="ActorBase"]
+
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+vframes = 3
+
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 
 amount = -7.0
@@ -70,3 +76,4 @@ stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
 
 
+[editable path="ActorBase"]
