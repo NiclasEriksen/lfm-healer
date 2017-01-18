@@ -60,7 +60,7 @@ func init(t, em, dm):
 	target_pos = t.get_pos()
 	target = weakref(t)
 	if has_node("Trail"):
-		get_node("Trail").set_emit_timeout(flytime / 2)
+		get_node("Trail").set_emit_timeout(flytime * 0.75)
 		get_node("Trail").set_lifetime(flytime / 2)
 	effect_module = weakref(em)
 	if dm:

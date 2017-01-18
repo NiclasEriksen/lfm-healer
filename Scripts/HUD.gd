@@ -15,7 +15,7 @@ func draw_lines(points, col):
 	var adj_p = []
 	for p in points:
 		adj_p.append(
-			p / get_tree().get_root().get_node("Game/Camera2D")
+			p / get_tree().get_root().get_node("Game/Camera2D").get_zoom()
 		)
 	get_node("LineDisplay").points = adj_p
 	get_node("LineDisplay").line_color = col

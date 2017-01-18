@@ -206,11 +206,12 @@ func on_death():
 	if Globals.get("debug_mode"):
 		print(self, " died.")
 	var de = death_effect.instance()
-	de.set_pos(parent.get_body_pos())
+	de.set_pos(parent.get_pos())
 	if has_death_anim:
 		var tex = get_node("Sprite").get_texture()
 		var hf = get_node("Sprite").get_hframes()
 		var vf = get_node("Sprite").get_vframes()
+		de.set_scale(get_node("Sprite").get_scale() * get_scale())
 		de.set_texture(tex, hf, vf)
 	#	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())
 	root.get_node("Effects").add_child(de)

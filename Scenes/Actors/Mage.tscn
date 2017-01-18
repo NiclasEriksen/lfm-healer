@@ -74,13 +74,12 @@ has_attack_anim = false
 
 [node name="Sprite" parent="ActorBase"]
 
-transform/scale = Vector2( 2, 2 )
 texture = ExtResource( 6 )
 frame = 1
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
-transform/pos = Vector2( 0, -35 )
+transform/pos = Vector2( 0, -37 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
