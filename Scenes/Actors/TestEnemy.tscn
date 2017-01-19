@@ -49,7 +49,6 @@ _update_shape_index = 0
 
 spritesheet = ExtResource( 4 )
 has_death_anim = true
-STEALTH_OPACITY = 0.3
 
 [node name="Attack" parent="." instance=ExtResource( 5 )]
 

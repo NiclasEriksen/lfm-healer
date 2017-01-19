@@ -106,13 +106,13 @@ has_attack_anim = true
 has_death_anim = false
 has_special_anim = false
 tile_dimensions = Vector2( 5, 5 )
+STEALTH_OPACITY = 0.3
 
 [node name="Sprite" type="Sprite" parent="."]
 
 transform/scale = Vector2( 2, 2 )
 vframes = 5
 hframes = 5
-frame = 14
 
 [node name="Selected" type="Light2D" parent="."]
 

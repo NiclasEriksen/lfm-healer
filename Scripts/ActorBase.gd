@@ -223,7 +223,7 @@ func on_death():
 		print(self, " died.")
 	var de = death_effect.instance()
 	de.set_pos(parent.get_pos())
-	de.set_z(parent.get_z())
+	de.set_z(parent.get_z() - 8)
 	if has_death_anim:
 		var tex = get_node("Sprite").get_texture()
 		var hf = get_node("Sprite").get_hframes()
@@ -273,6 +273,14 @@ func update_state():
 				if target_enemy.get_ref():
 					var te = target_enemy.get_ref()
 					if te.get_body_pos().x > parent.get_body_pos().x:
+						set_scale(Vector2(1, 1))
+					else:
+						set_scale(Vector2(-1, 1))
+				else:
+					target_enemy = null
+			else:
+				if parent.has_node("MoveModule"):
+					if parent.get_node("MoveModule").get_direction().x > 0:
 						set_scale(Vector2(1, 1))
 					else:
 						set_scale(Vector2(-1, 1))

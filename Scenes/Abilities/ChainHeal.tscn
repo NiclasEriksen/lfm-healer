@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scenes/Abilities/ChainHeal.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/UI/hp_flat_blue.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -13,14 +14,15 @@ radius = 32.0
 [node name="ChainHeal" type="Node2D"]
 
 script/script = ExtResource( 1 )
+ability_icon = ExtResource( 2 )
 max_jump_range = 250
 max_jumps = 4
 
 [node name="Sprite" type="Sprite" parent="."]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
-[node name="EffectModule" parent="." instance=ExtResource( 3 )]
+[node name="EffectModule" parent="." instance=ExtResource( 4 )]
 
 amount = 18.0
 
@@ -41,6 +43,6 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="BuffModuleBak" parent="." instance=ExtResource( 4 )]
+[node name="BuffModuleBak" parent="." instance=ExtResource( 5 )]
 
 

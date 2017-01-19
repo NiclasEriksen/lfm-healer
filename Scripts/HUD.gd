@@ -5,11 +5,25 @@ var titleflash = preload("res://Scenes/UI/TitleFlash.tscn")
 var currently_flashing = null
 
 func _ready():
+	set_button_ability(3, get_node("Button2/Sprite").get_texture())
 	pass
 
 func clear():
 	for hpb in get_node("HPBars").get_children():
 		hpb.free()
+
+func set_button_ability(btn, tex):
+	var ab = get_node("AbilityBar")
+	var b_node_name = "HBoxContainer/Ability" + str(btn)
+	if ab.has_node(b_node_name):
+		var b_node = ab.get_node(b_node_name)
+		b_node.get_node("Sprite").set_scale(b_node.get_size() / tex.get_size() * 0.8)
+		b_node.get_node("Sprite").set_texture(tex)
+	else:
+		print("no... ", b_node_name)
+#	if not typeof(btn) == int:
+#		print("btn has to be an integer, not adding ability.")
+	
 
 func draw_lines(points, col):
 	var adj_p = []

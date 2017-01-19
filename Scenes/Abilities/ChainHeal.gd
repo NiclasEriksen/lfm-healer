@@ -53,7 +53,6 @@ func _process(delta):
 			targets = []
 		var points = []
 		for t in targets:
-			print(t)
 			points.append(t.get_global_pos())
 			t.get_node("ActorBase").get_node("Selected").set_enabled(true)
 #		hud.update()

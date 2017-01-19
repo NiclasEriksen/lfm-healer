@@ -40,9 +40,7 @@ func _fixed_process(dt):
 						var dm = dot_module.get_ref().duplicate()
 						if owner.get_ref():
 							dm.set_unique_ref(owner.get_ref().get_instance_ID())
-							print("owner!")
-						else:
-							print("no owner?!")
+
 						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
 
 						# print("And doing dmg!")

@@ -29,9 +29,22 @@ func _ready():
 	set_process_input(true)
 	newgame()
 
+func add_all_spells():
+	var i = 1
+	for s in spells:
+		if s:
+			s = s.instance()
+		else:
+			i += 1
+			continue
+		if s.get_icon():
+			get_node("HUD").set_button_ability(i, s.get_icon())
+		i += 1
+
 func newgame():
 	cleanup()
 	if has_node("HUD"):
+		add_all_spells()
 		get_node("HUD").flash_message("Begynner", "nei men se der ja", 3)
 	spawn_actor("enemy", "enemy")
 	spawn_actor("enemy", "enemy")
