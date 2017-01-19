@@ -223,6 +223,7 @@ func on_death():
 		print(self, " died.")
 	var de = death_effect.instance()
 	de.set_pos(parent.get_pos())
+	de.set_z(parent.get_z())
 	if has_death_anim:
 		var tex = get_node("Sprite").get_texture()
 		var hf = get_node("Sprite").get_hframes()

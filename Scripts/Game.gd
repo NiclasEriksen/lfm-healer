@@ -25,8 +25,6 @@ var max_spell4_cd = 2.0
 signal spell_cd_changed(spell_id, pts)
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	set_process(true)
 	set_process_input(true)
 	newgame()
