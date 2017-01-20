@@ -11,7 +11,7 @@ func _ready():
 func get_target():
 	var candidates = get_node("Area2D").get_overlapping_bodies()
 	var closest_candidate = null
-	var closest = 500
+	var closest = 100
 	for f in candidates:
 		if f.is_in_group("friendly"):
 			var dist = abs(f.get_pos().distance_to(get_pos()))
@@ -30,6 +30,7 @@ func get_chain(start_target):
 		var closest = max_jump_range
 		var candidate = null
 		for friend in friendlies:
+			friend.set_highlighted(false)
 			if not friend in chain_targets:
 				if not friend.get_node("ActorBase").healthy:
 					var dist = abs(friend.get_pos().distance_to(last_target.get_pos()))
@@ -46,6 +47,9 @@ func get_chain(start_target):
 
 func _process(delta):
 	if active:
+		var friendlies = get_tree().get_nodes_in_group("friendly")
+		for friend in friendlies:
+			friend.set_highlighted(false)
 		var target = get_target()
 		if target:
 			targets = get_chain(target)
@@ -54,7 +58,7 @@ func _process(delta):
 		var points = []
 		for t in targets:
 			points.append(t.get_global_pos())
-			t.get_node("ActorBase").get_node("Selected").set_enabled(true)
+			t.set_highlighted(true)
 #		hud.update()
 		hud.draw_lines(points, Color(0.2,0.9,0.1,0.5))
 

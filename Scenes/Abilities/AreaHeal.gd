@@ -16,15 +16,18 @@ func _ready():
 
 func _process(delta):
 	if active:
+		for f in get_tree().get_nodes_in_group("friendly"):
+			f.set_highlighted(false)
 		for target in get_node("Area2D").get_overlapping_bodies():
 			if "friendly" in target.get_groups():
-				target.get_node("ActorBase").get_node("Selected").set_enabled(true)
+				target.set_highlighted(true)
 
 
 func trigger():
 	targets = get_node("Area2D").get_overlapping_bodies()
 	var targets_hit = false
 	for target in targets:
+		target.set_highlighted(false)
 		if "friendly" in target.get_groups():
 			if target.has_node("StatsModule"):
 				targets_hit = true

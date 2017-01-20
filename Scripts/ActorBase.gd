@@ -292,6 +292,9 @@ func update_state():
 	else:
 		set_opacity(1.0)
 
+	get_node("Selected").set_enabled(parent.is_selected())
+	get_node("Highlight").set_enabled(parent.is_highlighted())
+
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)
 		if attacking:

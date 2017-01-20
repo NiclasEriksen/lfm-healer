@@ -8,7 +8,11 @@ func _ready():
 
 func _process(delta):
 	if active:
+		for f in get_tree().get_nodes_in_group("friendly"):
+			f.set_highlighted(false)
 		set_target()
+		if target:
+			target.set_highlighted(true)
 
 func set_target():
 	var candidates = get_node("Area2D").get_overlapping_bodies()
@@ -23,7 +27,6 @@ func set_target():
 			closest_candidate = f
 	if closest_candidate:
 		target = closest_candidate
-		target.get_node("ActorBase").get_node("Selected").set_enabled(true)
 	else:
 		target = null
 
@@ -48,6 +51,7 @@ func trigger():
 			).apply_effect(
 				get_node("EffectModule"), null
 				)
+			target.set_highlighted(false)
 			target.get_node("ActorBase").on_heal()
 			var he = healeffect.instance()
 			he.set_pos(target.get_body_pos())

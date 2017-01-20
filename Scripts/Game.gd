@@ -98,9 +98,6 @@ func _process(dt):
 		newgame()
 		return
 
-	for f in friendlies:
-		f.get_node("ActorBase").get_node("Selected").set_enabled(false)
-	
 	if spell1_cd > 0:
 		emit_signal("spell_cd_changed", 1, spell1_cd / max_spell1_cd * 100)
 		spell1_cd -= dt

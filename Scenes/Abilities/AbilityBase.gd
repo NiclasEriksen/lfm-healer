@@ -3,6 +3,7 @@ extends Node2D
 var active = false
 var slot = 0
 var z_offset = 0
+var prev_highlighted = []
 export(Texture) var ability_icon = null setget set_icon, get_icon
 
 # class member variables go here, for example:
@@ -25,6 +26,14 @@ func _ready():
 	if has_node("Area2D/CollisionShape2D"):
 		z_offset = get_node("Area2D/CollisionShape2D").get_shape().get_radius()
 	set_process(true)
+	set_fixed_process(true)
+	
+func _fixed_process(delta):
+	for a in prev_highlighted:
+		if a.get_ref():
+			a.get_ref().queue_set_highlighted(false)
+			print("queueing")
+		prev_highlighted.erase(a)
 
 func _process(dt):
 	if active:

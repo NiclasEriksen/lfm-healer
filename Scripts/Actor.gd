@@ -6,7 +6,20 @@ export(String, FILE, "*.tscn") var projectile = null setget set_projectile, get_
 export(String, FILE, "*.tscn") var hit_effect = null setget set_hit_effect, get_hit_effect
 var hit_effect_scene = null
 var projectile_scene = null
+var selected = false setget set_selected, is_selected
+var highlighted = false setget set_highlighted, is_highlighted
 
+func set_selected(v):
+	selected = v
+
+func is_selected():
+	return selected
+
+func set_highlighted(v):
+	highlighted = v
+
+func is_highlighted():
+	return highlighted
 
 func change_allegiance(a):
 	if Globals.get("debug_mode"):
