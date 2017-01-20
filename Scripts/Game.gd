@@ -69,6 +69,12 @@ func newgame():
 
 func cleanup():
 	dragged_ability = null
+	spell1_cd = 0.0
+	spell2_cd = 0.0
+	spell3_cd = 0.0
+	spell4_cd = 0.0
+	for s in range(spells.size()):
+		emit_signal("spell_cd_changed", s, 0)
 	get_node("HUD").clear()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Objects").get_child_count())

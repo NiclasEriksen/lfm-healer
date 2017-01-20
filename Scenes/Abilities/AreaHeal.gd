@@ -27,8 +27,8 @@ func trigger():
 	targets = get_node("Area2D").get_overlapping_bodies()
 	var targets_hit = false
 	for target in targets:
-		target.set_highlighted(false)
 		if "friendly" in target.get_groups():
+			target.set_highlighted(false)
 			if target.has_node("StatsModule"):
 				targets_hit = true
 				target.get_node(
