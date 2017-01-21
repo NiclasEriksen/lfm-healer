@@ -38,21 +38,35 @@ func _ready():
 		set_process(true)
 		set_fixed_process(true)
 		parent = get_parent()
-		if has_node("MoveModule"):
-			movement = get_node("MoveModule")
-		if get_parent().has_node("StatsModule"):
+		if parent.has_node("MoveModule"):
+			movement = parent.get_node("MoveModule")
+
+		if parent.has_node("StatsModule"):
 			if Globals.get("debug_mode"):
 				print("Statsmodule found.")
-			stats = get_parent().get_node("StatsModule")
+			stats = parent.get_node("StatsModule")
 			stats.connect("stealth_broken", self, "on_stealth_broken")
 			var shape = CircleShape2D.new()
 			shape.set_radius(stats.get_actual("attack_range"))
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
 			root.get_node("HUD").add_hpbar(get_parent())
-		if has_node("Selected") and get_parent().has_node("CollisionShape2D"):
-			get_node("Selected").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
-		if has_node("State") and get_parent().has_node("CollisionShape2D"):
-			get_node("State").set_texture_offset(get_parent().get_node("CollisionShape2D").get_pos())
+		if has_node("Selected") and parent.has_node("CollisionShape2D"):
+			get_node("Selected").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
+		if has_node("State") and parent.has_node("CollisionShape2D"):
+			get_node("State").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
+		if parent.has_node("CollisionShape2D"):
+			make_light_occluder()
+
+func make_light_occluder():
+	var cr = parent.get_node("CollisionShape2D").get_shape().get_radius()
+	var pos = parent.get_node("CollisionShape2D").get_pos()
+	var va = []
+	for i in range(24):
+		va.append(pos + Vector2(0, cr).rotated(i * PI / 12))
+	var lo = OccluderPolygon2D.new()
+	lo.set_polygon(va)
+	lo.set_cull_mode(2)
+	get_node("LightOccluder2D").set_occluder_polygon(lo)
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
@@ -207,7 +221,7 @@ func on_attack():
 		stats.emit_signal("stealth_broken")
 	attacking = true
 	idle = false
-	get_node("AnimationPlayer").set_speed(1)
+	# get_node("AnimationPlayer").set_speed(1)
 
 	if not get_node("AnimationPlayer").get_current_animation() == "attack" or not get_node("AnimationPlayer").is_playing():
 		if not get_node("AnimationPlayer").get_current_animation() == "idle":
@@ -289,7 +303,11 @@ func update_state():
 
 	if stealthed:
 		set_opacity(STEALTH_OPACITY)
+		get_node("Stealth").set_enabled(true)
+		get_node("Stealth/Particles2D").set_emitting(true)
 	else:
+		get_node("Stealth").set_enabled(false)
+		get_node("Stealth/Particles2D").set_emitting(false)
 		set_opacity(1.0)
 
 	get_node("Selected").set_enabled(parent.is_selected())

@@ -1,12 +1,18 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=18 format=1]
 
 [ext_resource path="res://Scripts/ActorBase.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=2]
-[ext_resource path="res://Assets/UI/hp_mid_blue.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Animations/walk.tres" type="Animation" id=5]
-[ext_resource path="res://Assets/Animations/attack.tres" type="Animation" id=6]
-[ext_resource path="res://Assets/Animations/hit.tres" type="Animation" id=7]
+[ext_resource path="res://Assets/Effects/smoke_large.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/hp_mid_blue.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Animations/walk.tres" type="Animation" id=6]
+[ext_resource path="res://Assets/Animations/attack.tres" type="Animation" id=7]
+[ext_resource path="res://Assets/Animations/hit.tres" type="Animation" id=8]
+
+[sub_resource type="ColorRamp" id=9]
+
+offsets = FloatArray( 0, 0.0584795, 0.619883, 1 )
+colors = ColorArray( 0, 0, 0, 0.0936078, 0.0342178, 0.000305176, 0.0390625, 0.770196, 0.0868684, 0, 0.0992781, 0.838275, 0.140137, 0, 0.160156, 0 )
 
 [sub_resource type="ColorRamp" id=1]
 
@@ -18,12 +24,12 @@ colors = ColorArray( 0.193848, 1, 0.1875, 0, 0.158966, 1, 0.152344, 1, 0.302734,
 resource/name = "attack"
 length = 0.5
 loop = false
-step = 0.1
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.1, 0.2, 0.3, 0.5 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":1, "values":[ 10, 11, 12, 13, 14 ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.1, 0.3, 0.4, 0.5 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":1, "values":[ 10, 11, 12, 13, 14 ] }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:transform/pos")
 tracks/1/interp = 1
@@ -99,6 +105,12 @@ radius = 50.0
 custom_solver_bias = 0.0
 radius = 50.0
 
+[sub_resource type="OccluderPolygon2D" id=8]
+
+closed = true
+cull_mode = 0
+polygon = Vector2Array(  )
+
 [node name="ActorBase" type="Node2D"]
 
 script/script = ExtResource( 1 )
@@ -109,17 +121,67 @@ has_special_anim = false
 tile_dimensions = Vector2( 5, 5 )
 STEALTH_OPACITY = 0.3
 
+[node name="Stealth" type="Light2D" parent="."]
+
+enabled = false
+editor_only = false
+texture = ExtResource( 2 )
+offset = Vector2( 0, 0 )
+scale = 0.2
+color = Color( 1, 1, 1, 1 )
+energy = 0.3
+mode = 1
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Particles2D" type="Particles2D" parent="Stealth"]
+
+transform/pos = Vector2( 0, 18 )
+config/amount = 32
+config/lifetime = 1.5
+config/half_extents = Vector2( 8, 0 )
+config/local_space = false
+params/direction = -180.0
+params/spread = 5.0
+params/linear_velocity = 12.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 2.0
+params/radial_accel = 1.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 2.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/hue_variation = 0.2
+color/color = Color( 0.175781, 0.175781, 0.175781, 1 )
+color/color_ramp = SubResource( 9 )
+
 [node name="Sprite" type="Sprite" parent="."]
 
 transform/scale = Vector2( 2, 2 )
 vframes = 5
 hframes = 5
+frame = 13
 
 [node name="Selected" type="Light2D" parent="."]
 
 enabled = false
 editor_only = false
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 offset = Vector2( 0, 0 )
 scale = 0.5
 color = Color( 1, 1, 1, 1 )
@@ -141,7 +203,7 @@ shadow/item_mask = 1
 
 enabled = false
 editor_only = false
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 offset = Vector2( 0, 0 )
 scale = 1.0
 color = Color( 1, 1, 1, 1 )
@@ -163,7 +225,7 @@ shadow/item_mask = 1
 
 enabled = false
 editor_only = false
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 offset = Vector2( 0, 0 )
 scale = 0.5
 color = Color( 1, 1, 1, 1 )
@@ -187,7 +249,7 @@ config/amount = 24
 config/lifetime = 2.0
 config/emitting = false
 config/half_extents = Vector2( 20, 8 )
-config/texture = ExtResource( 4 )
+config/texture = ExtResource( 5 )
 params/direction = 180.0
 params/spread = 0.0
 params/linear_velocity = 20.0
@@ -215,9 +277,9 @@ root/root = NodePath("..")
 anims/attack = SubResource( 2 )
 anims/death = SubResource( 3 )
 anims/idle = SubResource( 4 )
-anims/walk = ExtResource( 5 )
+anims/walk = ExtResource( 6 )
 playback/active = true
-playback/speed = 5.0
+playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
@@ -227,8 +289,8 @@ playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/Heal = SubResource( 5 )
-anims/attack = ExtResource( 6 )
-anims/hit = ExtResource( 7 )
+anims/attack = ExtResource( 7 )
+anims/hit = ExtResource( 8 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -236,6 +298,7 @@ autoplay = ""
 
 [node name="AttackRange" type="Area2D" parent="."]
 
+visibility/visible = false
 input/pickable = true
 shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -250,6 +313,11 @@ angular_damp = 1.0
 shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+
+occluder = SubResource( 8 )
+light_mask = 1
 
 [connection signal="attack" from="." to="." method="_on_ActorBase_attack"]
 

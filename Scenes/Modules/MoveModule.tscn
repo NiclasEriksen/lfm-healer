@@ -5,13 +5,20 @@
 [node name="MoveModule" type="Node2D"]
 
 script/script = ExtResource( 1 )
+AVOID_COLLISION = false
+AVOID_FORCE = 0.5
+RAYCAST_LENGTH = 30.0
+STALL_TRESHOLD = 0.1
+PATH_REACH_TRESHOLD = 8.0
+stats_node = null
+BASE_MOVEMENT_SPEED = 250
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 
-enabled = false
+enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, 50 )
-layer_mask = 1
+cast_to = Vector2( 0, 0 )
+layer_mask = 4
 type_mask = 15
 
 [node name="Timer" type="Timer" parent="."]

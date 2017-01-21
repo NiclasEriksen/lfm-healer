@@ -18,7 +18,7 @@ radius = 4.0
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 5 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 14 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -43,7 +43,7 @@ transform/pos = Vector2( 0, -36.6667 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 1, 5 )
+transform/pos = Vector2( 1, 14 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -69,10 +69,8 @@ time = 1.5
 
 [node name="MoveModule" parent="." instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 0, 21 )
+transform/pos = Vector2( 0, 13 )
 AVOID_COLLISION = true
-AVOID_FORCE = 0.5
-RAYCAST_LENGTH = 30.0
 STALL_TRESHOLD = 0.2
 PATH_REACH_TRESHOLD = 10.0
 stats_node = NodePath("../StatsModule")
@@ -82,4 +80,14 @@ BASE_MOVEMENT_SPEED = 50
 
 spritesheet = ExtResource( 8 )
 
+[node name="Sprite" parent="ActorBase"]
 
+texture = ExtResource( 8 )
+frame = 14
+
+[node name="AnimationPlayer" parent="ActorBase"]
+
+playback/speed = 1.0
+
+
+[editable path="ActorBase"]
