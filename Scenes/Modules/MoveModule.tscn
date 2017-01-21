@@ -18,7 +18,7 @@ BASE_MOVEMENT_SPEED = 250
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 0 )
-layer_mask = 4
+layer_mask = 1
 type_mask = 15
 
 [node name="Timer" type="Timer" parent="."]

@@ -145,7 +145,7 @@ shadow/item_mask = 1
 
 [node name="Particles2D" type="Particles2D" parent="Stealth"]
 
-transform/pos = Vector2( 0, 18 )
+transform/pos = Vector2( 5, 18 )
 config/amount = 32
 config/lifetime = 1.5
 config/half_extents = Vector2( 8, 0 )
