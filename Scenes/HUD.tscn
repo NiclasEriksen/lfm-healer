@@ -165,6 +165,68 @@ margin/top = 645.0
 margin/right = 798.0
 margin/bottom = 725.0
 
+[node name="Allegiance" type="OptionButton" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1000.0
+margin/top = 10.0
+margin/right = 1100.0
+margin/bottom = 42.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+align = 0
+selected = -1
+items = [  ]
+
+[node name="Actortype" type="OptionButton" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1110.0
+margin/top = 10.0
+margin/right = 1210.0
+margin/bottom = 42.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+align = 0
+selected = -1
+items = [  ]
+
+[node name="Spawn" type="Button" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1220.0
+margin/top = 10.0
+margin/right = 1268.0
+margin/bottom = 42.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+
+[node name="Sprite" type="Sprite" parent="Spawn"]
+
+transform/pos = Vector2( 8, 0 )
+transform/scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+offset = Vector2( 25, 25 )
+vframes = 10
+hframes = 11
+frame = 20
+
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_RestartButton_pressed"]
@@ -176,5 +238,7 @@ margin/bottom = 725.0
 [connection signal="toggled" from="ChillMode" to="." method="_on_ChillMode_toggled"]
 
 [connection signal="pressed" from="Kill" to="." method="_on_Kill_pressed"]
+
+[connection signal="pressed" from="Spawn" to="." method="_on_Spawn_pressed"]
 
 

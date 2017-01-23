@@ -14,6 +14,7 @@ var rogue_actor = load("res://Scenes/Actors/Rogue.tscn")
 var mage_actor = load("res://Scenes/Actors/Mage.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
+var actor_types = ["tank", "archer", "rogue", "mage", "enemy"]
 onready var cam = get_node("Camera2D")
 var spell1_cd = 0.0
 var spell2_cd = 0.0

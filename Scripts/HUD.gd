@@ -6,8 +6,11 @@ var currently_flashing = null
 signal kill_pressed
 
 func _ready():
-	set_button_ability(3, get_node("Button2/Sprite").get_texture())
-	pass
+	var actor_options = get_parent().actor_types
+	for t in actor_options:
+		get_node("Actortype").add_item(t)
+	get_node("Allegiance").add_item("friendly")
+	get_node("Allegiance").add_item("enemy")
 
 func clear():
 	for hpb in get_node("HPBars").get_children():
@@ -90,3 +93,9 @@ func _on_Button_toggled( pressed ):
 
 func _on_Kill_pressed():
 	emit_signal("kill_pressed")
+
+
+func _on_Spawn_pressed():
+	var t = get_node("Actortype").get_text()
+	var a = get_node("Allegiance").get_text()
+	get_parent().spawn_actor(t, a)
