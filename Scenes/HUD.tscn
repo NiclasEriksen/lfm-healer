@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Button\n\n# class member variables go here, for example:\n# var a = 2\n# var b = \"textvar\"\n\nfunc _ready():\n\tset_process_input(true)\n\nfunc _input(event):\n\tif is_hovered():\n\t\taccept_event()"
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -116,6 +120,33 @@ vframes = 10
 hframes = 11
 frame = 74
 
+[node name="Kill" type="Button" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 201.0
+margin/top = 16.0
+margin/right = 233.0
+margin/bottom = 48.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+script/script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Kill"]
+
+transform/pos = Vector2( -0.902499, 0 )
+transform/scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+offset = Vector2( 25, 25 )
+vframes = 10
+hframes = 11
+frame = 57
+
 [node name="HPBars" type="CanvasLayer" parent="."]
 
 layer = 1
@@ -143,5 +174,7 @@ margin/bottom = 725.0
 [connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]
 
 [connection signal="toggled" from="ChillMode" to="." method="_on_ChillMode_toggled"]
+
+[connection signal="pressed" from="Kill" to="." method="_on_Kill_pressed"]
 
 

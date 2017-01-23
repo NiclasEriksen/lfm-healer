@@ -27,7 +27,7 @@ signal spell_cd_changed(spell_id, pts)
 
 func _ready():
 	set_process(true)
-	set_process_input(true)
+	set_process_unhandled_input(true)
 	newgame()
 
 func add_all_spells():
@@ -133,7 +133,7 @@ func _process(dt):
 			emit_signal("spell_cd_changed", 4, 0)
 		spell4_cd = 0
 
-func _input(event):
+func _unhandled_input(event):
 	event = make_input_local(event)
 	if event.type == InputEvent.SCREEN_TOUCH:
 		if not event.pressed and dragged_ability:
@@ -278,3 +278,10 @@ func spawn_ability(ability, pos):
 	self.dragged_ability.set_active(false)
 	
 	self.get_node("Effects").add_child(self.dragged_ability)
+
+
+func _on_HUD_kill_pressed():
+	var actors = get_tree().get_nodes_in_group("friendly") + get_tree().get_nodes_in_group("enemy")
+	for a in actors:
+		if a.is_selected():
+			a.queue_free()

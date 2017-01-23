@@ -3,6 +3,7 @@ extends CanvasLayer
 var hp_bar_scn = preload("res://Scenes/UI/HPBar.tscn")
 var titleflash = preload("res://Scenes/UI/TitleFlash.tscn")
 var currently_flashing = null
+signal kill_pressed
 
 func _ready():
 	set_button_ability(3, get_node("Button2/Sprite").get_texture())
@@ -85,3 +86,7 @@ func _on_ChillMode_toggled( pressed ):
 
 func _on_Button_toggled( pressed ):
 	Globals.set("debug_mode", pressed)
+
+
+func _on_Kill_pressed():
+	emit_signal("kill_pressed")
