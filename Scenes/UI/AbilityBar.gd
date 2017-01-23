@@ -12,13 +12,13 @@ func _ready():
 func update_spell_cd(id, val):
 	var a_node = null
 	if id == 1:
-		a_node = get_node("HBoxContainer/Ability1")
+		a_node = get_node("VBoxContainer/HBoxContainer/Ability1")
 	if id == 2:
-		a_node = get_node("HBoxContainer/Ability2")
+		a_node = get_node("VBoxContainer/HBoxContainer/Ability2")
 	if id == 3:
-		a_node = get_node("HBoxContainer/Ability3")
+		a_node = get_node("VBoxContainer/HBoxContainer/Ability3")
 	if id == 4:
-		a_node = get_node("HBoxContainer/Ability4")
+		a_node = get_node("VBoxContainer/HBoxContainer/Ability4")
 
 	if a_node:
 		a_node.get_node("ProgressBar").set_val(val)
