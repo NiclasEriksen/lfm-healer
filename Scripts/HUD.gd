@@ -87,8 +87,9 @@ func _on_ChillMode_toggled( pressed ):
 	Globals.set("chill_mode", pressed)
 
 
-func _on_Button_toggled( pressed ):
-	Globals.set("debug_mode", pressed)
+func _on_Button_pressed():
+#	Globals.set("debug_mode", pressed)
+	get_node("SettingsLayer/Settings").popup()
 
 
 func _on_Kill_pressed():

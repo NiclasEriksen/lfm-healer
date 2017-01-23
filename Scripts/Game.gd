@@ -237,10 +237,11 @@ func _on_Timer_timeout():
 #		else:
 #			spawn_actor("tank")
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
-	if Globals.get("chill_mode"):
-		if randf() > 0.75:
-			return
-	spawn_actor("enemy", "enemy")
+	if Globals.get("autospawn"):
+		if Globals.get("chill_mode"):
+			if randf() > 0.75:
+				return
+		spawn_actor("enemy", "enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
 #	for f in friendlies:
 	# t.set_wait_time(1.0)
