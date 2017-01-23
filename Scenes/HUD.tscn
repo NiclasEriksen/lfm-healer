@@ -8,7 +8,7 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends Button\n\n# class member variables go here, for example:\n# var a = 2\n# var b = \"textvar\"\n\nfunc _ready():\n\tset_process_input(true)\n\nfunc _input(event):\n\tif is_hovered():\n\t\taccept_event()"
+script/source = "extends Button\n\n# class member variables go here, for example:\n# var a = 2\n# var b = \"textvar\"\n\nfunc _ready():\n\tset_focus_mode(0)\n\tset_process_input(true)\n\nfunc _input(event):\n\tif is_hovered():\n\t\taccept_event()"
 
 [node name="HUD" type="CanvasLayer"]
 
