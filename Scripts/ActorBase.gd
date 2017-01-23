@@ -356,11 +356,13 @@ func _on_ActorBase_attack(tar):
 	if has_attack_anim:
 		get_node("AnimationPlayer").play("attack")
 	else:
+		get_node("HealParticles").set_emitting(false)
 		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
 	if stats:
 		stats.emit_signal("stealth_broken")
+	get_node("HealParticles").set_emitting(false)
 	get_node("EffectPlayer").play("hit")
 	var he = null
 	if parent.hit_effect_scene:
