@@ -1,15 +1,9 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/debug_grass_16.png" type="Texture" id=2]
 
 [sub_resource type="NavigationPolygon" id=1]
-
-vertices = Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 29.6, 0.627045 )
-polygons = [ IntArray( 0, 1, 2, 3 ) ]
-outlines = [ Vector2Array( 1024.07, 0.193303, 1024.02, 600.016, 88.8441, 598.966, 29.6, 0.627045 ) ]
-
-[sub_resource type="NavigationPolygon" id=2]
 
 vertices = Vector2Array( 360.028, 206.37, 512.454, -0.00574303, 512.298, 288.738, 336.505, 243.86, 348.42, 85.7744, 328.419, 168.146, 325.397, 116.878, 249.765, 156.384, 248.666, 129.847, 171.11, 168.881, 172.476, 115.798, 321.598, 58.9523, 27.047, -0.747543, 250.885, 45.2974, 171.394, 61.3907, 153.838, 87.2374, 27.9041, 287.51, 143.911, 205.635, 163.024, 242.39, 245.354, 257.827 )
 polygons = [ IntArray( 0, 1, 2, 3 ), IntArray( 4, 1, 0, 5, 6 ), IntArray( 6, 5, 7, 8 ), IntArray( 8, 7, 9, 10 ), IntArray( 1, 4, 11 ), IntArray( 12, 1, 11, 13 ), IntArray( 12, 13, 14 ), IntArray( 12, 14, 15 ), IntArray( 16, 12, 15, 10, 9, 17 ), IntArray( 16, 17, 18 ), IntArray( 16, 18, 19 ), IntArray( 2, 16, 19 ), IntArray( 2, 19, 3 ) ]
@@ -20,15 +14,9 @@ outlines = [ Vector2Array( 27.047, -0.747543, 27.9041, 287.51, 512.298, 288.738,
 script/script = ExtResource( 1 )
 mapfile = null
 
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
-
-visibility/visible = false
-navpoly = SubResource( 1 )
-enabled = false
-
 [node name="NavigationPolygonInstance2" type="NavigationPolygonInstance" parent="."]
 
-navpoly = SubResource( 2 )
+navpoly = SubResource( 1 )
 enabled = true
 
 [node name="EnemySpawn" type="Position2D" parent="."]

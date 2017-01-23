@@ -31,6 +31,10 @@ func _process(delta):
 			remove()
 			return
 		if "enemy" in o.get_groups():
+			if o.get_node("StatsModule").is_stealthed():
+				hide()
+			else:
+				show()
 			set_scale(enemy_scale)
 		elif "friendly" in o.get_groups():
 			set_scale(friendly_scale)

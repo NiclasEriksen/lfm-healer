@@ -18,3 +18,4 @@ func set_spawn_pos():
 
 func _ready():
 	set_spawn_pos()
+#	print(get_node("NavigationPolygonInstance2").get_navigation_polygon().get_vertices())

@@ -302,9 +302,12 @@ func update_state():
 		on_stunned()
 
 	if stealthed:
-		set_opacity(STEALTH_OPACITY)
-		get_node("Stealth").set_enabled(true)
-		get_node("Stealth/Particles2D").set_emitting(true)
+		if "enemy" in parent.get_groups():
+			set_opacity(0)
+		else:
+			set_opacity(STEALTH_OPACITY)
+			get_node("Stealth").set_enabled(true)
+			get_node("Stealth/Particles2D").set_emitting(true)
 	else:
 		get_node("Stealth").set_enabled(false)
 		get_node("Stealth/Particles2D").set_emitting(false)
