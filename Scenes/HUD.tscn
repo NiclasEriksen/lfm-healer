@@ -250,4 +250,6 @@ visibility/visible = false
 
 [connection signal="pressed" from="Spawn" to="." method="_on_Spawn_pressed"]
 
+[connection signal="load_map" from="SettingsLayer/Settings" to="." method="_on_Settings_load_map"]
+
 

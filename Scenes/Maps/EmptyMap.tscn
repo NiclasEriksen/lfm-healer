@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Maps/greynoise.png" type="Texture" id=2]
+
+[sub_resource type="NavigationPolygon" id=1]
+
+vertices = Vector2Array( 512.454, -0.00574303, 512.298, 288.738, 27.9041, 287.51, 27.047, -0.747543 )
+polygons = [ IntArray( 0, 1, 2, 3 ) ]
+outlines = [ Vector2Array( 27.047, -0.747543, 27.9041, 287.51, 512.298, 288.738, 512.454, -0.00574303 ) ]
+
+[node name="Map" type="Navigation2D"]
+
+script/script = ExtResource( 1 )
+mapfile = "res://Assets/Maps/greynoise.png"
+
+[node name="NavigationPolygonInstance2" type="NavigationPolygonInstance" parent="."]
+
+navpoly = SubResource( 1 )
+enabled = true
+
+[node name="EnemySpawn" type="Position2D" parent="."]
+
+transform/pos = Vector2( 460.8, 144 )
+
+[node name="FriendlySpawn" type="Position2D" parent="."]
+
+transform/pos = Vector2( 64, 144 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+centered = false
+
+

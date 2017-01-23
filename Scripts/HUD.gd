@@ -89,7 +89,7 @@ func _on_ChillMode_toggled( pressed ):
 
 func _on_Button_pressed():
 #	Globals.set("debug_mode", pressed)
-	get_node("SettingsLayer/Settings").popup()
+	get_node("SettingsLayer/Settings").popup_centered()
 
 
 func _on_Kill_pressed():
@@ -100,3 +100,7 @@ func _on_Spawn_pressed():
 	var t = get_node("Actortype").get_text()
 	var a = get_node("Allegiance").get_text()
 	get_parent().spawn_actor(t, a)
+
+
+func _on_Settings_load_map(m):
+	get_parent().load_map(m)

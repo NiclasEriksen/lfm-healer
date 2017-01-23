@@ -1,6 +1,7 @@
 extends Node2D
 
 var dragged_ability = false
+var maplist_node = preload("res://Scripts/MapList.gd").new()
 export(int, 2, 50, 1) var select_sensitivity = 20
 var spells = [
 	load("res://Scenes/Abilities/TargetedHeal.tscn"),
@@ -42,6 +43,18 @@ func add_all_spells():
 		if s.get_icon():
 			get_node("HUD").set_button_ability(i, s.get_icon())
 		i += 1
+
+func load_map(m):
+	var m_path = maplist_node.get_map_dir() + m
+	var mapnode = load(m_path).instance()
+	mapnode.set_name("Map")
+	if has_node("Map"):
+		get_node("Map").free()
+	else:
+		print("No map node present? :S")
+	add_child(mapnode)
+	move_child(mapnode, 0)
+	newgame()
 
 func newgame():
 	cleanup()
