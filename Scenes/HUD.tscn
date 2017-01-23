@@ -27,8 +27,8 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 16.0
 margin/top = 16.0
-margin/right = 66.0
-margin/bottom = 66.0
+margin/right = 91.0
+margin/bottom = 91.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -37,7 +37,7 @@ flat = false
 
 [node name="Sprite" type="Sprite" parent="Button2"]
 
-transform/scale = Vector2( 0.75, 0.75 )
+transform/pos = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 offset = Vector2( 33, 33 )
 vframes = 10
@@ -50,10 +50,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 73.0
+margin/left = 95.0
 margin/top = 16.0
-margin/right = 123.0
-margin/bottom = 66.0
+margin/right = 170.0
+margin/bottom = 91.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -62,7 +62,7 @@ flat = false
 
 [node name="Sprite" type="Sprite" parent="RestartButton"]
 
-transform/scale = Vector2( 0.75, 0.75 )
+transform/pos = Vector2( 4, 0 )
 texture = ExtResource( 2 )
 offset = Vector2( 33, 33 )
 vframes = 10
@@ -75,10 +75,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 129.0
+margin/left = 180.0
 margin/top = 16.0
-margin/right = 161.0
-margin/bottom = 48.0
+margin/right = 228.0
+margin/bottom = 64.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -87,8 +87,7 @@ flat = false
 
 [node name="Sprite" type="Sprite" parent="Button"]
 
-transform/pos = Vector2( -0.902499, 0 )
-transform/scale = Vector2( 0.6, 0.6 )
+transform/pos = Vector2( -2, -2 )
 texture = ExtResource( 2 )
 offset = Vector2( 25, 25 )
 vframes = 10
@@ -97,6 +96,7 @@ frame = 18
 
 [node name="ChillMode" type="Button" parent="."]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -127,10 +127,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 201.0
+margin/left = 235.0
 margin/top = 16.0
-margin/right = 233.0
-margin/bottom = 48.0
+margin/right = 283.0
+margin/bottom = 64.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -140,8 +140,7 @@ script/script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Kill"]
 
-transform/pos = Vector2( -0.902499, 0 )
-transform/scale = Vector2( 0.6, 0.6 )
+transform/pos = Vector2( -2, -2 )
 texture = ExtResource( 2 )
 offset = Vector2( 25, 25 )
 vframes = 10
