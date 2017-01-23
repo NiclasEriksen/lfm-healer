@@ -32,13 +32,13 @@ hit_effect = null
 
 [node name="Light2D" type="Light2D" parent="."]
 
-transform/pos = Vector2( 0, 28 )
+transform/pos = Vector2( 0, 13 )
 enabled = true
 editor_only = false
 texture = ExtResource( 2 )
 offset = Vector2( 0, 0 )
-scale = 0.2
-color = Color( 0.867188, 0.0135498, 0.0735712, 1 )
+scale = 0.15
+color = Color( 0.957031, 0.223691, 0.168228, 1 )
 energy = 1.0
 mode = 0
 range/height = 0.0
@@ -154,10 +154,7 @@ color/color_ramp = ExtResource( 8 )
 
 transform/pos = Vector2( 0, 12 )
 AVOID_COLLISION = true
-AVOID_FORCE = 0.5
-RAYCAST_LENGTH = 30.0
 STALL_TRESHOLD = 0.2
-PATH_REACH_TRESHOLD = 8.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
 

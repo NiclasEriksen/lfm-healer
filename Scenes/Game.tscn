@@ -20,6 +20,7 @@ points = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589
 [node name="Game" type="Node2D"]
 
 script/script = ExtResource( 1 )
+select_sensitivity = 20
 
 [node name="Map" parent="." instance=ExtResource( 2 )]
 

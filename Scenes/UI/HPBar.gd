@@ -47,20 +47,29 @@ func _process(delta):
 			self.old_val = val
 			get_node("TextureProgress").set_value(val)
 			get_node("AnimationPlayer").play("val_change")
-		if Globals.get("debug_mode") and has_node ("Panel"):
-			get_node("Panel").show()
-			var lvl = o.get_node("StatsModule").get_level()
-			var hp = o.get_node("StatsModule").get("hp")
-			var maxhp = o.get_node("StatsModule").get_actual("max_hp")
-			var dmg = o.get_node("StatsModule").get_actual("damage")
-			get_node("Panel").get_node("Level").get_node("Value").set_text(str(lvl))
-			get_node("Panel").get_node("HP").get_node("Value").set_text(str(int(hp)))
-			get_node("Panel").get_node("HPMAX").get_node("Value").set_text(str(int(maxhp)))
-			get_node("Panel").get_node("DMG").get_node("Value").set_text(str(int(dmg)))
+		if Globals.get("debug_mode") and has_node("Panel"):
+			show_panel(o)
+		elif o.is_selected() and has_node("Panel"):
+			show_panel(o)
 		else:
-			get_node("Panel").hide()
+			hide_panel()
 	else:
 		remove()
+
+func show_panel(o):
+	get_node("Panel").show()
+	var lvl = o.get_node("StatsModule").get_level()
+	var hp = o.get_node("StatsModule").get("hp")
+	var maxhp = o.get_node("StatsModule").get_actual("max_hp")
+	var dmg = o.get_node("StatsModule").get_actual("damage")
+	get_node("Panel").get_node("Level").get_node("Value").set_text(str(lvl))
+	get_node("Panel").get_node("HP").get_node("Value").set_text(str(int(hp)))
+	get_node("Panel").get_node("HPMAX").get_node("Value").set_text(str(int(maxhp)))
+	get_node("Panel").get_node("DMG").get_node("Value").set_text(str(int(dmg)))
+
+func hide_panel():
+	get_node("Panel").hide()
+
 
 func remove():
 	if not get_node("AnimationPlayer").get_current_animation() == "remove":

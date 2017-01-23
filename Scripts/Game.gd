@@ -1,6 +1,7 @@
 extends Node2D
 
 var dragged_ability = false
+export(int, 2, 50, 1) var select_sensitivity = 20
 var spells = [
 	load("res://Scenes/Abilities/TargetedHeal.tscn"),
 	load("res://Scenes/Abilities/AreaHeal.tscn"),
@@ -53,10 +54,10 @@ func newgame():
 	spawn_actor("enemy", "enemy")
 	spawn_actor("enemy", "enemy")
 #	spawn_actor("mage", "enemy")
+#	spawn_actor("archer", "friendly")
 	spawn_actor("archer", "friendly")
-	spawn_actor("archer", "friendly")
-	spawn_actor("rogue", "friendly")
-	spawn_actor("rogue", "friendly")
+	spawn_actor("mage", "friendly")
+#	spawn_actor("rogue", "friendly")
 	spawn_actor("rogue", "friendly")
 #	spawn_actor("tank", "friendly")
 #	spawn_actor("mage", "friendly")
@@ -150,6 +151,8 @@ func _input(event):
 				elif i == 4:
 					spell4_cd = max_spell4_cd
 			dragged_ability = false
+		if event.pressed:
+			select_actor(event.pos)
 	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
 			if not dragged_ability.active:
@@ -167,6 +170,17 @@ func _input(event):
 #		elif event.pressed and event.scancode == KEY_DOWN:
 #			get_node("Camera2D").set_pos(get_node("Camera2D").get_pos() + Vector2(0, 50))
 
+func select_actor(p):
+	var closest = null
+	var closest_dist = select_sensitivity
+	var n = get_tree().get_nodes_in_group("friendly") + get_tree().get_nodes_in_group("enemy")
+	for actor in n:
+		actor.set_selected(false)
+		if p.distance_to(actor.get_pos()) <= closest_dist:
+			closest = actor
+			closest_dist = p.distance_to(actor.get_pos())
+	if closest:
+		closest.set_selected(true)
 
 func spawn_actor(actor_type, alliance):
 	var actor = null
