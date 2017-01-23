@@ -161,7 +161,7 @@ script/script = ExtResource( 3 )
 [node name="AbilityBar" parent="." instance=ExtResource( 4 )]
 
 margin/left = 390.0
-margin/top = 600.0
+margin/top = 620.0
 margin/right = 890.0
 margin/bottom = 720.0
 

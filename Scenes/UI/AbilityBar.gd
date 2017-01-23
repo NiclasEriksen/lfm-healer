@@ -6,9 +6,7 @@ extends Panel
 signal ability_tapped(slot)
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
+	get_node("VBoxContainer").set_size(get_size())
 
 
 func update_spell_cd(id, val):

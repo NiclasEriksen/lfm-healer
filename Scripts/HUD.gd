@@ -18,7 +18,7 @@ func clear():
 
 func set_button_ability(btn, tex):
 	var ab = get_node("AbilityBar")
-	var b_node_name = "HBoxContainer/Ability" + str(btn)
+	var b_node_name = "VBoxContainer/HBoxContainer/Ability" + str(btn)
 	if ab.has_node(b_node_name):
 		var b_node = ab.get_node(b_node_name)
 		b_node.get_node("Sprite").set_scale(b_node.get_size() / tex.get_size() * 0.8)
