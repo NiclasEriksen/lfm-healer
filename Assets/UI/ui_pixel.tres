@@ -1,12 +1,33 @@
-[gd_resource type="Theme" load_steps=5 format=1]
+[gd_resource type="Theme" load_steps=8 format=1]
 
 [ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=1]
 [ext_resource path="res://Assets/UI/checkbox_checked.png" type="Texture" id=2]
 [ext_resource path="res://Assets/UI/checkbox_unchecked.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Fonts/pixel_large_white.fnt" type="BitmapFont" id=4]
+[ext_resource path="res://Assets/UI/close.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/flat_box_dark_title.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -50.0
+content_margin/bottom = -1.0
+texture = ExtResource( 6 )
+margin/left = 2.0
+margin/right = 2.0
+margin/top = 50.0
+margin/bottom = 2.0
+expand_margin/left = 0.0
+expand_margin/right = 0.0
+expand_margin/top = 50.0
+expand_margin/bottom = 0.0
+modulate/color = Color( 1, 1, 1, 1 )
+draw_center = true
 
 [resource]
 
+default_font = ExtResource( 1 )
 Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
@@ -64,4 +85,47 @@ TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0.1 )
 TooltipLabel/constants/shadow_offset_x = 1
 TooltipLabel/constants/shadow_offset_y = 1
 TooltipLabel/fonts/font = ExtResource( 1 )
+Tree/colors/cursor_color = Color( 0, 0, 0, 1 )
+Tree/colors/drop_position_color = Color( 1, 0.3, 0.2, 1 )
+Tree/colors/font_color = Color( 0.690196, 0.690196, 0.690196, 1 )
+Tree/colors/font_color_selected = Color( 1, 1, 1, 1 )
+Tree/colors/guide_color = Color( 0, 0, 0, 0.1 )
+Tree/colors/relationship_line_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+Tree/colors/selection_color = Color( 0.1, 0.1, 1, 0.8 )
+Tree/colors/title_button_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Tree/constants/button_margin = 4
+Tree/constants/draw_relationship_lines = 0
+Tree/constants/guide_width = 2
+Tree/constants/hseparation = 4
+Tree/constants/item_margin = 12
+Tree/constants/scroll_border = 4
+Tree/constants/scroll_speed = 12
+Tree/constants/vseparation = 4
+Tree/fonts/font = null
+Tree/fonts/title_button_font = null
+Tree/icons/arrow = null
+Tree/icons/arrow_collapsed = null
+Tree/icons/checked = ExtResource( 2 )
+Tree/icons/select_arrow = null
+Tree/icons/unchecked = ExtResource( 3 )
+Tree/icons/updown = null
+Tree/styles/bg = null
+Tree/styles/bg_focus = null
+Tree/styles/button_pressed = null
+Tree/styles/cursor = null
+Tree/styles/cursor_unfocused = null
+Tree/styles/selected = null
+Tree/styles/selected_focus = null
+Tree/styles/title_button_hover = null
+Tree/styles/title_button_normal = null
+Tree/styles/title_button_pressed = null
+WindowDialog/colors/title_color = Color( 0, 0, 0, 1 )
+WindowDialog/constants/close_h_ofs = 50
+WindowDialog/constants/close_v_ofs = 50
+WindowDialog/constants/title_height = 50
+WindowDialog/constants/titlebar_height = 50
+WindowDialog/fonts/title_font = null
+WindowDialog/icons/close = ExtResource( 5 )
+WindowDialog/icons/close_hilite = ExtResource( 5 )
+WindowDialog/styles/panel = SubResource( 1 )
 
