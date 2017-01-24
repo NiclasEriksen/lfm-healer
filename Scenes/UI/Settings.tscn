@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=1]
+[gd_scene load_steps=3 format=1]
 
-[ext_resource path="res://Scenes/UI/Settings.gd" type="Script" id=1]
+[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/UI/Settings.gd" type="Script" id=2]
 
 [node name="Settings" type="WindowDialog"]
 
@@ -8,24 +9,26 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 500.0
-margin/bottom = 300.0
+margin/right = 800.0
+margin/bottom = 400.0
 popup/exclusive = false
 window/title = "Configuration"
-script/script = ExtResource( 1 )
+script/script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
-size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/horizontal = 3
+size_flags/vertical = 3
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 500.0
-margin/bottom = 300.0
+margin/right = 800.0
+margin/bottom = 400.0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
@@ -33,11 +36,13 @@ alignment = 1
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 172.0
+size_flags/vertical = 3
+size_flags/stretch_ratio = 2.0
+theme/theme = ExtResource( 1 )
+margin/left = 300.0
 margin/top = 0.0
-margin/right = 328.0
-margin/bottom = 300.0
+margin/right = 500.0
+margin/bottom = 400.0
 alignment = 2
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
@@ -45,80 +50,85 @@ alignment = 2
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/vertical = 3
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 43.0
-margin/right = 156.0
-margin/bottom = 66.0
+margin/top = 0.0
+margin/right = 206.0
+margin/bottom = 54.0
 toggle_mode = true
 is_pressed = true
 enabled_focus_mode = 2
 shortcut = null
 text = "Debug mode"
 flat = false
-align = 0
+align = 2
 
 [node name="CheckBox2" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/vertical = 3
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 70.0
-margin/right = 156.0
-margin/bottom = 93.0
+margin/top = 58.0
+margin/right = 200.0
+margin/bottom = 112.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 text = "Chill mode"
 flat = false
-align = 0
+align = 2
 
 [node name="CheckBox3" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/vertical = 3
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 97.0
-margin/right = 156.0
-margin/bottom = 120.0
+margin/top = 116.0
+margin/right = 323.0
+margin/bottom = 170.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 text = "Autospawn enemies"
 flat = false
-align = 0
+align = 2
 
 [node name="CheckBox4" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/vertical = 3
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 124.0
-margin/right = 156.0
-margin/bottom = 147.0
+margin/top = 174.0
+margin/right = 200.0
+margin/bottom = 228.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 text = "Show FPS"
 flat = false
-align = 0
+align = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
-size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/horizontal = 3
+size_flags/vertical = 3
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 151.0
-margin/right = 156.0
-margin/bottom = 171.0
+margin/top = 232.0
+margin/right = 200.0
+margin/bottom = 283.0
 alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -127,10 +137,11 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 18.0
+theme/theme = ExtResource( 1 )
+margin/left = 0.0
 margin/top = 3.0
-margin/right = 49.0
-margin/bottom = 17.0
+margin/right = 69.0
+margin/bottom = 48.0
 text = "Map:"
 percent_visible = 1.0
 lines_skipped = 0
@@ -142,10 +153,11 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 53.0
+theme/theme = ExtResource( 1 )
+margin/left = 73.0
 margin/top = 0.0
-margin/right = 92.0
-margin/bottom = 20.0
+margin/right = 112.0
+margin/bottom = 51.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -160,10 +172,11 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 96.0
+theme/theme = ExtResource( 1 )
+margin/left = 116.0
 margin/top = 0.0
-margin/right = 138.0
-margin/bottom = 20.0
+margin/right = 200.0
+margin/bottom = 51.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -178,9 +191,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 175.0
-margin/right = 156.0
-margin/bottom = 300.0
+margin/top = 287.0
+margin/right = 200.0
+margin/bottom = 412.0
 alignment = 2
 
 [node name="Button" type="Button" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
@@ -188,11 +201,12 @@ alignment = 2
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/vertical = 1
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 105.0
-margin/right = 156.0
-margin/bottom = 125.0
+margin/top = 37.0
+margin/right = 200.0
+margin/bottom = 88.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
