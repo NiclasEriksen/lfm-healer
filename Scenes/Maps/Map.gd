@@ -1,8 +1,15 @@
 tool
 extends Navigation2D
 export(String, FILE) var mapfile = null setget set_mapfile
+export(String) var map_title = "No name." setget set_map_title, get_map_title
 var spawnlist = []
 var spawn_wait = 0.0
+
+func set_map_title(t):
+	map_title = t
+
+func get_map_title():
+	return map_title
 
 func is_done_spawning():
 	return not bool(spawnlist.size())
@@ -23,12 +30,10 @@ func set_spawn_pos():
 	fs.set_pos(Vector2(rx / 8, ry / 2))
 
 func load_spawnlist():
-	var fn = get_filename()
-	if fn.ends_with(".converted.scn"):
-		fn = fn.replace(".converted.scn", "")
-	print("Filename: ", fn)
+	var fn = get_filename().replace(".converted.scn", "")
+#	print("Filename: ", fn)
 	var json_path = fn.replace(".tscn", ".json")
-	print("JSON path: ", json_path)
+#	print("JSON path: ", json_path)
 	var file = File.new()
 	file.open(json_path, file.READ)
 	var text = file.get_as_text()
@@ -38,10 +43,13 @@ func load_spawnlist():
 	if "spawnlist" in dict:
 		spawnlist = dict["spawnlist"]
 
+func get_spawnlist():
+	return spawnlist
+
 func _ready():
 	spawn_wait = 0.0
 	spawnlist = []
-	load_spawnlist()
+#	load_spawnlist()
 	set_spawn_pos()
 	set_process(true)
 #	print(get_node("NavigationPolygonInstance2").get_navigation_polygon().get_vertices())

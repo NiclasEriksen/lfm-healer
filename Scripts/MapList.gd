@@ -29,7 +29,7 @@ func get_maps():
 			if dir.current_is_dir():
 				pass
 			else:
-				print("Filename: ", file_name)
+#				print("Filename: ", file_name)
 				if file_name.ends_with("scn"):
 					var ffn = file_name
 					ffn = ffn.replace(".converted.scn", "")

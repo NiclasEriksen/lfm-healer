@@ -13,6 +13,7 @@ outlines = [ Vector2Array( 27.047, -0.747543, 27.9041, 287.51, 512.298, 288.738,
 
 script/script = ExtResource( 1 )
 mapfile = "res://Assets/Maps/greynoise.png"
+map_title = "The Empty Greyness"
 
 [node name="NavigationPolygonInstance2" type="NavigationPolygonInstance" parent="."]
 

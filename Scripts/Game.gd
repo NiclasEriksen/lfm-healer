@@ -61,9 +61,14 @@ func newgame(clean):
 	if clean:
 		cleanup()
 	map = get_node("Map")
+	if not map.get_spawnlist().size():
+		print("Spawnlist is empty! Enabling autospawn.")
+		Globals.set("autospawn", true)
+		spawn_actor("enemy", "enemy")
+
 	if has_node("HUD"):
 		add_all_spells()
-		var mapname = map.get_filename().split("/")[-1]
+		var mapname = "\"" + map.get_map_title() + "\""
 		get_node("HUD").flash_message("Starting round..", "Current map: " + mapname, 3)
 	spawn_party()
 

@@ -32,8 +32,6 @@ select_sensitivity = 20
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
-fps_refresh_delay = 0.5
-
 [node name="EffectModule" parent="." instance=ExtResource( 4 )]
 
 amount = -1.0
