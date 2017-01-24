@@ -61,7 +61,8 @@ func newgame(clean):
 		cleanup()
 	if has_node("HUD"):
 		add_all_spells()
-		get_node("HUD").flash_message("Begynner", "nei men se der ja", 3)
+		var mapname = get_node("Map").get_filename().split("/")[-1]
+		get_node("HUD").flash_message("Starting round..", "Current map: " + mapname, 3)
 	spawn_party()
 
 func spawn_party():

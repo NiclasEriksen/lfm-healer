@@ -24,7 +24,6 @@ func set_spawn_pos():
 
 func load_spawnlist():
 	var json_path = get_filename().replace(".tscn", ".json")
-	print(json_path)
 	var file = File.new()
 	file.open(json_path, file.READ)
 	var text = file.get_as_text()
@@ -36,6 +35,7 @@ func load_spawnlist():
 
 func _ready():
 	spawn_wait = 0.0
+	spawnlist = []
 	load_spawnlist()
 	set_spawn_pos()
 	set_process(true)

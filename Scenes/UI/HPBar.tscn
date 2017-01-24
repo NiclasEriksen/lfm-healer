@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Scenes/UI/HPBar.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/hp_flat_blue.png" type="Texture" id=2]
 [ext_resource path="res://Assets/UI/hp_flat_red.png" type="Texture" id=3]
 [ext_resource path="res://Assets/UI/hp_flat_bot.png" type="Texture" id=4]
 [ext_resource path="res://Assets/UI/hp_flat_top.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Fonts/PressStart2P.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Assets/Fonts/pixel_mini_white.fnt" type="BitmapFont" id=6]
 
 [sub_resource type="Animation" id=1]
 
@@ -55,13 +55,6 @@ tracks/1/path = NodePath("TextureProgress:rect/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 0, 0.12, 0.3 ), "transitions":FloatArray( 0.196146, 0.25, 1 ), "update":0, "values":[ Vector2( -32, -8 ), Vector2( -32, -12 ), Vector2( -32, -8 ) ] }
-
-[sub_resource type="DynamicFont" id=4]
-
-font/size = 9
-font/use_mipmaps = false
-font/use_filter = false
-font/font = ExtResource( 6 )
 
 [node name="HPBar" type="Node2D"]
 
@@ -143,7 +136,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "Lvl."
 uppercase = true
 percent_visible = 1.0
@@ -160,7 +153,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "2"
 align = 2
 uppercase = true
@@ -189,7 +182,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "HP \\"
 uppercase = true
 percent_visible = 1.0
@@ -206,7 +199,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "32"
 align = 2
 uppercase = true
@@ -235,7 +228,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "MAX"
 uppercase = true
 percent_visible = 1.0
@@ -252,7 +245,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "40"
 align = 2
 uppercase = true
@@ -281,7 +274,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "DMG"
 uppercase = true
 percent_visible = 1.0
@@ -298,7 +291,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 70.0
 margin/bottom = 10.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
 text = "40"
 align = 2
 uppercase = true
