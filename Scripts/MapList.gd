@@ -21,12 +21,19 @@ func get_maps():
 	if dir.open(maps_directory) == OK:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
+#		print("_--------------------------_")
+#		print("Beginning to read directory.")
+#		print("First file name: ", file_name)
+#		print("_--------------------------_")
 		while (file_name != ""):
 			if dir.current_is_dir():
 				pass
 			else:
-				if file_name.ends_with(".tscn"):
-					mapfiles.append(file_name)
+				print("Filename: ", file_name)
+				if file_name.ends_with("scn"):
+					var ffn = file_name
+					ffn = ffn.replace(".converted.scn", "")
+					mapfiles.append(ffn)
 
 			file_name = dir.get_next()
 	else:

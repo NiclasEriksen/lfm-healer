@@ -23,7 +23,12 @@ func set_spawn_pos():
 	fs.set_pos(Vector2(rx / 8, ry / 2))
 
 func load_spawnlist():
-	var json_path = get_filename().replace(".tscn", ".json")
+	var fn = get_filename()
+	if fn.ends_with(".converted.scn"):
+		fn = fn.replace(".converted.scn", "")
+	print("Filename: ", fn)
+	var json_path = fn.replace(".tscn", ".json")
+	print("JSON path: ", json_path)
 	var file = File.new()
 	file.open(json_path, file.READ)
 	var text = file.get_as_text()
