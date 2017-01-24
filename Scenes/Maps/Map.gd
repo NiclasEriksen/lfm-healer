@@ -49,7 +49,7 @@ func get_spawnlist():
 func _ready():
 	spawn_wait = 0.0
 	spawnlist = []
-#	load_spawnlist()
+	load_spawnlist()
 	set_spawn_pos()
 	set_process(true)
 #	print(get_node("NavigationPolygonInstance2").get_navigation_polygon().get_vertices())

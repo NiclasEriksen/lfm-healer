@@ -1,5 +1,6 @@
 extends WindowDialog
 signal load_map
+var maps = {}
 
 # class member variables go here, for example:
 # var a = 2
@@ -16,12 +17,12 @@ func _ready():
 	get_node("HBoxContainer/VBoxContainer/CheckBox2").set_pressed(cm)
 	get_node("HBoxContainer/VBoxContainer/CheckBox3").set_pressed(as)
 	get_node("HBoxContainer/VBoxContainer/CheckBox4").set_pressed(sf)
-	var maps = []
 	if get_tree().get_root().has_node("Game"):
-		maps = get_tree().get_root().get_node("Game").maplist_node.get_maps()
+#		maps = get_tree().get_root().get_node("Game").maplist_node.get_maps()
+		get_tree().get_root().get_node("Game").maplist_node.generate_mapdict()
+		maps = get_tree().get_root().get_node("Game").maplist_node.mapdict
 	for m in maps:
 		get_node("HBoxContainer/VBoxContainer/HBoxContainer/MapList").add_item(m)
-
 func _on_CheckBox_toggled( pressed ):
 	Globals.set("debug_mode", pressed)
 
@@ -39,4 +40,4 @@ func _on_Button_pressed():
 
 func _on_Load_pressed():
 	var m = get_node("HBoxContainer/VBoxContainer/HBoxContainer/MapList").get_text()
-	emit_signal("load_map", m)
+	emit_signal("load_map", maps[m])
