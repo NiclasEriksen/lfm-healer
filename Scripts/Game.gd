@@ -30,7 +30,7 @@ signal spell_cd_changed(spell_id, pts)
 func _ready():
 	set_process(true)
 	set_process_unhandled_input(true)
-	newgame()
+	newgame(false)
 
 func add_all_spells():
 	var i = 1
@@ -54,10 +54,11 @@ func load_map(m):
 		print("No map node present? :S")
 	add_child(mapnode)
 	move_child(mapnode, 0)
-	newgame()
+	newgame(true)
 
-func newgame():
-	cleanup()
+func newgame(clean):
+	if clean:
+		cleanup()
 	if has_node("HUD"):
 		add_all_spells()
 		get_node("HUD").flash_message("Begynner", "nei men se der ja", 3)
@@ -105,13 +106,13 @@ func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	if not friendlies.size():
 		print("All friendly players dead, restarting.")
-		newgame()
+		newgame(true)
 		return
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if not enemies.size():
 		if get_node("Map").is_done_spawning():
 			print("All enemy players dead, restarting in 1 second.")
-			newgame()
+			newgame(true)
 			return
 
 	if spell1_cd > 0:

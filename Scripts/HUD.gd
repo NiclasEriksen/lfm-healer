@@ -76,12 +76,11 @@ func flash_ended():
 			currently_flashing.get_ref().queue_free()
 
 func _on_RestartButton_pressed():
-	get_tree().get_root().get_node("Game").newgame()
+	get_tree().get_root().get_node("Game").newgame(true)
 
 func _on_Game_spell_cd_changed( spell_id, pts ):
 	if has_node("AbilityBar"):
 		get_node("AbilityBar").update_spell_cd(spell_id, pts)
-
 
 func _on_ChillMode_toggled( pressed ):
 	Globals.set("chill_mode", pressed)
