@@ -47,6 +47,7 @@ var immobile = false
 var stunned = false setget set_stunned, is_stunned
 export var stealthed = false setget set_stealthed, is_stealthed
 signal stealth_broken
+signal critical_hit
 
 var final_stats = {}
 var active_effects = []
@@ -220,6 +221,13 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 	elif get(effectmodule.effect_stat) or get(effectmodule.effect_stat) == 0:
 		# print(effectmodule.effect_stat, effectmodule.amount)
 		var amount = effectmodule.amount * rand_range(0.9, 1.1)
+		if originmodule:
+			var crit_type = "phys_crit"
+			if not effectmodule.effect_type == "physical":
+				crit_type = "spell_crit"
+			if rand_range(0, 100) < originmodule.get_actual(crit_type):
+				originmodule.emit_signal("critical_hit")
+				amount *= 1.5
 		if get_parent().has_node("ActorBase"):
 			if amount > 0 and effectmodule.effect_stat == "hp":
 				get_parent().get_node("ActorBase").on_heal()

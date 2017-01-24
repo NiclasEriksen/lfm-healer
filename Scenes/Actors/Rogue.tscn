@@ -42,6 +42,7 @@ _update_shape_index = 0
 primary_stat = "agi"
 max_hp = 21.0
 base_damage = 7.0
+base_phys_crit = 50.0
 base_movement_speed = 120.0
 base_attack_speed = 1.1
 stealthed = true

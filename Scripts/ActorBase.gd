@@ -47,6 +47,7 @@ func _ready():
 				print("Statsmodule found.")
 			stats = parent.get_node("StatsModule")
 			stats.connect("stealth_broken", self, "on_stealth_broken")
+			stats.connect("critical_hit", self, "on_critical_hit")
 			var shape = CircleShape2D.new()
 			shape.set_radius(stats.get_actual("attack_range"))
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
@@ -384,6 +385,10 @@ func on_hit(tar):
 
 func on_stealth_broken():
 	set_opacity(1)
+
+func on_critical_hit():
+	# get_node("EffectPlayer").play("crit")
+	pass
 
 func _on_MoveModule_stalled():
 	on_idle()

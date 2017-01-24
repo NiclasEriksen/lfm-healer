@@ -92,6 +92,7 @@ func _ready():
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
+		draw_line(Vector2(0, 0), (steer(get_direction()) * 30), Color(0.2, 0.9, 0.1), 2.0)
 		draw_line(Vector2(0, 0), (get_direction() * 30), Color(0.8, 0.4, 0.1), 3.0)
 		if raycast:
 			var col = Color(1, 0.7, 0.7)
