@@ -6,7 +6,7 @@ export(bool) var AVOID_COLLISION = false setget set_avoid_collision, get_avoid_c
 export(float, 0, 1, 0.1) var AVOID_FORCE = 0.5 setget set_avoid_force, get_avoid_force
 export(float, 1, 128, 1) var RAYCAST_LENGTH = 30.0 setget set_raycast_length, get_raycast_length
 export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.1 setget set_stall_treshold, get_stall_treshold
-export(float) var PATH_REACH_TRESHOLD = 8.0 setget set_reach_treshold, get_reach_treshold
+export(float) var PATH_REACH_TRESHOLD = 16.0 setget set_reach_treshold, get_reach_treshold
 signal stalled
 signal moved
 var stalling = false
@@ -116,6 +116,7 @@ func _fixed_process(dt):
 		update_raycast()
 		var dir = direction
 		if target:
+			set_walk_path([])
 			dir = seek_target(target)
 		elif path.size():
 			dir = check_path(dir)
@@ -172,7 +173,7 @@ func steer(dir):
 	return (dir + adjusted_angle).normalized()
 
 func check_path(dir):
-	var current_pos = get_pos()
+	var current_pos = get_global_pos()
 	if parent:
 		current_pos = parent.get_body_pos()
 	if current_pos.distance_to(path[0]) <= PATH_REACH_TRESHOLD:

@@ -228,8 +228,9 @@ func spawn_actor(actor_type, alliance):
 			print("Spawning actor: ", actor_type)
 		actor.change_allegiance(alliance)
 		actor.set_pos(p)
+		var body_p = actor.get_body_pos()
 		if actor.has_node("MoveModule"):
-			var path = get_node("Map").get_simple_path(p, p_to)
+			var path = get_node("Map").get_simple_path(body_p, p_to)
 			actor.get_node("MoveModule").set_walk_path(path)
 		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
 		get_node("Actors").add_child(actor)

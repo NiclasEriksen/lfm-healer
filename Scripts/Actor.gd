@@ -66,7 +66,9 @@ func _on_ActorBase_attack_effect(target):
 	pass
 
 func get_body_pos():
-	if has_node("CollisionShape2D"):
+	if has_node("MoveModule"):
+		return get_pos() + get_node("MoveModule").get_pos()
+	elif has_node("CollisionShape2D"):
 		return get_pos() + get_node("CollisionShape2D").get_pos()
 	return get_pos()
 

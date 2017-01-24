@@ -12,6 +12,7 @@ var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var movement = get_parent().get_node("MoveModule")
 onready var parent = get_parent()
+var MIN_SEEK_DIST = 200
 signal attack
 signal death(pos)
 signal targeted_enemy(enemy)
@@ -192,11 +193,13 @@ func check_in_range():
 			emit_signal("targeted_enemy", target_enemy)
 			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > ar:
 				var path = root.get_node("Map").get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
+#				if path.size() > 1:
+#					path.remove(0)
 				movement.set_walk_path(path)
 
 func get_closest_enemy(enemies):
 	var closest_candidate = null
-	var closest = 2000
+	var closest = MIN_SEEK_DIST
 	for e in enemies:
 		var dist = abs(e.get_body_pos().distance_to(parent.get_body_pos()))
 		if target_enemy:
