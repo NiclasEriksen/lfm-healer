@@ -25,6 +25,7 @@ var max_spell1_cd = 0.0
 var max_spell2_cd = 1.5
 var max_spell3_cd = 3.0
 var max_spell4_cd = 2.0
+onready var map = get_node("Map")
 signal spell_cd_changed(spell_id, pts)
 
 func _ready():
@@ -59,9 +60,10 @@ func load_map(m):
 func newgame(clean):
 	if clean:
 		cleanup()
+	map = get_node("Map")
 	if has_node("HUD"):
 		add_all_spells()
-		var mapname = get_node("Map").get_filename().split("/")[-1]
+		var mapname = map.get_filename().split("/")[-1]
 		get_node("HUD").flash_message("Starting round..", "Current map: " + mapname, 3)
 	spawn_party()
 
@@ -228,7 +230,7 @@ func spawn_actor(actor_type, alliance):
 		actor.set_pos(p)
 		var body_p = actor.get_body_pos()
 		if actor.has_node("MoveModule"):
-			var path = get_node("Map").get_simple_path(body_p, p_to)
+			var path = map.get_simple_path(body_p, p_to)
 			actor.get_node("MoveModule").set_walk_path(path)
 		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
 		get_node("Actors").add_child(actor)

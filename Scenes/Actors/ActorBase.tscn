@@ -1,7 +1,7 @@
-[gd_scene load_steps=19 format=1]
+[gd_scene load_steps=18 format=1]
 
 [ext_resource path="res://Scripts/ActorBase.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Effects/smoke_large.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Effects/smoke_mid.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=3]
 [ext_resource path="res://Assets/UI/hp_mid_blue.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Effects/plus_sign.png" type="Texture" id=5]
@@ -115,12 +115,6 @@ radius = 50.0
 custom_solver_bias = 0.0
 radius = 50.0
 
-[sub_resource type="OccluderPolygon2D" id=10]
-
-closed = true
-cull_mode = 0
-polygon = Vector2Array(  )
-
 [node name="ActorBase" type="Node2D"]
 
 script/script = ExtResource( 1 )
@@ -131,27 +125,11 @@ has_special_anim = false
 tile_dimensions = Vector2( 5, 5 )
 STEALTH_OPACITY = 0.3
 
-[node name="Stealth" type="Light2D" parent="."]
+[node name="Stealth" type="Sprite" parent="."]
 
-enabled = false
-editor_only = false
+visibility/visible = false
 texture = ExtResource( 2 )
-offset = Vector2( 0, 0 )
-scale = 0.2
-color = Color( 1, 1, 1, 1 )
-energy = 0.3
-mode = 1
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 1024
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
+modulate = Color( 0, 0, 0, 1 )
 
 [node name="Particles2D" type="Particles2D" parent="Stealth"]
 
@@ -325,11 +303,6 @@ angular_damp = 1.0
 shape = SubResource( 9 )
 trigger = false
 _update_shape_index = 0
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-
-occluder = SubResource( 10 )
-light_mask = 1
 
 [connection signal="attack" from="." to="." method="_on_ActorBase_attack"]
 

@@ -4,8 +4,11 @@ export(Vector2) var friendly_scale = Vector2(1, 1)
 export(Vector2) var enemy_scale = Vector2(0.75, 0.75)
 export(Texture) var friendly_texture = null
 export(Texture) var enemy_texture = null
+var offset = Vector2(0, 0)
 var old_val = null
 var cam = null
+onready var progress_bar = get_node("TextureProgress")
+onready var panel = get_node("Panel")
 
 func _ready():
 	set_process(true)
@@ -21,17 +24,22 @@ func register(owner):
 		if friendly_texture:
 			get_node("TextureProgress").set_progress_texture(friendly_texture)
 		set_scale(friendly_scale)
+	if owner.has_node("HPBarPos"):
+		offset = owner.get_node("HPBarPos").get_pos()
 	#print(self, owner, "HEEET")
 	#set_value(owner.get("hp") / owner.get("max_hp") * 100.0)
 
 func _process(delta):
 	if owner.get_ref():
 		var o = owner.get_ref()
-		if not o.has_node("StatsModule"):
+		var stats = null
+		if o.has_node("StatsModule"):
+			stats = o.get_node("StatsModule")
+		else:
 			remove()
 			return
 		if "enemy" in o.get_groups():
-			if o.get_node("StatsModule").is_stealthed():
+			if stats.is_stealthed():
 				hide()
 			else:
 				show()
@@ -39,40 +47,36 @@ func _process(delta):
 		elif "friendly" in o.get_groups():
 			set_scale(friendly_scale)
 		var pos = o.get_pos()
-		var val = (o.get_node("StatsModule").get("hp") / o.get_node("StatsModule").get_actual("max_hp")) * 100.0
-		if o.get_node("HPBarPos"):
-			pos = cam.get_viewport().get_canvas_transform().xform(pos)
-			set_pos(pos + o.get_node("HPBarPos").get_pos())
-			#print(pos, o.get_node("HPBarPos").get_pos())
-		else:
-			set_pos(pos)
+		var val = (stats.get("hp") / stats.get_actual("max_hp")) * 100.0
+		pos = cam.get_viewport().get_canvas_transform().xform(pos)
+		set_pos(pos + offset)
 		set_z(pos.y)
 		if not old_val == val:
 			self.old_val = val
-			get_node("TextureProgress").set_value(val)
+			progress_bar.set_value(val)
 			get_node("AnimationPlayer").play("val_change")
-		if Globals.get("debug_mode") and has_node("Panel"):
-			show_panel(o)
-		elif o.is_selected() and has_node("Panel"):
-			show_panel(o)
+		if Globals.get("debug_mode") and panel:
+			show_panel(stats)
+		elif o.is_selected() and panel:
+			show_panel(stats)
 		else:
 			hide_panel()
 	else:
 		remove()
 
-func show_panel(o):
-	get_node("Panel").show()
-	var lvl = o.get_node("StatsModule").get_level()
-	var hp = o.get_node("StatsModule").get("hp")
-	var maxhp = o.get_node("StatsModule").get_actual("max_hp")
-	var dmg = o.get_node("StatsModule").get_actual("damage")
-	get_node("Panel").get_node("Level").get_node("Value").set_text(str(lvl))
-	get_node("Panel").get_node("HP").get_node("Value").set_text(str(int(hp)))
-	get_node("Panel").get_node("HPMAX").get_node("Value").set_text(str(int(maxhp)))
-	get_node("Panel").get_node("DMG").get_node("Value").set_text(str(int(dmg)))
+func show_panel(stats):
+	panel.show()
+	var lvl = stats.get_level()
+	var hp = stats.get("hp")
+	var maxhp = stats.get_actual("max_hp")
+	var dmg = stats.get_actual("damage")
+	panel.get_node("Level/Value").set_text(str(lvl))
+	panel.get_node("HP/Value").set_text(str(int(hp)))
+	panel.get_node("HPMAX/Value").set_text(str(int(maxhp)))
+	panel.get_node("DMG/Value").set_text(str(int(dmg)))
 
 func hide_panel():
-	get_node("Panel").hide()
+	panel.hide()
 
 
 func remove():

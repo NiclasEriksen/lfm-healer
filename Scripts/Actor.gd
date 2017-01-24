@@ -8,6 +8,11 @@ var hit_effect_scene = null
 var projectile_scene = null
 var selected = false setget set_selected, is_selected
 var highlighted = false setget set_highlighted, is_highlighted
+var stats_node = null
+var move_node = null
+var attack_node = null
+var statuseffect_node = null
+var debuff_node = null
 
 func set_selected(v):
 	selected = v
@@ -54,36 +59,33 @@ func get_projectile():
 func _on_ActorBase_attack(target):
 	if Globals.get("debug_mode"):
 		print("No attack method defined for ", self, ", using default.")
-	if target.has_node("StatsModule") and has_node("Attack"):
+	if target.stats_node and attack_node:
 		if Globals.get("debug_mode"):
 			print(self, " attacking ", target)
-		var sm = null
-		if has_node("StatsModule"):
-			sm = get_node("StatsModule")
-		target.get_node("StatsModule").apply_effect(get_node("Attack"), sm)
+		target.stats_node.apply_effect(attack_node, stats_node)
 
 func _on_ActorBase_attack_effect(target):
 	pass
 
 func get_body_pos():
-	if has_node("MoveModule"):
-		return get_pos() + get_node("MoveModule").get_pos()
+	if move_node:
+		return get_pos() + move_node.get_pos()
 	elif has_node("CollisionShape2D"):
 		return get_pos() + get_node("CollisionShape2D").get_pos()
 	return get_pos()
 
 func fire_projectile(target):
-	if projectile and has_node("Attack") and target.has_node("StatsModule"):
+	if projectile and attack_node and target.stats_node:
 		var a = projectile_scene.instance()
-		var dist_scale = get_body_pos().distance_to(target.get_body_pos()) / get_node("StatsModule").get_actual("attack_range")
+		var dist_scale = get_body_pos().distance_to(target.get_body_pos()) / stats_node.get_actual("attack_range")
 		a.set_pos(get_body_pos())
 		a.set_alliance(get_allegiance())
-		if has_node("Debuff"):
-			a.init(target, get_node("Attack"), get_node("Debuff"))
-		elif has_node("StatusEffect"):
-			a.init(target, get_node("Attack"), get_node("StatusEffect"))
+		if debuff_node:
+			a.init(target, attack_node, debuff_node)
+		elif statuseffect_node:
+			a.init(target, attack_node, statuseffect_node)
 		else:
-			a.init(target, get_node("Attack"), null)
+			a.init(target, attack_node, null)
 		a.set_owner(self)
 		a.flytime = a.flytime * dist_scale
 		a.y_offset = a.y_offset * dist_scale
@@ -97,7 +99,16 @@ func _ready():
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack")
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack_effect")
 		if has_node("MoveModule"):
-			get_node("MoveModule").connect("moved", get_node("ActorBase"), "_on_MoveModule_moved")
-			get_node("MoveModule").connect("stalled", get_node("ActorBase"), "_on_MoveModule_stalled")
-			get_node("ActorBase").connect("targeted_enemy", get_node("MoveModule"), "_on_ActorBase_targeted_enemy")
-			get_node("ActorBase").connect("cleared_target", get_node("MoveModule"), "_on_ActorBase_cleared_target")
+			move_node = get_node("MoveModule")
+			move_node.connect("moved", get_node("ActorBase"), "_on_MoveModule_moved")
+			move_node.connect("stalled", get_node("ActorBase"), "_on_MoveModule_stalled")
+			get_node("ActorBase").connect("targeted_enemy", move_node, "_on_ActorBase_targeted_enemy")
+			get_node("ActorBase").connect("cleared_target", move_node, "_on_ActorBase_cleared_target")
+		if has_node("StatsModule"):
+			stats_node = get_node("StatsModule")
+		if has_node("Attack"):
+			attack_node = get_node("Attack")
+		if has_node("StatusEffect"):
+			statuseffect_node = get_node("StatusEffect")
+		if has_node("Debuff"):
+			debuff_node = get_node("Debuff")

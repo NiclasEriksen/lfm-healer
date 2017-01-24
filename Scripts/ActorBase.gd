@@ -27,6 +27,8 @@ var idle_time = 0.0
 var idle = false
 var attacking = false
 var enabled = true
+onready var animations = get_node("AnimationPlayer")
+onready var sprite = get_node("Sprite")
 
 func set_stealth_opacity(v):
 	STEALTH_OPACITY = v
@@ -56,8 +58,8 @@ func _ready():
 			get_node("Selected").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
 		if has_node("State") and parent.has_node("CollisionShape2D"):
 			get_node("State").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
-		if parent.has_node("CollisionShape2D"):
-			make_light_occluder()
+#		if parent.has_node("CollisionShape2D"):
+#			make_light_occluder()
 
 func make_light_occluder():
 	var cr = parent.get_node("CollisionShape2D").get_shape().get_radius()
@@ -153,7 +155,11 @@ func set_tile_dimensions(td):
 		get_node("Sprite").set_vframes(int(tile_dimensions.y))
 
 func check_target():
-	var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
+	var ar = 0
+	if stats:
+		ar = stats.get_actual("attack_range")
+	else:
+		ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
 	if not target_enemy:
 		attacking = false
 		check_in_range()
@@ -184,7 +190,11 @@ func check_healthy():
 
 func check_in_range():
 	if not get_tree().is_editor_hint():
-		var ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
+		var ar = 0
+		if stats:
+			ar = stats.get_actual("attack_range")
+		else:
+			ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
 		var target_group = "enemy"
 		if "enemy" in parent.get_groups():
 			target_group = "friendly"
@@ -193,7 +203,7 @@ func check_in_range():
 			target_enemy = weakref(target_enemy_node)
 			emit_signal("targeted_enemy", target_enemy)
 			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > ar:
-				var path = root.get_node("Map").get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
+				var path = root.map.get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
 #				if path.size() > 1:
 #					path.remove(0)
 				movement.set_walk_path(path)
@@ -206,12 +216,11 @@ func get_closest_enemy(enemies):
 		if target_enemy:
 			if e == target_enemy.get_ref():
 				continue
-		if e.has_node("StatsModule") and parent.has_node("StatsModule"):
-			if e.get_node("StatsModule").is_stealthed() and dist > get_node("AttackRange/CollisionShape2D").get_shape().get_radius() / 5:
+		if e.stats_node and stats:
+			if e.stats_node.is_stealthed() and dist > stats.get_actual("attack_range") * 0.8:
 				continue
-			elif e.get_node("StatsModule").is_stealthed():
-				print("broken")
-				e.get_node("StatsModule").emit_signal("stealth_broken")
+			elif e.stats_node.is_stealthed():
+				e.stats_node.emit_signal("stealth_broken")
 		if dist < closest:
 			closest = dist
 			closest_candidate = e
@@ -225,11 +234,10 @@ func on_attack():
 		stats.emit_signal("stealth_broken")
 	attacking = true
 	idle = false
-	# get_node("AnimationPlayer").set_speed(1)
 
-	if not get_node("AnimationPlayer").get_current_animation() == "attack" or not get_node("AnimationPlayer").is_playing():
-		if not get_node("AnimationPlayer").get_current_animation() == "idle":
-			get_node("AnimationPlayer").play("idle")
+	if not animations.get_current_animation() == "attack" or not animations.is_playing():
+		if not animations.get_current_animation() == "idle":
+			animations.play("idle")
 
 func on_death():
 	enabled = false
@@ -243,40 +251,38 @@ func on_death():
 	de.set_pos(parent.get_pos())
 	de.set_z(parent.get_z() - 8)
 	if has_death_anim:
-		var tex = get_node("Sprite").get_texture()
-		var hf = get_node("Sprite").get_hframes()
-		var vf = get_node("Sprite").get_vframes()
-		de.set_scale(get_node("Sprite").get_scale() * get_scale())
+		var tex = sprite.get_texture()
+		var hf = sprite.get_hframes()
+		var vf = sprite.get_vframes()
+		de.set_scale(sprite.get_scale() * get_scale())
 		de.set_texture(tex, hf, vf)
-	#	de.get_node("Sprite").set_texture(get_node("DeathSprite").get_texture())
 	root.get_node("Effects").add_child(de)
 	parent.queue_free()
 
 
 func on_idle():
 	idle = true
-	get_node("AnimationPlayer").set_speed(1)
+	animations.set_speed(1)
 	if state_change_cd <= 0:
-		if not get_node("AnimationPlayer").get_current_animation() == "idle" or not get_node("AnimationPlayer").get_current_animation() == "attack":
-			get_node("Sprite").set_rot(0)
-			get_node("AnimationPlayer").play("idle")
+		if not animations.get_current_animation() == "idle" or not animations.get_current_animation() == "attack":
+			sprite.set_rot(0)
+			animations.play("idle")
 			state_change_cd = 0.3
 
 func on_walk():
 	idle = false
 	if state_change_cd <= 0:
-		if parent and not get_node("AnimationPlayer").get_current_animation() == "attack":
-			if parent.has_node("StatsModule"):
-				var ms = parent.get_node("StatsModule").get_actual("movement_speed") / 80
-				get_node("AnimationPlayer").set_speed(ms)
-		if not get_node("AnimationPlayer").get_current_animation() == "walk" and not get_node("AnimationPlayer").get_current_animation() == "attack":
-			get_node("Sprite").set_rot(0)
-			get_node("AnimationPlayer").play("walk")
+		if stats and not animations.get_current_animation() == "attack":
+			var ms = stats.get_actual("movement_speed") / 80
+			animations.set_speed(ms)
+		if not animations.get_current_animation() == "walk" and not animations.get_current_animation() == "attack":
+			sprite.set_rot(0)
+			animations.play("walk")
 			state_change_cd = 0.3
 
 func on_stunned():
-	get_node("AnimationPlayer").stop()
-	get_node("AnimationPlayer").set_current_animation("idle")
+	animations.stop()
+	animations.set_current_animation("idle")
 
 func update_state():
 	var stunned = false
@@ -297,8 +303,8 @@ func update_state():
 				else:
 					target_enemy = null
 			else:
-				if parent.has_node("MoveModule"):
-					if parent.get_node("MoveModule").get_direction().x > 0:
+				if movement:
+					if movement.get_direction().x > 0:
 						set_scale(Vector2(1, 1))
 					else:
 						set_scale(Vector2(-1, 1))
@@ -310,10 +316,10 @@ func update_state():
 			set_opacity(0)
 		else:
 			set_opacity(STEALTH_OPACITY)
-			get_node("Stealth").set_enabled(true)
+			get_node("Stealth").show()
 			get_node("Stealth/Particles2D").set_emitting(true)
 	else:
-		get_node("Stealth").set_enabled(false)
+		get_node("Stealth").hide()
 		get_node("Stealth/Particles2D").set_emitting(false)
 		set_opacity(1.0)
 
@@ -358,7 +364,7 @@ func _on_AttackRange_body_enter( body ):
 
 func _on_ActorBase_attack(tar):
 	if has_attack_anim:
-		get_node("AnimationPlayer").play("attack")
+		animations.play("attack")
 	else:
 		get_node("HealParticles").set_emitting(false)
 		get_node("EffectPlayer").play("attack")

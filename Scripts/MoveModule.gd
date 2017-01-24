@@ -108,8 +108,8 @@ func _draw():
 
 func _fixed_process(dt):
 	if parent:
-		if parent.has_node("StatsModule") and not get_tree().is_editor_hint():
-			if parent.get_node("StatsModule").is_stunned():
+		if not get_tree().is_editor_hint():
+			if parent.stats_node.is_stunned():
 				return
 		if parent.has_node("ActorBase"):
 			if parent.get_node("ActorBase").attacking:

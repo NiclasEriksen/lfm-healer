@@ -85,9 +85,5 @@ spritesheet = ExtResource( 8 )
 texture = ExtResource( 8 )
 frame = 14
 
-[node name="AnimationPlayer" parent="ActorBase"]
-
-playback/speed = 1.0
-
 
 [editable path="ActorBase"]
