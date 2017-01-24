@@ -11,9 +11,11 @@ func _ready():
 	var dm = Globals.get("debug_mode")
 	var cm = Globals.get("chill_mode")
 	var as = Globals.get("autospawn")
+	var sf = Globals.get("show_fps")
 	get_node("HBoxContainer/VBoxContainer/CheckBox").set_pressed(dm)
 	get_node("HBoxContainer/VBoxContainer/CheckBox2").set_pressed(cm)
 	get_node("HBoxContainer/VBoxContainer/CheckBox3").set_pressed(as)
+	get_node("HBoxContainer/VBoxContainer/CheckBox4").set_pressed(sf)
 	var maps = []
 	if get_tree().get_root().has_node("Game"):
 		maps = get_tree().get_root().get_node("Game").maplist_node.get_maps()
@@ -29,9 +31,11 @@ func _on_CheckBox2_toggled( pressed ):
 func _on_CheckBox3_toggled( pressed ):
 	Globals.set("autospawn", pressed)
 
+func _on_CheckBox4_toggled( pressed ):
+	Globals.set("show_fps", pressed)
+
 func _on_Button_pressed():
 	hide()
-
 
 func _on_Load_pressed():
 	var m = get_node("HBoxContainer/VBoxContainer/HBoxContainer/MapList").get_text()

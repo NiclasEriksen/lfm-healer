@@ -47,6 +47,8 @@ func _ready():
 #	print(get_node("NavigationPolygonInstance2").get_navigation_polygon().get_vertices())
 
 func _process(dt):
+	if get_tree().is_editor_hint():
+		return
 	if spawnlist.size():
 		if spawn_wait > 0.0:
 			spawn_wait -= dt

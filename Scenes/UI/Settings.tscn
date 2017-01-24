@@ -47,9 +47,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 70.0
+margin/top = 43.0
 margin/right = 156.0
-margin/bottom = 93.0
+margin/bottom = 66.0
 toggle_mode = true
 is_pressed = true
 enabled_focus_mode = 2
@@ -65,9 +65,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 97.0
+margin/top = 70.0
 margin/right = 156.0
-margin/bottom = 120.0
+margin/bottom = 93.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -82,13 +82,30 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
+margin/top = 97.0
+margin/right = 156.0
+margin/bottom = 120.0
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Autospawn enemies"
+flat = false
+align = 0
+
+[node name="CheckBox4" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
 margin/top = 124.0
 margin/right = 156.0
 margin/bottom = 147.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
-text = "Autospawn enemies"
+text = "Show FPS"
 flat = false
 align = 0
 
@@ -187,6 +204,8 @@ flat = false
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox2" to="." method="_on_CheckBox2_toggled"]
 
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox3" to="." method="_on_CheckBox3_toggled"]
+
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox4" to="." method="_on_CheckBox4_toggled"]
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Load" to="." method="_on_Load_pressed"]
 

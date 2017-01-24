@@ -2,15 +2,31 @@ extends CanvasLayer
 
 var hp_bar_scn = preload("res://Scenes/UI/HPBar.tscn")
 var titleflash = preload("res://Scenes/UI/TitleFlash.tscn")
+onready var fps = get_node("FPS")
 var currently_flashing = null
+export(int) var fps_refresh_delay = 0.5
+var fps_delay = 0.0
 signal kill_pressed
 
 func _ready():
 	var actor_options = get_parent().actor_types
+	set_process(true)
 	for t in actor_options:
 		get_node("Actortype").add_item(t)
 	get_node("Allegiance").add_item("friendly")
 	get_node("Allegiance").add_item("enemy")
+
+func _process(delta):
+	if Globals.get("show_fps"):
+		fps.show()
+		if fps_delay <= 0:
+			fps.set_text(str(int(1.0 / delta)))
+			fps_delay = fps_refresh_delay
+		else:
+			fps_delay -= delta
+	else:
+		fps.hide()
+		fps_delay = 0
 
 func clear():
 	for hpb in get_node("HPBars").get_children():
