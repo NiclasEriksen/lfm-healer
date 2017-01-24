@@ -7,4 +7,5 @@ extends "res://Scripts/Actor.gd"
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	pass
+	if has_node("ActorBase"):
+		get_node("ActorBase").set_opacity(0)

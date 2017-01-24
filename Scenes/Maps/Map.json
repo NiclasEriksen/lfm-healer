@@ -1,0 +1,15 @@
+{
+    "spawnlist": [
+        ["enemy", 0.0],
+        ["enemy", 0.2],
+        ["archer", 0.2],
+        ["enemy", 0.5],
+        ["rogue", 0.5],
+        ["rogue", 0.0],
+        ["enemy", 0.5],
+        ["enemy", 2.0],
+        ["enemy", 2.0],
+        ["enemy", 2.0],
+        ["enemy", 2.0],
+    ]
+}

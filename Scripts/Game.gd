@@ -61,25 +61,12 @@ func newgame():
 	if has_node("HUD"):
 		add_all_spells()
 		get_node("HUD").flash_message("Begynner", "nei men se der ja", 3)
-	spawn_actor("enemy", "enemy")
-	spawn_actor("enemy", "enemy")
-	spawn_actor("enemy", "enemy")
-	spawn_actor("enemy", "enemy")
-	spawn_actor("enemy", "enemy")
-	spawn_actor("enemy", "enemy")
-#	spawn_actor("mage", "enemy")
-#	spawn_actor("archer", "friendly")
+	spawn_party()
+
+func spawn_party():
 	spawn_actor("archer", "friendly")
 	spawn_actor("mage", "friendly")
-#	spawn_actor("rogue", "friendly")
 	spawn_actor("rogue", "friendly")
-#	spawn_actor("tank", "friendly")
-#	spawn_actor("mage", "friendly")
-#	spawn_actor("archer", "friendly")
-#	spawn_actor("archer", "friendly")
-#	spawn_actor("archer", "friendly")
-#	spawn_actor("archer", "friendly")
-#	spawn_actor("archer", "friendly")
 
 func cleanup():
 	dragged_ability = null
@@ -105,8 +92,16 @@ func cleanup():
 	if get_node("Actors").get_child_count():
 		for a in get_node("Actors").get_children():
 			a.free()
+	if has_node("Map"):
+		get_node("Map")._ready()
 
 func _process(dt):
+#	if game_over:
+#		if game_over_timer > 0:
+#			game_over_timer -= dt
+#		else:
+#			game_over = false
+#			newgame()
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	if not friendlies.size():
 		print("All friendly players dead, restarting.")
@@ -114,9 +109,10 @@ func _process(dt):
 		return
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if not enemies.size():
-		print("All enemy players dead, restarting.")
-		newgame()
-		return
+		if get_node("Map").is_done_spawning():
+			print("All enemy players dead, restarting in 1 second.")
+			newgame()
+			return
 
 	if spell1_cd > 0:
 		emit_signal("spell_cd_changed", 1, spell1_cd / max_spell1_cd * 100)
