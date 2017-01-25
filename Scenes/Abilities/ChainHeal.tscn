@@ -14,6 +14,9 @@ radius = 32.0
 [node name="ChainHeal" type="Node2D"]
 
 script/script = ExtResource( 1 )
+slot = 0
+cooldown = 3.0
+cost = 0
 ability_icon = ExtResource( 2 )
 max_jump_range = 250
 max_jumps = 4

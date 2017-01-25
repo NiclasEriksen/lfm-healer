@@ -1,12 +1,9 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Themes/main_theme.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/AbilityBar.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/AbilityBar.gd" type="Script" id=3]
-[ext_resource path="res://Assets/Objects/pot_hp_large.png" type="Texture" id=4]
-[ext_resource path="res://Assets/UI/cooldown_mid.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Objects/area_heal.png" type="Texture" id=6]
-[ext_resource path="res://Assets/Objects/framed_painting.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/cooldown_mid.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
 
@@ -94,8 +91,6 @@ autoplay = ""
 
 [node name="Sprite" type="Sprite" parent="VBoxContainer/HBoxContainer/Ability1"]
 
-texture = ExtResource( 4 )
-
 [node name="ProgressBar" type="TextureProgress" parent="VBoxContainer/HBoxContainer/Ability1"]
 
 focus/ignore_mouse = true
@@ -115,7 +110,7 @@ range/exp_edit = false
 range/rounded = false
 texture/under = null
 texture/over = null
-texture/progress = ExtResource( 5 )
+texture/progress = ExtResource( 4 )
 mode = 3
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
@@ -150,8 +145,6 @@ autoplay = ""
 
 [node name="Sprite" type="Sprite" parent="VBoxContainer/HBoxContainer/Ability2"]
 
-texture = ExtResource( 6 )
-
 [node name="ProgressBar" type="TextureProgress" parent="VBoxContainer/HBoxContainer/Ability2"]
 
 focus/ignore_mouse = true
@@ -171,7 +164,7 @@ range/exp_edit = false
 range/rounded = false
 texture/under = null
 texture/over = null
-texture/progress = ExtResource( 5 )
+texture/progress = ExtResource( 4 )
 mode = 3
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
@@ -206,8 +199,6 @@ autoplay = ""
 
 [node name="Sprite" type="Sprite" parent="VBoxContainer/HBoxContainer/Ability3"]
 
-texture = ExtResource( 7 )
-
 [node name="ProgressBar" type="TextureProgress" parent="VBoxContainer/HBoxContainer/Ability3"]
 
 focus/ignore_mouse = true
@@ -227,7 +218,7 @@ range/exp_edit = false
 range/rounded = false
 texture/under = null
 texture/over = null
-texture/progress = ExtResource( 5 )
+texture/progress = ExtResource( 4 )
 mode = 3
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
@@ -279,7 +270,7 @@ range/exp_edit = false
 range/rounded = false
 texture/under = null
 texture/over = null
-texture/progress = ExtResource( 5 )
+texture/progress = ExtResource( 4 )
 mode = 3
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )

@@ -3,12 +3,6 @@ extends Node2D
 var dragged_ability = false
 var maplist_node = preload("res://Scripts/MapList.gd").new()
 export(int, 2, 50, 1) var select_sensitivity = 20
-var spells = [
-	load("res://Scenes/Abilities/TargetedHeal.tscn"),
-	load("res://Scenes/Abilities/AreaHeal.tscn"),
-	load("res://Scenes/Abilities/ChainHeal.tscn"),
-	null
-]
 var tank_actor = load("res://Scenes/Actors/Tank.tscn")
 var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var rogue_actor = load("res://Scenes/Actors/Rogue.tscn")
@@ -17,16 +11,8 @@ var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 var actor_types = ["tank", "archer", "rogue", "mage", "enemy"]
 onready var cam = get_node("Camera2D")
-var spell1_cd = 0.0
-var spell2_cd = 0.0
-var spell3_cd = 0.0
-var spell4_cd = 0.0
-var max_spell1_cd = 0.0
-var max_spell2_cd = 1.5
-var max_spell3_cd = 3.0
-var max_spell4_cd = 2.0
 onready var map = get_node("Map")
-signal spell_cd_changed(spell_id, pts)
+onready var healer = get_node("Healer")
 
 func _ready():
 	set_process(true)
@@ -34,16 +20,17 @@ func _ready():
 	newgame(false)
 
 func add_all_spells():
-	var i = 1
-	for s in spells:
+	if not healer:
+		print("No healer?")
+		return
+	for i in range(1, 5):
+		var s = healer.get_ability(i)
 		if s:
 			s = s.instance()
 		else:
-			i += 1
 			continue
 		if s.get_icon():
 			get_node("HUD").set_button_ability(i, s.get_icon())
-		i += 1
 
 func load_map(m):
 	var m_path = maplist_node.get_map_dir() + m
@@ -60,6 +47,7 @@ func load_map(m):
 func newgame(clean):
 	if clean:
 		cleanup()
+	healer.reset()
 	map = get_node("Map")
 	if not map.get_spawnlist().size():
 		print("Spawnlist is empty! Enabling autospawn.")
@@ -79,12 +67,6 @@ func spawn_party():
 
 func cleanup():
 	dragged_ability = null
-	spell1_cd = 0.0
-	spell2_cd = 0.0
-	spell3_cd = 0.0
-	spell4_cd = 0.0
-	for s in range(spells.size()):
-		emit_signal("spell_cd_changed", s, 0)
 	get_node("HUD").clear()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Objects").get_child_count())
@@ -123,35 +105,6 @@ func _process(dt):
 			newgame(true)
 			return
 
-	if spell1_cd > 0:
-		emit_signal("spell_cd_changed", 1, spell1_cd / max_spell1_cd * 100)
-		spell1_cd -= dt
-	else:
-		if spell1_cd < 0:
-			emit_signal("spell_cd_changed", 1, 0)
-		spell1_cd = 0
-	if spell2_cd > 0:
-		emit_signal("spell_cd_changed", 2, spell2_cd / max_spell2_cd * 100)
-		spell2_cd -= dt
-	else:
-		if spell2_cd < 0:
-			emit_signal("spell_cd_changed", 2, 0)
-		spell2_cd = 0
-	if spell3_cd > 0:
-		emit_signal("spell_cd_changed", 3, spell3_cd / max_spell3_cd * 100)
-		spell3_cd -= dt
-	else:
-		if spell3_cd < 0:
-			emit_signal("spell_cd_changed", 3, 0)
-		spell3_cd = 0
-	if spell4_cd > 0:
-		emit_signal("spell_cd_changed", 4, spell4_cd / max_spell4_cd * 100)
-		spell4_cd -= dt
-	else:
-		if spell4_cd < 0:
-			emit_signal("spell_cd_changed", 4, 0)
-		spell4_cd = 0
-
 func _unhandled_input(event):
 	event = make_input_local(event)
 	if event.type == InputEvent.SCREEN_TOUCH:
@@ -161,14 +114,7 @@ func _unhandled_input(event):
 				i = 0	# No cooldowns.
 			var hit = dragged_ability.trigger()
 			if hit:
-				if i == 1:
-					spell1_cd = max_spell1_cd
-				elif i == 2:
-					spell2_cd = max_spell2_cd
-				elif i == 3:
-					spell3_cd = max_spell3_cd
-				elif i == 4:
-					spell4_cd = max_spell4_cd
+				healer.set_cooldown(i, dragged_ability.get_cooldown())
 			dragged_ability = false
 		if event.pressed:
 			select_actor(event.pos)
@@ -258,7 +204,7 @@ func _on_Timer_timeout():
 #	if get_tree().get_nodes_in_group("enemy").size() < 10:
 	if Globals.get("autospawn"):
 		if Globals.get("chill_mode"):
-			if randf() > 0.75:
+			if randf() > 0.5:
 				return
 		spawn_actor("enemy", "enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
@@ -270,20 +216,11 @@ func _on_AbilityBar_ability_tapped(slot):
 	if get_tree().is_paused():
 		return
 	var pos = get_local_mouse_pos()
-	if slot == 1:
-		if spell1_cd > 0:
-			return
-	elif slot == 2:
-		if spell2_cd > 0:
-			return
-	elif slot == 3:
-		if spell3_cd > 0:
-			return
-	elif slot == 4:
-		if spell4_cd > 0:
-			return
+	if healer.get_cooldown(slot) > 0:
+		return
 
-	var spell = self.spells[slot - 1]
+#	var spell = self.spells[slot - 1]
+	var spell = healer.get_ability(slot)
 	if spell:
 		spell = spell.instance()
 		spell.set_slot(slot)

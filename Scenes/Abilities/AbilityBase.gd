@@ -12,6 +12,9 @@ export(Texture) var ability_icon = null setget set_icon, get_icon
 # var a = 2
 # var b = "textvar"
 
+func get_cooldown():
+	return cooldown
+
 func set_icon(tex):
 	ability_icon = tex
 

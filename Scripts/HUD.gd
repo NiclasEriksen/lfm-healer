@@ -4,6 +4,7 @@ var hp_bar_scn = preload("res://Scenes/UI/HPBar.tscn")
 var titleflash = preload("res://Scenes/UI/TitleFlash.tscn")
 onready var fps = get_node("FPS")
 var currently_flashing = null
+onready var ability_bar = get_node("AbilityBar")
 export(int) var fps_refresh_delay = 0.5
 var fps_delay = 0.0
 signal kill_pressed
@@ -119,3 +120,8 @@ func _on_Spawn_pressed():
 
 func _on_Settings_load_map(m):
 	get_parent().load_map(m)
+
+
+func _on_Healer_spell_cd_changed( spell_id, pts ):
+	if ability_bar:
+		ability_bar.update_spell_cd(spell_id, pts)

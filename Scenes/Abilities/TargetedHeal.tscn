@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scenes/Abilities/TargetedHeal.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Objects/pot_hp.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Objects/pot_hp_large.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Objects/pot_hp.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -19,6 +20,10 @@ colors = ColorArray( 1, 1, 1, 0, 0, 1, 0.0625, 1, 0.862319, 1, 0.870924, 1, 1, 1
 transform/scale = Vector2( 2, 2 )
 z/z = 1
 script/script = ExtResource( 1 )
+slot = 0
+cooldown = 0.5
+cost = 0
+ability_icon = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -37,7 +42,7 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="EffectModule" parent="." instance=ExtResource( 2 )]
+[node name="EffectModule" parent="." instance=ExtResource( 3 )]
 
 amount = 40.0
 
@@ -101,6 +106,6 @@ color/color_ramp = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="."]
 
 transform/scale = Vector2( 3, 3 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 

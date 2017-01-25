@@ -57,15 +57,20 @@ script/script = ExtResource( 5 )
 
 [node name="Healer" parent="." instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 36.3531, 240 )
-
-[connection signal="spell_cd_changed" from="." to="HUD" method="_on_Game_spell_cd_changed"]
+transform/pos = Vector2( 30, 144 )
+transform/scale = Vector2( 1, 1 )
+ability_1_scene = "res://Scenes/Abilities/TargetedHeal.tscn"
+ability_2_scene = "res://Scenes/Abilities/AreaHeal.tscn"
+ability_3_scene = "res://Scenes/Abilities/ChainHeal.tscn"
+ability_4_scene = "res://Scenes/Abilities/ChainHeal.tscn"
 
 [connection signal="kill_pressed" from="HUD" to="." method="_on_HUD_kill_pressed"]
 
 [connection signal="ability_tapped" from="HUD/AbilityBar" to="." method="_on_AbilityBar_ability_tapped"]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="spell_cd_changed" from="Healer" to="HUD" method="_on_Healer_spell_cd_changed"]
 
 
 [editable path="HUD"]

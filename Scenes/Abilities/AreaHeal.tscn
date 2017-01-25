@@ -15,7 +15,7 @@ radius = 32.0
 
 script/script = ExtResource( 1 )
 slot = 1
-cooldown = 0.5
+cooldown = 1.5
 cost = 30.0
 ability_icon = ExtResource( 2 )
 
