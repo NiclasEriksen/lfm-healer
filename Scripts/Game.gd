@@ -31,8 +31,10 @@ func add_all_spells():
 			continue
 		if s.get_icon():
 			get_node("HUD").set_button_ability(i, s.get_icon())
+		s.free()
 
 func load_map(m):
+	print("Loading map \"", m, "\"...")
 	var m_path = maplist_node.get_map_dir() + m
 	var mapnode = load(m_path).instance()
 	mapnode.set_name("Map")
@@ -40,14 +42,16 @@ func load_map(m):
 		get_node("Map").free()
 	else:
 		print("No map node present? :S")
+		return
 	add_child(mapnode)
 	move_child(mapnode, 0)
+	print("Done.")
 	newgame(true)
 
 func newgame(clean):
 	if clean:
 		cleanup()
-	healer.reset()
+	print("Starting new game...")
 	map = get_node("Map")
 	if not map.get_spawnlist().size():
 		print("Spawnlist is empty! Enabling autospawn.")
@@ -66,6 +70,8 @@ func spawn_party():
 	spawn_actor("rogue", "friendly")
 
 func cleanup():
+	print("Resetting game state and clearing objects...")
+	healer.reset()
 	dragged_ability = null
 	get_node("HUD").clear()
 	if Globals.get("debug_mode"):
@@ -85,6 +91,7 @@ func cleanup():
 			a.free()
 	if has_node("Map"):
 		get_node("Map")._ready()
+	print("Done.")
 
 func _process(dt):
 #	if game_over:
@@ -101,7 +108,7 @@ func _process(dt):
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if not enemies.size():
 		if get_node("Map").is_done_spawning():
-			print("All enemy players dead, restarting in 1 second.")
+			print("All enemy players dead, restarting.")
 			newgame(true)
 			return
 
