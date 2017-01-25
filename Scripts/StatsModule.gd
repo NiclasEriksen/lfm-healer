@@ -45,6 +45,7 @@ var attack_speed = base_attack_speed
 var attack_range = base_attack_range
 var immobile = false
 var stunned = false setget set_stunned, is_stunned
+var invulnerable = false setget set_invulnerable, is_invulnerable
 export var stealthed = false setget set_stealthed, is_stealthed
 signal stealth_broken
 signal critical_hit
@@ -69,6 +70,12 @@ func set_stunned(val):
 
 func is_stunned():
 	return stunned
+
+func set_invulnerable(val):
+	invulnerable = val
+
+func is_invulnerable():
+	return invulnerable
 
 func set_stealthed(val):
 	stealthed = val
@@ -150,6 +157,7 @@ func _process(delta):
 		mp = get_actual("max_mp")
 	check_negatives()
 	stunned = false
+	invulnerable = false
 	for wr in get_children():
 		if wr.is_buff:
 			handle_buff(wr, delta)
@@ -161,6 +169,8 @@ func handle_status(wr, dt):
 	if status_result:
 		if wr.get_effect_type() == "stun":
 			stunned = true
+		elif wr.get_effect_type() == "invulnerable":
+			invulnerable = true
 	else:
 		if Globals.get("debug_mode"):
 			print("Removing status.")
@@ -236,7 +246,10 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 				if originmodule:
 					tar = originmodule.get_parent()
 				get_parent().get_node("ActorBase").on_hit(tar)
-		set(effectmodule.effect_stat, get(effectmodule.effect_stat) + amount)
+		if effectmodule.effect_stat == "hp" and amount < 0 and is_invulnerable():
+			pass
+		else:
+			set(effectmodule.effect_stat, get(effectmodule.effect_stat) + amount)
 	else:
 		print("StatsModule does not recognize that attribute: ", effectmodule.effect_stat)
 	update_final_stats()

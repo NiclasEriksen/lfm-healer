@@ -1,6 +1,6 @@
 extends Node
 
-export(String, "movement_speed", "stun") var effect_type = "movement_speed" setget set_effect_type, get_effect_type
+export(String, "movement_speed", "stun", "invulnerable") var effect_type = "movement_speed" setget set_effect_type, get_effect_type
 export(String, "percentage", "flat") var apply_as = "percentage" setget set_apply_as, get_apply_as
 export(float) var amount = 0.0 setget set_amount, get_amount
 var unique_ref = null setget set_unique_ref, get_unique_ref

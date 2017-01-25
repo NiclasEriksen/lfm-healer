@@ -238,11 +238,16 @@ func get_game_pos(p):
 	return t.xform(p)
 
 func spawn_ability(ability, pos):
-	dragged_ability = ability
-	self.dragged_ability.set_pos(pos)
-	self.dragged_ability.set_active(false)
-	
-	self.get_node("Effects").add_child(self.dragged_ability)
+	if ability.ability_type == "target":
+		dragged_ability = ability
+		self.dragged_ability.set_pos(pos)
+		self.dragged_ability.set_active(false)
+		
+		self.get_node("Effects").add_child(self.dragged_ability)
+	elif ability.ability_type == "instant":
+		self.get_node("Effects").add_child(ability)
+		ability.trigger()
+		healer.set_cooldown(ability.get_slot(), ability.get_cooldown())
 
 
 func _on_HUD_kill_pressed():

@@ -17,6 +17,7 @@ script/script = ExtResource( 1 )
 slot = 0
 cooldown = 3.0
 cost = 0
+ability_type = "target"
 ability_icon = ExtResource( 2 )
 max_jump_range = 250
 max_jumps = 4

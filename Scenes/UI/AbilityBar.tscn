@@ -251,6 +251,8 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
+[node name="Sprite" type="Sprite" parent="VBoxContainer/HBoxContainer/Ability4"]
+
 [node name="ProgressBar" type="TextureProgress" parent="VBoxContainer/HBoxContainer/Ability4"]
 
 focus/ignore_mouse = true
@@ -274,8 +276,6 @@ texture/progress = ExtResource( 4 )
 mode = 3
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
-
-[node name="Sprite" type="Sprite" parent="VBoxContainer/HBoxContainer/Ability4"]
 
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/Ability1" to="." method="_on_Ability1_button_down"]
 

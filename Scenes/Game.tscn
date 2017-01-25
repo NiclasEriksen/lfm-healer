@@ -62,7 +62,7 @@ transform/scale = Vector2( 1, 1 )
 ability_1_scene = "res://Scenes/Abilities/TargetedHeal.tscn"
 ability_2_scene = "res://Scenes/Abilities/AreaHeal.tscn"
 ability_3_scene = "res://Scenes/Abilities/ChainHeal.tscn"
-ability_4_scene = "res://Scenes/Abilities/ChainHeal.tscn"
+ability_4_scene = "res://Scenes/Abilities/Shield.tscn"
 
 [connection signal="kill_pressed" from="HUD" to="." method="_on_HUD_kill_pressed"]
 

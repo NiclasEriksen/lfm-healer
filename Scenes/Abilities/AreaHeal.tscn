@@ -17,6 +17,7 @@ script/script = ExtResource( 1 )
 slot = 1
 cooldown = 1.5
 cost = 30.0
+ability_type = "target"
 ability_icon = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
