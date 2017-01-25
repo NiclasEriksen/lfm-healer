@@ -111,10 +111,9 @@ func _fixed_process(dt):
 		if not get_tree().is_editor_hint():
 			if parent.stats_node.is_stunned():
 				return
-		if parent.has_node("ActorBase"):
-			if parent.get_node("ActorBase").attacking:
+		if parent.actorbase_node:
+			if parent.actorbase_node.attacking:
 				return
-		update_raycast()
 		var dir = direction
 		if target:
 			set_walk_path([])
@@ -123,6 +122,7 @@ func _fixed_process(dt):
 			dir = check_path(dir)
 		set_direction(dir)
 		if AVOID_COLLISION:
+#			update_raycast()
 			dir = steer(dir)
 		if not get_tree().is_editor_hint():
 			move(dir, dt)
@@ -203,3 +203,6 @@ func _on_ActorBase_cleared_target():
 	if target.get_ref() and raycast:
 		raycast.remove_exception(target.get_ref())
 	target = null
+
+func _on_Timer_timeout():
+	update_raycast()

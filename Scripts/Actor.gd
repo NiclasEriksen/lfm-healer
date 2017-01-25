@@ -11,6 +11,7 @@ var highlighted = false setget set_highlighted, is_highlighted
 var stats_node = null
 var move_node = null
 var attack_node = null
+var actorbase_node = null
 var statuseffect_node = null
 var debuff_node = null
 
@@ -96,6 +97,7 @@ func fire_projectile(target):
 func _ready():
 	# Connect signals
 	if has_node("ActorBase"):
+		actorbase_node = get_node("ActorBase")
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack")
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack_effect")
 		if has_node("MoveModule"):
