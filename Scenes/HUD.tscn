@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=6]
+[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=5]
+[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=7]
 
 [sub_resource type="GDScript" id=1]
 
@@ -79,8 +80,8 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 180.0
 margin/top = 16.0
-margin/right = 228.0
-margin/bottom = 64.0
+margin/right = 244.0
+margin/bottom = 80.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -89,12 +90,36 @@ flat = false
 
 [node name="Sprite" type="Sprite" parent="Button"]
 
-transform/pos = Vector2( -2, -2 )
+transform/pos = Vector2( 32, 32 )
 texture = ExtResource( 2 )
-offset = Vector2( 25, 25 )
 vframes = 10
 hframes = 11
 frame = 18
+
+[node name="Kill" type="Button" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 254.0
+margin/top = 16.0
+margin/right = 318.0
+margin/bottom = 80.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+script/script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Kill"]
+
+transform/pos = Vector2( 32, 32 )
+texture = ExtResource( 2 )
+vframes = 10
+hframes = 11
+frame = 57
 
 [node name="ChillMode" type="Button" parent="."]
 
@@ -123,32 +148,6 @@ vframes = 10
 hframes = 11
 frame = 74
 
-[node name="Kill" type="Button" parent="."]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 235.0
-margin/top = 16.0
-margin/right = 283.0
-margin/bottom = 64.0
-toggle_mode = false
-click_on_press = true
-enabled_focus_mode = 2
-shortcut = null
-flat = false
-script/script = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="Kill"]
-
-transform/pos = Vector2( -2, -2 )
-texture = ExtResource( 2 )
-offset = Vector2( 25, 25 )
-vframes = 10
-hframes = 11
-frame = 57
-
 [node name="HPBars" type="CanvasLayer" parent="."]
 
 layer = 1
@@ -173,14 +172,16 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1000.0
+theme/theme = ExtResource( 5 )
+margin/left = 900.0
 margin/top = 10.0
-margin/right = 1100.0
-margin/bottom = 42.0
+margin/right = 1060.0
+margin/bottom = 61.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 flat = false
+clip_text = true
 align = 0
 selected = -1
 items = [  ]
@@ -191,14 +192,16 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1110.0
+theme/theme = ExtResource( 5 )
+margin/left = 1063.0
 margin/top = 10.0
-margin/right = 1210.0
-margin/bottom = 42.0
+margin/right = 1223.0
+margin/bottom = 61.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 flat = false
+clip_text = true
 align = 0
 selected = -1
 items = [  ]
@@ -209,10 +212,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1220.0
+margin/left = 1226.0
 margin/top = 10.0
-margin/right = 1268.0
-margin/bottom = 42.0
+margin/right = 1276.0
+margin/bottom = 60.0
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
@@ -221,10 +224,9 @@ flat = false
 
 [node name="Sprite" type="Sprite" parent="Spawn"]
 
-transform/pos = Vector2( 8, 0 )
+transform/pos = Vector2( 25, 25 )
 transform/scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
-offset = Vector2( 25, 25 )
 vframes = 10
 hframes = 11
 frame = 20
@@ -236,7 +238,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 
-[node name="Settings" parent="SettingsLayer" instance=ExtResource( 5 )]
+[node name="Settings" parent="SettingsLayer" instance=ExtResource( 6 )]
 
 visibility/visible = false
 
@@ -250,7 +252,7 @@ margin/left = 0.0
 margin/top = 100.0
 margin/right = 160.0
 margin/bottom = 145.0
-custom_fonts/font = ExtResource( 6 )
+custom_fonts/font = ExtResource( 7 )
 text = "0"
 align = 1
 valign = 1
@@ -264,9 +266,9 @@ max_lines_visible = -1
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 
-[connection signal="toggled" from="ChillMode" to="." method="_on_ChillMode_toggled"]
-
 [connection signal="pressed" from="Kill" to="." method="_on_Kill_pressed"]
+
+[connection signal="toggled" from="ChillMode" to="." method="_on_ChillMode_toggled"]
 
 [connection signal="pressed" from="Spawn" to="." method="_on_Spawn_pressed"]
 
