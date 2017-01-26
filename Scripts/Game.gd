@@ -120,7 +120,7 @@ func _unhandled_input(event):
 			if Globals.get("chill_mode"):
 				i = 0	# No cooldowns.
 			var hit = dragged_ability.trigger()
-			if hit:
+			if hit and not Globals.get("debug_mode"):
 				healer.set_cooldown(i, dragged_ability.get_cooldown())
 			dragged_ability = false
 		if event.pressed:
@@ -247,7 +247,8 @@ func spawn_ability(ability, pos):
 	elif ability.ability_type == "instant":
 		self.get_node("Effects").add_child(ability)
 		ability.trigger()
-		healer.set_cooldown(ability.get_slot(), ability.get_cooldown())
+		if not Globals.get("debug_mode"):
+			healer.set_cooldown(ability.get_slot(), ability.get_cooldown())
 
 
 func _on_HUD_kill_pressed():
