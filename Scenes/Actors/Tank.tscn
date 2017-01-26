@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Actors/rogue_16.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Actors/tank_20.png" type="Texture" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -29,7 +29,7 @@ hit_effect = null
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-max_hp = 25.0
+max_hp = 30.0
 base_damage = 4.0
 base_armor = 1.0
 base_magic_resist = 1.0
@@ -56,10 +56,7 @@ amount = -7.0
 
 transform/pos = Vector2( 2, 20 )
 AVOID_COLLISION = true
-AVOID_FORCE = 0.5
-RAYCAST_LENGTH = 30.0
 STALL_TRESHOLD = 0.2
-PATH_REACH_TRESHOLD = 8.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
 

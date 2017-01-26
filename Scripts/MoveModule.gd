@@ -111,9 +111,9 @@ func _fixed_process(dt):
 		if not get_tree().is_editor_hint():
 			if parent.stats_node.is_stunned():
 				return
-		if parent.actorbase_node:
-			if parent.actorbase_node.attacking:
-				return
+			if parent.actorbase_node:
+				if parent.actorbase_node.attacking:
+					return
 		var dir = direction
 		if target:
 			set_walk_path([])

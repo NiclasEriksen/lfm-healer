@@ -65,9 +65,21 @@ func newgame(clean):
 	spawn_party()
 
 func spawn_party():
+	spawn_actor("tank", "friendly")
 	spawn_actor("archer", "friendly")
 	spawn_actor("mage", "friendly")
 	spawn_actor("rogue", "friendly")
+
+func gameover():
+	get_tree().set_pause(true)
+	get_node("HUD").flash_message("", "Round ended, restarting...", 2)
+	var t = Tween.new()
+	t.set_pause_mode(2)
+	t.interpolate_callback(self, 2, "newgame", true)
+	t.interpolate_callback(get_tree(), 2, "set_pause", false)
+	t.interpolate_callback(t, 2.1, "queue_free")
+	t.start()
+	add_child(t)
 
 func cleanup():
 	print("Resetting game state and clearing objects...")
@@ -103,13 +115,13 @@ func _process(dt):
 	var friendlies = get_tree().get_nodes_in_group("friendly")
 	if not friendlies.size():
 		print("All friendly players dead, restarting.")
-		newgame(true)
+		gameover()
 		return
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if not enemies.size():
 		if get_node("Map").is_done_spawning():
 			print("All enemy players dead, restarting.")
-			newgame(true)
+			gameover()
 			return
 
 func _unhandled_input(event):
