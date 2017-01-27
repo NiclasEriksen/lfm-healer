@@ -220,7 +220,7 @@ func check_in_range():
 		if target_enemy_node and movement:
 			target_enemy = weakref(target_enemy_node)
 			emit_signal("targeted_enemy", target_enemy)
-			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > ar:
+			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > 100:
 				var path = root.map.get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
 #				if path.size() > 1:
 #					path.remove(0)

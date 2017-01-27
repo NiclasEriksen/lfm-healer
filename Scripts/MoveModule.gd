@@ -98,7 +98,7 @@ func _draw():
 			var col = Color(1, 0.7, 0.7)
 			if raycast.is_colliding():
 				col = Color(1, 0.4, 0.4)
-			draw_line(raycast.get_pos(), raycast.get_cast_to(), col)
+			draw_line(raycast.get_pos(), raycast.get_pos() + raycast.get_cast_to(), col)
 		if path.size():
 			var start = Vector2(0, 0)
 			for p in path:
@@ -116,15 +116,15 @@ func _fixed_process(dt):
 					return
 		var dir = direction
 		if target:
-			set_walk_path([])
-			dir = seek_target(target)
-		elif path.size():
+			dir = seek_target(dir, target)
+		if path.size():
 			dir = check_path(dir)
 		set_direction(dir)
 		if AVOID_COLLISION:
 #			update_raycast()
 			dir = steer(dir)
 		if not get_tree().is_editor_hint():
+#			set_rot(dir)
 			move(dir, dt)
 			parent.set_z(parent.get_body_pos().y)
 
@@ -184,14 +184,18 @@ func check_path(dir):
 	print("No path.")
 	return Vector2(0, 0)
 
-func seek_target(target):
+func seek_target(dir, target):
 	if not target.get_ref():
 		target = null
-		return Vector2(0, 0)
+		return dir
 	var p = get_pos()
 	if parent:
 		p = parent.get_body_pos()
-	return (target.get_ref().get_body_pos() - p).normalized()
+	if target.get_ref().get_body_pos().distance_to(p) > 100:
+		return dir
+	else:
+		set_walk_path([])
+		return (target.get_ref().get_body_pos() - p).normalized()
 
 func _on_ActorBase_targeted_enemy( enemy ):
 	target = enemy
