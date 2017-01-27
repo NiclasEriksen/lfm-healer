@@ -29,12 +29,24 @@ var attacking = false
 var enabled = true
 onready var animations = get_node("AnimationPlayer")
 onready var sprite = get_node("Sprite")
+onready var shield_sprite = get_node("Shield")
+
 
 func set_stealth_opacity(v):
 	STEALTH_OPACITY = v
 
 func get_stealth_opacity():
 	return STEALTH_OPACITY
+
+func enable_shield(c):
+	if shield_sprite:
+		if not shield_sprite.is_visible():
+			shield_sprite.set_modulate(c)
+			shield_sprite.show()
+
+func disable_shield():
+	if shield_sprite:
+		shield_sprite.hide()
 
 func _ready():
 	if not get_tree().is_editor_hint():
@@ -60,6 +72,12 @@ func _ready():
 			get_node("State").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
 #		if parent.has_node("CollisionShape2D"):
 #			make_light_occluder()
+		if has_node("Sprite") and has_node("Shield"):
+			var stex = get_node("Sprite").get_texture()
+			var h = stex.get_height() / tile_dimensions.y
+			var s = h / get_node("Shield").get_texture().get_height() * 2
+			get_node("Shield").set_scale(Vector2(s, s))
+
 
 func make_light_occluder():
 	var cr = parent.get_node("CollisionShape2D").get_shape().get_radius()
@@ -287,9 +305,11 @@ func on_stunned():
 func update_state():
 	var stunned = false
 	var stealthed = false
+	var shielded = false
 	if stats:
 		stunned = stats.is_stunned()
 		stealthed = stats.is_stealthed()
+		shielded = stats.is_invulnerable()
 	if not stunned:
 		if flip_cd <= 0.0:
 			flip_cd = 0.3
@@ -322,6 +342,11 @@ func update_state():
 		get_node("Stealth").hide()
 		get_node("Stealth/Particles2D").set_emitting(false)
 		set_opacity(1.0)
+
+	if shielded:
+		enable_shield(Color(1, 0.9, 0.7, 0.5))
+	else:
+		disable_shield()
 
 	get_node("Selected").set_enabled(parent.is_selected())
 	get_node("Highlight").set_enabled(parent.is_highlighted())

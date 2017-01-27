@@ -45,6 +45,7 @@ func load_map(m):
 		return
 	add_child(mapnode)
 	move_child(mapnode, 0)
+	map = mapnode
 	print("Done.")
 	newgame(true)
 
@@ -185,13 +186,13 @@ func spawn_actor(actor_type, alliance):
 		if Globals.get("chill_mode") and actor:
 			# Triple level
 			actor.get_node("StatsModule").set_level(10)
-		p = get_node("Map/FriendlySpawn").get_pos()
-		p_to= get_node("Map/EnemySpawn").get_pos()
+		p = map.get_spawn_pos(alliance)
+		p_to= map.get_spawn_pos("enemy")
 	elif alliance == "enemy":
-		p = get_node("Map/EnemySpawn").get_pos()
-		p_to = get_node("Map/FriendlySpawn").get_pos()
+		p = map.get_spawn_pos(alliance)
+		p_to= map.get_spawn_pos("friendly")
 	var scr_h = Globals.get("render_height")
-	p += Vector2(0, rand_range(-(scr_h / 4), scr_h / 4))
+	p += Vector2(0, rand_range(-(scr_h / 10), scr_h / 10))
 
 	if actor:
 		if Globals.get("debug_mode"):

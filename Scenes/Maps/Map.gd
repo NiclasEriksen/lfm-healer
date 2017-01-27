@@ -5,6 +5,15 @@ export(String) var map_title = "No name." setget set_map_title, get_map_title
 var spawnlist = []
 var spawn_wait = 0.0
 
+func get_spawn_pos(alliance):
+	if alliance == "friendly":
+		return get_node("FriendlySpawn").get_pos()
+	elif alliance == "enemy":
+		return get_node("EnemySpawn").get_pos()
+	else:
+		print("No spawn point.")
+		return Vector2(Globals.get("render_width") / 2, Globals.get("render_height") / 2)
+
 func set_map_title(t):
 	map_title = t
 
@@ -50,7 +59,7 @@ func _ready():
 	spawn_wait = 0.0
 	spawnlist = []
 	load_spawnlist()
-	set_spawn_pos()
+#	set_spawn_pos()
 	set_process(true)
 #	print(get_node("NavigationPolygonInstance2").get_navigation_polygon().get_vertices())
 

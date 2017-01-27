@@ -304,6 +304,11 @@ shape = SubResource( 9 )
 trigger = false
 _update_shape_index = 0
 
+[node name="Shield" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 3 )
+
 [connection signal="attack" from="." to="." method="_on_ActorBase_attack"]
 
 [connection signal="body_enter" from="AttackRange" to="." method="_on_AttackRange_body_enter"]
