@@ -12,7 +12,7 @@ var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var movement = get_parent().get_node("MoveModule")
 onready var parent = get_parent()
-var MIN_SEEK_DIST = 200
+var MIN_SEEK_DIST = 180
 signal attack
 signal death(pos)
 signal targeted_enemy(enemy)
