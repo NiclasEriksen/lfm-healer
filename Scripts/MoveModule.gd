@@ -6,6 +6,8 @@ export(bool) var AVOID_COLLISION = false setget set_avoid_collision, get_avoid_c
 export(float, 0, 1, 0.1) var AVOID_FORCE = 0.5 setget set_avoid_force, get_avoid_force
 export(float, 1, 128, 1) var RAYCAST_LENGTH = 30.0 setget set_raycast_length, get_raycast_length
 export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.1 setget set_stall_treshold, get_stall_treshold
+var SLOW_RADIUS = 32
+var max_velocity = 50
 export(float) var PATH_REACH_TRESHOLD = 16.0 setget set_reach_treshold, get_reach_treshold
 signal stalled
 signal moved
@@ -17,6 +19,7 @@ export(NodePath) var stats_node = null setget set_stat_node, get_stat_node
 export(float) var BASE_MOVEMENT_SPEED = 250 setget set_base_ms, get_base_ms
 var raycast = null
 var path = []
+
 
 func set_direction(newdir):
 	direction = newdir
@@ -108,29 +111,63 @@ func _draw():
 
 func _fixed_process(dt):
 	if parent:
+		max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
 		if not get_tree().is_editor_hint():
 			if parent.stats_node.is_stunned():
 				return
 			if parent.actorbase_node:
 				if parent.actorbase_node.attacking:
 					return
-		var dir = direction
-		if target:
-			dir = seek_target(dir, target)
-		if path.size():
-			dir = check_path(dir)
-		set_direction(dir)
-		if AVOID_COLLISION:
-#			update_raycast()
-			dir = steer(dir)
-		if not get_tree().is_editor_hint():
-#			set_rot(dir)
-			move(dir, dt)
-			parent.set_z(parent.get_body_pos().y)
+		var party = parent.get_party()
+		if party:
+			if party.is_leader(parent.get_party_index()):
+				var dir = direction
+				if target:
+					dir = seek_target(dir, target)
+				if path.size():
+					dir = check_path(dir)
+				set_direction(dir)
+				if AVOID_COLLISION:
+		#			update_raycast()
+					dir = steer(dir)
+				party.set_orientation(dir)
+	#			move(direction * formation.get_velocity() * dt)
+				party.set_pos(parent.get_body_pos() - party.get_leader_offset())
+				move(dir, dt)
+			else:
+				set_direction(party.get_orientation())
+				var af = Vector2()
+				if party.is_in_the_way(parent):
+					var leader_pos = party.get_leader_pos()
+					af = evade(leader_pos, direction)
+				var fp = party.lookup_formation_pos(parent.get_party_index())
+				var dist = fp - parent.get_body_pos()
+				var d = (dist.normalized() + af.normalized()).normalized()
+				if dist.length() > 1:
+					max_velocity *= 1.5
+					if dist.length() > 8:
+						d = (arrive(fp).normalized() + af.normalized()).normalized()
+						d = steer(d)
+	#				move_and_slide(((d * formation.get_form_velocity())))
+					move(d, dt)
+		else:
+			var dir = direction
+			if target:
+				dir = seek_target(dir, target)
+			if path.size():
+				dir = check_path(dir)
+			set_direction(dir)
+			if AVOID_COLLISION:
+	#			update_raycast()
+				dir = steer(dir)
+			if not get_tree().is_editor_hint():
+	#			set_rot(dir)
+				move(dir, dt)
+				parent.set_z(parent.get_body_pos().y)
 
 func move(dir, dt):
 	if stats:
-		dir *= get_node(get_stat_node()).get_actual("movement_speed") * 10 * dt
+		dir *= max_velocity * dt
 	else:
 		dir *= BASE_MOVEMENT_SPEED * dt
 
@@ -141,6 +178,28 @@ func move(dir, dt):
 		else:
 			emit_signal("stalled")
 	update()
+
+func arrive(p):
+	var desired_velocity = p - parent.get_body_pos()
+	var dist = desired_velocity.length()
+	if dist < SLOW_RADIUS:
+		desired_velocity = desired_velocity.normalized() * max_velocity * (dist / SLOW_RADIUS)
+	else:
+		desired_velocity = desired_velocity.normalized() * max_velocity
+	return desired_velocity
+
+func evade(t, d):
+	var distance = t - parent.get_body_pos()
+	var ahead = distance.length() / max_velocity
+	var future_pos = t + (d * max_velocity) * ahead
+#	print(t, "   ", future_pos)
+	return flee(future_pos)
+
+func flee(p):
+	var desired_velocity = (parent.get_body_pos() - p).normalized() * max_velocity
+#	evade_vector = desired_velocity
+#	return desired_velocity - get_direction()
+	return desired_velocity
 
 func setup_raycast():
 	raycast = get_node("RayCast2D")

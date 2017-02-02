@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Maps/Map.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Actors/Healer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Modules/Party.tscn" type="PackedScene" id=7]
 
 [node name="Game" type="Node2D"]
 
@@ -63,6 +64,8 @@ ability_1_scene = "res://Scenes/Abilities/TargetedHeal.tscn"
 ability_2_scene = "res://Scenes/Abilities/AreaHeal.tscn"
 ability_3_scene = "res://Scenes/Abilities/ChainHeal.tscn"
 ability_4_scene = "res://Scenes/Abilities/Shield.tscn"
+
+[node name="Party" parent="." instance=ExtResource( 7 )]
 
 [connection signal="kill_pressed" from="HUD" to="." method="_on_HUD_kill_pressed"]
 

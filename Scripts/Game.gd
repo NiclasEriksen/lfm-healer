@@ -70,6 +70,9 @@ func spawn_party():
 	spawn_actor("archer", "friendly")
 	spawn_actor("mage", "friendly")
 	spawn_actor("rogue", "friendly")
+	get_node("Party").set_scale(0.85)
+	for f in get_tree().get_nodes_in_group("friendly"):
+		f.set_party(get_node("Party"))
 
 func gameover():
 	get_tree().set_pause(true)
@@ -104,6 +107,8 @@ func cleanup():
 			a.free()
 	if has_node("Map"):
 		get_node("Map")._ready()
+	if has_node("Party"):
+		get_node("Party")._ready()
 	print("Done.")
 
 func _process(dt):

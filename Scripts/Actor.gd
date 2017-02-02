@@ -14,6 +14,21 @@ var attack_node = null
 var actorbase_node = null
 var statuseffect_node = null
 var debuff_node = null
+export(NodePath) var party = null setget set_party, get_party
+export(int) var party_index = -1 setget set_party_index, get_party_index
+
+func set_party(p):
+	party = p
+	set_party_index(p.register_unit())
+
+func get_party():
+	return party
+
+func set_party_index(i):
+	party_index = i
+
+func get_party_index():
+	return party_index
 
 func set_selected(v):
 	selected = v
