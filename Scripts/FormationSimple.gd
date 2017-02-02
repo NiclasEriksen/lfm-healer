@@ -2,8 +2,12 @@ extends Node2D
 
 var LEADER_SIGHT_RADIUS = 24
 var AHEAD_LENGTH = 32
+var RC_MARGIN = 8
 var leader = 0
-var formation_scale = 1 setget set_scale, get_scale
+var min_scale = Vector2(0.5, 0.5)
+var max_scale = Vector2(2.5, 2.5)
+var default_scale = Vector2(0.85, 0.85)
+var formation_scale = default_scale setget set_scale, get_scale
 var orientation = Vector2() setget set_orientation, get_orientation
 var velocity = 50 setget set_velocity, get_velocity
 var form_velocity = velocity * 1.5
@@ -18,6 +22,9 @@ var formation_positions = []
 var max_unit_count = 5
 var registered_units = []
 var formation_map = {0:false, 1:false, 2:false, 3:false, 4:false}
+onready var rc_left = get_node("RayCastLeft")
+onready var rc_right = get_node("RayCastRight")
+var RAYCAST_LENGTH = 50
 
 func set_scale(v):
 	formation_scale = v
@@ -27,6 +34,11 @@ func get_scale():
 
 func set_orientation(o):
 	orientation = o
+	if rc_left and rc_right:
+		rc_left.set_cast_to(o * RAYCAST_LENGTH)
+		rc_right.set_cast_to(o * RAYCAST_LENGTH)
+#		rc_left.set_rot(o.angle())
+#		rc_right.set_rot(o.angle())
 
 func get_orientation():
 	return orientation
@@ -98,6 +110,29 @@ func register_unit():
 	print("No more room!")
 	return -1
 
+func adjust_shape(dt):
+	var new_scale = get_scale()
+	if rc_left.is_colliding() and rc_right.is_colliding():
+		if new_scale.x > min_scale.x:
+			new_scale *= Vector2(1, 1 - 0.1 * dt)
+		else:
+			new_scale.x = min_scale.x
+		if new_scale.y < max_scale.y:
+			new_scale *= Vector2(1 + 0.1 * dt, 1)
+		else:
+			new_scale.y = max_scale.y
+		set_scale(new_scale)
+	else:
+		if new_scale.x < default_scale.x:
+			new_scale *= Vector2(1, 1 + 0.03 * dt)
+		else:
+			new_scale.x = default_scale.x
+		if new_scale.y > default_scale.y:
+			new_scale *= Vector2(1 - 0.03 * dt, 1)
+		else:
+			new_scale.y = default_scale.y
+		set_scale(new_scale)
+
 func unregister_unit(i):
 	formation_map[i] = false
 	if i == leader:
@@ -117,8 +152,24 @@ func select_formation():
 	else:
 		print("No formation for ", c, " units.")
 
+func adjust_raycasts():
+	var left_most = Vector2()
+	var right_most = Vector2()
+	for fp in formation_positions:
+		if fp.x < left_most.x:
+			left_most = fp
+		elif fp.x > right_most.x:
+			right_most = fp
+	var lm = (left_most - Vector2(RC_MARGIN, 0)).rotated(get_orientation().angle()) * get_scale()
+	var rm = (right_most + Vector2(RC_MARGIN, 0)).rotated(get_orientation().angle()) * get_scale()
+	rc_left.set_pos(lm)
+	rc_right.set_pos(rm)
+
 func _fixed_process(delta):
 #	set_pos(get_pos() + (get_orientation() * velocity * delta))
+	if rc_left and rc_right:
+		adjust_raycasts()
+		adjust_shape(delta)
 	update()
 
 func _ready():
@@ -128,6 +179,16 @@ func _ready():
 func _draw():
 	if Globals.get("debug_mode"):
 		draw_set_transform(Vector2(), 0, Vector2(1, 1))
+		var rcl = get_node("RayCastLeft")
+		var rcr = get_node("RayCastRight")
+		if rcl.is_colliding():
+			draw_line(rcl.get_pos(), rcl.get_pos() + rcl.get_cast_to(), Color(0.8, 0.4, 0.8, 0.9), 3)
+		else:
+			draw_line(rcl.get_pos(), rcl.get_pos() + rcl.get_cast_to(), Color(0.3, 0.3, 0.9, 0.7), 2)
+		if rcr.is_colliding():
+			draw_line(rcr.get_pos(), rcr.get_pos() + rcr.get_cast_to(), Color(0.8, 0.4, 0.8, 0.9), 3)
+		else:
+			draw_line(rcr.get_pos(), rcr.get_pos() + rcr.get_cast_to(), Color(0.3, 0.3, 0.9, 0.7), 2)
 		for fp in formation_positions:
 			draw_circle(fp.rotated(get_orientation().angle()) * get_scale(), 10, Color(0.8, 0.2, 0.2, 0.5))
 		draw_line(Vector2(), get_orientation() * 30, Color(0.6, 0.6, 0.0), 2)

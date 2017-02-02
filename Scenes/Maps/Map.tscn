@@ -32,11 +32,11 @@ enabled = true
 
 [node name="EnemySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 460.8, 144 )
+transform/pos = Vector2( 460.8, 130 )
 
 [node name="FriendlySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 64, 144 )
+transform/pos = Vector2( 64, 135 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -59,7 +59,6 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 
-transform/scale = Vector2( 1, 1 )
 build_mode = 0
 polygon = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589, 88.9373, -1.44037, 60.4103, 24.4329, 1.36606, 33.0574, -62.9855, 24.4329, -88.1954, 0.549866 )
 shape_range = Vector2( 0, 0 )

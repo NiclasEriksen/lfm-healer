@@ -71,7 +71,7 @@ func spawn_party():
 	spawn_actor("rogue", "friendly")
 	spawn_actor("archer", "friendly")
 	spawn_actor("mage", "friendly")
-	get_node("Party").set_scale(0.85)
+	get_node("Party").set_scale(Vector2(0.85, 0.85))
 	get_node("Party").set_pos(map.get_spawn_pos("friendly"))
 	for f in get_tree().get_nodes_in_group("friendly"):
 		f.set_party(get_node("Party"))
