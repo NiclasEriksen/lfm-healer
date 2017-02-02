@@ -1,7 +1,7 @@
 extends Node2D
 
-var LEADER_SIGHT_RADIUS = 30
-var AHEAD_LENGTH = 42
+var LEADER_SIGHT_RADIUS = 24
+var AHEAD_LENGTH = 32
 var leader = 0
 var formation_scale = 1 setget set_scale, get_scale
 var orientation = Vector2() setget set_orientation, get_orientation

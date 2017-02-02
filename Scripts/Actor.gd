@@ -16,6 +16,13 @@ var statuseffect_node = null
 var debuff_node = null
 export(NodePath) var party = null setget set_party, get_party
 export(int) var party_index = -1 setget set_party_index, get_party_index
+var party_leader = false setget set_leader, is_leader
+
+func set_leader(v):
+	party_leader = v
+
+func is_leader():
+	return party_leader
 
 func set_party(p):
 	party = p
@@ -23,6 +30,9 @@ func set_party(p):
 
 func get_party():
 	return party
+
+func is_in_party():
+	return party != null
 
 func set_party_index(i):
 	party_index = i

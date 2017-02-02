@@ -67,12 +67,25 @@ func newgame(clean):
 
 func spawn_party():
 	spawn_actor("tank", "friendly")
+	spawn_actor("rogue", "friendly")
+	spawn_actor("rogue", "friendly")
 	spawn_actor("archer", "friendly")
 	spawn_actor("mage", "friendly")
-	spawn_actor("rogue", "friendly")
 	get_node("Party").set_scale(0.85)
+	get_node("Party").set_pos(map.get_spawn_pos("friendly"))
 	for f in get_tree().get_nodes_in_group("friendly"):
 		f.set_party(get_node("Party"))
+		if f.get_party_index() == 0:
+#			f.set_leader(true)
+			f.set_pos(f.get_party().lookup_formation_pos(0))
+			f.move_node.set_direction(
+				f.move_node.check_path(f.move_node.get_direction())
+			)
+			f.get_party().set_orientation(f.move_node.get_direction())
+#		print(p, "          ", f.get_pos())
+	for f in get_tree().get_nodes_in_group("friendly"):
+		var p = f.get_party().lookup_formation_pos(f.get_party_index())
+		f.set_pos(p)
 
 func gameover():
 	get_tree().set_pause(true)
@@ -195,9 +208,9 @@ func spawn_actor(actor_type, alliance):
 		p_to= map.get_spawn_pos("enemy")
 	elif alliance == "enemy":
 		p = map.get_spawn_pos(alliance)
-		p_to= map.get_spawn_pos("friendly")
-	var scr_h = Globals.get("render_height")
-	p += Vector2(0, rand_range(-(scr_h / 10), scr_h / 10))
+		p_to = map.get_spawn_pos("friendly")
+		var scr_h = Globals.get("render_height")
+		p += Vector2(0, rand_range(-(scr_h / 10), scr_h / 10))
 
 	if actor:
 		if Globals.get("debug_mode"):
@@ -209,6 +222,7 @@ func spawn_actor(actor_type, alliance):
 			var path = map.get_simple_path(body_p, p_to)
 			actor.get_node("MoveModule").set_walk_path(path)
 		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
+		actor.get_node("ActorBase").connect("death", actor, "on_actor_death")
 		get_node("Actors").add_child(actor)
 	else:
 		print("No actor by that identifier found: ", actor_type)
@@ -273,4 +287,4 @@ func _on_HUD_kill_pressed():
 	var actors = get_tree().get_nodes_in_group("friendly") + get_tree().get_nodes_in_group("enemy")
 	for a in actors:
 		if a.is_selected():
-			a.queue_free()
+			a.actorbase_node.on_death()

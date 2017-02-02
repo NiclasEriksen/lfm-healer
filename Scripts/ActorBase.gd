@@ -221,7 +221,12 @@ func check_in_range():
 			target_enemy = weakref(target_enemy_node)
 			emit_signal("targeted_enemy", target_enemy)
 			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > 100:
+				if parent.get_party():
+					if not parent.get_party().is_leader(parent.get_party_index()):
+						print("nop!")
+						return
 				var path = root.map.get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
+						
 #				if path.size() > 1:
 #					path.remove(0)
 				movement.set_walk_path(path)
@@ -261,6 +266,9 @@ func on_death():
 	enabled = false
 	parent.get_node("StatsModule").queue_free()
 	parent.get_node("CollisionShape2D").queue_free()
+	print("wat")
+	if parent.is_in_party():
+		parent.get_party().unregister_unit(parent.get_party_index())
 	for g in parent.get_groups():
 		parent.remove_from_group(g)
 	if Globals.get("debug_mode"):

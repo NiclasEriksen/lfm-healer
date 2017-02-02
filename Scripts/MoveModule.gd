@@ -111,8 +111,8 @@ func _draw():
 
 func _fixed_process(dt):
 	if parent:
-		max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
 		if not get_tree().is_editor_hint():
+			max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
 			if parent.stats_node.is_stunned():
 				return
 			if parent.actorbase_node:
@@ -121,6 +121,18 @@ func _fixed_process(dt):
 		var party = parent.get_party()
 		if party:
 			if party.is_leader(parent.get_party_index()):
+				if not parent.is_leader():
+					parent.set_leader(true)
+					var map = get_tree().get_root().get_node("Game/Map")
+					var target_pos = map.get_spawn_pos("friendly")
+					if parent.get_allegiance() == "friendly":
+						target_pos = map.get_spawn_pos("enemy")
+					var te = parent.actorbase_node.target_enemy
+					if te:
+						if te.get_ref():
+							target_pos = te.get_ref().get_body_pos()
+					set_walk_path(map.get_simple_path(parent.get_body_pos(), target_pos))
+
 				var dir = direction
 				if target:
 					dir = seek_target(dir, target)
@@ -135,6 +147,8 @@ func _fixed_process(dt):
 				party.set_pos(parent.get_body_pos() - party.get_leader_offset())
 				move(dir, dt)
 			else:
+				if parent.is_leader():
+					parent.set_leader(false)
 				set_direction(party.get_orientation())
 				var af = Vector2()
 				if party.is_in_the_way(parent):
@@ -241,7 +255,7 @@ func check_path(dir):
 	if path.size():
 		return (path[0] - current_pos).normalized()
 	print("No path.")
-	return Vector2(0, 0)
+	return dir
 
 func seek_target(dir, target):
 	if not target.get_ref():
