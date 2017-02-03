@@ -157,12 +157,14 @@ func _fixed_process(dt):
 				var dist = fp - parent.get_body_pos()
 				var d = (dist.normalized() + af.normalized()).normalized()
 				if dist.length() > 1:
-					max_velocity *= 1.5
+					max_velocity *= 2
 					if dist.length() > 8:
 						d = (arrive(fp).normalized() + af.normalized()).normalized()
-						d = steer(d)
+					d = steer(d)
 	#				move_and_slide(((d * formation.get_form_velocity())))
 					move(d, dt)
+				else:
+					move(steer(d), dt)
 		else:
 			var dir = direction
 			if target:
