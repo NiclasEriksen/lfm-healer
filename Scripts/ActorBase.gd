@@ -67,7 +67,9 @@ func _ready():
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
 			root.get_node("HUD").add_hpbar(get_parent())
 		if has_node("Selected") and parent.has_node("CollisionShape2D"):
-			get_node("Selected").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
+			get_node("Selected").set_offset(parent.get_node("CollisionShape2D").get_pos())
+		if has_node("Highlight") and parent.has_node("CollisionShape2D"):
+			get_node("Highlight").set_offset(parent.get_node("CollisionShape2D").get_pos())
 		if has_node("State") and parent.has_node("CollisionShape2D"):
 			get_node("State").set_texture_offset(parent.get_node("CollisionShape2D").get_pos())
 #		if parent.has_node("CollisionShape2D"):
@@ -356,8 +358,14 @@ func update_state():
 	else:
 		disable_shield()
 
-	get_node("Selected").set_enabled(parent.is_selected())
-	get_node("Highlight").set_enabled(parent.is_highlighted())
+	if parent.is_selected():
+		get_node("Selected").show()
+	else:
+		get_node("Selected").hide()
+	if parent.is_highlighted():
+		get_node("Highlight").show()
+	else:
+		get_node("Highlight").hide()
 
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)

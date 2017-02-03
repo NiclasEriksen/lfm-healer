@@ -159,56 +159,18 @@ randomness/hue_variation = 0.2
 color/color = Color( 0.175781, 0.175781, 0.175781, 1 )
 color/color_ramp = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Selected" type="Sprite" parent="."]
 
-transform/scale = Vector2( 2, 2 )
-vframes = 5
-hframes = 5
-frame = 13
-
-[node name="Selected" type="Light2D" parent="."]
-
-enabled = false
-editor_only = false
+transform/pos = Vector2( 0, 10 )
+transform/scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
-offset = Vector2( 0, 0 )
-scale = 0.5
-color = Color( 1, 1, 1, 1 )
-energy = 1.0
-mode = 0
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 0
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
 
-[node name="Highlight" type="Light2D" parent="."]
+[node name="Highlight" type="Sprite" parent="."]
 
-enabled = false
-editor_only = false
+transform/pos = Vector2( 0, 10 )
+transform/scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 4 )
-offset = Vector2( 0, 0 )
-scale = 1.0
-color = Color( 1, 1, 1, 1 )
-energy = 1.0
-mode = 0
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 0
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
+modulate = Color( 64.35, 15.63, 76.62, 1 )
 
 [node name="State" type="Light2D" parent="."]
 
@@ -231,6 +193,13 @@ shadow/color = Color( 0, 0, 0, 0 )
 shadow/buffer_size = 2048
 shadow/esm_multiplier = 80.0
 shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/scale = Vector2( 2, 2 )
+vframes = 5
+hframes = 5
+frame = 13
 
 [node name="HealParticles" type="Particles2D" parent="."]
 
