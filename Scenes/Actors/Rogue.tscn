@@ -25,6 +25,8 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = null
 hit_effect = null
+party = null
+party_index = -1
 
 [node name="HPBarPos" type="Position2D" parent="."]
 

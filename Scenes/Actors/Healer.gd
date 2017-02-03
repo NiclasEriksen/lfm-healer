@@ -1,4 +1,4 @@
-extends Node2D
+extends "res://Scripts/Actor.gd"
 
 onready var game = get_tree().get_root().get_node("Game")
 signal spell_cd_changed(spell_id, pts)
@@ -45,6 +45,8 @@ func set_ability_4_scene(scn):
 	ability_4_scene = scn
 
 func _ready():
+	set_healer(true)
+	reset()
 	if Globals.get("debug_mode"):
 		print("Loading abilities...")
 	if ability_1_scene:
@@ -80,10 +82,10 @@ func reset():
 	emit_signal("spell_cd_changed", 4, 0)
 
 func _process(dt):
-	if game.dragged_ability:
-		get_node("Sprite").set_rot(get_pos().angle_to_point(game.dragged_ability.get_pos()) + PI)
-	else:
-		get_node("Sprite").set_rot(PI / 2)
+#	if game.dragged_ability:
+#		get_node("Sprite").set_rot(get_pos().angle_to_point(game.dragged_ability.get_pos()) + PI)
+#	else:
+#		get_node("Sprite").set_rot(PI / 2)
 	update_cooldowns(dt)
 
 func use_ability(i):
@@ -142,3 +144,9 @@ func update_cooldowns(dt):
 		if spell4_cd < 0:
 			emit_signal("spell_cd_changed", 4, 0)
 		spell4_cd = 0
+
+
+func _on_ActorBase_death( pos ):
+	print("HERE")
+	get_tree().get_root().get_node("Game").healer = null
+	get_tree().get_root().get_node("Game").gameover()

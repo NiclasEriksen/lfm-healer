@@ -110,14 +110,13 @@ func _draw():
 				start = p_rel
 
 func _fixed_process(dt):
-	if parent:
-		if not get_tree().is_editor_hint():
-			max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
-			if parent.stats_node.is_stunned():
+	if parent and not get_tree().is_editor_hint():
+		max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
+		if parent.stats_node.is_stunned():
+			return
+		if parent.actorbase_node:
+			if parent.actorbase_node.attacking:
 				return
-			if parent.actorbase_node:
-				if parent.actorbase_node.attacking:
-					return
 		var party = parent.get_party()
 		if party:
 			if party.is_leader(parent.get_party_index()):

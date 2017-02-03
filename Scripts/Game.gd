@@ -9,10 +9,11 @@ var rogue_actor = load("res://Scenes/Actors/Rogue.tscn")
 var mage_actor = load("res://Scenes/Actors/Mage.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
+var healer_actor = load("res://Scenes/Actors/Healer.tscn")
 var actor_types = ["tank", "archer", "rogue", "mage", "enemy"]
 onready var cam = get_node("Camera2D")
 onready var map = get_node("Map")
-onready var healer = get_node("Healer")
+var healer = null
 
 func _ready():
 	set_process(true)
@@ -49,9 +50,20 @@ func load_map(m):
 	print("Done.")
 	newgame(true)
 
+func spawn_healer():
+	if has_node("Healer"):
+		print("Healer alive.")
+		get_node("Healer").free()
+	var hn = healer_actor.instance()
+	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
+	hn.set_name("Healer")
+	add_child(hn)
+	healer = hn
+
 func newgame(clean):
 	if clean:
 		cleanup()
+	spawn_healer()
 	print("Starting new game...")
 	map = get_node("Map")
 	if not map.get_spawnlist().size():
@@ -67,7 +79,6 @@ func newgame(clean):
 
 func spawn_party():
 	spawn_actor("tank", "friendly")
-	spawn_actor("rogue", "friendly")
 	spawn_actor("rogue", "friendly")
 	spawn_actor("archer", "friendly")
 	spawn_actor("mage", "friendly")
@@ -100,7 +111,6 @@ func gameover():
 
 func cleanup():
 	print("Resetting game state and clearing objects...")
-	healer.reset()
 	dragged_ability = null
 	get_node("HUD").clear()
 	if Globals.get("debug_mode"):

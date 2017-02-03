@@ -108,7 +108,8 @@ func _process(dt):
 			check_death()
 			check_healthy()
 			stunned = stats.is_stunned()
-		check_target()
+		if not parent.is_healer():
+			check_target()
 		if not stunned:
 			if target_enemy:
 				if target_enemy.get_ref():
@@ -117,7 +118,7 @@ func _process(dt):
 				else:
 					target_enemy = null
 					emit_signal("cleared_target")
-			else:
+			elif not parent.is_healer():
 				check_in_range()
 
 			if idle:
@@ -198,7 +199,6 @@ func check_target():
 func check_death():
 	if stats.get("hp") <= 0:
 		on_death()
-		emit_signal("death", parent.get_body_pos())
 
 func check_healthy():
 	if stats.get("hp") < stats.get("max_hp"):
@@ -223,7 +223,6 @@ func check_in_range():
 			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > 100:
 				if parent.get_party():
 					if not parent.get_party().is_leader(parent.get_party_index()):
-						print("nop!")
 						return
 				var path = root.map.get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
 						
@@ -264,9 +263,9 @@ func on_attack():
 
 func on_death():
 	enabled = false
+	emit_signal("death", parent.get_body_pos())
 	parent.get_node("StatsModule").queue_free()
 	parent.get_node("CollisionShape2D").queue_free()
-	print("wat")
 	if parent.is_in_party():
 		parent.get_party().unregister_unit(parent.get_party_index())
 	for g in parent.get_groups():

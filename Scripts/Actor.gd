@@ -17,6 +17,13 @@ var debuff_node = null
 export(NodePath) var party = null setget set_party, get_party
 export(int) var party_index = -1 setget set_party_index, get_party_index
 var party_leader = false setget set_leader, is_leader
+var healer = false
+
+func set_healer(v):
+	healer = v
+
+func is_healer():
+	return healer
 
 func set_leader(v):
 	party_leader = v
@@ -25,8 +32,9 @@ func is_leader():
 	return party_leader
 
 func set_party(p):
-	party = p
-	set_party_index(p.register_unit())
+	if p:
+		party = p
+		set_party_index(p.register_unit())
 
 func get_party():
 	return party

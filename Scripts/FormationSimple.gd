@@ -110,6 +110,25 @@ func register_unit():
 	print("No more room!")
 	return -1
 
+func unregister_unit(i):
+	formation_map[i] = false
+	if i == leader:
+		if get_unit_count() > 0:
+			for f in formation_map:
+				if formation_map[f]:
+					leader = f
+					break
+		else:
+			print("No unit to give leader to.")
+	select_formation()
+
+func select_formation():
+	var c = get_unit_count()
+	if formations.has(c):
+		formation_positions = formations[c]
+	else:
+		print("No formation for ", c, " units.")
+
 func adjust_shape(dt):
 	var new_scale = get_scale()
 	if rc_left.is_colliding() and rc_right.is_colliding():
@@ -132,25 +151,6 @@ func adjust_shape(dt):
 		else:
 			new_scale.y = default_scale.y
 		set_scale(new_scale)
-
-func unregister_unit(i):
-	formation_map[i] = false
-	if i == leader:
-		if get_unit_count() > 0:
-			for f in formation_map:
-				if formation_map[f]:
-					leader = f
-					break
-		else:
-			print("No unit to give leader to.")
-	select_formation()
-
-func select_formation():
-	var c = get_unit_count()
-	if formations.has(c):
-		formation_positions = formations[c]
-	else:
-		print("No formation for ", c, " units.")
 
 func adjust_raycasts():
 	var left_most = Vector2()

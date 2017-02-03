@@ -1,16 +1,60 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scenes/Actors/Healer.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Actors/healer.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Actors/healer_16.png" type="Texture" id=5]
 
-[node name="Healer" type="Node2D"]
+[sub_resource type="CircleShape2D" id=1]
 
-transform/scale = Vector2( 1.5, 1.5 )
+custom_solver_bias = 0.0
+radius = 7.0
+
+[node name="Healer" type="KinematicBody2D"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
 script/script = ExtResource( 1 )
+alliance = "friendly"
+projectile = null
+hit_effect = null
+party = null
+party_index = -1
+ability_1_scene = "res://Scenes/Abilities/TargetedHeal.tscn"
+ability_2_scene = "res://Scenes/Abilities/AreaHeal.tscn"
+ability_3_scene = "res://Scenes/Abilities/ChainHeal.tscn"
+ability_4_scene = "res://Scenes/Abilities/Shield.tscn"
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="MoveModule" parent="." instance=ExtResource( 2 )]
 
-transform/rot = 90.0
-texture = ExtResource( 2 )
+stats_node = NodePath("../StatsModule")
+
+[node name="StatsModule" parent="." instance=ExtResource( 3 )]
+
+primary_stat = "int"
+base_movement_speed = 70.0
+
+[node name="ActorBase" parent="." instance=ExtResource( 4 )]
+
+spritesheet = ExtResource( 5 )
+has_attack_anim = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="HPBarPos" type="Position2D" parent="."]
+
+transform/pos = Vector2( 0, -45 )
+
+[connection signal="death" from="ActorBase" to="." method="_on_ActorBase_death"]
 
 
