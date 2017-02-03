@@ -49,7 +49,6 @@ func is_casting():
 	return game.dragged_ability
 
 func _ready():
-	set_healer(true)
 	reset()
 	if Globals.get("debug_mode"):
 		print("Loading abilities...")

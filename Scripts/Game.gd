@@ -55,6 +55,7 @@ func spawn_healer():
 		print("Healer alive.")
 		get_node("Healer").free()
 	var hn = healer_actor.instance()
+	hn.set_healer(true)
 	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
 	hn.connect("healer_death", self, "_on_Healer_death")
 	hn.set_name("Healer")

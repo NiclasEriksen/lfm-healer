@@ -2,6 +2,8 @@ extends Node2D
 var owner = null
 export(Vector2) var friendly_scale = Vector2(1, 1)
 export(Vector2) var enemy_scale = Vector2(0.75, 0.75)
+var current_scale = null
+export(Texture) var healer_texture = null
 export(Texture) var friendly_texture = null
 export(Texture) var enemy_texture = null
 var offset = Vector2(0, 0)
@@ -19,11 +21,17 @@ func register(owner):
 	if "enemy" in owner.get_groups():
 		if enemy_texture:
 			get_node("TextureProgress").set_progress_texture(enemy_texture)
-		set_scale(enemy_scale)
+		current_scale = enemy_scale
+		set_scale(current_scale)
 	elif "friendly" in owner.get_groups():
-		if friendly_texture:
+		if healer_texture and owner.is_healer():
+			get_node("TextureProgress").set_progress_texture(healer_texture)
+			current_scale = friendly_scale * 1.2
+			set_scale(current_scale)
+		elif friendly_texture:
 			get_node("TextureProgress").set_progress_texture(friendly_texture)
-		set_scale(friendly_scale)
+			current_scale = friendly_scale
+			set_scale(current_scale)
 	if owner.has_node("HPBarPos"):
 		offset = owner.get_node("HPBarPos").get_pos()
 	#print(self, owner, "HEEET")
@@ -38,14 +46,12 @@ func _process(delta):
 		else:
 			remove()
 			return
+		set_scale(current_scale)
 		if "enemy" in o.get_groups():
 			if stats.is_stealthed():
 				hide()
 			else:
 				show()
-			set_scale(enemy_scale)
-		elif "friendly" in o.get_groups():
-			set_scale(friendly_scale)
 		var pos = o.get_pos()
 		var val = (stats.get("hp") / stats.get_actual("max_hp")) * 100.0
 		pos = cam.get_viewport().get_canvas_transform().xform(pos)
