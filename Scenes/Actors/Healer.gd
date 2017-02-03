@@ -18,6 +18,7 @@ var max_spell1_cd = 0.0
 var max_spell2_cd = 0.0
 var max_spell3_cd = 0.0
 var max_spell4_cd = 0.0
+signal healer_death
 
 func get_ability(i):
 	if i == 1:
@@ -43,6 +44,9 @@ func set_ability_3_scene(scn):
 
 func set_ability_4_scene(scn):
 	ability_4_scene = scn
+
+func is_casting():
+	return game.dragged_ability
 
 func _ready():
 	set_healer(true)
@@ -147,6 +151,4 @@ func update_cooldowns(dt):
 
 
 func _on_ActorBase_death( pos ):
-	print("HERE")
-	get_tree().get_root().get_node("Game").healer = null
-	get_tree().get_root().get_node("Game").gameover()
+	emit_signal("healer_death")

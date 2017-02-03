@@ -56,6 +56,7 @@ func spawn_healer():
 		get_node("Healer").free()
 	var hn = healer_actor.instance()
 	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
+	hn.connect("healer_death", self, "_on_Healer_death")
 	hn.set_name("Healer")
 	add_child(hn)
 	healer = hn
@@ -99,8 +100,11 @@ func spawn_party():
 		f.set_pos(p)
 
 func gameover():
+	if healer:
+		get_node("HUD").flash_message("", "Round ended, restarting...", 2)
+	else:
+		get_node("HUD").flash_message("", "Healer died, you suck...", 2)
 	get_tree().set_pause(true)
-	get_node("HUD").flash_message("", "Round ended, restarting...", 2)
 	var t = Tween.new()
 	t.set_pause_mode(2)
 	t.interpolate_callback(self, 2, "newgame", true)
@@ -241,7 +245,10 @@ func on_actor_death(p):
 	var ds = death_splat.instance()
 	ds.set_pos(p)
 	get_node("Objects").add_child(ds)
-	
+
+func _on_Healer_death():
+	healer = null
+	gameover()
 
 func _on_Timer_timeout():
 #	rand_seed(randi())

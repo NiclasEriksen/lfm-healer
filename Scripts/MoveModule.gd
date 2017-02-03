@@ -185,11 +185,17 @@ func move(dir, dt):
 		dir *= BASE_MOVEMENT_SPEED * dt
 
 	if parent:
-		var moved = parent.move_and_slide(dir)
-		if moved.length() > dir.length() * STALL_TRESHOLD:
-			emit_signal("moved")
-		else:
-			emit_signal("stalled")
+		var moving = true
+		if parent.is_healer():
+			if parent.is_casting():
+				moving = false
+				emit_signal("stalled")
+		if moving:
+			var moved = parent.move_and_slide(dir)
+			if moved.length() > dir.length() * STALL_TRESHOLD:
+				emit_signal("moved")
+			else:
+				emit_signal("stalled")
 	update()
 
 func arrive(p):

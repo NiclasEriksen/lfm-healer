@@ -125,7 +125,8 @@ func _process(dt):
 				idle_time += dt
 				if idle_time > 2.0:
 					idle_time = 0
-					check_in_range()
+					if not parent.is_healer():
+						check_in_range()
 			else:
 				if idle_time > 0:
 					idle_time -= dt
