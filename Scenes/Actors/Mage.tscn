@@ -29,6 +29,8 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = "res://Scenes/Objects/Fireball.tscn"
 hit_effect = null
+party = null
+party_index = -1
 
 [node name="Light2D" type="Light2D" parent="."]
 
