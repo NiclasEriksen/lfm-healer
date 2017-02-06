@@ -161,12 +161,14 @@ color/color_ramp = SubResource( 1 )
 
 [node name="Selected" type="Sprite" parent="."]
 
+visibility/visible = false
 transform/pos = Vector2( 0, 10 )
 transform/scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
 
 [node name="Highlight" type="Sprite" parent="."]
 
+visibility/visible = false
 transform/pos = Vector2( 0, 10 )
 transform/scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 4 )
