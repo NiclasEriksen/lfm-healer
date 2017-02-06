@@ -157,6 +157,7 @@ func _process(dt):
 			print("All enemy players dead, restarting.")
 			gameover()
 			return
+	update()
 
 func _unhandled_input(event):
 	event = make_input_local(event)
@@ -187,6 +188,10 @@ func _unhandled_input(event):
 #			get_node("Camera2D").set_pos(get_node("Camera2D").get_pos() + Vector2(0, -50))
 #		elif event.pressed and event.scancode == KEY_DOWN:
 #			get_node("Camera2D").set_pos(get_node("Camera2D").get_pos() + Vector2(0, 50))
+
+func _draw():
+#	if Globals.get("debug_mode"):
+	pass
 
 func select_actor(p):
 	var closest = null

@@ -29,6 +29,7 @@ func _process(delta):
 		fps.hide()
 		fps_delay = 0
 
+
 func clear():
 	for hpb in get_node("HPBars").get_children():
 		hpb.free()

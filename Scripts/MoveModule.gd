@@ -6,6 +6,7 @@ export(bool) var AVOID_COLLISION = false setget set_avoid_collision, get_avoid_c
 export(float, 0, 1, 0.1) var AVOID_FORCE = 0.5 setget set_avoid_force, get_avoid_force
 export(float, 1, 128, 1) var RAYCAST_LENGTH = 30.0 setget set_raycast_length, get_raycast_length
 export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.1 setget set_stall_treshold, get_stall_treshold
+var SEEK_TRESHOLD = 100
 var SLOW_RADIUS = 32
 var max_velocity = 50
 export(float) var PATH_REACH_TRESHOLD = 16.0 setget set_reach_treshold, get_reach_treshold
@@ -271,7 +272,7 @@ func seek_target(dir, target):
 	var p = get_pos()
 	if parent:
 		p = parent.get_body_pos()
-	if target.get_ref().get_body_pos().distance_to(p) > 100:
+	if target.get_ref().get_body_pos().distance_to(p) > SEEK_TRESHOLD:
 		return dir
 	else:
 		set_walk_path([])
