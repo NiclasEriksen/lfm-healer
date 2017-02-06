@@ -8,6 +8,7 @@ var archer_actor = load("res://Scenes/Actors/Archer.tscn")
 var rogue_actor = load("res://Scenes/Actors/Rogue.tscn")
 var mage_actor = load("res://Scenes/Actors/Mage.tscn")
 var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
+var blub_actor = load("res://Scenes/Actors/Blub.tscn")
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 var healer_actor = load("res://Scenes/Actors/Healer.tscn")
 var actor_types = ["tank", "archer", "rogue", "mage", "enemy"]
@@ -213,6 +214,8 @@ func spawn_actor(actor_type, alliance):
 		actor = tank_actor.instance()
 	elif actor_type == "enemy":
 		actor = enemy_actor.instance()
+	elif actor_type == "blub":
+		actor = blub_actor.instance()
 	elif actor_type == "archer":
 		actor = archer_actor.instance()
 	elif actor_type == "rogue":

@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=1]
+
+[ext_resource path="res://Scenes/Actors/Blub.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Actors/blubb.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 15.0
+
+[node name="Blub" type="KinematicBody2D"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 20 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+alliance = "friendly"
+projectile = "res://Scenes/Objects/Arrow.tscn"
+hit_effect = null
+party = null
+party_index = -1
+
+[node name="StatsModule" parent="." instance=ExtResource( 2 )]
+
+base_attack_range = 150.0
+
+[node name="MoveModule" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 0, 20 )
+AVOID_COLLISION = true
+stats_node = NodePath("../StatsModule")
+
+[node name="ActorBase" parent="." instance=ExtResource( 4 )]
+
+spritesheet = ExtResource( 5 )
+has_death_anim = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+transform/pos = Vector2( 1, 20 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="HPBarPos" type="Position2D" parent="."]
+
+transform/pos = Vector2( 0, -59 )
+
+[node name="Attack" parent="." instance=ExtResource( 6 )]
+
+effect_type = "earth"
+amount = -8.0
+
+

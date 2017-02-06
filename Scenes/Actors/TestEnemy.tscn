@@ -25,6 +25,8 @@ script/script = ExtResource( 1 )
 alliance = "enemy"
 projectile = null
 hit_effect = null
+party = null
+party_index = -1
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
@@ -58,9 +60,6 @@ amount = -4.0
 
 transform/pos = Vector2( 0, 10 )
 AVOID_COLLISION = true
-AVOID_FORCE = 0.5
-RAYCAST_LENGTH = 30.0
-STALL_TRESHOLD = 0.1
 PATH_REACH_TRESHOLD = 10.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
