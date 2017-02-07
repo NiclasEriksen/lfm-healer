@@ -53,7 +53,6 @@ stealthed = true
 
 transform/pos = Vector2( 0, 10 )
 AVOID_COLLISION = true
-STALL_TRESHOLD = 0.2
 stats_node = NodePath("../StatsModule")
 
 [node name="ActorBase" parent="." instance=ExtResource( 4 )]

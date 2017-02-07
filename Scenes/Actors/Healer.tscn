@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scenes/Actors/Healer.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Actors/healer_16.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -54,6 +55,12 @@ _update_shape_index = 0
 [node name="HPBarPos" type="Position2D" parent="."]
 
 transform/pos = Vector2( 0, -45 )
+
+[node name="Brain" parent="." instance=ExtResource( 6 )]
+
+stats_node = NodePath("../StatsModule")
+move_node = NodePath("../MoveModule")
+actorbase_node = NodePath("../ActorBase")
 
 [connection signal="death" from="ActorBase" to="." method="_on_ActorBase_death"]
 

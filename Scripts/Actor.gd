@@ -6,6 +6,7 @@ export(String, FILE, "*.tscn") var projectile = null setget set_projectile, get_
 export(String, FILE, "*.tscn") var hit_effect = null setget set_hit_effect, get_hit_effect
 var hit_effect_scene = null
 var projectile_scene = null
+var target = null setget set_target, get_target
 var selected = false setget set_selected, is_selected
 var highlighted = false setget set_highlighted, is_highlighted
 var stats_node = null
@@ -18,6 +19,16 @@ export(NodePath) var party = null setget set_party, get_party
 export(int) var party_index = -1 setget set_party_index, get_party_index
 var party_leader = false setget set_leader, is_leader
 var healer = false
+
+func set_target(t):
+	target = weakref(t)
+
+func get_target():
+	if target:
+		if target.get_ref():
+			return target.get_ref()
+		target = null
+	return null
 
 func set_healer(v):
 	healer = v
@@ -91,6 +102,14 @@ func get_projectile():
 	return projectile
 
 func _on_ActorBase_attack(target):
+	if Globals.get("debug_mode"):
+		print("No attack method defined for ", self, ", using default.")
+	if target.stats_node and attack_node:
+		if Globals.get("debug_mode"):
+			print(self, " attacking ", target)
+		target.stats_node.apply_effect(attack_node, stats_node)
+
+func attack(target):
 	if Globals.get("debug_mode"):
 		print("No attack method defined for ", self, ", using default.")
 	if target.stats_node and attack_node:

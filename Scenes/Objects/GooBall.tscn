@@ -25,7 +25,7 @@ y_offset = Vector2( -32, 48 )
 
 texture = ExtResource( 2 )
 hframes = 5
-frame = 3
+frame = 1
 
 [node name="Trail" type="Particles2D" parent="."]
 

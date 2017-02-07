@@ -148,6 +148,9 @@ func update_cooldowns(dt):
 			emit_signal("spell_cd_changed", 4, 0)
 		spell4_cd = 0
 
+func attack(t):
+	# Override attack method for healer.
+	pass
 
 func _on_ActorBase_death( pos ):
 	emit_signal("healer_death")
