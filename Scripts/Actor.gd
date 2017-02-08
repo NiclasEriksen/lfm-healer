@@ -23,7 +23,9 @@ var healer = false
 func set_target(t):
 	if t:
 		target = weakref(t)
+		actorbase_node.emit_signal("targeted_enemy", t)
 	else:
+		actorbase_node.emit_signal("cleared_target")
 		target = null
 
 func get_target():

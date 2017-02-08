@@ -110,58 +110,6 @@ func _draw():
 				draw_line(start, p_rel, Color(0.3, 0.3, 0.3, 0.5), 3.0)
 				start = p_rel
 
-func _fixed_process(dt):
-	if parent and not get_tree().is_editor_hint():
-		max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
-		if parent.stats_node.is_stunned():
-			return
-		if parent.actorbase_node:
-			if parent.actorbase_node.attacking:
-				return
-		var party = parent.get_party()
-		if party:
-			if party.is_leader(parent.get_party_index()):
-				if not parent.is_leader():
-					parent.set_leader(true)
-					var map = get_tree().get_root().get_node("Game/Map")
-					var target_pos = map.get_spawn_pos("friendly")
-					if parent.get_allegiance() == "friendly":
-						target_pos = map.get_spawn_pos("enemy")
-					var te = parent.get_target()
-					if te:
-						target_pos = te.get_body_pos()
-					set_walk_path(map.get_simple_path(parent.get_body_pos(), target_pos))
-
-				var dir = get_direction()
-
-				if AVOID_COLLISION:
-		#			update_raycast()
-					dir = steer(dir)
-				party.set_orientation(dir)
-	#			move(direction * formation.get_velocity() * dt)
-				party.set_pos(parent.get_body_pos() - party.get_leader_offset())
-				move(dir, dt)
-			else:
-				if parent.is_leader():
-					parent.set_leader(false)
-				set_direction(party.get_orientation())
-				var af = Vector2()
-				if party.is_in_the_way(parent):
-					var leader_pos = party.get_leader_pos()
-					af = evade(leader_pos, direction)
-				var fp = party.lookup_formation_pos(parent.get_party_index())
-				var dist = fp - parent.get_body_pos()
-				var d = (dist.normalized() + af.normalized()).normalized()
-				if dist.length() > 1:
-					max_velocity *= 2
-					if dist.length() > 8:
-						d = (arrive(fp).normalized() + af.normalized()).normalized()
-					d = steer(d)
-	#				move_and_slide(((d * formation.get_form_velocity())))
-					move(d, dt)
-				else:
-					move(steer(d), dt)
-
 func move(dir, dt):
 	max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
 	if stats:
@@ -182,6 +130,11 @@ func move(dir, dt):
 			else:
 				emit_signal("stalled")
 			parent.set_z(parent.get_body_pos().y)
+			var party = parent.get_party()
+			if party:
+				if party.is_leader(parent.get_party_index()):
+					party.set_pos(parent.get_body_pos() - party.get_leader_offset())
+					party.set_orientation(dir.normalized())
 	update()
 
 func arrive(p):
@@ -238,12 +191,14 @@ func steer(dir):
 	return (dir + adjusted_angle).normalized()
 
 func _on_ActorBase_targeted_enemy( enemy ):
-	target = enemy
-	if enemy.get_ref() and raycast:
-		raycast.add_exception(enemy.get_ref())
+	target = weakref(enemy)
+	if raycast:
+		raycast.add_exception(enemy)
 
 
 func _on_ActorBase_cleared_target():
+	if not target:
+		return
 	if target.get_ref() and raycast:
 		raycast.remove_exception(target.get_ref())
 	target = null

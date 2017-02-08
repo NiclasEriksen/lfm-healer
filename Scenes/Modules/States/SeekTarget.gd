@@ -12,6 +12,7 @@ func check_reqs():
 	return (not statsmodule == null) and (not movemodule == null) and (not actorbasemodule == null)
 
 func on_enter():
+	movemodule.set_walk_path([])
 	if not brain.owner.get_target():
 		brain.pop_state()
 

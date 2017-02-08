@@ -14,6 +14,7 @@ var available_states = {
 	"idle": preload("res://Scenes/Modules/States/Idle.gd").new(),
 	"seek_target": preload("res://Scenes/Modules/States/SeekTarget.gd").new(),
 	"follow_path": preload("res://Scenes/Modules/States/FollowPath.gd").new(),
+	"follow_formation": preload("res://Scenes/Modules/States/FollowFormation.gd").new(),
 	"attack": preload("res://Scenes/Modules/States/Attack.gd").new(),
 	"seek_end": null,
 	"celebrate": null
@@ -68,7 +69,6 @@ func _ready():
 	owner = get_parent()
 	register_modules()
 	push_state("idle")
-	push_state("attack")
 	set_process(true)
 
 func _process(dt):

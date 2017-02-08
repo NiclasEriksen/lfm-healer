@@ -160,7 +160,11 @@ func set_tile_dimensions(td):
 		get_node("Sprite").set_hframes(int(tile_dimensions.x))
 		get_node("Sprite").set_vframes(int(tile_dimensions.y))
 
-func get_closest_enemy(enemies, dist=0):
+func get_closest_enemy(dist=0):
+	var target_group = "enemy"
+	if "enemy" in parent.get_groups():
+		target_group = "friendly"
+	var enemies = get_tree().get_nodes_in_group(target_group)
 	var closest_candidate = null
 	var closest = dist
 	var stealth_dist = stats.get_actual("attack_range") * 0.8
@@ -312,31 +316,6 @@ func update_state():
 			get_node("State").set_color(Color(0, 1, 0))
 	else:
 		get_node("State").set_enabled(false)
-
-#func _on_AttackRange_body_enter( body ):
-#	var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-#	if target_enemy:
-#		if target_enemy.get_ref():
-#			var dist = parent.get_body_pos().distance_to(target_enemy.get_ref().get_body_pos())
-#			if dist <= r:
-#				return
-#	var target_group = "enemy"
-#	if "enemy" in parent.get_groups():
-#		target_group = "friendly"
-#	if target_group in body.get_groups():
-#		var estats = null
-#		if body.has_node("StatsModule"):
-#			estats = body.get_node("StatsModule")
-#		if estats:
-#			var dist = parent.get_body_pos().distance_to(body.get_body_pos())
-#			if estats.is_stealthed() and dist >= r / 3:
-#				return
-#			elif estats.is_stealthed():
-#				estats.emit_signal("stealth_broken")
-#		if movement:
-#			movement.set_walk_path([])
-#		parent.set_target(body)
-#		emit_signal("targeted_enemy", target_enemy)
 
 func _on_ActorBase_attack(tar):
 	if has_attack_anim:

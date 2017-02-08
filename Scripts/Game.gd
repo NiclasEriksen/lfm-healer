@@ -92,10 +92,13 @@ func spawn_party():
 		if f.get_party_index() == 0:
 #			f.set_leader(true)
 			f.set_pos(f.get_party().lookup_formation_pos(0))
-
 			f.get_party().set_orientation(f.move_node.get_direction())
 #		print(p, "          ", f.get_pos())
 	for f in get_tree().get_nodes_in_group("friendly"):
+		if f.get_party_index() == 0 and f.has_node("Brain"):
+			f.get_node("Brain").push_state("follow_path")
+		elif f.has_node("Brain"):
+			f.get_node("Brain").push_state("follow_formation")
 		var p = f.get_party().lookup_formation_pos(f.get_party_index())
 		f.set_pos(p)
 

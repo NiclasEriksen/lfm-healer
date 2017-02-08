@@ -17,10 +17,6 @@ func update(dt):
 	if t:
 		brain.push_state("attack")
 		return
-	var target_group = "enemy"
-	if "enemy" in brain.owner.get_groups():
-		target_group = "friendly"
-	
 	brain.owner.set_target(
-		actorbasemodule.get_closest_enemy(brain.get_tree().get_nodes_in_group(target_group), SEEK_DIST * 6)
+		actorbasemodule.get_closest_enemy(SEEK_DIST * 6)
 	)
