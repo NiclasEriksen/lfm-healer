@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Scenes/Actors/Archer.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Actors/ranger_16.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -86,6 +87,12 @@ spritesheet = ExtResource( 8 )
 
 texture = ExtResource( 8 )
 frame = 14
+
+[node name="Brain" parent="." instance=ExtResource( 9 )]
+
+stats_node = NodePath("../StatsModule")
+move_node = NodePath("../MoveModule")
+actorbase_node = NodePath("../ActorBase")
 
 
 [editable path="ActorBase"]

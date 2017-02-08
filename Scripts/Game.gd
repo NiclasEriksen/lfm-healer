@@ -92,9 +92,7 @@ func spawn_party():
 		if f.get_party_index() == 0:
 #			f.set_leader(true)
 			f.set_pos(f.get_party().lookup_formation_pos(0))
-			f.move_node.set_direction(
-				f.move_node.check_path(f.move_node.get_direction())
-			)
+
 			f.get_party().set_orientation(f.move_node.get_direction())
 #		print(p, "          ", f.get_pos())
 	for f in get_tree().get_nodes_in_group("friendly"):

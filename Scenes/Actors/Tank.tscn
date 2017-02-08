@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Scenes/Actors/Tank.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Actors/tank_20.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -26,6 +27,8 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = null
 hit_effect = null
+party = null
+party_index = -1
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
@@ -63,5 +66,11 @@ BASE_MOVEMENT_SPEED = 50
 [node name="ActorBase" parent="." instance=ExtResource( 5 )]
 
 spritesheet = ExtResource( 6 )
+
+[node name="Brain" parent="." instance=ExtResource( 7 )]
+
+stats_node = NodePath("../StatsModule")
+move_node = NodePath("../MoveModule")
+actorbase_node = NodePath("../ActorBase")
 
 

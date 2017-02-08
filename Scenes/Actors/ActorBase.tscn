@@ -282,6 +282,4 @@ texture = ExtResource( 3 )
 
 [connection signal="attack" from="." to="." method="_on_ActorBase_attack"]
 
-[connection signal="body_enter" from="AttackRange" to="." method="_on_AttackRange_body_enter"]
-
 

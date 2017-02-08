@@ -64,4 +64,6 @@ actorbase_node = NodePath("../ActorBase")
 
 [connection signal="death" from="ActorBase" to="." method="_on_ActorBase_death"]
 
+[connection signal="entered_state" from="Brain" to="ActorBase" method="_on_Brain_entered_state"]
+
 

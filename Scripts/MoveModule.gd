@@ -92,7 +92,7 @@ func _ready():
 	if stats_node:
 		stats = get_node(stats_node)
 	setup_raycast()
-	set_fixed_process(true)
+#	set_fixed_process(true)
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
@@ -127,18 +127,13 @@ func _fixed_process(dt):
 					var target_pos = map.get_spawn_pos("friendly")
 					if parent.get_allegiance() == "friendly":
 						target_pos = map.get_spawn_pos("enemy")
-					var te = parent.actorbase_node.target_enemy
+					var te = parent.get_target()
 					if te:
-						if te.get_ref():
-							target_pos = te.get_ref().get_body_pos()
+						target_pos = te.get_body_pos()
 					set_walk_path(map.get_simple_path(parent.get_body_pos(), target_pos))
 
-				var dir = direction
-				if target:
-					dir = seek_target(dir, target)
-				if path.size():
-					dir = check_path(dir)
-				set_direction(dir)
+				var dir = get_direction()
+
 				if AVOID_COLLISION:
 		#			update_raycast()
 					dir = steer(dir)
@@ -166,22 +161,9 @@ func _fixed_process(dt):
 					move(d, dt)
 				else:
 					move(steer(d), dt)
-		else:
-			var dir = direction
-			if target:
-				dir = seek_target(dir, target)
-			if path.size():
-				dir = check_path(dir)
-			set_direction(dir)
-			if AVOID_COLLISION:
-	#			update_raycast()
-				dir = steer(dir)
-			if not get_tree().is_editor_hint():
-	#			set_rot(dir)
-				move(dir, dt)
-				parent.set_z(parent.get_body_pos().y)
 
 func move(dir, dt):
+	max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
 	if stats:
 		dir *= max_velocity * dt
 	else:
@@ -199,6 +181,7 @@ func move(dir, dt):
 				emit_signal("moved")
 			else:
 				emit_signal("stalled")
+			parent.set_z(parent.get_body_pos().y)
 	update()
 
 func arrive(p):
@@ -253,30 +236,6 @@ func steer(dir):
 			adjusted_angle = (a * AVOID_FORCE).normalized()
 
 	return (dir + adjusted_angle).normalized()
-
-func check_path(dir):
-	var current_pos = get_global_pos()
-	if parent:
-		current_pos = parent.get_body_pos()
-	if current_pos.distance_to(path[0]) <= PATH_REACH_TRESHOLD:
-		path.remove(0)
-	if path.size():
-		return (path[0] - current_pos).normalized()
-	print("No path.")
-	return dir
-
-func seek_target(dir, target):
-	if not target.get_ref():
-		target = null
-		return dir
-	var p = get_pos()
-	if parent:
-		p = parent.get_body_pos()
-	if target.get_ref().get_body_pos().distance_to(p) > SEEK_TRESHOLD:
-		return dir
-	else:
-		set_walk_path([])
-		return (target.get_ref().get_body_pos() - p).normalized()
 
 func _on_ActorBase_targeted_enemy( enemy ):
 	target = enemy

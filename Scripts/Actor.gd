@@ -21,7 +21,10 @@ var party_leader = false setget set_leader, is_leader
 var healer = false
 
 func set_target(t):
-	target = weakref(t)
+	if t:
+		target = weakref(t)
+	else:
+		target = null
 
 func get_target():
 	if target:
@@ -101,13 +104,6 @@ func set_projectile(p):
 func get_projectile():
 	return projectile
 
-func _on_ActorBase_attack(target):
-	if Globals.get("debug_mode"):
-		print("No attack method defined for ", self, ", using default.")
-	if target.stats_node and attack_node:
-		if Globals.get("debug_mode"):
-			print(self, " attacking ", target)
-		target.stats_node.apply_effect(attack_node, stats_node)
 
 func attack(target):
 	if Globals.get("debug_mode"):
@@ -150,7 +146,6 @@ func _ready():
 	# Connect signals
 	if has_node("ActorBase"):
 		actorbase_node = get_node("ActorBase")
-		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack")
 		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack_effect")
 		if has_node("MoveModule"):
 			move_node = get_node("MoveModule")

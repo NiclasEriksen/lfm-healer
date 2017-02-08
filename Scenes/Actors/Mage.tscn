@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Scenes/Actors/Mage.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Effects/smoke_large.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Assets/Effects/fire_gradient.tres" type="ColorRamp" id=8]
 [ext_resource path="res://Assets/Effects/tiny_smoke.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -159,6 +160,8 @@ AVOID_COLLISION = true
 STALL_TRESHOLD = 0.2
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
+
+[node name="Brain" parent="." instance=ExtResource( 11 )]
 
 
 [editable path="ActorBase"]

@@ -17,7 +17,6 @@ signal attack
 signal death(pos)
 signal targeted_enemy(enemy)
 signal cleared_target()
-var target_enemy = null
 var healthy = true
 #onready var RAYCAST_LENGTH = 3 * get_parent().get_node("CollisionShape2D").get_shape().get_radius()
 var attack_cd = 0.0
@@ -94,13 +93,13 @@ func make_light_occluder():
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
-		if target_enemy:
-			if target_enemy.get_ref():
-				var te_pos = target_enemy.get_ref().get_body_pos() - parent.get_body_pos()
-				var col = Color(0.1, 0.4, 0.9, 0.75)
-				if "enemy" in parent.get_groups():
-					col = Color(0.9, 0.1, 0.4, 0.75)
-				draw_line(Vector2(0, 0), te_pos * get_scale(), col, 1.0)
+		var t = parent.get_target()
+		if t:
+			var te_pos = t.get_body_pos() - parent.get_body_pos()
+			var col = Color(0.1, 0.4, 0.9, 0.75)
+			if "enemy" in parent.get_groups():
+				col = Color(0.9, 0.1, 0.4, 0.75)
+			draw_line(Vector2(0, 0), te_pos * get_scale(), col, 1.0)
 
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
@@ -110,25 +109,23 @@ func _process(dt):
 			check_death()
 			check_healthy()
 			stunned = stats.is_stunned()
-		if not parent.is_healer():
-			check_target()
-		if not stunned:
-			if target_enemy:
-				if target_enemy.get_ref():
-					if movement:
-						movement.set_direction((target_enemy.get_ref().get_body_pos() - parent.get_body_pos()).normalized())
-				else:
-					target_enemy = null
-					emit_signal("cleared_target")
-			elif not parent.is_healer():
-				check_in_range()
+#		if not stunned:
+#			if target_enemy:
+#				if not target_enemy.get_ref():
+#					if movement:
+#						movement.set_direction((target_enemy.get_ref().get_body_pos() - parent.get_body_pos()).normalized())
+#				else:
+#					target_enemy = null
+#					emit_signal("cleared_target")
+#			elif not parent.is_healer():
+#				check_in_range()
 
 			if idle:
 				idle_time += dt
 				if idle_time > 2.0:
 					idle_time = 0
-					if not parent.is_healer():
-						check_in_range()
+#					if not parent.is_healer():
+#						check_in_range()
 			else:
 				if idle_time > 0:
 					idle_time -= dt
@@ -140,19 +137,6 @@ func _process(dt):
 		if state_change_cd > 0.0:
 			state_change_cd -= dt
 		update_state()
-
-		if attack_cd <= 0 and not stunned:
-			if target_enemy:
-				if attacking and target_enemy.get_ref():
-					attack_cd = 0.5
-					if stats:
-						attack_cd = stats.get_actual("attack_speed")
-						# print(self.attack_cd)
-					else:
-						print("No statsmodule?! ", self)
-					emit_signal("attack", target_enemy.get_ref())
-		else:
-			self.attack_cd -= dt
 
 func _fixed_process(dt):
 #	if not attacking and enabled:
@@ -176,28 +160,21 @@ func set_tile_dimensions(td):
 		get_node("Sprite").set_hframes(int(tile_dimensions.x))
 		get_node("Sprite").set_vframes(int(tile_dimensions.y))
 
-func check_target():
-	var ar = 0
-	if stats:
-		ar = stats.get_actual("attack_range")
-	else:
-		ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-	if not target_enemy:
-		attacking = false
-		check_in_range()
-		return
-	if target_enemy.get_ref():
-		var te = target_enemy.get_ref()
-		var dist = parent.get_body_pos().distance_to(te.get_body_pos())
-		if dist <= ar:
-			on_attack()
-		elif dist < 80:
-			attacking = false
-		else:
-			attacking = false
-	else:
-		emit_signal("cleared_target")
-		target_enemy = null
+func get_closest_enemy(enemies, dist=0):
+	var closest_candidate = null
+	var closest = dist
+	var stealth_dist = stats.get_actual("attack_range") * 0.8
+	for e in enemies:
+		var dist = abs(e.get_body_pos().distance_to(parent.get_body_pos()))
+		if e.stats_node:
+			if e.stats_node.is_stealthed() and dist > stealth_dist:
+				continue
+			elif e.stats_node.is_stealthed():
+				e.stats_node.emit_signal("stealth_broken")
+		if dist < closest:
+			closest = dist
+			closest_candidate = e
+	return closest_candidate
 
 func check_death():
 	if stats.get("hp") <= 0:
@@ -210,46 +187,7 @@ func check_healthy():
 		healthy = true
 
 func check_in_range():
-	if not get_tree().is_editor_hint():
-		var ar = 0
-		if stats:
-			ar = stats.get_actual("attack_range")
-		else:
-			ar = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-		var target_group = "enemy"
-		if "enemy" in parent.get_groups():
-			target_group = "friendly"
-		var target_enemy_node = get_closest_enemy(get_tree().get_nodes_in_group(target_group))
-		if target_enemy_node and movement:
-			target_enemy = weakref(target_enemy_node)
-			emit_signal("targeted_enemy", target_enemy)
-			if parent.get_body_pos().distance_to(target_enemy_node.get_body_pos()) > 100:
-				if parent.get_party():
-					if not parent.get_party().is_leader(parent.get_party_index()):
-						return
-				var path = root.map.get_simple_path(parent.get_body_pos(), target_enemy_node.get_body_pos())
-						
-#				if path.size() > 1:
-#					path.remove(0)
-				movement.set_walk_path(path)
-
-func get_closest_enemy(enemies):
-	var closest_candidate = null
-	var closest = MIN_SEEK_DIST
-	for e in enemies:
-		var dist = abs(e.get_body_pos().distance_to(parent.get_body_pos()))
-		if target_enemy:
-			if e == target_enemy.get_ref():
-				continue
-		if e.stats_node and stats:
-			if e.stats_node.is_stealthed() and dist > stats.get_actual("attack_range") * 0.8:
-				continue
-			elif e.stats_node.is_stealthed():
-				e.stats_node.emit_signal("stealth_broken")
-		if dist < closest:
-			closest = dist
-			closest_candidate = e
-	return closest_candidate
+	pass
 
 func on_heal():
 	get_node("EffectPlayer").play("Heal")
@@ -323,15 +261,12 @@ func update_state():
 	if not stunned:
 		if flip_cd <= 0.0:
 			flip_cd = 0.3
-			if target_enemy:
-				if target_enemy.get_ref():
-					var te = target_enemy.get_ref()
-					if te.get_body_pos().x > parent.get_body_pos().x:
-						set_scale(Vector2(1, 1))
-					else:
-						set_scale(Vector2(-1, 1))
+			var t = parent.get_target()
+			if t:
+				if t.get_body_pos().x > parent.get_body_pos().x:
+					set_scale(Vector2(1, 1))
 				else:
-					target_enemy = null
+					set_scale(Vector2(-1, 1))
 			else:
 				if movement:
 					if movement.get_direction().x > 0:
@@ -378,30 +313,30 @@ func update_state():
 	else:
 		get_node("State").set_enabled(false)
 
-func _on_AttackRange_body_enter( body ):
-	var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
-	if target_enemy:
-		if target_enemy.get_ref():
-			var dist = parent.get_body_pos().distance_to(target_enemy.get_ref().get_body_pos())
-			if dist <= r:
-				return
-	var target_group = "enemy"
-	if "enemy" in parent.get_groups():
-		target_group = "friendly"
-	if target_group in body.get_groups():
-		var estats = null
-		if body.has_node("StatsModule"):
-			estats = body.get_node("StatsModule")
-		if estats:
-			var dist = parent.get_body_pos().distance_to(body.get_body_pos())
-			if estats.is_stealthed() and dist >= r / 3:
-				return
-			elif estats.is_stealthed():
-				estats.emit_signal("stealth_broken")
-		if movement:
-			movement.set_walk_path([])
-		target_enemy = weakref(body)
-		emit_signal("targeted_enemy", target_enemy)
+#func _on_AttackRange_body_enter( body ):
+#	var r = get_node("AttackRange/CollisionShape2D").get_shape().get_radius()
+#	if target_enemy:
+#		if target_enemy.get_ref():
+#			var dist = parent.get_body_pos().distance_to(target_enemy.get_ref().get_body_pos())
+#			if dist <= r:
+#				return
+#	var target_group = "enemy"
+#	if "enemy" in parent.get_groups():
+#		target_group = "friendly"
+#	if target_group in body.get_groups():
+#		var estats = null
+#		if body.has_node("StatsModule"):
+#			estats = body.get_node("StatsModule")
+#		if estats:
+#			var dist = parent.get_body_pos().distance_to(body.get_body_pos())
+#			if estats.is_stealthed() and dist >= r / 3:
+#				return
+#			elif estats.is_stealthed():
+#				estats.emit_signal("stealth_broken")
+#		if movement:
+#			movement.set_walk_path([])
+#		parent.set_target(body)
+#		emit_signal("targeted_enemy", target_enemy)
 
 func _on_ActorBase_attack(tar):
 	if has_attack_anim:
@@ -443,3 +378,8 @@ func _on_MoveModule_stalled():
 
 func _on_MoveModule_moved():
 	on_walk()
+
+
+func _on_Brain_entered_state(state):
+	if state == "idle":
+		on_idle()

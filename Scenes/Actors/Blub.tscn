@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Scenes/Actors/Blub.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Actors/blubb.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -40,6 +41,7 @@ stats_node = NodePath("../StatsModule")
 
 [node name="ActorBase" parent="." instance=ExtResource( 4 )]
 
+transform/pos = Vector2( 0, 1 )
 spritesheet = ExtResource( 5 )
 has_death_anim = true
 
@@ -58,5 +60,7 @@ transform/pos = Vector2( 0, -59 )
 
 effect_type = "earth"
 amount = -8.0
+
+[node name="Brain" parent="." instance=ExtResource( 7 )]
 
 
