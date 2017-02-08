@@ -328,6 +328,9 @@ func _on_ActorBase_attack(tar):
 		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
+	if parent.is_healer():
+		parent.set_target(tar)
+		parent.get_node("Brain").push_state("evade")
 	if stats:
 		stats.emit_signal("stealth_broken")
 	get_node("HealParticles").set_emitting(false)
