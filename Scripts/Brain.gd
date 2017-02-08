@@ -17,7 +17,7 @@ var available_states = {
 	"follow_formation": preload("res://Scenes/Modules/States/FollowFormation.gd").new(),
 	"attack": preload("res://Scenes/Modules/States/Attack.gd").new(),
 	"evade": preload("res://Scenes/Modules/States/Evade.gd").new(),
-	"seek_end": null,
+	"stunned": preload("res://Scenes/Modules/States/Stunned.gd").new(),
 	"celebrate": null
 }
 

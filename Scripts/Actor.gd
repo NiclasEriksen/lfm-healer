@@ -13,12 +13,16 @@ var stats_node = null
 var move_node = null
 var attack_node = null
 var actorbase_node = null
+var brain_node = null
 var statuseffect_node = null
 var debuff_node = null
 export(NodePath) var party = null setget set_party, get_party
 export(int) var party_index = -1 setget set_party_index, get_party_index
 var party_leader = false setget set_leader, is_leader
 var healer = false
+
+func get_brain():
+	return brain_node
 
 func set_target(t):
 	if t:
@@ -163,3 +167,5 @@ func _ready():
 			statuseffect_node = get_node("StatusEffect")
 		if has_node("Debuff"):
 			debuff_node = get_node("Debuff")
+		if has_node("Brain"):
+			brain_node = get_node("Brain")

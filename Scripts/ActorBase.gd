@@ -236,8 +236,8 @@ func on_idle():
 	var cur_anim = animations.get_current_animation()
 	if state_change_cd <= 0:
 		if not cur_anim == "idle" or not cur_anim == "attack":
-			if animations.is_playing() and cur_anim == "walk":
-				return
+#			if animations.is_playing() and cur_anim == "walk":
+#				return
 			sprite.set_rot(0)
 			animations.play("idle")
 			state_change_cd = 0.3
@@ -328,9 +328,6 @@ func _on_ActorBase_attack(tar):
 		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
-	if parent.is_healer():
-		parent.set_target(tar)
-		parent.get_node("Brain").push_state("evade")
 	if stats:
 		stats.emit_signal("stealth_broken")
 	get_node("HealParticles").set_emitting(false)
@@ -359,7 +356,6 @@ func on_critical_hit():
 
 func _on_MoveModule_stalled():
 	on_idle()
-
 
 func _on_MoveModule_moved():
 	on_walk()

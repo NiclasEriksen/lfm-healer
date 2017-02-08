@@ -1,4 +1,6 @@
 extends Node
+
+var parent = null
 var buff_module = load("res://Scripts/BuffModule.gd")
 var effect_module = load("res://Scripts/EffectModule.gd")
 
@@ -67,6 +69,8 @@ func get_level():
 
 func set_stunned(val):
 	stunned = val
+	if val:
+		parent.get_brain().push_state("stunned")
 
 func is_stunned():
 	return stunned
@@ -90,6 +94,7 @@ func get_stealth_speed_increase():
 	return stealth_speed_increase
 
 func _ready():
+	parent = get_parent()
 	self.update_final_stats()
 	hp = get_actual("max_hp")
 	mp = get_actual("max_mp")
@@ -142,11 +147,11 @@ func update_final_stats():
 		attack_range=base_attack_range,
 		movement_speed=base_movement_speed,
 	}
-	if get_parent().has_node("Attack"):
+	if parent.has_node("Attack"):
 		var am = get_parent().get_node("Attack")
 		am.set_amount(-get_actual("damage"))
-	if get_parent().has_node("Debuff"):
-		var dm = get_parent().get_node("Debuff")
+	if parent.has_node("Debuff"):
+		var dm = parent.get_node("Debuff")
 		dm.set_amount(-get_actual("damage"))
 
 
@@ -156,7 +161,7 @@ func _process(delta):
 	if mp > get_actual("max_mp"):
 		mp = get_actual("max_mp")
 	check_negatives()
-	stunned = false
+	set_stunned(false)
 	invulnerable = false
 	for wr in get_children():
 		if wr.is_buff:
@@ -168,7 +173,7 @@ func handle_status(wr, dt):
 	var status_result = wr.status_update(dt)
 	if status_result:
 		if wr.get_effect_type() == "stun":
-			stunned = true
+			set_stunned(true)
 		elif wr.get_effect_type() == "invulnerable":
 			invulnerable = true
 	else:
@@ -238,14 +243,17 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 			if rand_range(0, 100) < originmodule.get_actual(crit_type):
 				originmodule.emit_signal("critical_hit")
 				amount *= 1.5
-		if get_parent().has_node("ActorBase"):
+		if parent.has_node("ActorBase"):
 			if amount > 0 and effectmodule.effect_stat == "hp":
-				get_parent().get_node("ActorBase").on_heal()
+				parent.get_node("ActorBase").on_heal()
 			elif amount < 0 and effectmodule.effect_stat == "hp":
 				var tar = null
 				if originmodule:
-					tar = originmodule.get_parent()
-				get_parent().get_node("ActorBase").on_hit(tar)
+					tar = originmodule.parent
+				parent.get_node("ActorBase").on_hit(tar)
+				if parent.is_healer():
+					parent.set_target(tar)
+					parent.get_brain().push_state("evade")
 		if effectmodule.effect_stat == "hp" and amount < 0 and is_invulnerable():
 			pass
 		else:

@@ -5,10 +5,11 @@
         ["blur", 0.2],
         ["blub", 0.2],
         ["enemy", 0.2],
-        ["mage", 1.0],
-        ["archer", 1.0],
-        ["archer", 0.5],
-        ["archer", 0.5],
-        ["archer", 0.5],
+        ["blub", 0.2],
+        ["enemy", 0.2],
+        ["blub", 0.2],
+        ["enemy", 0.2],
+        ["blub", 0.2],
+        ["enemy", 0.2],
     ]
 }
