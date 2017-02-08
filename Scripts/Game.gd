@@ -241,6 +241,7 @@ func spawn_actor(actor_type, alliance):
 			print("Spawning actor: ", actor_type)
 		actor.change_allegiance(alliance)
 		actor.set_pos(p)
+		actor.set_z(p.y)
 		var body_p = actor.get_body_pos()
 		if actor.has_node("MoveModule"):
 			var path = map.get_simple_path(body_p, p_to)

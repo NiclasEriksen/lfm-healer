@@ -18,5 +18,5 @@ func update(dt):
 		brain.push_state("attack")
 		return
 	brain.owner.set_target(
-		actorbasemodule.get_closest_enemy(SEEK_DIST * 6)
+		actorbasemodule.get_closest_enemy(SEEK_DIST * 2)
 	)

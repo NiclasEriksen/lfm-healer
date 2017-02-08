@@ -233,8 +233,11 @@ func on_death():
 func on_idle():
 	idle = true
 	animations.set_speed(1)
+	var cur_anim = animations.get_current_animation()
 	if state_change_cd <= 0:
-		if not animations.get_current_animation() == "idle" or not animations.get_current_animation() == "attack":
+		if not cur_anim == "idle" or not cur_anim == "attack":
+			if animations.is_playing() and cur_anim == "walk":
+				return
 			sprite.set_rot(0)
 			animations.play("idle")
 			state_change_cd = 0.3
