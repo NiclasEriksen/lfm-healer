@@ -33,9 +33,9 @@ party_index = -1
 
 max_hp = 19.0
 base_damage = 3.0
-base_movement_speed = 115.0
+base_movement_speed = 125.0
 base_attack_speed = 1.2
-base_attack_range = 90.0
+base_attack_range = 120.0
 
 [node name="HPBarPos" type="Position2D" parent="."]
 
