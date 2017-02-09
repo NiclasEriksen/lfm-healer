@@ -10,7 +10,7 @@ var fps_delay = 0.0
 signal kill_pressed
 
 func _ready():
-	var actor_options = get_parent().actor_types
+	var actor_options = get_parent().get_actor_types()
 	set_process(true)
 	for t in actor_options:
 		get_node("Actortype").add_item(t)

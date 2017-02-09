@@ -3,18 +3,26 @@ extends Node2D
 var dragged_ability = false
 var maplist_node = preload("res://Scripts/MapList.gd").new()
 export(int, 2, 50, 1) var select_sensitivity = 20
-var tank_actor = load("res://Scenes/Actors/Tank.tscn")
-var archer_actor = load("res://Scenes/Actors/Archer.tscn")
-var rogue_actor = load("res://Scenes/Actors/Rogue.tscn")
-var mage_actor = load("res://Scenes/Actors/Mage.tscn")
-var enemy_actor = load("res://Scenes/Actors/TestEnemy.tscn")
-var blub_actor = load("res://Scenes/Actors/Blub.tscn")
+var actors = {
+	"tank": preload("res://Scenes/Actors/Tank.tscn"),
+	"archer": preload("res://Scenes/Actors/Archer.tscn"),
+	"rogue": preload("res://Scenes/Actors/Rogue.tscn"),
+	"mage": preload("res://Scenes/Actors/Mage.tscn"),
+	"testenemy": preload("res://Scenes/Actors/TestEnemy.tscn"),
+	"member": preload("res://Scenes/Actors/Member.tscn"),
+	"blub": preload("res://Scenes/Actors/Blub.tscn"),
+	"healer": preload("res://Scenes/Actors/Healer.tscn"),
+}
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
-var healer_actor = load("res://Scenes/Actors/Healer.tscn")
-var actor_types = ["tank", "archer", "rogue", "mage", "enemy"]
 onready var cam = get_node("Camera2D")
 onready var map = get_node("Map")
 var healer = null
+
+func get_actor_types():
+	var l = []
+	for k in actors:
+		l.append(k)
+	return l
 
 func _ready():
 	set_process(true)
@@ -55,7 +63,7 @@ func spawn_healer():
 	if has_node("Healer"):
 		print("Healer alive.")
 		get_node("Healer").free()
-	var hn = healer_actor.instance()
+	var hn = actors["healer"].instance()
 	hn.set_healer(true)
 	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
 	hn.connect("healer_death", self, "_on_Healer_death")
@@ -208,21 +216,12 @@ func select_actor(p):
 		closest.set_selected(true)
 
 func spawn_actor(actor_type, alliance):
-	var actor = null
+	if not actors.has(actor_type):
+		print("No such actor: ", actor_type)
+		return
+	var actor = actors[actor_type].instance()
 	var p = Vector2(0, 0)
 	var p_to = Vector2(0, 0)
-	if actor_type == "tank":
-		actor = tank_actor.instance()
-	elif actor_type == "enemy":
-		actor = enemy_actor.instance()
-	elif actor_type == "blub":
-		actor = blub_actor.instance()
-	elif actor_type == "archer":
-		actor = archer_actor.instance()
-	elif actor_type == "rogue":
-		actor = rogue_actor.instance()
-	elif actor_type == "mage":
-		actor = mage_actor.instance()
 
 	if alliance == "friendly":
 		if Globals.get("chill_mode") and actor:
@@ -312,7 +311,7 @@ func spawn_ability(ability, pos):
 
 
 func _on_HUD_kill_pressed():
-	var actors = get_tree().get_nodes_in_group("friendly") + get_tree().get_nodes_in_group("enemy")
-	for a in actors:
+	var allactors = get_tree().get_nodes_in_group("friendly") + get_tree().get_nodes_in_group("enemy")
+	for a in allactors:
 		if a.is_selected():
 			a.actorbase_node.on_death()

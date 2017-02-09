@@ -1,8 +1,10 @@
 extends Camera2D
+export var scroll_spd = 100
 
 func _ready():
 	reset_zoom()
 	set_process_input(true)
+	set_process(true)
 
 func _input(event):
 	if event.type == InputEvent.MOUSE_BUTTON:
@@ -11,6 +13,18 @@ func _input(event):
 				zoom_in()
 			elif event.button_index == BUTTON_WHEEL_DOWN:
 				zoom_out()
+
+func _process(dt):
+	var vel = Vector2()
+	if Input.is_action_pressed("camera_left"):
+		vel -= Vector2(scroll_spd, 0)
+	if Input.is_action_pressed("camera_right"):
+		vel += Vector2(scroll_spd, 0)
+	if Input.is_action_pressed("camera_up"):
+		vel -= Vector2(0, scroll_spd)
+	if Input.is_action_pressed("camera_down"):
+		vel += Vector2(0, scroll_spd)
+	set_offset(get_offset() + vel.clamped(scroll_spd) * dt)
 
 func reset_zoom():
 	set_center()

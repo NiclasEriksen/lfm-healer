@@ -1,16 +1,16 @@
 {
     "spawnlist": [
-        ["enemy", 0.0],
-        ["enemy", 2.0],
-        ["enemy", 1.5],
+        ["testenemy", 0.0],
+        ["testenemy", 2.0],
+        ["member", 1.5],
         ["blub", 0.5],
         ["blub", 2.5],
-        ["enemy", 2.0],
-        ["enemy", 3.0],
-        ["enemy", 2.0],
+        ["testenemy", 2.0],
+        ["member", 3.0],
+        ["testenemy", 2.0],
         ["rogue", 2.5],
-        ["enemy", 2.0],
+        ["testenemy", 2.0],
         ["blub", 0.2],
-        ["enemy", 0.2],
+        ["testenemy", 0.2],
     ]
 }
