@@ -2,6 +2,7 @@ tool
 extends Navigation2D
 export(String, FILE) var mapfile = null setget set_mapfile
 export(String) var map_title = "No name." setget set_map_title, get_map_title
+var map_size = Vector2()
 var spawnlist = []
 var spawn_wait = 0.0
 
@@ -13,6 +14,9 @@ func get_spawn_pos(alliance):
 	else:
 		print("No spawn point.")
 		return Vector2(Globals.get("render_width") / 2, Globals.get("render_height") / 2)
+
+func get_map_size():
+	return map_size
 
 func set_map_title(t):
 	map_title = t
@@ -27,6 +31,7 @@ func set_mapfile(newmap):
 	if newmap:
 		if has_node("Sprite"):
 			var tex = load(newmap)
+			map_size = Vector2(tex.get_width(), tex.get_height())
 			get_node("Sprite").set_texture(tex)
 	mapfile = newmap
 
@@ -58,6 +63,8 @@ func get_spawnlist():
 func _ready():
 	spawn_wait = 0.0
 	spawnlist = []
+	var tex = get_node("Sprite").get_texture()
+	map_size = Vector2(tex.get_width(), tex.get_height())
 	load_spawnlist()
 #	set_spawn_pos()
 	set_process(true)

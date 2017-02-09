@@ -35,8 +35,8 @@ func update(dt):
 	var fp = party.lookup_formation_pos(brain.owner.get_party_index())
 	var dist = fp - brain.owner.get_body_pos()
 	var d = (dist.normalized() + af.normalized()).normalized()
-	if dist.length() > 1:
-		if dist.length() > 8:
+	if dist.length() > 4:
+		if dist.length() > 16:
 			d = (movemodule.arrive(fp).normalized() + af.normalized()).normalized()
 		d = movemodule.steer(d) * 2
 #				move_and_slide(((d * formation.get_form_velocity())))

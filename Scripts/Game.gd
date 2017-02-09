@@ -56,6 +56,12 @@ func load_map(m):
 	add_child(mapnode)
 	move_child(mapnode, 0)
 	map = mapnode
+	get_node("Camera2D").set_limit(2, mapnode.get_map_size().x)
+	get_node("Camera2D").set_limit(3, mapnode.get_map_size().y)
+	print(get_node("Camera2D").get_limit(0))
+	print(get_node("Camera2D").get_limit(1))
+	print(get_node("Camera2D").get_limit(2))
+	print(get_node("Camera2D").get_limit(3))
 	print("Done.")
 	newgame(true)
 
