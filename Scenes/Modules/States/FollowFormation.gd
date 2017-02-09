@@ -27,7 +27,7 @@ func update(dt):
 	if party.is_leader(brain.owner.get_party_index()):
 		brain.pop_state()
 		return
-	movemodule.set_direction(party.get_orientation())
+#	movemodule.set_direction(party.get_orientation())
 	var af = Vector2()
 	if party.is_in_the_way(brain.owner):
 		var leader_pos = party.get_leader_pos()
@@ -35,6 +35,7 @@ func update(dt):
 	var fp = party.lookup_formation_pos(brain.owner.get_party_index())
 	var dist = fp - brain.owner.get_body_pos()
 	var d = (dist.normalized() + af.normalized()).normalized()
+	movemodule.set_direction(d)
 	if dist.length() > 4:
 		if dist.length() > 16:
 			d = (movemodule.arrive(fp).normalized() + af.normalized()).normalized()
