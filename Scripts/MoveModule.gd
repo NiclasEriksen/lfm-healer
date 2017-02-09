@@ -9,7 +9,7 @@ export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.1 setget set_stall_treshold, get
 var SEEK_TRESHOLD = 100
 var SLOW_RADIUS = 32
 var max_velocity = 50
-export(float) var PATH_REACH_TRESHOLD = 16.0 setget set_reach_treshold, get_reach_treshold
+export(float) var PATH_REACH_TRESHOLD = 4.0 setget set_reach_treshold, get_reach_treshold
 signal stalled
 signal moved
 var stalling = false
@@ -110,9 +110,11 @@ func _draw():
 				draw_line(start, p_rel, Color(0.3, 0.3, 0.3, 0.5), 3.0)
 				start = p_rel
 
-func move(dir, dt):
+func move(dir, dt, vel=0):
 	max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
-	if stats:
+	if vel:
+		dir = dir.normalized() * vel
+	elif stats:
 		dir *= max_velocity * dt
 	else:
 		dir *= BASE_MOVEMENT_SPEED * dt

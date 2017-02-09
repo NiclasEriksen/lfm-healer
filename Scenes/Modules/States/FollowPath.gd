@@ -1,6 +1,6 @@
 extends "res://Scenes/Modules/States/State.gd"
 
-var SEEK_DIST = 180
+var SEEK_DIST = 150
 var map = null
 
 func _ready():
@@ -36,7 +36,7 @@ func update(dt):
 	movemodule.move(movemodule.get_direction(), dt)
 
 func check_path():
-	var current_pos = brain.owner.get_global_pos()
+	var current_pos = brain.owner.get_body_pos()
 	var path = movemodule.get_walk_path()
 	if current_pos.distance_to(path[0]) <= movemodule.PATH_REACH_TRESHOLD:
 		path.remove(0)

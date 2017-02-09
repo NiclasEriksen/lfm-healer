@@ -61,6 +61,7 @@ amount = -7.0
 transform/pos = Vector2( -1, 17 )
 AVOID_COLLISION = true
 STALL_TRESHOLD = 0.2
+PATH_REACH_TRESHOLD = 1.0
 stats_node = NodePath("../StatsModule")
 BASE_MOVEMENT_SPEED = 50
 

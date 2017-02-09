@@ -37,9 +37,9 @@ func update(dt):
 	var d = (dist.normalized() + af.normalized()).normalized()
 	if dist.length() > 1:
 		if dist.length() > 8:
-			d = (movemodule.arrive(fp).normalized() + af.normalized()).normalized() * 1.5
-		d = movemodule.steer(d) * 1.5
+			d = (movemodule.arrive(fp).normalized() + af.normalized()).normalized()
+		d = movemodule.steer(d) * 2
 #				move_and_slide(((d * formation.get_form_velocity())))
 		movemodule.move(d, dt)
 	else:
-		movemodule.move(Vector2(), dt)
+		movemodule.move(d, dt, dist.length())

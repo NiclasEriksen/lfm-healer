@@ -5,7 +5,7 @@ var AHEAD_LENGTH = 32
 var RC_MARGIN = 8
 var leader = 0
 var min_scale = Vector2(0.5, 0.5)
-var max_scale = Vector2(2.5, 2.5)
+var max_scale = Vector2(2, 1.5)
 var default_scale = Vector2(0.85, 0.85)
 var formation_scale = default_scale setget set_scale, get_scale
 var orientation = Vector2() setget set_orientation, get_orientation
@@ -77,14 +77,15 @@ func is_in_the_way(u):
 
 func get_formation_pos(i):
 	var p = get_global_transform()[2]
+	var angle = get_orientation().angle()
 	if i >= 0 and i < formation_positions.size():
-		return p + formation_positions[i].rotated(get_orientation().angle()) * get_scale()
+		return p + (formation_positions[i] * get_scale()).rotated(angle)
 	else:
 		print("There's no formation position available for ", i, ".")
 		return Vector2()
 
 func get_leader_offset():
-	return formation_positions[0].rotated(get_orientation().angle())
+	return (formation_positions[0] * get_scale()).rotated(get_orientation().angle())
 
 func lookup_formation_pos(i):
 	if i == leader:
@@ -131,23 +132,23 @@ func select_formation():
 
 func adjust_shape(dt):
 	var new_scale = get_scale()
-	if rc_left.is_colliding() and rc_right.is_colliding():
+	if rc_left.is_colliding() or rc_right.is_colliding():
 		if new_scale.x > min_scale.x:
-			new_scale *= Vector2(1, 1 - 0.1 * dt)
+			new_scale *= Vector2(1 - 0.1 * dt, 1)
 		else:
 			new_scale.x = min_scale.x
 		if new_scale.y < max_scale.y:
-			new_scale *= Vector2(1 + 0.1 * dt, 1)
+			new_scale *= Vector2(1, 1 + 0.1 * dt)
 		else:
 			new_scale.y = max_scale.y
 		set_scale(new_scale)
 	else:
 		if new_scale.x < default_scale.x:
-			new_scale *= Vector2(1, 1 + 0.03 * dt)
+			new_scale *= Vector2(1 + 0.03 * dt, 1)
 		else:
 			new_scale.x = default_scale.x
 		if new_scale.y > default_scale.y:
-			new_scale *= Vector2(1 - 0.03 * dt, 1)
+			new_scale *= Vector2(1, 1 - 0.03 * dt)
 		else:
 			new_scale.y = default_scale.y
 		set_scale(new_scale)
@@ -160,8 +161,9 @@ func adjust_raycasts():
 			left_most = fp
 		elif fp.x > right_most.x:
 			right_most = fp
-	var lm = (left_most - Vector2(RC_MARGIN, 0)).rotated(get_orientation().angle()) * get_scale()
-	var rm = (right_most + Vector2(RC_MARGIN, 0)).rotated(get_orientation().angle()) * get_scale()
+	var angle = get_orientation().angle()
+	var lm = (left_most * get_scale() - Vector2(RC_MARGIN, 0)).rotated(angle)
+	var rm = (right_most * get_scale() + Vector2(RC_MARGIN, 0)).rotated(angle)
 	rc_left.set_pos(lm)
 	rc_right.set_pos(rm)
 
@@ -181,6 +183,7 @@ func _draw():
 		draw_set_transform(Vector2(), 0, Vector2(1, 1))
 		var rcl = get_node("RayCastLeft")
 		var rcr = get_node("RayCastRight")
+		var angle = get_orientation().angle()
 		if rcl.is_colliding():
 			draw_line(rcl.get_pos(), rcl.get_pos() + rcl.get_cast_to(), Color(0.8, 0.4, 0.8, 0.9), 3)
 		else:
@@ -190,7 +193,7 @@ func _draw():
 		else:
 			draw_line(rcr.get_pos(), rcr.get_pos() + rcr.get_cast_to(), Color(0.3, 0.3, 0.9, 0.7), 2)
 		for fp in formation_positions:
-			draw_circle(fp.rotated(get_orientation().angle()) * get_scale(), 10, Color(0.8, 0.2, 0.2, 0.5))
+			draw_circle((fp * get_scale()).rotated(angle), 10, Color(0.8, 0.2, 0.2, 0.5))
 		draw_line(Vector2(), get_orientation() * 30, Color(0.6, 0.6, 0.0), 2)
 		draw_set_transform_matrix(get_global_transform().inverse())
 		draw_line(get_global_pos(), get_ahead_pos(), Color(0.2, 0.8, 0.5), 1)

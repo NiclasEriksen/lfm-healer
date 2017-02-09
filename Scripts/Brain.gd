@@ -30,6 +30,8 @@ func push_state(state):
 			return
 		if s.check_reqs():
 			print("Requirements met for state " + s.name + ", pushing.")
+			if get_current_state():
+				print("Previous state: ", get_current_state().name)
 			state_stack.append(s)
 			s.on_enter()
 			emit_signal("entered_state", s.name)

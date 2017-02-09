@@ -117,6 +117,50 @@ margin/top = -44.0
 margin/right = 35.0
 margin/bottom = -4.0
 
+[node name="State" type="Container" parent="Panel"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = -10.0
+margin/right = 70.0
+margin/bottom = 0.0
+
+[node name="ID" type="Label" parent="Panel/State"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 70.0
+margin/bottom = 10.0
+custom_fonts/font = ExtResource( 7 )
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Value" type="Label" parent="Panel/State"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 70.0
+margin/bottom = 10.0
+custom_fonts/font = ExtResource( 7 )
+text = "2"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="Level" type="Container" parent="Panel"]
 
 focus/ignore_mouse = false

@@ -24,7 +24,10 @@ func _process(dt):
 		vel -= Vector2(0, scroll_spd)
 	if Input.is_action_pressed("camera_down"):
 		vel += Vector2(0, scroll_spd)
-	set_offset(get_offset() + vel.clamped(scroll_spd) * dt)
+	pan(vel.clamped(scroll_spd) * dt)
+
+func pan(vel):
+	set_offset(get_offset() + vel)
 
 func reset_zoom():
 	set_center()

@@ -72,10 +72,13 @@ func _process(delta):
 
 func show_panel(stats):
 	panel.show()
+	var o = owner.get_ref()
+	var state = o.get_brain().get_current_state().name
 	var lvl = stats.get_level()
 	var hp = stats.get("hp")
 	var maxhp = stats.get_actual("max_hp")
 	var dmg = stats.get_actual("damage")
+	panel.get_node("State/Value").set_text(str(state))
 	panel.get_node("Level/Value").set_text(str(lvl))
 	panel.get_node("HP/Value").set_text(str(int(hp)))
 	panel.get_node("HPMAX/Value").set_text(str(int(maxhp)))

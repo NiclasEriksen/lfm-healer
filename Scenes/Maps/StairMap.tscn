@@ -1,30 +1,60 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/stairs.png" type="Texture" id=2]
 
 [sub_resource type="NavigationPolygon" id=1]
 
-vertices = Vector2Array( 79.1551, 233.778, 63.9726, 0.144562, 370.047, 0.423702, 366.011, 26.4179, 360.155, 57.7785, 0.21356, 177.162, 34.7874, 177.401, 30.1551, 233.778, 0.161295, 288.484, 363.433, 288.11, 404.155, 57.7785, 436.871, 27.2982, 433.898, 204.109, 401.09, 287.512, 511.525, 287.483, 511.734, 203.51 )
-polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 5, 6, 7, 8 ), IntArray( 9, 8, 7, 0 ), IntArray( 4, 9, 0 ), IntArray( 10, 4, 3, 11 ), IntArray( 10, 11, 12, 13 ), IntArray( 14, 13, 12, 15 ) ]
-outlines = [ Vector2Array( 34.7874, 177.401, 0.21356, 177.162, 0.161295, 288.484, 363.433, 288.11, 360.155, 57.7785, 404.155, 57.7785, 401.09, 287.512, 511.525, 287.483, 511.734, 203.51, 433.898, 204.109, 436.871, 27.2982, 366.011, 26.4179, 370.047, 0.423702, 63.9726, 0.144562, 79.1551, 233.778, 30.1551, 233.778 ) ]
+vertices = Vector2Array( 585.664, 76.9693, 660.391, 41.389, 731.13, 31.8664, 733.851, 215.517, 592.212, 328.775, 426.007, 206.891, 547.327, 204.487, 539.026, 330.991, 402.11, 459.357, 1.06746, 110.169, 38.5347, 110.169, 29.3307, 235.7, 1.67144, 368.498, 865.376, 169.2, 875.415, 124.728, 947.767, 120.206, 947.767, 273.954, 866.279, 207.105, 522.993, 78.1191, 520.272, 16.9023, 659.03, 4.65892, 214.372, 183.623, 76.8165, 190.806, 74.417, 7.74157, 359.607, 6.83907, 361.412, 31.2066, 357.966, 52.2813, 782.189, 504.788, 780.961, 326.766, 1033.88, 331.677, 1531.24, 507.057, 1528.77, 7.81017, 1033.69, 76.4929, 819.302, 9.13898, 875.415, 73.4782, 820.251, 169.2, 745.783, 270.94, 745.783, 459.357, 411.853, 55.8737, 436.319, 28.4991, 363.274, 369.071, 207.724, 286.67, 113.541, 285.562, 100.245, 241.24 )
+polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 5, 6, 7, 8 ), IntArray( 9, 10, 11, 12 ), IntArray( 13, 14, 15, 16, 17 ), IntArray( 18, 19, 20, 1, 0 ), IntArray( 21, 22, 23, 24, 25, 26 ), IntArray( 27, 28, 29, 30 ), IntArray( 31, 30, 29, 32 ), IntArray( 33, 31, 32, 34 ), IntArray( 35, 33, 34, 14, 13 ), IntArray( 17, 16, 36, 3 ), IntArray( 4, 3, 36, 37 ), IntArray( 4, 37, 8, 7 ), IntArray( 5, 8, 38, 39 ), IntArray( 25, 39, 38, 26 ), IntArray( 21, 26, 40, 41 ), IntArray( 41, 40, 12, 42 ), IntArray( 42, 12, 11, 43 ) ]
+outlines = [ Vector2Array( 1.06746, 110.169, 38.5347, 110.169, 29.3307, 235.7, 100.245, 241.24, 113.541, 285.562, 207.724, 286.67, 214.372, 183.623, 76.8165, 190.806, 74.417, 7.74157, 359.607, 6.83907, 361.412, 31.2066, 436.319, 28.4991, 426.007, 206.891, 547.327, 204.487, 539.026, 330.991, 592.212, 328.775, 585.664, 76.9693, 522.993, 78.1191, 520.272, 16.9023, 659.03, 4.65892, 660.391, 41.389, 731.13, 31.8664, 733.851, 215.517, 866.279, 207.105, 865.376, 169.2, 820.251, 169.2, 819.302, 9.13898, 1528.77, 7.81017, 1531.24, 507.057, 782.189, 504.788, 780.961, 326.766, 1033.88, 331.677, 1033.69, 76.4929, 875.415, 73.4782, 875.415, 124.728, 947.767, 120.206, 947.767, 273.954, 745.783, 270.94, 745.783, 459.357, 402.11, 459.357, 411.853, 55.8737, 357.966, 52.2813, 363.274, 369.071, 1.67144, 368.498 ) ]
+
+[sub_resource type="RectangleShape2D" id=10]
+
+custom_solver_bias = 0.0
+extents = Vector2( 11, 57 )
+
+[sub_resource type="RectangleShape2D" id=11]
+
+custom_solver_bias = 0.0
+extents = Vector2( 11, 50 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 11, 60 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 11, 107 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
-extents = Vector2( 35, 87 )
+extents = Vector2( 35, 55 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
+
+custom_solver_bias = 0.0
+extents = Vector2( 70, 55 )
+
+[sub_resource type="RectangleShape2D" id=6]
+
+custom_solver_bias = 0.0
+extents = Vector2( 35, 35 )
+
+[sub_resource type="RectangleShape2D" id=7]
+
+custom_solver_bias = 0.0
+extents = Vector2( 30, 10 )
+
+[sub_resource type="RectangleShape2D" id=8]
 
 custom_solver_bias = 0.0
 extents = Vector2( 71, 11 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=9]
 
 custom_solver_bias = 0.0
 extents = Vector2( 12, 60 )
@@ -37,6 +67,7 @@ map_title = "Tripp Trapp Tresko"
 
 [node name="Sprite" type="Sprite" parent="."]
 
+transform/pos = Vector2( 1.50732, 0 )
 texture = ExtResource( 2 )
 centered = false
 
@@ -47,18 +78,18 @@ enabled = true
 
 [node name="EnemySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 477.8, 242 )
+transform/pos = Vector2( 1152.86, 69.0504 )
 
 [node name="FriendlySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 20, 253 )
+transform/pos = Vector2( 60, 303 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 transform/pos = Vector2( 381, 289 )
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, -108 )
+shapes/0/shape = SubResource( 10 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, -57 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -69,18 +100,80 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 
-transform/pos = Vector2( 0, -108 )
+transform/pos = Vector2( 2, -57 )
+shape = SubResource( 10 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 381, 191 )
+input/pickable = false
+shapes/0/shape = SubResource( 11 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, -66 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D11"]
+
+transform/pos = Vector2( 2, -66 )
+shape = SubResource( 11 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D10" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 565, 227 )
+input/pickable = false
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 27 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D10"]
+
+transform/pos = Vector2( 1, 27 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 381, 503 )
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, -108 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+
+transform/pos = Vector2( 2, -108 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 
-transform/pos = Vector2( 477, 109 )
-transform/scale = Vector2( 1, 1 )
+transform/pos = Vector2( 477, 56 )
 input/pickable = false
-shapes/0/shape = SubResource( 3 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 1 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -91,7 +184,92 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
 
-shape = SubResource( 3 )
+transform/pos = Vector2( 0, 1 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 31, 56 )
+input/pickable = false
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -2, -1 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9"]
+
+transform/pos = Vector2( -2, -1 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 477, 139 )
+input/pickable = false
+shapes/0/shape = SubResource( 5 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 33, 5 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8"]
+
+transform/pos = Vector2( 33, 5 )
+shape = SubResource( 5 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 152, 228 )
+input/pickable = false
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 5, 5 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
+
+transform/pos = Vector2( 5, 5 )
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( 88, 207 )
+input/pickable = false
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 5, 5 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7"]
+
+transform/pos = Vector2( 5, 5 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
@@ -99,7 +277,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 441, 11 )
 input/pickable = false
-shapes/0/shape = SubResource( 4 )
+shapes/0/shape = SubResource( 8 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -111,16 +289,15 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 
-shape = SubResource( 4 )
+shape = SubResource( 8 )
 trigger = false
 _update_shape_index = 0
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="."]
 
 transform/pos = Vector2( 51, 108 )
-transform/scale = Vector2( 1, 1 )
 input/pickable = false
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 9 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 1, 54 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -133,7 +310,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
 
 transform/pos = Vector2( 1, 54 )
-shape = SubResource( 5 )
+shape = SubResource( 9 )
 trigger = false
 _update_shape_index = 0
 
