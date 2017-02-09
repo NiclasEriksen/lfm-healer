@@ -39,6 +39,8 @@ stats_node = NodePath("../StatsModule")
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]
 
 primary_stat = "int"
+max_hp = 25.0
+max_mp = 40.0
 base_movement_speed = 70.0
 
 [node name="ActorBase" parent="." instance=ExtResource( 4 )]

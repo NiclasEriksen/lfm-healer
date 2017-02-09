@@ -2,6 +2,15 @@ extends Camera2D
 
 func _ready():
 	reset_zoom()
+	set_process_input(true)
+
+func _input(event):
+	if event.type == InputEvent.MOUSE_BUTTON:
+		if event.is_pressed():
+			if event.button_index == BUTTON_WHEEL_UP:
+				zoom_in()
+			elif event.button_index == BUTTON_WHEEL_DOWN:
+				zoom_out()
 
 func reset_zoom():
 	set_center()

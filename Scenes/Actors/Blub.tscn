@@ -31,7 +31,8 @@ party_index = -1
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-base_attack_range = 150.0
+base_attack_speed = 3.0
+base_attack_range = 175.0
 
 [node name="MoveModule" parent="." instance=ExtResource( 3 )]
 
@@ -59,7 +60,7 @@ transform/pos = Vector2( 0, -59 )
 [node name="Attack" parent="." instance=ExtResource( 6 )]
 
 effect_type = "earth"
-amount = -8.0
+amount = -15.0
 
 [node name="Brain" parent="." instance=ExtResource( 7 )]
 

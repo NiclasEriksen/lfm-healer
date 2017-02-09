@@ -247,7 +247,7 @@ func spawn_actor(actor_type, alliance):
 			var path = map.get_simple_path(body_p, p_to)
 			actor.get_node("MoveModule").set_walk_path(path)
 		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
-		actor.get_node("ActorBase").connect("death", actor, "on_actor_death")
+#		actor.get_node("ActorBase").connect("death", actor, "on_actor_death")
 		get_node("Actors").add_child(actor)
 	else:
 		print("No actor by that identifier found: ", actor_type)

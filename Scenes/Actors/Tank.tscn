@@ -32,7 +32,8 @@ party_index = -1
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-max_hp = 30.0
+base_strength = 3
+max_hp = 45.0
 base_damage = 4.0
 base_armor = 1.0
 base_magic_resist = 1.0

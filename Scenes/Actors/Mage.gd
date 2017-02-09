@@ -7,8 +7,5 @@ func _ready():
 
 
 ## Override attack method by uncommenting this.
-func _on_ActorBase_attack(target):
-	fire_projectile(target)
-
 func attack(target):
 	fire_projectile(target)

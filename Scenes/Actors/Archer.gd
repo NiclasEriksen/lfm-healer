@@ -6,8 +6,6 @@ func _ready():
 	# Initialization here
 	pass
 
-func _on_ActorBase_attack(target):
-	fire_projectile(target)
 
 func attack(target):
 	fire_projectile(target)

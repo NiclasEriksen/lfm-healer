@@ -16,9 +16,11 @@ var available_states = {
 	"follow_path": preload("res://Scenes/Modules/States/FollowPath.gd").new(),
 	"follow_formation": preload("res://Scenes/Modules/States/FollowFormation.gd").new(),
 	"attack": preload("res://Scenes/Modules/States/Attack.gd").new(),
+	"dead": preload("res://Scenes/Modules/States/Dead.gd").new(),
+	"reviving": preload("res://Scenes/Modules/States/Reviving.gd").new(),
 	"evade": preload("res://Scenes/Modules/States/Evade.gd").new(),
 	"stunned": preload("res://Scenes/Modules/States/Stunned.gd").new(),
-	"celebrate": null
+	"celebrating": preload("res://Scenes/Modules/States/Celebrating.gd").new()
 }
 
 func push_state(state):

@@ -17,8 +17,8 @@ func get_maps():
 	if not maps_directory:
 		print("No map directory set in MapList!")
 		return []
-	var dir = Directory.new()
 	var mapfiles = []
+	var dir = Directory.new()
 	if dir.open(maps_directory) == OK:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
@@ -41,8 +41,8 @@ func get_maps():
 		print("An error occurred when trying to access the path.")
 
 	mapfiles.sort()		# sort by file name
-	return mapfiles
 
+	return mapfiles
 func get_maps_with_names():
 	pass
 
