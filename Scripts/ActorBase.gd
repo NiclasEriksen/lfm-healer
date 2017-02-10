@@ -2,7 +2,7 @@ tool
 extends Node2D
 
 onready var root = get_tree().get_root().get_node("Game")
-export(Texture) var spritesheet = null setget set_sprite_texture
+export(Texture) var spritesheet = null setget set_sprite_texture, get_sprite_texture
 export(bool) var has_attack_anim = true
 export(bool) var has_death_anim = false
 export(bool) var has_special_anim = false
@@ -154,11 +154,17 @@ func set_sprite_texture(tex):
 #		var scale = 320 / tex.get_width()
 #		s.set_scale(Vector2(scale, scale))
 
+func get_sprite_texture():
+	return spritesheet
+
 func set_tile_dimensions(td):
 	tile_dimensions = td
 	if has_node("Sprite"):
 		get_node("Sprite").set_hframes(int(tile_dimensions.x))
 		get_node("Sprite").set_vframes(int(tile_dimensions.y))
+
+func get_tile_dimensions():
+	return tile_dimensions
 
 func get_closest_enemy(dist=0):
 	var target_group = "enemy"

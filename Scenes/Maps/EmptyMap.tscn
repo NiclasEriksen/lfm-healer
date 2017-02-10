@@ -37,16 +37,16 @@ centered = false
 
 [node name="SpawnPoint" type="Position2D" parent="."]
 
-transform/pos = Vector2( 61.0347, 63.6884 )
+transform/pos = Vector2( 413.035, 76.6884 )
 transform/scale = Vector2( 1, 1 )
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }
-actor_scene = "res://Scenes/Actors/Member.tscn"
+actor_scene = "res://Scenes/Actors/TestEnemy.tscn"
 spawn_delay = 0
 
 [node name="SpawnPoint2" type="Position2D" parent="."]
 
-transform/pos = Vector2( 162.034, 106.043 )
+transform/pos = Vector2( 417.034, 164.043 )
 transform/scale = Vector2( 1, 1 )
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }

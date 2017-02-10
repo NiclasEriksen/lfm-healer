@@ -4,7 +4,9 @@ export(String, FILE) var mapfile = null setget set_mapfile
 export(String) var map_title = "No name." setget set_map_title, get_map_title
 var map_size = Vector2()
 var spawnlist = []
+var spawnpoints = []
 var spawn_wait = 0.0
+var is_spawning = false
 
 func get_spawn_pos(alliance):
 	if alliance == "friendly":
@@ -69,6 +71,11 @@ func _ready():
 #	set_spawn_pos()
 	set_process(true)
 #	print(get_node("NavigationPolygonInstance2").get_navigation_polygon().get_vertices())
+
+func start():
+	for sp in spawnpoints:
+		sp.spawn()
+
 
 func _process(dt):
 	if get_tree().is_editor_hint():

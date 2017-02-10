@@ -44,6 +44,7 @@ func add_all_spells():
 		s.free()
 
 func load_map(m):
+	cleanup()
 	print("Loading map \"", m, "\"...")
 	var m_path = maplist_node.get_map_dir() + m
 	var mapnode = load(m_path).instance()
@@ -58,12 +59,8 @@ func load_map(m):
 	map = mapnode
 	get_node("Camera2D").set_limit(2, mapnode.get_map_size().x)
 	get_node("Camera2D").set_limit(3, mapnode.get_map_size().y)
-	print(get_node("Camera2D").get_limit(0))
-	print(get_node("Camera2D").get_limit(1))
-	print(get_node("Camera2D").get_limit(2))
-	print(get_node("Camera2D").get_limit(3))
 	print("Done.")
-	newgame(true)
+	newgame(false)
 
 func spawn_healer():
 	if has_node("Healer"):
@@ -83,16 +80,18 @@ func newgame(clean):
 	spawn_healer()
 	print("Starting new game...")
 	map = get_node("Map")
-	if not map.get_spawnlist().size():
+
+	if not map.get_spawnlist().size() and not map.spawnpoints.size():
 		print("Spawnlist is empty! Enabling autospawn.")
 		Globals.set("autospawn", true)
-		spawn_actor("enemy", "enemy")
+		spawn_actor("testenemy", "enemy")
 
 	if has_node("HUD"):
 		add_all_spells()
 		var mapname = "\"" + map.get_map_title() + "\""
 		get_node("HUD").flash_message("Starting round..", "Current map: " + mapname, 3)
 	spawn_party()
+	map.start()
 
 func spawn_party():
 	spawn_actor("tank", "friendly")
@@ -278,7 +277,7 @@ func _on_Timer_timeout():
 		if Globals.get("chill_mode"):
 			if randf() > 0.5:
 				return
-		spawn_actor("enemy", "enemy")
+		spawn_actor("testenemy", "enemy")
 #	var friendlies = get_tree().get_nodes_in_group("friendly")
 #	for f in friendlies:
 	# t.set_wait_time(1.0)

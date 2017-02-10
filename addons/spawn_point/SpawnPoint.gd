@@ -22,6 +22,8 @@ func get_spawn_delay():
 	return spawn_delay
 
 func _enter_tree():
+	if not self in get_parent().spawnpoints:
+		get_parent().spawnpoints.append(self)
 	var s = Sprite.new()
 	s.set_name("Sprite")
 	add_child(s)
@@ -38,28 +40,38 @@ func _enter_tree():
 func _ready():
 	set_process(true)
 	if not get_tree().is_editor_hint():
+#		spawn()
+#		print("Hiding spawnpoint graphics.")
 		hide()
-#	else:
-#		if loaded_scene:
-#			update_display()
 
 func update_display():
+	if not get_tree():
+		return
 	if not loaded_scene:
 		return
 	display_scene = loaded_scene.instance()
-	if display_scene.has_node("ActorBase/Sprite"):
-		var s = display_scene.get_node("ActorBase/Sprite")
-		var tex = s.get_texture()
-		var vf = s.get_vframes()
-		var hf = s.get_hframes()
+	if display_scene.has_node("ActorBase"):
+		var tex = display_scene.get_node("ActorBase").get_sprite_texture()
+		var td = display_scene.get_node("ActorBase").get_tile_dimensions()
+		if not tex:
+			return
 		get_node("Sprite").set_texture(tex)
-		get_node("Sprite").set_vframes(vf)
-		get_node("Sprite").set_hframes(hf)
+		get_node("Sprite").set_hframes(td.x)
+		get_node("Sprite").set_vframes(td.y)
 		get_node("Sprite").set_frame(0)
 		get_node("Label").set_text(display_scene.get_name())
 
-func place(p):
-	pass
+func spawn():
+	print("Spawning actor from spawnpoint...")
+	if not loaded_scene:
+		print("No scene set for spawner.")
+		queue_free()
+		return
+	var a = loaded_scene.instance()
+	a.set_pos(get_pos())
+	a.set_z(get_pos().y)
+	a.change_allegiance("enemy")
+	get_tree().get_root().get_node("Game/Actors").add_child(a)
 
 func _process(dt):
 	pass

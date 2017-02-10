@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/debug_grass_16.png" type="Texture" id=2]
+[ext_resource path="res://addons/spawn_point/SpawnPoint.gd" type="Script" id=3]
+[ext_resource path="res://addons/spawn_point/icon.png" type="Texture" id=4]
 
 [sub_resource type="NavigationPolygon" id=1]
 
@@ -84,5 +86,13 @@ build_mode = 0
 polygon = Vector2Array( -56.3513, -23.9966, -8.92905, -32.6286, 56.6737, -25.4589, 88.9373, -1.44037, 60.4103, 24.4329, 1.36606, 33.0574, -62.9855, 24.4329, -88.1954, 0.549866 )
 shape_range = Vector2( 0, 0 )
 trigger = false
+
+[node name="SpawnPoint" type="Position2D" parent="."]
+
+transform/pos = Vector2( 159.957, 32.1865 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/TestEnemy.tscn"
+spawn_delay = 0
 
 

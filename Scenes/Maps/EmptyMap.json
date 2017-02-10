@@ -1,24 +1,4 @@
 {
     "spawnlist": [
-        ["testenemy", 0.0],
-        ["testenemy", 0.0],
-        ["testenemy", 0.0],
-        ["testenemy", 0.0],
-        ["testenemy", 0.0],
-        ["testenemy", 0.0],
-        ["testenemy", 1.0],
-        ["testenemy", 1.0],
-        ["testenemy", 1.0],
-        ["testenemy", 0.2],
-        ["testenemy", 0.2],
-        ["testenemy", 0.2],
-        ["testenemy", 0.2],
-        ["testenemy", 0.2],
-        ["testenemy", 0.2],
-        ["testenemy", 0.2],
-        ["testenemy", 1.0],
-        ["testenemy", 1.0],
-        ["testenemy", 2.0],
-        ["testenemy", 2.0],
     ]
 }
