@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/greynoise.png" type="Texture" id=2]
+[ext_resource path="res://addons/spawn_point/SpawnPoint.gd" type="Script" id=3]
+[ext_resource path="res://addons/spawn_point/icon.png" type="Texture" id=4]
 
 [sub_resource type="NavigationPolygon" id=1]
 
@@ -32,5 +34,23 @@ transform/pos = Vector2( 64, 144 )
 
 texture = ExtResource( 2 )
 centered = false
+
+[node name="SpawnPoint" type="Position2D" parent="."]
+
+transform/pos = Vector2( 61.0347, 63.6884 )
+transform/scale = Vector2( 1, 1 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Member.tscn"
+spawn_delay = 0
+
+[node name="SpawnPoint2" type="Position2D" parent="."]
+
+transform/pos = Vector2( 162.034, 106.043 )
+transform/scale = Vector2( 1, 1 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Member.tscn"
+spawn_delay = 0
 
 

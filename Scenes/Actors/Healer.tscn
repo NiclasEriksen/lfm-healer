@@ -34,6 +34,8 @@ ability_4_scene = "res://Scenes/Abilities/Shield.tscn"
 
 [node name="MoveModule" parent="." instance=ExtResource( 2 )]
 
+AVOID_COLLISION = true
+AVOID_FORCE = 0.3
 stats_node = NodePath("../StatsModule")
 
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]
