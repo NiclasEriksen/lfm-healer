@@ -34,7 +34,7 @@ func _enter_tree():
 	l.set_autowrap(true)
 	l.set_clip_text(true)
 	l.set_size(Vector2(70, 16))
-	l.set_pos(Vector2(-35, -24))
+	l.set_pos(Vector2(-35, -32))
 	update_display()
 
 func _ready():
@@ -59,6 +59,7 @@ func update_display():
 		get_node("Sprite").set_hframes(td.x)
 		get_node("Sprite").set_vframes(td.y)
 		get_node("Sprite").set_frame(0)
+		get_node("Sprite").set_scale(Vector2(2, 2))
 		get_node("Label").set_text(display_scene.get_name())
 
 func spawn():

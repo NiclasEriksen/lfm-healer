@@ -44,6 +44,24 @@ __meta__ = { "_editor_icon":ExtResource( 4 ) }
 actor_scene = "res://Scenes/Actors/TestEnemy.tscn"
 spawn_delay = 0
 
+[node name="SpawnPoint3" type="Position2D" parent="."]
+
+transform/pos = Vector2( 345.347, 217.479 )
+transform/scale = Vector2( 1, 1 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Archer.tscn"
+spawn_delay = 0
+
+[node name="SpawnPoint4" type="Position2D" parent="."]
+
+transform/pos = Vector2( 328.2, 110.081 )
+transform/scale = Vector2( 1, 1 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Blub.tscn"
+spawn_delay = 0
+
 [node name="SpawnPoint2" type="Position2D" parent="."]
 
 transform/pos = Vector2( 417.034, 164.043 )
