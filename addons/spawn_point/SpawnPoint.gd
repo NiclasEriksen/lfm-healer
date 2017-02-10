@@ -66,7 +66,6 @@ func spawn():
 	print("Spawning actor from spawnpoint...")
 	if not loaded_scene:
 		print("No scene set for spawner.")
-		queue_free()
 		return
 	var a = loaded_scene.instance()
 	a.set_pos(get_pos())

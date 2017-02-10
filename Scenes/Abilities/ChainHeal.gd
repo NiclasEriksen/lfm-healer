@@ -57,7 +57,7 @@ func _process(delta):
 			targets = []
 		var points = []
 		for t in targets:
-			points.append(t.get_global_pos())
+			points.append(t.get_body_pos())
 			t.set_highlighted(true)
 #		hud.update()
 		hud.draw_lines(points, Color(0.2,0.9,0.1,0.5))
