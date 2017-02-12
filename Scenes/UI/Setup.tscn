@@ -1,0 +1,251 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/UI/FormationEditor.gd" type="Script" id=2]
+[ext_resource path="res://Assets/UI/grey_beweled_box.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/UI/PickerFrame.gd" type="Script" id=4]
+[ext_resource path="res://Assets/UI/hp_mid_blue.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/hp_mid.png" type="Texture" id=6]
+
+[node name="Setup" type="Panel"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 1 )
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 800.0
+margin/bottom = 500.0
+
+[node name="FormationEditor" type="HBoxContainer" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+rect/min_size = Vector2( 800, 500 )
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+alignment = 0
+script/script = ExtResource( 2 )
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="FormationEditor"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 304.0
+margin/bottom = 500.0
+alignment = 0
+
+[node name="Title" type="HBoxContainer" parent="FormationEditor/ChoiceContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 304.0
+margin/bottom = 100.0
+alignment = 0
+
+[node name="Label" type="Label" parent="FormationEditor/ChoiceContainer/Title"]
+
+rect/min_size = Vector2( 200, 100 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 200.0
+margin/bottom = 100.0
+text = "Formation"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Formations" type="OptionButton" parent="FormationEditor/ChoiceContainer/Title"]
+
+rect/min_size = Vector2( 100, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 204.0
+margin/top = 0.0
+margin/right = 304.0
+margin/bottom = 100.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+flat = false
+align = 0
+selected = -1
+items = [  ]
+
+[node name="Choices" type="VBoxContainer" parent="FormationEditor/ChoiceContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 104.0
+margin/right = 304.0
+margin/bottom = 104.0
+alignment = 0
+
+[node name="PickerContainer" type="Patch9Frame" parent="FormationEditor"]
+
+visibility/behind_parent = true
+rect/min_size = Vector2( 400, 400 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 0
+size_flags/vertical = 0
+margin/left = 308.0
+margin/top = 50.0
+margin/right = 708.0
+margin/bottom = 450.0
+texture = ExtResource( 3 )
+patch_margin/left = 8
+patch_margin/top = 8
+patch_margin/right = 8
+patch_margin/bottom = 8
+
+[node name="PickerFrame" type="Container" parent="FormationEditor/PickerContainer"]
+
+rect/min_size = Vector2( 340, 340 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 0
+size_flags/vertical = 0
+margin/left = 30.0
+margin/top = 30.0
+margin/right = 360.0
+margin/bottom = 360.0
+script/script = ExtResource( 4 )
+
+[node name="Sprite1" type="Sprite" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+texture = ExtResource( 5 )
+
+[node name="Label1" type="Label" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -32.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 45.0
+text = "1"
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Sprite2" type="Sprite" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+texture = ExtResource( 6 )
+
+[node name="Label2" type="Label" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -32.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 45.0
+text = "2"
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Sprite3" type="Sprite" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+texture = ExtResource( 6 )
+
+[node name="Label3" type="Label" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -32.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 45.0
+text = "3"
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Sprite4" type="Sprite" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+texture = ExtResource( 6 )
+
+[node name="Label4" type="Label" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -32.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 45.0
+text = "4"
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Sprite5" type="Sprite" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+texture = ExtResource( 6 )
+
+[node name="Label5" type="Label" parent="FormationEditor/PickerContainer/PickerFrame"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -32.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 45.0
+text = "5"
+align = 1
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="item_selected" from="FormationEditor/ChoiceContainer/Title/Formations" to="FormationEditor" method="_on_Formations_item_selected"]
+
+[connection signal="input_event" from="FormationEditor/PickerContainer/PickerFrame" to="FormationEditor" method="_on_PickerFrame_input_event"]
+
+

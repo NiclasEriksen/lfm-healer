@@ -394,7 +394,7 @@ spawn_delay = 0
 
 [node name="SpawnPoint13" type="Position2D" parent="."]
 
-transform/pos = Vector2( 680.7, 75.8607 )
+transform/pos = Vector2( 669.87, 79.4707 )
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }
 actor_scene = "res://Scenes/Actors/Member.tscn"
@@ -478,6 +478,14 @@ transform/pos = Vector2( 910.689, 36.7035 )
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }
 actor_scene = "res://Scenes/Actors/TestEnemy.tscn"
+spawn_delay = 0
+
+[node name="SpawnPoint15" type="Position2D" parent="."]
+
+transform/pos = Vector2( 331.241, 69.1661 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Tank.tscn"
 spawn_delay = 0
 
 

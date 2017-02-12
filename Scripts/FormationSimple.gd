@@ -7,16 +7,17 @@ var leader = 0
 var min_scale = Vector2(0.5, 0.5)
 var max_scale = Vector2(2, 1.5)
 var default_scale = Vector2(0.85, 0.85)
+var formation_size = Vector2(100, 100)
 var formation_scale = default_scale setget set_scale, get_scale
 var orientation = Vector2() setget set_orientation, get_orientation
 var velocity = 50 setget set_velocity, get_velocity
 var form_velocity = velocity * 1.5
 var formations = {
 	1:[Vector2(0, 0)],
-	2:[Vector2(-25, 0), Vector2(25, 0)],
-	3:[Vector2(0, 0), Vector2(-35, -25), Vector2(35, -25)],
-	4:[Vector2(0, 0), Vector2(-30, -25), Vector2(30, -25), Vector2(0, -50)],
-	5:[Vector2(0, 0), Vector2(-40, -25), Vector2(40, -25), Vector2(20, -60), Vector2(-20, -60)]
+	2:[Vector2(-0.25, 0), Vector2(0.25, 0)],
+	3:[Vector2(0, 0), Vector2(-0.35, -0.25), Vector2(0.35, -0.25)],
+	4:[Vector2(0, 0), Vector2(-0.30, -0.25), Vector2(0.30, -0.25), Vector2(0, -0.50)],
+	5:[Vector2(0, 0), Vector2(-0.40, -0.25), Vector2(0.40, -0.25), Vector2(0.20, -0.60), Vector2(-0.20, -0.60)]
 }
 var formation_positions = []
 var max_unit_count = 5
@@ -79,13 +80,13 @@ func get_formation_pos(i):
 	var p = get_global_transform()[2]
 	var angle = get_orientation().angle()
 	if i >= 0 and i < formation_positions.size():
-		return p + (formation_positions[i] * get_scale()).rotated(angle)
+		return p + (formation_positions[i] * formation_size * get_scale()).rotated(angle)
 	else:
 		print("There's no formation position available for ", i, ".")
 		return Vector2()
 
 func get_leader_offset():
-	return (formation_positions[0] * get_scale()).rotated(get_orientation().angle())
+	return (formation_positions[0] * formation_size * get_scale()).rotated(get_orientation().angle())
 
 func lookup_formation_pos(i):
 	if i == leader:
@@ -162,8 +163,8 @@ func adjust_raycasts():
 		elif fp.x > right_most.x:
 			right_most = fp
 	var angle = get_orientation().angle()
-	var lm = (left_most * get_scale() - Vector2(RC_MARGIN, 0)).rotated(angle)
-	var rm = (right_most * get_scale() + Vector2(RC_MARGIN, 0)).rotated(angle)
+	var lm = (left_most * formation_size * get_scale() - Vector2(RC_MARGIN, 0)).rotated(angle)
+	var rm = (right_most * formation_size * get_scale() + Vector2(RC_MARGIN, 0)).rotated(angle)
 	rc_left.set_pos(lm)
 	rc_right.set_pos(rm)
 
@@ -193,7 +194,7 @@ func _draw():
 		else:
 			draw_line(rcr.get_pos(), rcr.get_pos() + rcr.get_cast_to(), Color(0.3, 0.3, 0.9, 0.7), 2)
 		for fp in formation_positions:
-			draw_circle((fp * get_scale()).rotated(angle), 10, Color(0.8, 0.2, 0.2, 0.5))
+			draw_circle((fp * formation_size * get_scale()).rotated(angle), 10, Color(0.8, 0.2, 0.2, 0.5))
 		draw_line(Vector2(), get_orientation() * 30, Color(0.6, 0.6, 0.0), 2)
 		draw_set_transform_matrix(get_global_transform().inverse())
 		draw_line(get_global_pos(), get_ahead_pos(), Color(0.2, 0.8, 0.5), 1)

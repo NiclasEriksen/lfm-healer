@@ -24,6 +24,11 @@ func get_actor_types():
 		l.append(k)
 	return l
 
+func get_actor_scene(n):
+	if actors.has(n):
+		return actors[n]
+	return
+
 func _ready():
 	set_process(true)
 	set_process_unhandled_input(true)
