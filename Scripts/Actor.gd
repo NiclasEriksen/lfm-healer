@@ -169,3 +169,9 @@ func _ready():
 			debuff_node = get_node("Debuff")
 		if has_node("Brain"):
 			brain_node = get_node("Brain")
+
+func _on_ThreatTable_aggro( target ):
+	if has_method("set_target"):
+		set_target(target)
+		return
+	print("No method set_target")

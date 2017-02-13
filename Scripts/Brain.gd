@@ -29,21 +29,26 @@ func push_state(state):
 		if s == get_current_state() or s == null:
 			return
 		if s.check_reqs():
-			print("Requirements met for state " + s.name + ", pushing.")
-			if get_current_state():
-				print("Previous state: ", get_current_state().name)
+			if Globals.get("debug_mode"):
+				print("Requirements met for state " + s.name + ", pushing.")
+				if get_current_state():
+					print("Previous state: ", get_current_state().name)
 			state_stack.append(s)
 			s.on_enter()
 			emit_signal("entered_state", s.name)
 		else:
-			print("Requirements for state not met.")
+			if Globals.get("debug_mode"):
+				print("Requirements for state ", s.name, " not met.")
 
 func pop_state():
 	emit_signal("exit_state", get_current_state().name)
-	print("Popping state \"" + get_current_state().name +  "\".")
+	if Globals.get("debug_mode"):
+		print("Popping state \"" + get_current_state().name +  "\".")
 	state_stack.pop_back()
-	if state_stack.size():
-		print("Current state: ", get_current_state().name)
+
+	if Globals.get("debug_mode"):
+		if state_stack.size():
+			print("Current state: ", get_current_state().name)
 
 func get_current_state():
 	if state_stack.size():

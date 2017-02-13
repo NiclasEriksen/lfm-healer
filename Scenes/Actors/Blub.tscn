@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Scenes/Actors/Blub.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Actors/blubb.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Modules/ThreatTable.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -63,5 +64,9 @@ effect_type = "earth"
 amount = -15.0
 
 [node name="Brain" parent="." instance=ExtResource( 7 )]
+
+[node name="ThreatTable" parent="." instance=ExtResource( 8 )]
+
+[connection signal="aggro" from="ThreatTable" to="." method="_on_ThreatTable_aggro"]
 
 

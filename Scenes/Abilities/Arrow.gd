@@ -26,22 +26,26 @@ func _fixed_process(dt):
 			var target_node = target.get_ref()
 			target_pos = target_node.get_body_pos()
 			if flown >= flytime:
+				var o = get_owner()
+				var origin_module = null
+				if o:
+					origin_module = o.stats_node
 				if effect_module:
-					if effect_module.get_ref() and target.get_ref().has_node("StatsModule"):
-						target.get_ref().get_node("StatsModule").apply_effect(effect_module.get_ref(), null)
+					if effect_module.get_ref() and target_node.has_node("StatsModule"):
+						target_node.get_node("StatsModule").apply_effect(effect_module.get_ref(), origin_module)
 				if dot_module:
-					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
+					if dot_module.get_ref() and target_node.stats_node:
 						var dm = dot_module.get_ref().duplicate()
-						if owner.get_ref():
-							dm.set_unique_ref(owner.get_ref().get_instance_ID())
-						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
+						if o:
+							dm.set_unique_ref(o.get_instance_ID())
+						target_node.stats_node.apply_effect(dm, origin_module)
 				if status_module:
-					if dot_module.get_ref() and target.get_ref().has_node("StatsModule"):
+					if dot_module.get_ref() and target_node.stats_node:
 						var dm = dot_module.get_ref().duplicate()
-						if owner.get_ref():
-							dm.set_unique_ref(owner.get_ref().get_instance_ID())
+						if o:
+							dm.set_unique_ref(o.get_instance_ID())
 
-						target.get_ref().get_node("StatsModule").apply_effect(dm, null)
+						target_node.get_node("StatsModule").apply_effect(dm, origin_module)
 
 						# print("And doing dmg!")
 				# print("There!")

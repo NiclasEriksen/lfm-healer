@@ -51,6 +51,8 @@ var invulnerable = false setget set_invulnerable, is_invulnerable
 export var stealthed = false setget set_stealthed, is_stealthed
 signal stealth_broken
 signal critical_hit
+signal dmg_taken(origin, amount)
+signal healing_taken(origin, amount)
 
 var final_stats = {}
 var active_effects = []
@@ -245,11 +247,14 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 				amount *= 1.5
 		if parent.has_node("ActorBase"):
 			if amount > 0 and effectmodule.effect_stat == "hp":
+				if originmodule:
+					emit_signal("healing_taken", originmodule.parent, amount)
 				parent.get_node("ActorBase").on_heal()
 			elif amount < 0 and effectmodule.effect_stat == "hp":
 				var tar = null
 				if originmodule:
 					tar = originmodule.parent
+					emit_signal("dmg_taken", tar, -amount)
 				parent.get_node("ActorBase").on_hit(tar)
 				if parent.is_healer():
 					parent.set_target(tar)

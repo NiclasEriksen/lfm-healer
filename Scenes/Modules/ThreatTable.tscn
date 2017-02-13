@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://Scripts/ThreatTable.gd" type="Script" id=1]
+
+[node name="ThreatTable" type="Node"]
+
+script/script = ExtResource( 1 )
+dmg_scale = 1
+heal_scale = 0.5
+aggro_treshold = 15
+refresh_timeout = 0.5
+
+[node name="Refresh" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = false
+autostart = true
+
+[connection signal="aggro" from="." to="." method="_on_ThreatTable_aggro"]
+
+[connection signal="timeout" from="Refresh" to="." method="_on_Refresh_timeout"]
+
+

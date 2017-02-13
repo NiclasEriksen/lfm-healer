@@ -26,6 +26,7 @@ func _fixed_process(dt):
 			if target.get_ref():
 				if effect_module and alliance:
 					if effect_module.get_ref():
+						var om = get_owner().stats_node
 						var targets = get_node("Area2D").get_overlapping_bodies()
 						var blast_targets = get_node("BlastZone").get_overlapping_bodies()
 						for target in blast_targets:
@@ -36,10 +37,10 @@ func _fixed_process(dt):
 									var em = effect_module.get_ref().duplicate()
 									if not target in targets:
 										em.set_amount(em.get_amount() / 2)
-									target.get_node("StatsModule").apply_effect(em, null)
+									target.get_node("StatsModule").apply_effect(em, om)
 									if dot_module:
 										var dm = dot_module.get_ref().duplicate()
-										target.get_node("StatsModule").apply_effect(dm, null)
+										target.get_node("StatsModule").apply_effect(dm, om)
 	if flown < flytime:
 		fly(dt)
 	else:

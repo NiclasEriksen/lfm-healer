@@ -45,7 +45,7 @@ func _ready():
 		hide()
 
 func update_display():
-	if not get_tree():
+	if get_tree() == null:
 		return
 	if not loaded_scene:
 		return

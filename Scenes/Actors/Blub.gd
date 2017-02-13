@@ -12,5 +12,3 @@ func _ready():
 
 func attack(target):
 	fire_projectile(target)
-
-
