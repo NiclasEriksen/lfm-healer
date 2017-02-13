@@ -254,6 +254,7 @@ func apply_effect(effectmodule, originmodule): # Recieves an EffectModule, and a
 				var tar = null
 				if originmodule:
 					tar = originmodule.parent
+					print("damage_taken ", tar, " ", -amount)
 					emit_signal("dmg_taken", tar, -amount)
 				parent.get_node("ActorBase").on_hit(tar)
 				if parent.is_healer():
