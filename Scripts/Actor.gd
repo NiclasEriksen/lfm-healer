@@ -23,6 +23,7 @@ var party_leader = false setget set_leader, is_leader
 var healer = false
 signal targeted_enemy(enemy)
 signal cleared_target
+signal attack(target)
 
 func get_brain():
 	return brain_node
@@ -122,9 +123,7 @@ func attack(target):
 		if Globals.get("debug_mode"):
 			print(self, " attacking ", target)
 		target.stats_node.apply_effect(attack_node, stats_node)
-
-func _on_ActorBase_attack_effect(target):
-	pass
+		emit_signal("attack", target)
 
 func get_body_pos():
 	if move_node:
@@ -149,6 +148,7 @@ func fire_projectile(target):
 		a.flytime = a.flytime * dist_scale
 		a.y_offset = a.y_offset * dist_scale
 		get_tree().get_root().get_node("Game/Objects").add_child(a)
+		emit_signal("attack", target)
 	else:
 		print("Actor tried to shoot a projectile, but none has been configured.")
 
@@ -156,7 +156,7 @@ func _ready():
 	# Connect signals
 	if has_node("ActorBase"):
 		actorbase_node = get_node("ActorBase")
-		actorbase_node.connect("attack", self, "_on_ActorBase_attack_effect")
+		connect("attack", actorbase_node, "_on_Actor_attack")
 		actorbase_node.connect("enemy_in_personal_space", self, "enemy_entered_personal_space")
 		if has_node("MoveModule"):
 			move_node = get_node("MoveModule")
@@ -174,6 +174,7 @@ func _ready():
 			debuff_node = get_node("Debuff")
 		if has_node("Brain"):
 			brain_node = get_node("Brain")
+			brain_node.connect("entered_state", actorbase_node, "_on_Brain_entered_state")
 
 func _on_ThreatTable_aggro( target ):
 	if has_method("set_target"):

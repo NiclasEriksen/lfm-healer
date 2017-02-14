@@ -109,16 +109,6 @@ func _process(dt):
 			check_death()
 			check_healthy()
 			stunned = stats.is_stunned()
-#		if not stunned:
-#			if target_enemy:
-#				if not target_enemy.get_ref():
-#					if movement:
-#						movement.set_direction((target_enemy.get_ref().get_body_pos() - parent.get_body_pos()).normalized())
-#				else:
-#					target_enemy = null
-#					emit_signal("cleared_target")
-#			elif not parent.is_healer():
-#				check_in_range()
 
 			if idle:
 				idle_time += dt
@@ -136,6 +126,8 @@ func _process(dt):
 			flip_cd -= dt
 		if state_change_cd > 0.0:
 			state_change_cd -= dt
+		if attacking:
+			on_attack()
 		update_state()
 
 func _fixed_process(dt):
@@ -205,8 +197,6 @@ func on_heal():
 func on_attack():
 	if stats:
 		stats.emit_signal("stealth_broken")
-	attacking = true
-	idle = false
 
 	if not animations.get_current_animation() == "attack" or not animations.is_playing():
 		if not animations.get_current_animation() == "idle":
@@ -251,10 +241,10 @@ func on_idle():
 func on_walk():
 	idle = false
 	if state_change_cd <= 0:
-		if stats and not animations.get_current_animation() == "attack":
+		if stats and not (animations.get_current_animation() == "attack" and animations.is_playing()):
 			var ms = stats.get_actual("movement_speed") / 80
 			animations.set_speed(ms)
-		if not animations.get_current_animation() == "walk" and not animations.get_current_animation() == "attack":
+		if not animations.get_current_animation() == "walk" and not (animations.get_current_animation() == "attack" and animations.is_playing()):
 			sprite.set_rot(0)
 			animations.play("walk")
 			state_change_cd = 0.3
@@ -326,7 +316,8 @@ func update_state():
 	else:
 		get_node("State").set_enabled(false)
 
-func _on_ActorBase_attack(tar):
+func _on_Actor_attack(tar):
+	print("attacking ", tar)
 	if has_attack_anim:
 		animations.play("attack")
 	else:
@@ -368,9 +359,11 @@ func _on_MoveModule_moved():
 
 
 func _on_Brain_entered_state(state):
+	attacking = false
 	if state == "idle":
 		on_idle()
-
+	elif state == "attack":
+		attacking = true
 
 func _on_PersonalSpace_body_enter(body):
 	if body extends KinematicBody2D and not parent.get_allegiance() in body.get_groups():

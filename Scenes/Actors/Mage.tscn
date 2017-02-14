@@ -77,11 +77,6 @@ transform/pos = Vector2( 4, 0 )
 spritesheet = ExtResource( 6 )
 has_death_anim = true
 
-[node name="Sprite" parent="ActorBase"]
-
-texture = ExtResource( 6 )
-frame = 1
-
 [node name="HPBarPos" type="Position2D" parent="."]
 
 transform/pos = Vector2( 0, -37 )
@@ -166,4 +161,3 @@ BASE_MOVEMENT_SPEED = 50
 [node name="Brain" parent="." instance=ExtResource( 11 )]
 
 
-[editable path="ActorBase"]

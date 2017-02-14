@@ -32,7 +32,6 @@ func update(dt):
 	else:
 		if attack_cd <= 0 and not stunned:
 			brain.owner.attack(target)
-			actorbasemodule._on_ActorBase_attack(target)
 			attack_cd = attack_speed
 		else:
 			attack_cd -= dt
