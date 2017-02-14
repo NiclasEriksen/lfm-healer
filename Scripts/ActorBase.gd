@@ -15,8 +15,7 @@ onready var parent = get_parent()
 var MIN_SEEK_DIST = 180
 signal attack
 signal death(pos)
-signal targeted_enemy(enemy)
-signal cleared_target()
+signal enemy_in_personal_space(enemy)
 var healthy = true
 #onready var RAYCAST_LENGTH = 3 * get_parent().get_node("CollisionShape2D").get_shape().get_radius()
 var attack_cd = 0.0
@@ -51,6 +50,7 @@ func _ready():
 	if not get_tree().is_editor_hint():
 		set_process(true)
 		set_fixed_process(true)
+
 		parent = get_parent()
 		if parent.has_node("MoveModule"):
 			movement = parent.get_node("MoveModule")
@@ -370,3 +370,8 @@ func _on_MoveModule_moved():
 func _on_Brain_entered_state(state):
 	if state == "idle":
 		on_idle()
+
+
+func _on_PersonalSpace_body_enter(body):
+	if body extends KinematicBody2D and not parent.get_allegiance() in body.get_groups():
+		emit_signal("enemy_in_personal_space", body)

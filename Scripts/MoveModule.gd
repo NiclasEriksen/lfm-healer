@@ -192,13 +192,12 @@ func steer(dir):
 
 	return (dir + adjusted_angle).normalized()
 
-func _on_ActorBase_targeted_enemy( enemy ):
+func _on_Actor_targeted_enemy( enemy ):
 	target = weakref(enemy)
 	if raycast:
 		raycast.add_exception(enemy)
 
-
-func _on_ActorBase_cleared_target():
+func _on_Actor_cleared_target():
 	if not target:
 		return
 	if target.get_ref() and raycast:

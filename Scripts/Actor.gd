@@ -4,6 +4,7 @@ var alliances = ["friendly", "enemy"]
 export(String, "friendly", "enemy") var alliance = "friendly" setget change_allegiance, get_allegiance
 export(String, FILE, "*.tscn") var projectile = null setget set_projectile, get_projectile
 export(String, FILE, "*.tscn") var hit_effect = null setget set_hit_effect, get_hit_effect
+export(bool) var ATTACK_OF_OPPORTUNITY = false
 var hit_effect_scene = null
 var projectile_scene = null
 var target = null setget set_target, get_target
@@ -20,6 +21,8 @@ export(NodePath) var party = null setget set_party, get_party
 export(int) var party_index = -1 setget set_party_index, get_party_index
 var party_leader = false setget set_leader, is_leader
 var healer = false
+signal targeted_enemy(enemy)
+signal cleared_target
 
 func get_brain():
 	return brain_node
@@ -27,9 +30,10 @@ func get_brain():
 func set_target(t):
 	if t:
 		target = weakref(t)
-		actorbase_node.emit_signal("targeted_enemy", t)
+		emit_signal("targeted_enemy", t)
 	else:
-		actorbase_node.emit_signal("cleared_target")
+		if target:
+			emit_signal("cleared_target", target.get_ref())
 		target = null
 
 func get_target():
@@ -152,13 +156,14 @@ func _ready():
 	# Connect signals
 	if has_node("ActorBase"):
 		actorbase_node = get_node("ActorBase")
-		get_node("ActorBase").connect("attack", self, "_on_ActorBase_attack_effect")
+		actorbase_node.connect("attack", self, "_on_ActorBase_attack_effect")
+		actorbase_node.connect("enemy_in_personal_space", self, "enemy_entered_personal_space")
 		if has_node("MoveModule"):
 			move_node = get_node("MoveModule")
-			move_node.connect("moved", get_node("ActorBase"), "_on_MoveModule_moved")
-			move_node.connect("stalled", get_node("ActorBase"), "_on_MoveModule_stalled")
-			get_node("ActorBase").connect("targeted_enemy", move_node, "_on_ActorBase_targeted_enemy")
-			get_node("ActorBase").connect("cleared_target", move_node, "_on_ActorBase_cleared_target")
+			move_node.connect("moved", actorbase_node, "_on_MoveModule_moved")
+			move_node.connect("stalled", actorbase_node, "_on_MoveModule_stalled")
+			connect("targeted_enemy", move_node, "_on_Actor_targeted_enemy")
+			connect("cleared_target", move_node, "_on_Actor_cleared_target")
 		if has_node("StatsModule"):
 			stats_node = get_node("StatsModule")
 		if has_node("Attack"):
@@ -175,3 +180,7 @@ func _on_ThreatTable_aggro( target ):
 		set_target(target)
 		return
 	print("No method set_target")
+
+func enemy_entered_personal_space(enemy):
+	if ATTACK_OF_OPPORTUNITY:
+		set_target(enemy)

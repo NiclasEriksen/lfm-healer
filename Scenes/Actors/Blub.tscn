@@ -27,6 +27,7 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = "res://Scenes/Objects/GooBall.tscn"
 hit_effect = null
+ATTACK_OF_OPPORTUNITY = false
 party = null
 party_index = -1
 

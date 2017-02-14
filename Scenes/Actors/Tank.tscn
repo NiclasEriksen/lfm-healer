@@ -27,6 +27,7 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = null
 hit_effect = null
+ATTACK_OF_OPPORTUNITY = true
 party = null
 party_index = -1
 
