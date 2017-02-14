@@ -67,7 +67,7 @@ func _process(dt):
 
 func _on_Refresh_timeout():
 	var top = get_top()
-	if not get_top():
+	if not top:
 		return
 	
 	if top == current_top:

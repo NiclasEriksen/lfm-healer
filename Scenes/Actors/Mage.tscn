@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/Modules/StatsModule.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Actors/mage_16.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Actors/wizardpurp.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Modules/BuffModule.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Effects/fire_gradient.tres" type="ColorRamp" id=8]
 [ext_resource path="res://Assets/Effects/tiny_smoke.png" type="Texture" id=9]
@@ -30,6 +30,7 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = "res://Scenes/Objects/Fireball.tscn"
 hit_effect = null
+ATTACK_OF_OPPORTUNITY = false
 party = null
 party_index = -1
 
@@ -72,8 +73,9 @@ amount = -5.0
 
 [node name="ActorBase" parent="." instance=ExtResource( 5 )]
 
+transform/pos = Vector2( 4, 0 )
 spritesheet = ExtResource( 6 )
-has_attack_anim = false
+has_death_anim = true
 
 [node name="Sprite" parent="ActorBase"]
 
