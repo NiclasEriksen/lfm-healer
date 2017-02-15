@@ -21,6 +21,7 @@ export(NodePath) var party = null setget set_party, get_party
 export(int) var party_index = -1 setget set_party_index, get_party_index
 var party_leader = false setget set_leader, is_leader
 var healer = false
+var attack_cd = 0.0
 signal targeted_enemy(enemy)
 signal cleared_target
 signal attack(target)
@@ -159,6 +160,7 @@ func fire_projectile(target):
 
 func _ready():
 	# Connect signals
+	set_process(true)
 	if has_node("ActorBase"):
 		actorbase_node = get_node("ActorBase")
 		connect("attack", actorbase_node, "_on_Actor_attack")
@@ -180,6 +182,12 @@ func _ready():
 		if has_node("Brain"):
 			brain_node = get_node("Brain")
 #			brain_node.connect("entered_state", actorbase_node, "_on_Brain_entered_state")
+
+func _process(dt):
+	if attack_cd > 0:
+		attack_cd -= dt
+	else:
+		attack_cd = 0
 
 func _on_ThreatTable_aggro( target ):
 	if has_method("set_target"):

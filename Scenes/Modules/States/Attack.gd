@@ -1,7 +1,6 @@
 extends "res://Scenes/Modules/States/State.gd"
 
 var attack_dist = 50
-var attack_cd	= 0.5
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -30,9 +29,6 @@ func update(dt):
 	if dist > attack_dist:
 		brain.push_state("seek_target")
 	else:
-		if attack_cd <= 0 and not stunned:
+		if brain.owner.attack_cd <= 0 and not stunned:
 			brain.owner.attack(target)
-			attack_cd = attack_speed
-		else:
-			attack_cd -= dt
-
+			brain.owner.attack_cd = attack_speed
