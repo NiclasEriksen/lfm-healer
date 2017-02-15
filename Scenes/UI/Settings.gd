@@ -6,7 +6,34 @@ var maps = {}
 # var a = 2
 # var b = "textvar"
 
+func save():
+    var dir = Directory.new()
+    var dir_name = "test-dir"
+    var filename = "test_file.txt"
+    var user_dir = "user://"
+
+    dir.open(user_dir)
+    print( "User directory: " + user_dir )
+
+    if( !dir.dir_exists( dir_name ) ):
+        print( dir_name + " doesn't exist." )
+        dir.make_dir_recursive( dir_name )
+    else:
+        print( dir_name + " exists." )
+
+    var fp_user = File.new()
+    var f_name = user_dir + dir_name + "/" + filename;
+    var err = fp_user.open( f_name, File.WRITE )
+    print( f_name + " opened." )
+    print( "fp_user error code: " + str(err) )
+
+    fp_user.store_line( "This is a test file." )
+    print( f_name + " written." )
+
+    fp_user.close()
+
 func _ready():
+	save()
 	# Called every time the node is added to the scene.
 	# Initialization here
 	var dm = Globals.get("debug_mode")

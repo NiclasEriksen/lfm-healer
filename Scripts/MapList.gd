@@ -43,6 +43,7 @@ func get_maps():
 	mapfiles.sort()		# sort by file name
 
 	return mapfiles
+
 func get_maps_with_names():
 	pass
 
