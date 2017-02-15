@@ -261,16 +261,6 @@ func on_critical_hit():
 	# get_node("EffectPlayer").play("crit")
 	pass
 
-func _on_MoveModule_stalled():
-	on_idle()
-
-func _on_MoveModule_moved():
-	on_walk()
-
-func _on_Brain_entered_state(state):
-	if state == "idle":
-		on_idle()
-
 func _on_PersonalSpace_body_enter(body):
 	if body extends KinematicBody2D and not parent.get_allegiance() in body.get_groups():
 		emit_signal("enemy_in_personal_space", body)
@@ -332,10 +322,6 @@ func on_attack():
 	if stats:
 		stats.emit_signal("stealth_broken")
 
-	if not animations.get_current_animation() == "attack" or not animations.is_playing():
-		if not animations.get_current_animation() == "idle":
-			animations.play("idle")
-
 func on_death():
 	enabled = false
 	emit_signal("death", parent.get_body_pos())
@@ -359,22 +345,13 @@ func on_death():
 	root.get_node("Effects").add_child(de)
 	parent.queue_free()
 
-func on_idle():
-	animations.set_speed(1)
-	var cur_anim = animations.get_current_animation()
-	if state_change_cd <= 0:
-		if not cur_anim == "idle" or not cur_anim == "attack":
-			sprite.set_rot(0)
-			animations.play("idle")
-			state_change_cd = 0.3
-
-func on_walk():
-	if stats and not (animations.get_current_animation() == "attack" and animations.is_playing()):
-		var ms = stats.get_actual("movement_speed") / 80
-		animations.set_speed(ms)
-	if not animations.get_current_animation() == "walk" and not (animations.get_current_animation() == "attack" and animations.is_playing()):
-		sprite.set_rot(0)
-		animations.play("walk")
+#func on_walk():
+#	if stats and not (animations.get_current_animation() == "attack" and animations.is_playing()):
+#		var ms = stats.get_actual("movement_speed") / 80
+#		animations.set_speed(ms)
+#	if not animations.get_current_animation() == "walk" and not (animations.get_current_animation() == "attack" and animations.is_playing()):
+#		sprite.set_rot(0)
+#		animations.play("walk")
 
 func on_stunned():
 	animations.stop()

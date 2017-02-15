@@ -165,8 +165,8 @@ func _ready():
 		actorbase_node.connect("enemy_in_personal_space", self, "enemy_entered_personal_space")
 		if has_node("MoveModule"):
 			move_node = get_node("MoveModule")
-			move_node.connect("moved", actorbase_node, "_on_MoveModule_moved")
-			move_node.connect("stalled", actorbase_node, "_on_MoveModule_stalled")
+#			move_node.connect("moved", actorbase_node, "_on_MoveModule_moved")
+#			move_node.connect("stalled", actorbase_node, "_on_MoveModule_stalled")
 			connect("targeted_enemy", move_node, "_on_Actor_targeted_enemy")
 			connect("cleared_target", move_node, "_on_Actor_cleared_target")
 		if has_node("StatsModule"):
