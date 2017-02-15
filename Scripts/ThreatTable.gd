@@ -18,7 +18,7 @@ func _ready():
 	if get_parent().has_node("StatsModule"):
 		var sm = get_parent().get_node("StatsModule")
 		sm.connect("dmg_taken", self, "add_dmg_threat")
-	connect("aggro", get_parent(), "on_ThreatTable_aggro")
+	connect("aggro", get_parent(), "_on_ThreatTable_aggro")
 	get_node("Refresh").set_wait_time(refresh_timeout)
 	set_process(true)
 

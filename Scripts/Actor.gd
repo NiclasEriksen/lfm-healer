@@ -179,7 +179,7 @@ func _ready():
 			debuff_node = get_node("Debuff")
 		if has_node("Brain"):
 			brain_node = get_node("Brain")
-			brain_node.connect("entered_state", actorbase_node, "_on_Brain_entered_state")
+#			brain_node.connect("entered_state", actorbase_node, "_on_Brain_entered_state")
 
 func _on_ThreatTable_aggro( target ):
 	if has_method("set_target"):

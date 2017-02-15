@@ -306,12 +306,10 @@ func update_animations():
 			animations.play("walk")
 	elif state == "attack":
 		if not cur_anim == "attack" and not animations.is_playing():
-			print("not attack anim and not is_playing")
 			animations.play("idle")
 		elif cur_anim == "attack" and animations.is_playing():
 			pass
 		elif not cur_anim == "idle":
-			print("idle anim when attack")
 			animations.play("idle")
 	elif state == "dead":
 		pass

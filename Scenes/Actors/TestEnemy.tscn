@@ -76,6 +76,4 @@ actorbase_node = NodePath("../ActorBase")
 
 [node name="ThreatTable" parent="." instance=ExtResource( 8 )]
 
-[connection signal="aggro" from="ThreatTable" to="." method="_on_ThreatTable_aggro"]
-
 

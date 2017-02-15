@@ -197,7 +197,7 @@ func _on_Actor_targeted_enemy( enemy ):
 	if raycast:
 		raycast.add_exception(enemy)
 
-func _on_Actor_cleared_target():
+func _on_Actor_cleared_target(t):
 	if not target:
 		return
 	if target.get_ref() and raycast:
