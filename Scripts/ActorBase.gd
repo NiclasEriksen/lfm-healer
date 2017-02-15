@@ -17,13 +17,8 @@ signal attack
 signal death(pos)
 signal enemy_in_personal_space(enemy)
 var healthy = true
-#onready var RAYCAST_LENGTH = 3 * get_parent().get_node("CollisionShape2D").get_shape().get_radius()
-var attack_cd = 0.0
 var flip_cd = 0.0
 var state_change_cd = 0.0
-var idle_time = 0.0
-var idle = false
-var attacking = false
 var enabled = true
 onready var animations = get_node("AnimationPlayer")
 onready var sprite = get_node("Sprite")
@@ -109,25 +104,12 @@ func _process(dt):
 			check_death()
 			check_healthy()
 			stunned = stats.is_stunned()
-
-			if idle:
-				idle_time += dt
-				if idle_time > 2.0:
-					idle_time = 0
-#					if not parent.is_healer():
-#						check_in_range()
-			else:
-				if idle_time > 0:
-					idle_time -= dt
-				else:
-					idle_time = 0
 		
 		if flip_cd > 0.0:
 			flip_cd -= dt
 		if state_change_cd > 0.0:
 			state_change_cd -= dt
-		if attacking:
-			on_attack()
+		update_animations()
 		update_state()
 
 func _fixed_process(dt):
@@ -188,71 +170,6 @@ func check_healthy():
 	else:
 		healthy = true
 
-func check_in_range():
-	pass
-
-func on_heal():
-	get_node("EffectPlayer").play("Heal")
-
-func on_attack():
-	if stats:
-		stats.emit_signal("stealth_broken")
-
-	if not animations.get_current_animation() == "attack" or not animations.is_playing():
-		if not animations.get_current_animation() == "idle":
-			animations.play("idle")
-
-func on_death():
-	enabled = false
-	emit_signal("death", parent.get_body_pos())
-	parent.get_node("StatsModule").queue_free()
-	parent.get_node("CollisionShape2D").queue_free()
-	if parent.is_in_party():
-		parent.get_party().unregister_unit(parent.get_party_index())
-	for g in parent.get_groups():
-		parent.remove_from_group(g)
-	if Globals.get("debug_mode"):
-		print(self, " died.")
-	var de = death_effect.instance()
-	de.set_pos(parent.get_pos())
-	de.set_z(parent.get_z() - 8)
-	if has_death_anim:
-		var tex = sprite.get_texture()
-		var hf = sprite.get_hframes()
-		var vf = sprite.get_vframes()
-		de.set_scale(sprite.get_scale() * get_scale())
-		de.set_texture(tex, hf, vf)
-	root.get_node("Effects").add_child(de)
-	parent.queue_free()
-
-
-func on_idle():
-	idle = true
-	animations.set_speed(1)
-	var cur_anim = animations.get_current_animation()
-	if state_change_cd <= 0:
-		if not cur_anim == "idle" or not cur_anim == "attack":
-#			if animations.is_playing() and cur_anim == "walk":
-#				return
-			sprite.set_rot(0)
-			animations.play("idle")
-			state_change_cd = 0.3
-
-func on_walk():
-	idle = false
-	if state_change_cd <= 0:
-		if stats and not (animations.get_current_animation() == "attack" and animations.is_playing()):
-			var ms = stats.get_actual("movement_speed") / 80
-			animations.set_speed(ms)
-		if not animations.get_current_animation() == "walk" and not (animations.get_current_animation() == "attack" and animations.is_playing()):
-			sprite.set_rot(0)
-			animations.play("walk")
-			state_change_cd = 0.3
-
-func on_stunned():
-	animations.stop()
-	animations.set_current_animation("idle")
-
 func update_state():
 	var stunned = false
 	var stealthed = false
@@ -307,17 +224,10 @@ func update_state():
 
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)
-		if attacking:
-			get_node("State").set_color(Color(1.0, 0, 0))
-		elif idle:
-			get_node("State").set_color(Color(0.5, 0.5, 0))
-		else:
-			get_node("State").set_color(Color(0, 1, 0))
 	else:
 		get_node("State").set_enabled(false)
 
 func _on_Actor_attack(tar):
-	print("attacking ", tar)
 	if has_attack_anim:
 		animations.play("attack")
 	else:
@@ -357,14 +267,117 @@ func _on_MoveModule_stalled():
 func _on_MoveModule_moved():
 	on_walk()
 
-
 func _on_Brain_entered_state(state):
-	attacking = false
 	if state == "idle":
 		on_idle()
-	elif state == "attack":
-		attacking = true
 
 func _on_PersonalSpace_body_enter(body):
 	if body extends KinematicBody2D and not parent.get_allegiance() in body.get_groups():
 		emit_signal("enemy_in_personal_space", body)
+
+func update_animations():
+	if not parent:
+		return
+	var brain = parent.get_brain()
+	if not brain:
+		return
+	var state = brain.get_current_state()
+	if not state:
+		return
+	state = state.name
+	var cur_anim = animations.get_current_animation()
+	if state == "idle":
+		if not cur_anim == "idle":
+			animations.play("idle")
+	elif state == "seek_target":
+		if not cur_anim == "walk":
+			animations.play("walk")
+		elif not animations.is_playing():
+			animations.play("walk")
+	elif state == "follow_path":
+		if not cur_anim == "walk":
+			animations.play("walk")
+		elif not animations.is_playing():
+			animations.play("walk")
+	elif state == "follow_formation":
+		if not cur_anim == "walk":
+			animations.play("walk")
+		elif not animations.is_playing():
+			animations.play("walk")
+	elif state == "attack":
+		if not cur_anim == "attack" and not animations.is_playing():
+			print("not attack anim and not is_playing")
+			animations.play("idle")
+		elif cur_anim == "attack" and animations.is_playing():
+			pass
+		elif not cur_anim == "idle":
+			print("idle anim when attack")
+			animations.play("idle")
+	elif state == "dead":
+		pass
+	elif state == "reviving":
+		pass
+	elif state == "evade":
+		if not cur_anim == "walk":
+			animations.play("walk")
+		elif not animations.is_playing():
+			animations.play("walk")
+	elif state == "stunned":
+		pass
+	elif state == "celebrating":
+		pass
+
+func on_heal():
+	get_node("EffectPlayer").play("Heal")
+
+func on_attack():
+	if stats:
+		stats.emit_signal("stealth_broken")
+
+	if not animations.get_current_animation() == "attack" or not animations.is_playing():
+		if not animations.get_current_animation() == "idle":
+			animations.play("idle")
+
+func on_death():
+	enabled = false
+	emit_signal("death", parent.get_body_pos())
+	parent.get_node("StatsModule").queue_free()
+	parent.get_node("CollisionShape2D").queue_free()
+	if parent.is_in_party():
+		parent.get_party().unregister_unit(parent.get_party_index())
+	for g in parent.get_groups():
+		parent.remove_from_group(g)
+	if Globals.get("debug_mode"):
+		print(self, " died.")
+	var de = death_effect.instance()
+	de.set_pos(parent.get_pos())
+	de.set_z(parent.get_z() - 8)
+	if has_death_anim:
+		var tex = sprite.get_texture()
+		var hf = sprite.get_hframes()
+		var vf = sprite.get_vframes()
+		de.set_scale(sprite.get_scale() * get_scale())
+		de.set_texture(tex, hf, vf)
+	root.get_node("Effects").add_child(de)
+	parent.queue_free()
+
+func on_idle():
+	animations.set_speed(1)
+	var cur_anim = animations.get_current_animation()
+	if state_change_cd <= 0:
+		if not cur_anim == "idle" or not cur_anim == "attack":
+			sprite.set_rot(0)
+			animations.play("idle")
+			state_change_cd = 0.3
+
+func on_walk():
+	if stats and not (animations.get_current_animation() == "attack" and animations.is_playing()):
+		var ms = stats.get_actual("movement_speed") / 80
+		animations.set_speed(ms)
+	if not animations.get_current_animation() == "walk" and not (animations.get_current_animation() == "attack" and animations.is_playing()):
+		sprite.set_rot(0)
+		animations.play("walk")
+
+func on_stunned():
+	animations.stop()
+	animations.set_current_animation("idle")

@@ -134,6 +134,12 @@ func gameover():
 	t.start()
 	add_child(t)
 
+func get_path_to_end(pos):
+	if not map:
+		return []
+	var end = map.get_spawn_pos("enemy")
+	return map.get_simple_path(pos, end)
+
 func cleanup():
 	print("Resetting game state and clearing objects...")
 	dragged_ability = null

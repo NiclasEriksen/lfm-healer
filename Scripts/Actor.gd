@@ -54,7 +54,12 @@ func set_leader(v):
 	party_leader = v
 
 func is_leader():
-	return party_leader
+	var p = get_party()
+	if not p:
+		return false
+	if p.is_leader(get_party_index()):
+		return true
+	return false
 
 func set_party(p):
 	if p:
