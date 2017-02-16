@@ -28,6 +28,7 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = "res://Scenes/Objects/Arrow.tscn"
 hit_effect = null
+ATTACK_OF_OPPORTUNITY = false
 party = null
 party_index = -1
 
@@ -81,12 +82,12 @@ BASE_MOVEMENT_SPEED = 50
 
 [node name="ActorBase" parent="." instance=ExtResource( 7 )]
 
+editor/display_folded = true
 spritesheet = ExtResource( 8 )
 
 [node name="Sprite" parent="ActorBase"]
 
 texture = ExtResource( 8 )
-frame = 14
 
 [node name="Brain" parent="." instance=ExtResource( 9 )]
 

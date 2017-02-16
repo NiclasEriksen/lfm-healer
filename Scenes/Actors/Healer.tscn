@@ -25,6 +25,7 @@ script/script = ExtResource( 1 )
 alliance = "friendly"
 projectile = null
 hit_effect = null
+ATTACK_OF_OPPORTUNITY = false
 party = null
 party_index = -1
 ability_1_scene = "res://Scenes/Abilities/TargetedHeal.tscn"
@@ -67,7 +68,5 @@ move_node = NodePath("../MoveModule")
 actorbase_node = NodePath("../ActorBase")
 
 [connection signal="death" from="ActorBase" to="." method="_on_ActorBase_death"]
-
-[connection signal="entered_state" from="Brain" to="ActorBase" method="_on_Brain_entered_state"]
 
 

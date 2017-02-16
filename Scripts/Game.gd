@@ -16,6 +16,7 @@ var actors = {
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 onready var cam = get_node("Camera2D")
 onready var map = get_node("Map")
+var userdata = preload("res://Scripts/UserDataManager.gd").new()
 var healer = null
 
 func get_actor_types():
@@ -30,6 +31,9 @@ func get_actor_scene(n):
 	return
 
 func _ready():
+	add_child(userdata)
+	var sd = userdata.load_data("Settings")
+	var fd = userdata.load_data("Formations")
 	set_process(true)
 	set_process_unhandled_input(true)
 	newgame(false)
