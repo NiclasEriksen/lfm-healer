@@ -2,6 +2,7 @@ extends Node
 var user_dir = "user://"
 var defaults = {
 	"Settings": "res://Scripts/Default/Settings.json",
+	"Party": "res://Scripts/Default/Party.json",
 	"Formations": "res://Scripts/Default/Formations.json",
 }
 

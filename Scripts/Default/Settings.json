@@ -4,4 +4,6 @@
     "music_enabled": false,
     "eyecandy": false,
     "default_map": "StairMap",
+    "show_fps": false,
+    "autospawn": false,
 }

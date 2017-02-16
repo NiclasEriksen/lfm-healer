@@ -44,7 +44,7 @@ theme/theme = ExtResource( 1 )
 margin/left = 164.0
 margin/top = 0.0
 margin/right = 625.0
-margin/bottom = 412.0
+margin/bottom = 467.0
 alignment = 2
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
@@ -57,7 +57,7 @@ theme/theme = ExtResource( 1 )
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 461.0
-margin/bottom = 54.0
+margin/bottom = 79.0
 toggle_mode = true
 is_pressed = true
 enabled_focus_mode = 2
@@ -74,9 +74,9 @@ size_flags/horizontal = 2
 size_flags/vertical = 3
 theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 58.0
+margin/top = 83.0
 margin/right = 461.0
-margin/bottom = 112.0
+margin/bottom = 162.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -92,9 +92,9 @@ size_flags/horizontal = 2
 size_flags/vertical = 3
 theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 116.0
+margin/top = 166.0
 margin/right = 461.0
-margin/bottom = 170.0
+margin/bottom = 245.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -110,9 +110,9 @@ size_flags/horizontal = 2
 size_flags/vertical = 3
 theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 174.0
+margin/top = 249.0
 margin/right = 461.0
-margin/bottom = 228.0
+margin/bottom = 328.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -128,9 +128,9 @@ size_flags/horizontal = 3
 size_flags/vertical = 3
 theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 232.0
+margin/top = 332.0
 margin/right = 461.0
-margin/bottom = 283.0
+margin/bottom = 411.0
 alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -141,9 +141,9 @@ size_flags/horizontal = 2
 size_flags/vertical = 0
 theme/theme = ExtResource( 1 )
 margin/left = 0.0
-margin/top = 3.0
+margin/top = 17.0
 margin/right = 69.0
-margin/bottom = 48.0
+margin/bottom = 62.0
 text = "Map:"
 percent_visible = 1.0
 lines_skipped = 0
@@ -160,7 +160,7 @@ theme/theme = ExtResource( 1 )
 margin/left = 73.0
 margin/top = 0.0
 margin/right = 373.0
-margin/bottom = 51.0
+margin/bottom = 79.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -180,41 +180,80 @@ theme/theme = ExtResource( 1 )
 margin/left = 377.0
 margin/top = 0.0
 margin/right = 461.0
-margin/bottom = 51.0
+margin/bottom = 79.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 text = "Load"
 flat = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="Container" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
 
-rect/min_size = Vector2( 0, 125 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 415.0
+margin/right = 461.0
+margin/bottom = 466.0
+alignment = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/Container"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 461.0
+margin/bottom = 51.0
+use_top_left = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Container/CenterContainer"]
+
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 287.0
-margin/right = 461.0
-margin/bottom = 412.0
-alignment = 2
+margin/left = 126.0
+margin/top = 0.0
+margin/right = 334.0
+margin/bottom = 51.0
+alignment = 0
 
-[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
+[node name="Save" type="Button" parent="HBoxContainer/VBoxContainer/Container/CenterContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -20.0
+margin/top = 0.0
+margin/right = 90.0
+margin/bottom = 51.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Save"
+flat = false
+
+[node name="Cancel" type="Button" parent="HBoxContainer/VBoxContainer/Container/CenterContainer/HBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 1
 theme/theme = ExtResource( 1 )
-margin/left = 0.0
-margin/top = 37.0
-margin/right = 461.0
-margin/bottom = 88.0
+margin/left = 120.0
+margin/top = 0.0
+margin/right = 208.0
+margin/bottom = 51.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "Close"
+text = "Cancel"
 flat = false
 
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]
@@ -227,6 +266,8 @@ flat = false
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Load" to="." method="_on_Load_pressed"]
 
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Container/CenterContainer/HBoxContainer/Save" to="." method="_on_Save_pressed"]
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Container/CenterContainer/HBoxContainer/Cancel" to="." method="_on_Button_pressed"]
 
 
