@@ -33,6 +33,8 @@ func get_actor_scene(n):
 func _ready():
 	add_child(userdata)
 	var sd = userdata.load_data("Settings")
+	for s in sd:
+		Globals.set(s, sd[s])
 	var fd = userdata.load_data("Formations")
 	set_process(true)
 	set_process_unhandled_input(true)
