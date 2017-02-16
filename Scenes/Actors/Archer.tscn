@@ -95,5 +95,9 @@ stats_node = NodePath("../StatsModule")
 move_node = NodePath("../MoveModule")
 actorbase_node = NodePath("../ActorBase")
 
+[node name="AttackOrigin" type="Position2D" parent="."]
+
+transform/pos = Vector2( 6, -10 )
+
 
 [editable path="ActorBase"]

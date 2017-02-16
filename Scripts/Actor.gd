@@ -141,8 +141,10 @@ func get_body_pos():
 func fire_projectile(target):
 	if projectile and attack_node and target.stats_node:
 		var a = projectile_scene.instance()
-		var dist_scale = get_body_pos().distance_to(target.get_body_pos()) / stats_node.get_actual("attack_range")
-		a.set_pos(get_body_pos())
+		var origin = get_body_pos() + actorbase_node.get_node("AttackOrigin").get_pos()
+		var dist_scale = origin.distance_to(target.get_body_pos()) / stats_node.get_actual("attack_range")
+#		a.set_pos(get_body_pos())
+		a.set_pos(origin)
 		a.set_alliance(get_allegiance())
 		if debuff_node:
 			a.init(target, attack_node, debuff_node)

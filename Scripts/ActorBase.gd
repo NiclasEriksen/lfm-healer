@@ -60,6 +60,8 @@ func _ready():
 			shape.set_radius(stats.get_actual("attack_range"))
 			get_node("AttackRange/CollisionShape2D").set_shape(shape)
 			root.get_node("HUD").add_hpbar(get_parent())
+		if parent.has_node("AttackOrigin"):
+			get_node("AttackOrigin").set_pos(get_node("AttackOrigin").get_pos() + parent.get_node("AttackOrigin").get_pos())
 		if has_node("Selected") and parent.has_node("CollisionShape2D"):
 			get_node("Selected").set_offset(parent.get_node("CollisionShape2D").get_pos())
 		if has_node("Highlight") and parent.has_node("CollisionShape2D"):
@@ -87,6 +89,7 @@ func make_light_occluder():
 	get_node("LightOccluder2D").set_occluder_polygon(lo)
 
 func _draw():
+#	draw_circle(get_node("AttackOrigin").get_pos(), 16, Color(0, 1, 1))
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		var t = parent.get_target()
 		if t:
