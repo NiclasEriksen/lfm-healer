@@ -113,10 +113,11 @@ spawn_delay = 0
 
 [node name="LeafEffect" type="Particles2D" parent="."]
 
-transform/pos = Vector2( 152.523, 97.47 )
+transform/pos = Vector2( 148.523, 97.47 )
 config/amount = 8
 config/lifetime = 4.0
 config/half_extents = Vector2( 24, 0 )
+config/explosiveness = 0.8
 config/texture = ExtResource( 5 )
 params/direction = 0.0
 params/spread = 10.0
@@ -124,7 +125,7 @@ params/linear_velocity = 0.0
 params/spin_velocity = 1.0
 params/orbit_velocity = 0.2
 params/gravity_direction = 0.0
-params/gravity_strength = 8.0
+params/gravity_strength = 7.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
@@ -135,7 +136,7 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/orbit_velocity = 1.0
-randomness/initial_angle = 0.2
+randomness/initial_angle = 1.0
 color/color = Color( 0.474239, 0.469208, 0.976562, 1 )
 color/color_ramp = SubResource( 4 )
 
