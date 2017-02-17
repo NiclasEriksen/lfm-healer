@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Maps/Map.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Maps/Mountain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
@@ -13,6 +13,8 @@ script/script = ExtResource( 1 )
 select_sensitivity = 20
 
 [node name="Map" parent="." instance=ExtResource( 2 )]
+
+map_title = "Fjellsidå"
 
 [node name="Objects" type="Node" parent="."]
 
