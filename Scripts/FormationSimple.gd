@@ -9,9 +9,11 @@ var max_scale = Vector2(2, 1.5)
 var default_scale = Vector2(0.85, 0.85)
 var formation_size = Vector2(100, 100)
 var formation_scale = default_scale setget set_scale, get_scale
-var orientation = Vector2() setget set_orientation, get_orientation
+var orientation = Vector2(1, 0) setget set_orientation, get_orientation
+var desired_orientation = Vector2()
 var velocity = 50 setget set_velocity, get_velocity
 var form_velocity = velocity * 1.5
+var rotate_speed = PI / 8
 var formations = {
 	1:[Vector2(0, 0)],
 	2:[Vector2(-0.25, 0), Vector2(0.25, 0)],
@@ -34,12 +36,24 @@ func get_scale():
 	return formation_scale
 
 func set_orientation(o):
-	orientation = o
-	if rc_left and rc_right:
-		rc_left.set_cast_to(o * RAYCAST_LENGTH)
-		rc_right.set_cast_to(o * RAYCAST_LENGTH)
+	desired_orientation = o
 #		rc_left.set_rot(o.angle())
 #		rc_right.set_rot(o.angle())
+
+func update_orientation(dt):
+	var to = desired_orientation
+	var a = orientation.angle_to(to)
+	var oa = orientation.angle()
+	var diff = to.angle() - oa
+	var abs_diff = abs(diff)
+	var speed = rotate_speed * dt
+	if abs_diff <= rotate_speed / 8:
+		orientation = orientation.rotated(diff)
+	else:
+		orientation = orientation.rotated(diff * speed)
+	if rc_left and rc_right:
+		rc_left.set_cast_to(orientation * RAYCAST_LENGTH)
+		rc_right.set_cast_to(orientation * RAYCAST_LENGTH)
 
 func get_orientation():
 	return orientation
@@ -171,6 +185,7 @@ func adjust_raycasts():
 func _fixed_process(delta):
 #	set_pos(get_pos() + (get_orientation() * velocity * delta))
 	if rc_left and rc_right:
+		update_orientation(delta)
 		adjust_raycasts()
 		adjust_shape(delta)
 	update()

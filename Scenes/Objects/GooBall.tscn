@@ -18,7 +18,7 @@ tracks/0/keys = { "times":FloatArray( 0, 0.1, 0.2, 0.3, 0.4 ), "transitions":Flo
 [node name="GooBall" type="Node2D"]
 
 script/script = ExtResource( 1 )
-flytime = 2.0
+flytime = 1.0
 y_offset = Vector2( -32, 48 )
 
 [node name="Sprite" type="Sprite" parent="."]
