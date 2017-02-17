@@ -1,5 +1,5 @@
 extends "res://Scenes/Modules/States/State.gd"
-var SEEK_DIST = 180
+var SEEK_DIST = 120
 
 func _ready():
 	pass

@@ -8,9 +8,9 @@
 
 [sub_resource type="NavigationPolygon" id=1]
 
-vertices = Vector2Array( 360.028, 206.37, 512.454, -0.00574303, 512.298, 288.738, 336.505, 243.86, 348.42, 85.7744, 328.419, 168.146, 325.397, 116.878, 249.765, 156.384, 248.666, 129.847, 171.11, 168.881, 172.476, 115.798, 321.598, 58.9523, 27.047, -0.747543, 250.885, 45.2974, 171.394, 61.3907, 153.838, 87.2374, 27.9041, 287.51, 143.911, 205.635, 163.024, 242.39, 245.354, 257.827 )
-polygons = [ IntArray( 0, 1, 2, 3 ), IntArray( 4, 1, 0, 5, 6 ), IntArray( 6, 5, 7, 8 ), IntArray( 8, 7, 9, 10 ), IntArray( 1, 4, 11 ), IntArray( 12, 1, 11, 13 ), IntArray( 12, 13, 14 ), IntArray( 12, 14, 15 ), IntArray( 16, 12, 15, 10, 9, 17 ), IntArray( 16, 17, 18 ), IntArray( 16, 18, 19 ), IntArray( 2, 16, 19 ), IntArray( 2, 19, 3 ) ]
-outlines = [ Vector2Array( 27.047, -0.747543, 27.9041, 287.51, 512.298, 288.738, 512.454, -0.00574303 ), Vector2Array( 171.11, 168.881, 249.765, 156.384, 328.419, 168.146, 360.028, 206.37, 336.505, 243.86, 245.354, 257.827, 163.024, 242.39, 143.911, 205.635 ), Vector2Array( 153.838, 87.2374, 171.394, 61.3907, 250.885, 45.2974, 321.598, 58.9523, 348.42, 85.7744, 325.397, 116.878, 248.666, 129.847, 172.476, 115.798 ) ]
+vertices = Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 405.39, 191.796, 358.46, 180.966, 325.068, 202.626, 211.353, 183.674, 39.8778, 288.364, -1.63722, 289.266, 75.9778, 258.581, 221.28, 201.724, 185.18, 181.869, 164.423, 208.041, 177.96, 220.676 )
+polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 0, 4, 5, 6 ), IntArray( 7, 8, 0, 9 ), IntArray( 5, 10, 6 ), IntArray( 0, 6, 11 ), IntArray( 9, 0, 11, 12 ), IntArray( 9, 12, 13 ), IntArray( 5, 9, 13 ), IntArray( 5, 13, 10 ) ]
+outlines = [ Vector2Array( 185.18, 181.869, 211.353, 183.674, 221.28, 201.724, 177.96, 220.676, 164.423, 208.041 ), Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 405.39, 191.796, 358.46, 180.966, 325.068, 202.626, 75.9778, 258.581, 39.8778, 288.364, -1.63722, 289.266 ) ]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 
@@ -109,6 +109,22 @@ transform/pos = Vector2( 694.957, 142.187 )
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }
 actor_scene = "res://Scenes/Actors/Blub.tscn"
+spawn_delay = 0
+
+[node name="SpawnPoint5" type="Position2D" parent="."]
+
+transform/pos = Vector2( 726.545, 191.824 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Member.tscn"
+spawn_delay = 0
+
+[node name="SpawnPoint6" type="Position2D" parent="."]
+
+transform/pos = Vector2( 723.837, 109.697 )
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+actor_scene = "res://Scenes/Actors/Member.tscn"
 spawn_delay = 0
 
 [node name="LeafEffect" type="Particles2D" parent="."]
