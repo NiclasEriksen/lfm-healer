@@ -12,7 +12,7 @@ func on_enter():
 
 func update(dt):
 	var t = brain.owner.get_target()
-	if t:
+	if t and not brain.owner.is_healer():
 		brain.push_state("attack")
 		return
 	t = actorbasemodule.get_closest_enemy(SEEK_DIST * 2)

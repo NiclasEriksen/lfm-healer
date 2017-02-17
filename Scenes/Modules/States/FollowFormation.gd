@@ -18,7 +18,8 @@ func update(dt):
 	var target = actorbasemodule.get_closest_enemy(ar)
 	if target:
 		brain.owner.set_target(target)
-		brain.push_state("attack")
+		if not brain.owner.is_healer():
+			brain.push_state("attack")
 		return
 	
 	if not party:
