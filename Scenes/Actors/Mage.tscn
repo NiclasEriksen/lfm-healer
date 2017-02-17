@@ -98,6 +98,7 @@ tick_interval = 0.5
 
 [node name="Particles2D" type="Particles2D" parent="."]
 
+visibility/opacity = 0.25
 transform/pos = Vector2( 0, 15 )
 config/amount = 50
 config/lifetime = 1.0
@@ -125,7 +126,7 @@ color/color_ramp = ExtResource( 8 )
 
 [node name="Particles2D2" type="Particles2D" parent="."]
 
-visibility/opacity = 0.5
+visibility/opacity = 0.2
 transform/pos = Vector2( 0, -1 )
 config/amount = 20
 config/lifetime = 3.0
