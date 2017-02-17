@@ -153,7 +153,7 @@ func adjust_shape(dt):
 		else:
 			new_scale.x = min_scale.x
 		if new_scale.y < max_scale.y:
-			new_scale *= Vector2(1, 1 + 0.1 * dt)
+			new_scale *= Vector2(1, 1 + 0.05 * dt)
 		else:
 			new_scale.y = max_scale.y
 		set_scale(new_scale)
@@ -163,7 +163,7 @@ func adjust_shape(dt):
 		else:
 			new_scale.x = default_scale.x
 		if new_scale.y > default_scale.y:
-			new_scale *= Vector2(1, 1 - 0.03 * dt)
+			new_scale *= Vector2(1, 1 - 0.02 * dt)
 		else:
 			new_scale.y = default_scale.y
 		set_scale(new_scale)

@@ -184,6 +184,10 @@ func _process(dt):
 		print("All friendly players dead, restarting.")
 		gameover()
 		return
+	elif friendlies.size() == 1 and friendlies[0].is_healer():
+		print("Only healer left...")
+		gameover()
+		return
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if not enemies.size():
 		if get_node("Map").is_done_spawning():
