@@ -41,8 +41,8 @@ func disable_shield():
 		shield_sprite.hide()
 
 func _ready():
+	set_process(true)
 	if not get_tree().is_editor_hint():
-		set_process(true)
 		set_fixed_process(true)
 
 		parent = get_parent()
@@ -100,6 +100,10 @@ func _draw():
 
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
+	if get_tree().is_editor_hint():
+		if not animations.is_playing():
+			animations.play("showcase")
+		return
 	if enabled:
 		var stunned = false
 		if stats:
