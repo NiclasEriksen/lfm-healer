@@ -12,7 +12,6 @@ var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var movement = get_parent().get_node("MoveModule")
 onready var parent = get_parent()
-var MIN_SEEK_DIST = 180
 signal attack
 signal death(pos)
 signal enemy_in_personal_space(enemy)
@@ -348,13 +347,23 @@ func on_death():
 	root.get_node("Effects").add_child(de)
 	parent.queue_free()
 
-#func on_walk():
-#	if stats and not (animations.get_current_animation() == "attack" and animations.is_playing()):
-#		var ms = stats.get_actual("movement_speed") / 80
-#		animations.set_speed(ms)
-#	if not animations.get_current_animation() == "walk" and not (animations.get_current_animation() == "attack" and animations.is_playing()):
-#		sprite.set_rot(0)
-#		animations.play("walk")
+func export_data():
+	return {
+		"spritesheet": spritesheet,
+		"has_attack_anim": has_attack_anim,
+		"has_death_anim": has_death_anim,
+		"has_special_anim": has_special_anim,
+		"tile_dimensions": tile_dimensions,
+		"STEALTH_OPACITY": STEALTH_OPACITY
+	}
+
+func import_data(d):
+	spritesheet = d["spritesheet"]
+	has_attack_anim = d["has_attack_anim"]
+	has_death_anim = d["has_death_anim"]
+	has_special_anim = d["has_special_anim"]
+	tile_dimensions = d["tile_dimensions"]
+	STEALTH_OPACITY = d["STEALTH_OPACITY"]
 
 func on_stunned():
 	animations.stop()

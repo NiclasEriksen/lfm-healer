@@ -8,6 +8,7 @@ var lvl_scale = 1.05
 var str_scale = 1.05
 var int_scale = 1.1
 var agi_scale = 1.1
+var xp = 0 # not total, only progress to next level
 export(int) var level = 1 setget set_level, get_level
 export(String, "str", "int", "agi") var primary_stat = "str"
 export(int) var base_strength = 0
@@ -302,6 +303,57 @@ func dmg_modifier():
 func armor_modifier():
 	return armor
 
+
+func export_stats():
+	return {
+		"level": level,
+		"xp": xp,
+		"primary_stat": primary_stat,
+		"base_strength": base_strength,
+		"base_intelligence": base_intelligence,
+		"base_agility": base_agility,
+		"base_spirit": base_spirit,
+		"base_stamina": base_stamina,
+		"max_hp": max_hp,
+		"max_mp": max_mp,
+		"base_damage": base_damage,
+		"base_spell_power": base_spell_power,
+		"base_phys_crit": base_phys_crit,
+		"base_spell_crit": base_spell_crit,
+		"base_hit_rate": base_hit_rate,
+		"base_armor": base_armor,
+		"base_magic_resist": base_magic_resist,
+		"base_movement_speed": base_movement_speed,
+		"stealth_speed_increase": stealth_speed_increase,
+		"base_attack_speed": base_attack_speed,
+		"base_attack_range": base_attack_range,
+		"stealthed": stealthed
+	}
+
+func import_stats(stats):
+	level = stats["level"]
+	xp = stats["xp"]
+	primary_stat = stats["primary_stat"]
+	base_strength = stats["base_strength"]
+	base_intelligence = stats["base_intelligence"]
+	base_agility = stats["base_agility"]
+	base_spirit = stats["base_spirit"]
+	base_stamina = stats["base_stamina"]
+	max_hp = stats["max_hp"]
+	max_mp = stats["max_mp"]
+	base_damage = stats["base_damage"]
+	base_spell_power = stats["base_spell_power"]
+	base_phys_crit = stats["base_phys_crit"]
+	base_spell_crit = stats["base_spell_crit"]
+	base_hit_rate = stats["base_hit_rate"]
+	base_armor = stats["base_armor"]
+	base_magic_resist = stats["base_magic_resist"]
+	base_movement_speed = stats["base_movement_speed"]
+	stealth_speed_increase = stats["stealth_speed_increase"]
+	base_attack_speed = stats["base_attack_speed"]
+	base_attack_range = stats["base_attack_range"]
+	stealthed = stats["stealthed"]
+	update_final_stats()
 
 func _on_StatsModule_stealth_broken():
 	set_stealthed(false)

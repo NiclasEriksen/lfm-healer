@@ -1,5 +1,6 @@
 tool
 extends KinematicBody2D
+export(String) var actor_name = "Unnamed" setget set_actor_name, get_actor_name
 var alliances = ["friendly", "enemy"]
 export(String, "friendly", "enemy") var alliance = "friendly" setget change_allegiance, get_allegiance
 export(String, FILE, "*.tscn") var projectile = null setget set_projectile, get_projectile
@@ -25,6 +26,12 @@ var attack_cd = 0.0
 signal targeted_enemy(enemy)
 signal cleared_target
 signal attack(target)
+
+func set_actor_name(n):
+	actor_name = n
+
+func get_actor_name():
+	return actor_name
 
 func get_brain():
 	return brain_node
@@ -200,3 +207,15 @@ func _on_ThreatTable_aggro( target ):
 func enemy_entered_personal_space(enemy):
 	if ATTACK_OF_OPPORTUNITY:
 		set_target(enemy)
+
+func save_actor():
+	return {
+		"actor_name": actor_name,
+		"stats_data": stats_node.export_stats(),
+		"actorbase_data": actorbase_node.export_data(),
+	}
+
+func load_actor(d):
+	actor_name = d["actor_name"]
+	stats_node.import_stats(d["stats_data"])
+	actorbase_node.import_data(d["actorbase_data"])

@@ -3,7 +3,7 @@ extends Node2D
 
 var direction = Vector2(0, 0)
 export(bool) var AVOID_COLLISION = false setget set_avoid_collision, get_avoid_collision
-export(float, 0, 1, 0.1) var AVOID_FORCE = 0.5 setget set_avoid_force, get_avoid_force
+var AVOID_FORCE = 0.4 setget set_avoid_force, get_avoid_force
 export(float, 1, 128, 1) var RAYCAST_LENGTH = 30.0 setget set_raycast_length, get_raycast_length
 export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.1 setget set_stall_treshold, get_stall_treshold
 var SEEK_TRESHOLD = 100
