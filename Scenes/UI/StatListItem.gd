@@ -21,9 +21,11 @@ func update_value():
 	get_node("HBoxContainer/Amount").set_text(str(value))
 
 func _on_Minus_button_down():
+	get_node("AnimationPlayer").play("decrease")
 	value -= 1
 	update_value()
 
 func _on_Plus_button_down():
+	get_node("AnimationPlayer").play("increase")
 	value += 1
 	update_value()
