@@ -126,6 +126,7 @@ alignment = 1
 
 [node name="ButtonGroup" type="ButtonGroup" parent="CenterContainer/VBoxContainer"]
 
+rect/min_size = Vector2( 0, 51 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
@@ -136,8 +137,9 @@ margin/right = 472.0
 margin/bottom = 55.0
 alignment = 0
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/ButtonGroup"]
+[node name="SaveButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonGroup"]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -153,6 +155,6 @@ shortcut = null
 text = "Save"
 flat = false
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonGroup/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonGroup/SaveButton" to="." method="_on_Button_pressed"]
 
 

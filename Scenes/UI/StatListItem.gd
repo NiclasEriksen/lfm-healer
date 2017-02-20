@@ -28,8 +28,9 @@ func init(o, s, val):
 
 func update_value():
 	get_node("HBoxContainer/Amount").set_text(str(value))
-	if not minus_node:
-		return
+	if not minus_node or not plus_node:
+		minus_node = get_node("HBoxContainer/Minus")
+		plus_node = get_node("HBoxContainer/Plus")
 	if value <= min_value:
 		minus_node.set_disabled(true)
 		minus_node.set_opacity(0.5)

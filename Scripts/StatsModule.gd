@@ -151,6 +151,8 @@ func update_final_stats():
 		attack_range=base_attack_range,
 		movement_speed=base_movement_speed,
 	}
+	if not parent:
+		return
 	if parent.has_node("Attack"):
 		var am = get_parent().get_node("Attack")
 		am.set_amount(-get_actual("damage"))
