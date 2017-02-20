@@ -22,6 +22,7 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+actor_name = "Unnamed"
 alliance = "friendly"
 projectile = null
 hit_effect = null
@@ -36,7 +37,6 @@ ability_4_scene = "res://Scenes/Abilities/Shield.tscn"
 [node name="MoveModule" parent="." instance=ExtResource( 2 )]
 
 AVOID_COLLISION = true
-AVOID_FORCE = 0.3
 stats_node = NodePath("../StatsModule")
 
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]

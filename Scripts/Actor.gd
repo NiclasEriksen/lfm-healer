@@ -182,6 +182,7 @@ func _ready():
 			connect("cleared_target", move_node, "_on_Actor_cleared_target")
 		if has_node("StatsModule"):
 			stats_node = get_node("StatsModule")
+			print(stats_node.export_stats())
 		if has_node("Attack"):
 			attack_node = get_node("Attack")
 		if has_node("StatusEffect"):

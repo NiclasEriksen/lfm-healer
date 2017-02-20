@@ -1,0 +1,132 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/UI/PartyEditor.gd" type="Script" id=2]
+
+[node name="WindowDialog" type="WindowDialog"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 1 )
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+popup/exclusive = false
+window/title = "Party Editor"
+script/script = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+use_top_left = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 404.0
+margin/top = 332.0
+margin/right = 876.0
+margin/bottom = 387.0
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 472.0
+margin/bottom = 0.0
+custom_constants/separation = 60
+alignment = 0
+
+[node name="ActorInfo" type="ScrollContainer" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 12.0
+margin/bottom = 0.0
+scroll/horizontal = false
+scroll/vertical = true
+
+[node name="Container" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer/ActorInfo"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+alignment = 0
+
+[node name="ActorList" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+
+rect/min_size = Vector2( 400, 0 )
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 72.0
+margin/top = 0.0
+margin/right = 472.0
+margin/bottom = 0.0
+custom_constants/separation = 8
+alignment = 1
+
+[node name="ButtonGroup" type="ButtonGroup" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 4.0
+margin/right = 472.0
+margin/bottom = 55.0
+alignment = 0
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/ButtonGroup"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 472.0
+margin/bottom = 51.0
+toggle_mode = true
+click_on_press = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Save"
+flat = false
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonGroup/Button" to="." method="_on_Button_pressed"]
+
+

@@ -8,10 +8,10 @@ var actors = {
 	"archer": preload("res://Scenes/Actors/Archer.tscn"),
 	"rogue": preload("res://Scenes/Actors/Rogue.tscn"),
 	"mage": preload("res://Scenes/Actors/Mage.tscn"),
+	"healer": preload("res://Scenes/Actors/Healer.tscn"),
 	"testenemy": preload("res://Scenes/Actors/TestEnemy.tscn"),
 	"member": preload("res://Scenes/Actors/Member.tscn"),
 	"blub": preload("res://Scenes/Actors/Blub.tscn"),
-	"healer": preload("res://Scenes/Actors/Healer.tscn"),
 }
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 onready var cam = get_node("Camera2D")
