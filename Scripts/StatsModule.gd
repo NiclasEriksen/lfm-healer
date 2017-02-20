@@ -5,9 +5,11 @@ var buff_module = load("res://Scripts/BuffModule.gd")
 var effect_module = load("res://Scripts/EffectModule.gd")
 
 var lvl_scale = 1.05
-var str_scale = 1.05
+var str_scale = 1.1
 var int_scale = 1.1
 var agi_scale = 1.1
+var spi_scale = 1.1
+var sta_scale = 1.1
 var xp = 0 # not total, only progress to next level
 var attribute_points = 3
 export(int) var level = 1 setget set_level, get_level
@@ -167,10 +169,15 @@ func add_xp(amount):
 	var next_lvl = 5 + pow(lvl, log(lvl))
 	if xp >= next_lvl:
 		set_level(lvl + 1)
-		attribute_points += 1
 		xp = fmod(xp, next_lvl)
-		emit_signal("leveled_up", parent)
-		update_final_stats()
+		on_levelup()
+
+func on_levelup():
+	attribute_points += 1
+	emit_signal("leveled_up", parent)
+	update_final_stats()
+	hp = get_actual("max_hp")
+	mp = get_actual("max_mp")
 
 func _process(delta):
 	if hp > get_actual("max_hp"):
