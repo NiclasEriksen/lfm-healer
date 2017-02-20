@@ -139,7 +139,7 @@ max_lines_visible = -1
 
 [node name="DecreaseParticles" type="Particles2D" parent="HBoxContainer/Amount"]
 
-transform/pos = Vector2( 62, 12 )
+transform/pos = Vector2( 62, 20 )
 config/amount = 128
 config/lifetime = 0.6
 config/emitting = false

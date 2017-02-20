@@ -9,6 +9,7 @@ var str_scale = 1.05
 var int_scale = 1.1
 var agi_scale = 1.1
 var xp = 0 # not total, only progress to next level
+var attribute_points = 3
 export(int) var level = 1 setget set_level, get_level
 export(String, "str", "int", "agi") var primary_stat = "str"
 export(int) var base_strength = 0
@@ -308,6 +309,7 @@ func export_stats():
 	return {
 		"level": level,
 		"xp": xp,
+		"attribute_points": attribute_points,
 		"primary_stat": primary_stat,
 		"base_strength": base_strength,
 		"base_intelligence": base_intelligence,
@@ -333,6 +335,7 @@ func export_stats():
 func import_stats(stats):
 	level = stats["level"]
 	xp = stats["xp"]
+	attribute_points = stats["attribute_points"]
 	primary_stat = stats["primary_stat"]
 	base_strength = stats["base_strength"]
 	base_intelligence = stats["base_intelligence"]

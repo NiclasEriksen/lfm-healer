@@ -3,6 +3,7 @@ extends WindowDialog
 var list_item = preload("res://Scenes/UI/StatListItem.tscn")
 var actor_item = preload("res://Scenes/UI/ActorListItem.tscn")
 var active_actor = null
+var points = 0
 onready var content_root = get_node("CenterContainer/VBoxContainer/HBoxContainer")
 
 var party_scenes = 	[
@@ -58,24 +59,34 @@ func _ready():
 
 func gather_data():
 	var new_stats = stats
-	for c in content_root.get_node("ActorInfo/Container").get_children():
+	for c in content_root.get_node("ActorInfo/VBoxContainer/Container").get_children():
 		new_stats[c.stat] = c.value
 	print(new_stats)
 
 func populate_data(d):
-	for c in content_root.get_node("ActorInfo/Container").get_children():
+	var ap = d["attribute_points"]
+	points = ap
+	content_root.get_node("ActorInfo/VBoxContainer/Label").set_text("Points available: " + str(ap))
+	for c in content_root.get_node("ActorInfo/VBoxContainer/Container").get_children():
 		c.free()
 	for r in relevant:
 		var data = d[r]
 		var sli = list_item.instance()
-		sli.init(r, data)
-		content_root.get_node("ActorInfo/Container").add_child(sli)
+		sli.init(self, r, data)
+		sli.connect("value_changed", self, "_on_stat_changed")
+		content_root.get_node("ActorInfo/VBoxContainer/Container").add_child(sli)
 
 func _on_partymember_selected(a):
 	for c in content_root.get_node("ActorList").get_children():
 		c.select(false)
 	var d = a.get_node("StatsModule").export_stats()
 	populate_data(d)
+
+func _on_stat_changed(s):
+	for c in content_root.get_node("ActorInfo/VBoxContainer/Container").get_children():
+		c.update_value()
+	content_root.get_node("ActorInfo/VBoxContainer/Label").set_text("Points available: " + str(points))
+
 
 func _on_Button_pressed():
 	gather_data()
