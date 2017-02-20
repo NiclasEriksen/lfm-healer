@@ -1,7 +1,17 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://Scenes/UI/StatListItem.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=2]
+
+[sub_resource type="ColorRamp" id=3]
+
+offsets = FloatArray( 0, 0.173913, 1 )
+colors = ColorArray( 1, 0.140625, 0, 1, 0.976562, 0.366211, 0.366211, 1, 1, 1, 1, 0 )
+
+[sub_resource type="ColorRamp" id=4]
+
+offsets = FloatArray( 0, 0.26087, 1 )
+colors = ColorArray( 1, 1, 1, 1, 0.466604, 0.886719, 0.419113, 1, 0.101562, 1, 0, 0 )
 
 [sub_resource type="Animation" id=1]
 
@@ -10,15 +20,10 @@ length = 1.0
 loop = false
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer/Minus/ParticleAttractor2D:enabled")
+tracks/0/path = NodePath("HBoxContainer/Amount/DecreaseParticles:config/emitting")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ false, true ] }
-tracks/1/type = "value"
-tracks/1/path = NodePath("HBoxContainer/Amount/DecreaseParticles:config/emitting")
-tracks/1/interp = 1
-tracks/1/imported = false
-tracks/1/keys = { "times":FloatArray( 0, 0.2 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [sub_resource type="Animation" id=2]
 
@@ -27,15 +32,10 @@ length = 1.0
 loop = false
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer/Amount/ParticleAttractor2D:enabled")
+tracks/0/path = NodePath("HBoxContainer/Plus/IncreaseParticles:config/emitting")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ false, true ] }
-tracks/1/type = "value"
-tracks/1/path = NodePath("HBoxContainer/Plus/IncreaseParticles:config/emitting")
-tracks/1/interp = 1
-tracks/1/imported = false
-tracks/1/keys = { "times":FloatArray( 0, 0.2 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [node name="ListItem" type="HBoxContainer"]
 
@@ -141,15 +141,15 @@ max_lines_visible = -1
 
 transform/pos = Vector2( 62, 12 )
 config/amount = 128
-config/lifetime = 0.8
+config/lifetime = 0.6
 config/emitting = false
-config/half_extents = Vector2( 0, 15 )
+config/half_extents = Vector2( 15, 15 )
 config/local_space = false
 params/direction = 90.0
 params/spread = 180.0
 params/linear_velocity = 100.0
-params/spin_velocity = 0.0
-params/orbit_velocity = 0.0
+params/spin_velocity = 10.0
+params/orbit_velocity = 2.0
 params/gravity_direction = 0.0
 params/gravity_strength = 9.8
 params/radial_accel = -128.0
@@ -162,6 +162,7 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color = Color( 0.888118, 0.945312, 0.745911, 1 )
+color/color_ramp = SubResource( 3 )
 
 [node name="ParticleAttractor2D" type="ParticleAttractor2D" parent="HBoxContainer/Amount"]
 
@@ -202,15 +203,15 @@ frame = 59
 
 transform/pos = Vector2( 24, 30 )
 config/amount = 128
-config/lifetime = 0.8
+config/lifetime = 0.6
 config/emitting = false
-config/half_extents = Vector2( 0, 15 )
+config/half_extents = Vector2( 15, 15 )
 config/local_space = false
 params/direction = 90.0
 params/spread = 180.0
 params/linear_velocity = 100.0
-params/spin_velocity = 0.0
-params/orbit_velocity = 0.0
+params/spin_velocity = 10.0
+params/orbit_velocity = -2.0
 params/gravity_direction = 0.0
 params/gravity_strength = 9.8
 params/radial_accel = -128.0
@@ -223,6 +224,7 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color = Color( 0.888118, 0.945312, 0.745911, 1 )
+color/color_ramp = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
