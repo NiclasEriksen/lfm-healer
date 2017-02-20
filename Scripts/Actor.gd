@@ -202,6 +202,8 @@ func _process(dt):
 		attack_cd -= dt
 	else:
 		attack_cd = 0
+	if not attack_node == null:
+		attack_node.set_amount(-stats_node.get_actual("damage"))
 
 func _on_ThreatTable_aggro( target ):
 	if has_method("set_target"):

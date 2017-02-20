@@ -38,7 +38,8 @@ func _ready():
 	var fd = userdata.load_data("Formations")
 	set_process(true)
 	set_process_unhandled_input(true)
-	newgame(false)
+	load_map("Mountain.tscn")
+#	newgame(false)
 
 func add_all_spells():
 	if not healer:
@@ -64,7 +65,7 @@ func load_map(m):
 		get_node("Map").free()
 	else:
 		print("No map node present? :S")
-		return
+#		return
 	add_child(mapnode)
 	move_child(mapnode, 0)
 	map = mapnode

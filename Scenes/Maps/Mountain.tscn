@@ -51,7 +51,7 @@ colors = ColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
 script/script = ExtResource( 1 )
 mapfile = "res://Assets/Maps/mountainside.png"
-map_title = "Fjellsidaå"
+map_title = "Fjedla"
 
 [node name="NavigationPolygonInstance2" type="NavigationPolygonInstance" parent="."]
 

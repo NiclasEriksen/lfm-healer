@@ -13,7 +13,7 @@ var sta_scale = 1.1
 var xp = 0 # not total, only progress to next level
 var attribute_points = 3
 export(int) var level = 1 setget set_level, get_level
-export(String, "str", "int", "agi") var primary_stat = "str"
+export(String, "str", "int", "agi", "spi", "sta") var primary_stat = "str"
 export(int) var base_strength = 0
 export(int) var base_intelligence = 0
 export(int) var base_agility = 0
@@ -126,6 +126,18 @@ func get_agi_scale():
 	else:
 		return lvl_scale
 
+func get_spi_scale():
+	if primary_stat == "spi":
+		return lvl_scale * spi_scale
+	else:
+		return lvl_scale
+
+func get_sta_scale():
+	if primary_stat == "sta":
+		return lvl_scale * sta_scale
+	else:
+		return lvl_scale
+
 func scale_stat(stat, scal):
 	var bonus = 0.0 + stat
 	if level > 1:
@@ -134,22 +146,23 @@ func scale_stat(stat, scal):
 
 func update_final_stats():
 	self.final_stats = {
-		hp=scale_stat(max_hp, get_str_scale()),
-		mp=scale_stat(max_mp, get_int_scale()),
-		max_hp=scale_stat(max_hp, get_str_scale()),
-		max_mp=scale_stat(max_mp, get_int_scale()),
+		hp=scale_stat(max_hp, get_sta_scale()),
+		mp=scale_stat(max_mp, get_spi_scale()),
+		max_hp=scale_stat(max_hp, get_sta_scale()),
+		max_mp=scale_stat(max_mp, get_spi_scale()),
 		strength=base_strength,
 		agility=base_agility,
 		intelligence=base_intelligence,
 		spirit=base_spirit,
 		stamina=base_stamina,
-		damage=scale_stat(base_damage, max(get_str_scale(), get_agi_scale())),
+		damage=scale_stat(base_damage, get_str_scale()),
 		spell_power=scale_stat(base_spell_power, get_int_scale()),
 		phys_crit=scale_stat(base_phys_crit, get_agi_scale()),
 		spell_crit=scale_stat(base_spell_crit, get_int_scale()),
 		hit_rate=base_hit_rate,
-		armor=scale_stat(base_armor, get_str_scale()),
-		magic_resist=scale_stat(base_magic_resist, get_str_scale()),
+#		armor=scale_stat(base_armor, get_str_scale()),
+		armor=base_armor,
+		magic_resist=base_magic_resist,
 		attack_speed=base_attack_speed,
 		attack_range=base_attack_range,
 		movement_speed=base_movement_speed,

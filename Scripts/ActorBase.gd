@@ -332,7 +332,6 @@ func on_attack():
 		stats.emit_signal("stealth_broken")
 
 func on_death():
-	print("ON DEATH")
 	parent.on_death()
 	enabled = false
 	var de = death_effect.instance()

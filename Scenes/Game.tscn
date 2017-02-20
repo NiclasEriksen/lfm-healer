@@ -1,20 +1,15 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Maps/Mountain.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/Modules/Party.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Modules/EffectModule.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Modules/Party.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
 
 script/script = ExtResource( 1 )
 select_sensitivity = 20
-
-[node name="Map" parent="." instance=ExtResource( 2 )]
-
-map_title = "Fjellsidå"
 
 [node name="Objects" type="Node" parent="."]
 
@@ -22,9 +17,9 @@ map_title = "Fjellsidå"
 
 [node name="Effects" type="Node" parent="."]
 
-[node name="HUD" parent="." instance=ExtResource( 3 )]
+[node name="HUD" parent="." instance=ExtResource( 2 )]
 
-[node name="EffectModule" parent="." instance=ExtResource( 4 )]
+[node name="EffectModule" parent="." instance=ExtResource( 3 )]
 
 amount = -1.0
 
@@ -55,10 +50,10 @@ drag_margin/left = 0.1
 drag_margin/top = 0.05
 drag_margin/right = 0.0
 drag_margin/bottom = 0.05
-script/script = ExtResource( 5 )
+script/script = ExtResource( 4 )
 scroll_spd = 100
 
-[node name="Party" parent="." instance=ExtResource( 6 )]
+[node name="Party" parent="." instance=ExtResource( 5 )]
 
 [connection signal="kill_pressed" from="HUD" to="." method="_on_HUD_kill_pressed"]
 
