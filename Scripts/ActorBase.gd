@@ -171,7 +171,7 @@ func check_death():
 		on_death()
 
 func check_healthy():
-	if stats.get("hp") < stats.get("max_hp"):
+	if stats.get("hp") < stats.get_actual("max_hp"):
 		healthy = false
 	else:
 		healthy = true

@@ -12,37 +12,37 @@ vertices = Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 4
 polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 0, 4, 5, 6 ), IntArray( 7, 8, 0, 9 ), IntArray( 5, 10, 6 ), IntArray( 0, 6, 11 ), IntArray( 9, 0, 11, 12 ), IntArray( 9, 12, 13 ), IntArray( 5, 9, 13 ), IntArray( 5, 13, 10 ) ]
 outlines = [ Vector2Array( 185.18, 181.869, 211.353, 183.674, 221.28, 201.724, 177.96, 220.676, 164.423, 208.041 ), Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 405.39, 191.796, 358.46, 180.966, 325.068, 202.626, 75.9778, 258.581, 39.8778, 288.364, -1.63722, 289.266 ) ]
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 120, 40 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 130, 40 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 100 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 30, 20 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=6]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 60 )
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=7]
 
 custom_solver_bias = 0.0
 extents = Vector2( 120, 40 )
 
-[sub_resource type="ColorRamp" id=4]
+[sub_resource type="ColorRamp" id=8]
 
 offsets = FloatArray( 0, 0.878261, 1 )
 colors = ColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
@@ -75,7 +75,7 @@ centered = false
 
 transform/pos = Vector2( 616.051, 250.706 )
 input/pickable = false
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -87,7 +87,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -95,7 +95,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 376.153, 251.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -107,7 +107,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -115,7 +115,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 616.153, 60.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -127,7 +127,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
 
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -135,7 +135,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 376.153, 60.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -147,7 +147,7 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
 
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -155,7 +155,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 127.153, 60.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -1, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -168,7 +168,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7"]
 
 transform/pos = Vector2( -1, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
@@ -176,7 +176,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( -22.8469, 190.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 7 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, 9 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -189,7 +189,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8"]
 
 transform/pos = Vector2( 2, 9 )
-shape = SubResource( 7 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
@@ -197,7 +197,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 17.1531, 300.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 8 )
+shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, 9 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -210,7 +210,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9"]
 
 transform/pos = Vector2( 2, 9 )
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
@@ -218,7 +218,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 752.153, 148.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 9 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, 9 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -231,7 +231,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D10"]
 
 transform/pos = Vector2( 2, 9 )
-shape = SubResource( 9 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 
@@ -239,7 +239,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 158.153, 289.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Matrix32( 0.939693, -0.34202, 0.34202, 0.939693, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -252,7 +252,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
 
 transform/rot = 20.0
-shape = SubResource( 10 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
@@ -331,6 +331,6 @@ params/anim_initial_pos = 0.0
 randomness/orbit_velocity = 1.0
 randomness/initial_angle = 1.0
 color/color = Color( 0.474239, 0.469208, 0.976562, 1 )
-color/color_ramp = SubResource( 4 )
+color/color_ramp = SubResource( 8 )
 
 

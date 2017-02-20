@@ -167,8 +167,10 @@ func add_xp(amount):
 	var next_lvl = 5 + pow(lvl, log(lvl))
 	if xp >= next_lvl:
 		set_level(lvl + 1)
+		attribute_points += 1
 		xp = fmod(xp, next_lvl)
 		emit_signal("leveled_up", parent)
+		update_final_stats()
 
 func _process(delta):
 	if hp > get_actual("max_hp"):
