@@ -55,6 +55,7 @@ signal stealth_broken
 signal critical_hit
 signal dmg_taken(origin, amount)
 signal healing_taken(origin, amount)
+signal leveled_up(origin)
 
 var final_stats = {}
 var active_effects = []
@@ -160,8 +161,17 @@ func update_final_stats():
 		var dm = parent.get_node("Debuff")
 		dm.set_amount(-get_actual("damage"))
 
+func add_xp(amount):
+	var lvl = get_level()
+	xp += amount
+	var next_lvl = 5 + pow(lvl, log(lvl))
+	if xp >= next_lvl:
+		set_level(lvl + 1)
+		xp = fmod(xp, next_lvl)
+		emit_signal("leveled_up", parent)
 
 func _process(delta):
+	add_xp(1)
 	if hp > get_actual("max_hp"):
 		hp = get_actual("max_hp")
 	if mp > get_actual("max_mp"):

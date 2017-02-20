@@ -22,7 +22,13 @@ func refresh():
 	var name = actor_instance.actor_name
 	get_node("Details/Name").set_text(name)
 	var lvl = actor_instance.get_node("StatsModule").get_level()
-	get_node("Details/Label").set_text("Level " + str(lvl))
+	var ap = actor_instance.get_node("StatsModule").attribute_points
+	get_node("Details/HBoxContainer/lvl").set_text("Level " + str(lvl))
+	if ap > 0:
+		get_node("Details/HBoxContainer/ap").show()
+		get_node("Details/HBoxContainer/ap").set_text("(" + str(ap) + ")")
+	else:
+		get_node("Details/HBoxContainer/ap").hide()
 
 func select(val):
 	if val:

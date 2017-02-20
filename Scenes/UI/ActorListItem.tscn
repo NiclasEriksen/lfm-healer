@@ -81,7 +81,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 170.0
 margin/top = 0.0
-margin/right = 216.0
+margin/right = 261.0
 margin/bottom = 100.0
 alignment = 0
 
@@ -93,25 +93,54 @@ size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 46.0
+margin/right = 91.0
 margin/bottom = 14.0
 text = "Tank"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Label" type="Label" parent="Details"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Details"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 18.0
+margin/right = 91.0
+margin/bottom = 32.0
+custom_constants/separation = 16
+alignment = 0
+
+[node name="lvl" type="Label" parent="Details/HBoxContainer"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 18.0
+margin/top = 0.0
 margin/right = 46.0
-margin/bottom = 32.0
+margin/bottom = 14.0
 custom_colors/font_color = Color( 0.636719, 0.636719, 0.636719, 1 )
 text = "Level 2"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="ap" type="Label" parent="Details/HBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 62.0
+margin/top = 0.0
+margin/right = 99.0
+margin/bottom = 14.0
+custom_colors/font_color = Color( 0.636719, 0.952824, 0.636719, 1 )
+text = "(3 AP)"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
