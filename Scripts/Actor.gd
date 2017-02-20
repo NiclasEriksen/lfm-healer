@@ -182,6 +182,7 @@ func _ready():
 			connect("cleared_target", move_node, "_on_Actor_cleared_target")
 		if has_node("StatsModule"):
 			stats_node = get_node("StatsModule")
+			stats_node.connect("leveled_up", self, "_on_level_up")
 			print(stats_node.export_stats())
 		if has_node("Attack"):
 			attack_node = get_node("Attack")
@@ -220,3 +221,6 @@ func load_actor(d):
 	actor_name = d["actor_name"]
 	stats_node.import_stats(d["stats_data"])
 	actorbase_node.import_data(d["actorbase_data"])
+
+func _on_level_up(o):
+	actorbase_node.get_node("LevelUp").play("level_up")
