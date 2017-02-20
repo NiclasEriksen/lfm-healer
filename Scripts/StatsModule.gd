@@ -171,7 +171,6 @@ func add_xp(amount):
 		emit_signal("leveled_up", parent)
 
 func _process(delta):
-	add_xp(1)
 	if hp > get_actual("max_hp"):
 		hp = get_actual("max_hp")
 	if mp > get_actual("max_mp"):

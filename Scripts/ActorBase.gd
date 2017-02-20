@@ -100,7 +100,7 @@ func _draw():
 
 func _process(dt):
 	#get_node("AttackRange/CollisionShape2D").get_shape().set_radius(stats.get("base_attack_range"))
-	if get_tree().is_editor_hint():
+	if get_tree().is_editor_hint() and animations:
 		if not animations.is_playing():
 			animations.play("showcase")
 		return
@@ -177,6 +177,8 @@ func check_healthy():
 		healthy = true
 
 func update_state():
+	if get_tree().is_editor_hint():
+		return
 	var stunned = false
 	var stealthed = false
 	var shielded = false
@@ -219,14 +221,15 @@ func update_state():
 	else:
 		disable_shield()
 
-	if parent.is_selected():
-		get_node("Selected").show()
-	else:
-		get_node("Selected").hide()
-	if parent.is_highlighted():
-		get_node("Highlight").show()
-	else:
-		get_node("Highlight").hide()
+	if parent:
+		if parent.is_selected():
+			get_node("Selected").show()
+		else:
+			get_node("Selected").hide()
+		if parent.is_highlighted():
+			get_node("Highlight").show()
+		else:
+			get_node("Highlight").hide()
 
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
 		get_node("State").set_enabled(true)
@@ -329,16 +332,9 @@ func on_attack():
 		stats.emit_signal("stealth_broken")
 
 func on_death():
+	print("ON DEATH")
+	parent.on_death()
 	enabled = false
-	emit_signal("death", parent.get_body_pos())
-	parent.get_node("StatsModule").queue_free()
-	parent.get_node("CollisionShape2D").queue_free()
-	if parent.is_in_party():
-		parent.get_party().unregister_unit(parent.get_party_index())
-	for g in parent.get_groups():
-		parent.remove_from_group(g)
-	if Globals.get("debug_mode"):
-		print(self, " died.")
 	var de = death_effect.instance()
 	de.set_pos(parent.get_pos())
 	de.set_z(parent.get_z() - 8)
@@ -349,7 +345,6 @@ func on_death():
 		de.set_scale(sprite.get_scale() * get_scale())
 		de.set_texture(tex, hf, vf)
 	root.get_node("Effects").add_child(de)
-	parent.queue_free()
 
 func export_data():
 	return {

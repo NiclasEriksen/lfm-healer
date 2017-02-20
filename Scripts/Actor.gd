@@ -26,6 +26,7 @@ var attack_cd = 0.0
 signal targeted_enemy(enemy)
 signal cleared_target
 signal attack(target)
+signal death(actor)
 
 func set_actor_name(n):
 	actor_name = n
@@ -170,6 +171,8 @@ func fire_projectile(target):
 func _ready():
 	# Connect signals
 	set_process(true)
+	if get_tree().get_root().has_node("Game"):
+		connect("death", get_tree().get_root().get_node("Game"), "on_actor_death")
 	if has_node("ActorBase"):
 		actorbase_node = get_node("ActorBase")
 		connect("attack", actorbase_node, "_on_Actor_attack")
@@ -183,7 +186,7 @@ func _ready():
 		if has_node("StatsModule"):
 			stats_node = get_node("StatsModule")
 			stats_node.connect("leveled_up", self, "_on_level_up")
-			print(stats_node.export_stats())
+			# print(stats_node.export_stats())
 		if has_node("Attack"):
 			attack_node = get_node("Attack")
 		if has_node("StatusEffect"):
@@ -224,3 +227,13 @@ func load_actor(d):
 
 func _on_level_up(o):
 	actorbase_node.get_node("LevelUp").play("level_up")
+
+func on_death():
+	if is_in_party():
+		get_party().unregister_unit(get_party_index())
+#	for g in get_groups():
+#		remove_from_group(g)
+	if Globals.get("debug_mode"):
+		print(self, " died.")
+	emit_signal("death", self)
+

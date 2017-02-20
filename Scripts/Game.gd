@@ -112,6 +112,7 @@ func spawn_party():
 	get_node("Party").set_scale(Vector2(0.85, 0.85))
 	get_node("Party").set_pos(map.get_spawn_pos("friendly"))
 	for f in get_tree().get_nodes_in_group("friendly"):
+		f.add_to_group("party")
 		f.set_party(get_node("Party"))
 		if f.get_party_index() == 0:
 #			f.set_leader(true)
@@ -272,16 +273,20 @@ func spawn_actor(actor_type, alliance):
 		if actor.has_node("MoveModule"):
 			var path = map.get_simple_path(body_p, p_to)
 			actor.get_node("MoveModule").set_walk_path(path)
-		actor.get_node("ActorBase").connect("death", self, "on_actor_death")
 #		actor.get_node("ActorBase").connect("death", actor, "on_actor_death")
 		get_node("Actors").add_child(actor)
 	else:
 		print("No actor by that identifier found: ", actor_type)
 
-func on_actor_death(p):
+func on_actor_death(a):
+	if "enemy" in a.get_groups():
+		for pm in get_tree().get_nodes_in_group("party"):
+			pm.stats_node.add_xp(5)
 	var ds = death_splat.instance()
-	ds.set_pos(p)
+	ds.set_pos(a.get_body_pos())
 	get_node("Objects").add_child(ds)
+	a.queue_free()
+
 
 func _on_Healer_death():
 	healer = null
