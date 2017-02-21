@@ -1,7 +1,6 @@
 extends "res://Scenes/Abilities/AbilityBase.gd"
 var targets = []
 onready var hud = get_tree().get_root().get_node("Game").get_node("HUD")
-var healeffect = load("res://Scenes/Effects/NatureHealEffect.tscn")
 export var max_jump_range = 200
 export var max_jumps = 3
 
@@ -78,10 +77,7 @@ func trigger():
 				get_node("EffectModule"), null
 				)
 			target.get_node("ActorBase").on_heal()
-			var he = healeffect.instance()
-			he.set_pos(target.get_body_pos())
-			he.set_z(target.get_z())
-			get_tree().get_root().get_node("Game/Effects").add_child(he)
+			target.get_node("ActorBase").play_effect("nature_heal")
 	hud.clear_lines()
 	queue_free()
 	return targets_hit

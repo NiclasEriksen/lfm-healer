@@ -1,12 +1,10 @@
-[gd_scene load_steps=5 format=1]
-
-[ext_resource path="res://Assets/Effects/random_spot.png" type="Texture" id=1]
+[gd_scene load_steps=4 format=1]
 
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D\n\n# class member variables go here, for example:\n# var a = 2\n# var b = \"textvar\"\n\nfunc _ready():\n\t# Called every time the node is added to the scene.\n\t# Initialization here\n\tget_node(\"AnimationPlayer\").play(\"heal\")\n"
 
-[sub_resource type="ColorRamp" id=4]
+[sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.508772, 1 )
 colors = ColorArray( 1, 0.986572, 0.785156, 1, 1, 0.980347, 0.820312, 1, 1, 1, 1, 0 )
@@ -27,21 +25,6 @@ tracks/1/path = NodePath("Particles2D:config/emitting")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 0, 0.5 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
-tracks/2/type = "value"
-tracks/2/path = NodePath("Light2D:scale")
-tracks/2/interp = 1
-tracks/2/imported = false
-tracks/2/keys = { "times":FloatArray( 0, 0.2, 1.5 ), "transitions":FloatArray( 1, 1, 0.108819 ), "update":0, "values":[ 0.0, 0.75, 0.0 ] }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Light2D:enabled")
-tracks/3/interp = 1
-tracks/3/imported = false
-tracks/3/keys = { "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Light2D:visibility/opacity")
-tracks/4/interp = 1
-tracks/4/imported = false
-tracks/4/keys = { "times":FloatArray( 0, 0.2, 1.5 ), "transitions":FloatArray( 1, 1, 1 ), "update":0, "values":[ 1.0, 0.3, 0.0 ] }
 
 [node name="HealEffect2" type="Node2D"]
 
@@ -70,7 +53,7 @@ params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
-color/color_ramp = SubResource( 4 )
+color/color_ramp = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -82,28 +65,5 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
-
-[node name="Light2D" type="Light2D" parent="."]
-
-visibility/opacity = 0.0
-enabled = false
-editor_only = false
-texture = ExtResource( 1 )
-offset = Vector2( 0, 0 )
-scale = 0.0
-color = Color( 1, 1, 1, 1 )
-energy = 1.0
-mode = 0
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 1024
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
 
 

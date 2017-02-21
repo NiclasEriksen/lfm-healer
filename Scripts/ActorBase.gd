@@ -10,7 +10,8 @@ export(Vector2) var tile_dimensions = Vector2(5, 5) setget set_tile_dimensions
 export(float, 0, 1, 0.05) var STEALTH_OPACITY = 0.3 setget set_stealth_opacity, get_stealth_opacity
 var effects = {
 	"death": ["global", preload("res://Scenes/Effects/DeathEffect.tscn")],
-	"level_up": ["local", preload("res://Scenes/Effects/LvlUpEffect.tscn")]
+	"level_up": ["local", preload("res://Scenes/Effects/LvlUpEffect.tscn")],
+	"nature_heal": ["local", preload("res://Scenes/Effects/NatureHealEffect.tscn")],
 }
 onready var effects_path = get_node("Effects")
 onready var stats = get_parent().get_node("StatsModule")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://Assets/Effects/lvlup.png" type="Texture" id=1]
 
@@ -48,14 +48,25 @@ tracks/2/path = NodePath("Particles2D2:config/emitting")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = { "times":FloatArray( 0.3, 0.7 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Particles2D3:config/emitting")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = { "times":FloatArray( 0, 0.7 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [sub_resource type="ColorRamp" id=5]
 
 offsets = FloatArray( 0, 0.104348, 0.556522, 1 )
 colors = ColorArray( 1, 0.698456, 0.0585938, 0, 1, 0.778534, 0.308594, 1, 0.844693, 0.867188, 0.579254, 1, 1, 1, 1, 0 )
 
+[sub_resource type="ColorRamp" id=6]
+
+offsets = FloatArray( 0, 0.0782609, 1 )
+colors = ColorArray( 0.710938, 0.810303, 1, 0, 0.73356, 0.825149, 1, 1, 0.6875, 0.743652, 1, 0 )
+
 [node name="LvlUpEffect" type="Node2D"]
 
+transform/pos = Vector2( 0, 8 )
 script/script = SubResource( 1 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
@@ -76,8 +87,8 @@ params/radial_accel = -150.0
 params/tangential_accel = 0.0
 params/damping = 0.0
 params/initial_angle = 0.0
-params/initial_size = 1.0
-params/final_size = 3.0
+params/initial_size = 1.5
+params/final_size = 0.5
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
@@ -125,10 +136,37 @@ params/tangential_accel = 0.0
 params/damping = 0.0
 params/initial_angle = 0.0
 params/initial_size = 0.5
-params/final_size = 1.0
+params/final_size = 0.75
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color_ramp = SubResource( 5 )
+
+[node name="Particles2D3" type="Particles2D" parent="."]
+
+transform/pos = Vector2( 0, 5 )
+config/amount = 48
+config/lifetime = 1.6
+config/emit_timeout = 0.7
+config/emitting = false
+config/half_extents = Vector2( 12, 6 )
+params/direction = 180.0
+params/spread = 0.0
+params/linear_velocity = 50.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 1.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color = Color( 0.5625, 0.589932, 1, 1 )
+color/color_ramp = SubResource( 6 )
 
 
