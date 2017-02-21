@@ -228,7 +228,8 @@ func load_actor(d):
 	actorbase_node.import_data(d["actorbase_data"])
 
 func _on_level_up(o):
-	actorbase_node.get_node("LevelUp").play("level_up")
+#	actorbase_node.get_node("LevelUp").play("level_up")
+	actorbase_node.on_lvlup()
 
 func on_death():
 	if is_in_party():

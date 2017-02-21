@@ -9,6 +9,7 @@ export(bool) var has_special_anim = false
 export(Vector2) var tile_dimensions = Vector2(5, 5) setget set_tile_dimensions
 export(float, 0, 1, 0.05) var STEALTH_OPACITY = 0.3 setget set_stealth_opacity, get_stealth_opacity
 var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
+var lvlup_effect = preload("res://Scenes/Effects/LvlUpEffect.tscn")
 onready var stats = get_parent().get_node("StatsModule")
 onready var movement = get_parent().get_node("MoveModule")
 onready var parent = get_parent()
@@ -344,6 +345,10 @@ func on_death():
 		de.set_scale(sprite.get_scale() * get_scale())
 		de.set_texture(tex, hf, vf)
 	root.get_node("Effects").add_child(de)
+
+func on_lvlup():
+	var lvle = lvlup_effect.instance()
+	get_node("Effects").add_child(lvle)
 
 func export_data():
 	return {
