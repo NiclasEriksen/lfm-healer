@@ -353,7 +353,7 @@ func on_death():
 	parent.on_death()
 	enabled = false
 	var de = effects["death"][1].instance()
-	de.set_pos(parent.get_pos())
+	de.set_pos(parent.get_pos() + get_pos())
 	de.set_z(parent.get_z() - 8)
 	if has_death_anim:
 		var tex = sprite.get_texture()

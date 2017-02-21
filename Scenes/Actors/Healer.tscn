@@ -41,6 +41,7 @@ stats_node = NodePath("../StatsModule")
 
 [node name="StatsModule" parent="." instance=ExtResource( 3 )]
 
+level = 3
 primary_stat = "int"
 max_hp = 25.0
 max_mp = 40.0
