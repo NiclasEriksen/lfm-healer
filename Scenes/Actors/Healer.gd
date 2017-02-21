@@ -89,7 +89,10 @@ func _process(dt):
 #		get_node("Sprite").set_rot(get_pos().angle_to_point(game.dragged_ability.get_pos()) + PI)
 #	else:
 #		get_node("Sprite").set_rot(PI / 2)
-	get_tree().get_root().get_node("Game/Camera2D").set_pos(get_global_pos())
+	if party:
+		get_tree().get_root().get_node("Game/Camera2D").set_pos(party.get_pos())
+	else:
+		get_tree().get_root().get_node("Game/Camera2D").set_pos(get_global_pos())
 	update_cooldowns(dt)
 
 func use_ability(i):

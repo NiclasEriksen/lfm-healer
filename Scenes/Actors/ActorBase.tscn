@@ -216,7 +216,7 @@ shadow/item_mask = 1
 transform/scale = Vector2( 2, 2 )
 vframes = 5
 hframes = 5
-frame = 19
+frame = 7
 
 [node name="HealParticles" type="Particles2D" parent="."]
 
