@@ -3,31 +3,22 @@ extends Node2D
 var dragged_ability = false
 var maplist_node = preload("res://Scripts/MapList.gd").new()
 export(int, 2, 50, 1) var select_sensitivity = 20
-var actors = {
-	"tank": preload("res://Scenes/Actors/Tank.tscn"),
-	"archer": preload("res://Scenes/Actors/Archer.tscn"),
-	"rogue": preload("res://Scenes/Actors/Rogue.tscn"),
-	"mage": preload("res://Scenes/Actors/Mage.tscn"),
-	"healer": preload("res://Scenes/Actors/Healer.tscn"),
-	"testenemy": preload("res://Scenes/Actors/TestEnemy.tscn"),
-	"member": preload("res://Scenes/Actors/Member.tscn"),
-	"blub": preload("res://Scenes/Actors/Blub.tscn"),
-}
+var actory = preload("res://Scripts/ActorFactory.gd").new()
 var death_splat = load("res://Scenes/Effects/DeathSplat.tscn")
 onready var cam = get_node("Camera2D")
-onready var map = get_node("Map")
+var map = null
 var userdata = preload("res://Scripts/UserDataManager.gd").new()
 var healer = null
 
 func get_actor_types():
 	var l = []
-	for k in actors:
+	for k in actory.actors:
 		l.append(k)
 	return l
 
 func get_actor_scene(n):
-	if actors.has(n):
-		return actors[n]
+	if actory.actors.has(n):
+		return actory.actors[n]
 	return
 
 func _ready():
@@ -36,6 +27,7 @@ func _ready():
 	for s in sd:
 		Globals.set(s, sd[s])
 	var fd = userdata.load_data("Formations")
+	actory.game = self
 	set_process(true)
 	set_process_unhandled_input(true)
 	load_map("Mountain.tscn")
@@ -76,9 +68,9 @@ func load_map(m):
 
 func spawn_healer():
 	if has_node("Healer"):
-		print("Healer alive.")
+#		print("Healer alive.")
 		get_node("Healer").free()
-	var hn = actors["healer"].instance()
+	var hn = actory.actors["healer"].instance()
 	hn.set_healer(true)
 	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
 	hn.connect("healer_death", self, "_on_Healer_death")
@@ -166,8 +158,11 @@ func cleanup():
 		for e in get_node("Effects").get_children():
 			e.free()
 	if get_node("Actors").get_child_count():
-		for a in get_node("Actors").get_children():
-			a.free()
+		get_node("Actors").free()
+		var a = Node.new()
+		a.set_name("Actors")
+		add_child(a)
+		move_child(a, 2)
 	if has_node("Map"):
 		get_node("Map")._ready()
 	if has_node("Party"):
@@ -245,39 +240,7 @@ func select_actor(p):
 		closest.set_selected(true)
 
 func spawn_actor(actor_type, alliance):
-	if not actors.has(actor_type):
-		print("No such actor: ", actor_type)
-		return
-	var actor = actors[actor_type].instance()
-	var p = Vector2(0, 0)
-	var p_to = Vector2(0, 0)
-
-	if alliance == "friendly":
-		if Globals.get("chill_mode") and actor:
-			# Triple level
-			actor.get_node("StatsModule").set_level(10)
-		p = map.get_spawn_pos(alliance)
-		p_to= map.get_spawn_pos("enemy")
-	elif alliance == "enemy":
-		p = map.get_spawn_pos(alliance)
-		p_to = map.get_spawn_pos("friendly")
-		var scr_h = Globals.get("render_height")
-		p += Vector2(0, rand_range(-(scr_h / 10), scr_h / 10))
-
-	if actor:
-		if Globals.get("debug_mode"):
-			print("Spawning actor: ", actor_type)
-		actor.change_allegiance(alliance)
-		actor.set_pos(p)
-		actor.set_z(p.y)
-		var body_p = actor.get_body_pos()
-		if actor.has_node("MoveModule"):
-			var path = map.get_simple_path(body_p, p_to)
-			actor.get_node("MoveModule").set_walk_path(path)
-#		actor.get_node("ActorBase").connect("death", actor, "on_actor_death")
-		get_node("Actors").add_child(actor)
-	else:
-		print("No actor by that identifier found: ", actor_type)
+	actory.spawn_actor(actor_type, alliance)
 
 func on_actor_death(a):
 	if "enemy" in a.get_groups():

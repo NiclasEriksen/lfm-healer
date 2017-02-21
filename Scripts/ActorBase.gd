@@ -8,8 +8,11 @@ export(bool) var has_death_anim = false
 export(bool) var has_special_anim = false
 export(Vector2) var tile_dimensions = Vector2(5, 5) setget set_tile_dimensions
 export(float, 0, 1, 0.05) var STEALTH_OPACITY = 0.3 setget set_stealth_opacity, get_stealth_opacity
-var death_effect = preload("res://Scenes/Effects/DeathEffect.tscn")
-var lvlup_effect = preload("res://Scenes/Effects/LvlUpEffect.tscn")
+var effects = {
+	"death": ["global", preload("res://Scenes/Effects/DeathEffect.tscn")],
+	"level_up": ["local", preload("res://Scenes/Effects/LvlUpEffect.tscn")]
+}
+onready var effects_path = get_node("Effects")
 onready var stats = get_parent().get_node("StatsModule")
 onready var movement = get_parent().get_node("MoveModule")
 onready var parent = get_parent()
@@ -241,13 +244,11 @@ func _on_Actor_attack(tar):
 	if has_attack_anim:
 		animations.play("attack")
 	else:
-		get_node("HealParticles").set_emitting(false)
 		get_node("EffectPlayer").play("attack")
 
 func on_hit(tar):
 	if stats:
 		stats.emit_signal("stealth_broken")
-	get_node("HealParticles").set_emitting(false)
 	get_node("EffectPlayer").play("hit")
 	var he = null
 	if parent.hit_effect_scene:
@@ -325,8 +326,23 @@ func update_animations():
 	elif state == "celebrating":
 		pass
 
+func play_effect(name):
+	if not effects.has(name):
+		print("No such effect: ", name)
+		return
+	var e = effects[name][1].instance()
+	var etype = effects[name][0]
+	if etype == "global":
+		e.set_pos(parent.get_pos())
+		e.set_z(parent.get_z() - 8)
+		root.get_node("Effects").add_child(e)
+	else:
+		effects_path.add_child(e)
+	return e
+
 func on_heal():
-	get_node("EffectPlayer").play("Heal")
+#	get_node("EffectPlayer").play("Heal")
+	get_node("HealParticles").set_emitting(true)
 
 func on_attack():
 	if stats:
@@ -335,7 +351,7 @@ func on_attack():
 func on_death():
 	parent.on_death()
 	enabled = false
-	var de = death_effect.instance()
+	var de = effects["death"][1].instance()
 	de.set_pos(parent.get_pos())
 	de.set_z(parent.get_z() - 8)
 	if has_death_anim:
@@ -347,8 +363,7 @@ func on_death():
 	root.get_node("Effects").add_child(de)
 
 func on_lvlup():
-	var lvle = lvlup_effect.instance()
-	get_node("Effects").add_child(lvle)
+	play_effect("level_up")
 
 func export_data():
 	return {

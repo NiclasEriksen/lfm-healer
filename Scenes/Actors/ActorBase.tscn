@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=19 format=1]
 
 [ext_resource path="res://Scripts/ActorBase.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Effects/smoke_mid.png" type="Texture" id=2]
@@ -103,17 +103,6 @@ tracks/2/path = NodePath("Sprite:transform/rot")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ 0.0 ] }
-
-[sub_resource type="Animation" id=7]
-
-length = 0.6
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("HealParticles:config/emitting")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 0.6 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
 [sub_resource type="Animation" id=8]
 
@@ -227,12 +216,13 @@ shadow/item_mask = 1
 transform/scale = Vector2( 2, 2 )
 vframes = 5
 hframes = 5
-frame = 7
+frame = 19
 
 [node name="HealParticles" type="Particles2D" parent="."]
 
 config/amount = 24
 config/lifetime = 2.0
+config/emit_timeout = 0.4
 config/emitting = false
 config/half_extents = Vector2( 10, 6 )
 config/texture = ExtResource( 5 )
@@ -275,7 +265,6 @@ autoplay = ""
 playback/process_mode = 1
 playback/default_blend_time = 1.0
 root/root = NodePath("..")
-anims/Heal = SubResource( 7 )
 anims/attack = ExtResource( 7 )
 anims/crit = SubResource( 8 )
 anims/hit = ExtResource( 8 )
