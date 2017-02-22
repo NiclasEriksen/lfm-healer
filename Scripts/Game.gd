@@ -219,6 +219,9 @@ func _unhandled_input(event):
 			var hpos = healer.get_body_pos()
 			if not hpos.distance_to(event.pos) > dragged_ability.cast_range:
 				dragged_ability.set_pos(event.pos)
+			else:
+				var newpos = hpos + (event.pos - hpos).clamped(dragged_ability.cast_range)
+				dragged_ability.set_pos(newpos)
 	elif event.type == InputEvent.KEY:
 		if event.pressed and event.scancode == KEY_F12:
 			Globals.set("debug_mode", not Globals.get("debug_mode"))
