@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/mountainside.png" type="Texture" id=2]
@@ -47,13 +47,25 @@ extents = Vector2( 120, 40 )
 offsets = FloatArray( 0, 0.878261, 1 )
 colors = ColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
+[sub_resource type="CapsuleShape2D" id=9]
+
+custom_solver_bias = 0.0
+radius = 10.0
+height = 20.0
+
+[sub_resource type="CapsuleShape2D" id=10]
+
+custom_solver_bias = 0.0
+radius = 12.0
+height = 40.0
+
 [node name="Map" type="Navigation2D"]
 
 script/script = ExtResource( 1 )
 mapfile = "res://Assets/Maps/mountainside.png"
 map_title = "Fjedla"
 
-[node name="NavigationPolygonInstance2" type="NavigationPolygonInstance" parent="."]
+[node name="MainNav" type="NavigationPolygonInstance" parent="."]
 
 navpoly = SubResource( 1 )
 enabled = true
@@ -64,7 +76,7 @@ transform/pos = Vector2( 710.8, 150 )
 
 [node name="FriendlySpawn" type="Position2D" parent="."]
 
-transform/pos = Vector2( 64, 135 )
+transform/pos = Vector2( 58, 200 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -332,5 +344,85 @@ randomness/orbit_velocity = 1.0
 randomness/initial_angle = 1.0
 color/color = Color( 0.474239, 0.469208, 0.976562, 1 )
 color/color_ramp = SubResource( 8 )
+
+[node name="Mid" type="Node2D" parent="."]
+
+[node name="TestStone" type="Sprite" parent="Mid"]
+
+transform/pos = Vector2( 196, 203 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Mid/TestStone"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 9 )
+shapes/0/transform = Matrix32( 0.258819, 0.965926, -0.965926, 0.258819, -2, -1 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mid/TestStone/StaticBody2D"]
+
+transform/pos = Vector2( -2, -1 )
+transform/rot = 285.0
+shape = SubResource( 9 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Nav" type="Polygon2D" parent="Mid/TestStone"]
+
+polygon = Vector2Array( -29.5264, 8.0802, -8.44475, 20.4657, 21.8601, 8.60724, 23.9682, -11.9473, 6.04886, -22.2246, -27.6817, -10.3662 )
+uv = Vector2Array(  )
+color = Color( 1, 0.830196, 0.732392, 0.420588 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+
+[node name="TestStone2" type="Sprite" parent="Mid"]
+
+transform/pos = Vector2( 371, 200 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Mid/TestStone2"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 10 )
+shapes/0/transform = Matrix32( -4.37114e-08, -1, 1, -4.37114e-08, -2, -1 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mid/TestStone2/StaticBody2D"]
+
+transform/pos = Vector2( -2, -1 )
+transform/rot = 90.0
+shape = SubResource( 10 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Nav" type="Polygon2D" parent="Mid/TestStone2"]
+
+polygon = Vector2Array( -49.034, 12.6437, 46.0333, 11.3233, 29.7487, -17.725, -38.9111, -16.4046 )
+uv = Vector2Array(  )
+color = Color( 1, 0.830196, 0.732392, 0.420588 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
 
 

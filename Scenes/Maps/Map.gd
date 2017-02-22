@@ -67,6 +67,7 @@ func _ready():
 	spawnlist = []
 	var tex = get_node("Sprite").get_texture()
 	map_size = Vector2(tex.get_width(), tex.get_height())
+	build_navpoly()
 	load_spawnlist()
 #	set_spawn_pos()
 	set_process(true)
@@ -75,6 +76,31 @@ func _ready():
 func start():
 	for sp in spawnpoints:
 		sp.spawn()
+
+
+func build_navpoly():
+	if not has_node("MainNav"):
+		return
+	var mn = get_node("MainNav")
+	var np = mn.get_navigation_polygon()
+#	mn.clear_outlines()
+#	mn.clear_polygons()
+#	var outline = Vector2Array([Vector2(0, 0), Vector2(map_size.x, 0), map_size, Vector2(0, map_size.y)])
+#	np.add_outline(outline)
+#	np.add_polygon(
+	if has_node("Mid"):
+		var n = get_node("Mid")
+		for b in n.get_children():
+			if b.has_node("Nav"):
+				var p = IntArray()
+				b.get_node("Nav").hide()
+				for v in b.get_node("Nav").get_polygon():
+					p.append(v.x)
+					p.append(v.y)
+				np.add_polygon(p)
+				pass
+	mn.set_navigation_polygon(np)
+	print(mn.get_navigation_polygon().get_outline(0))
 
 
 func _process(dt):
