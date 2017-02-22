@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Scenes/Actors/Healer.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Modules/MoveModule.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Actors/ActorBase.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Actors/healer_16.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Modules/Brain.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Effects/ring_light_64.png" type="Texture" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -67,6 +68,18 @@ transform/pos = Vector2( 0, -45 )
 stats_node = NodePath("../StatsModule")
 move_node = NodePath("../MoveModule")
 actorbase_node = NodePath("../ActorBase")
+
+[node name="CastRange" type="Sprite" parent="."]
+
+visibility/opacity = 0.0
+texture = ExtResource( 7 )
+
+[node name="CastRangeTween" type="Tween" parent="."]
+
+playback/process_mode = 1
+playback/active = true
+playback/repeat = false
+playback/speed = 1.0
 
 [connection signal="death" from="ActorBase" to="." method="_on_ActorBase_death"]
 

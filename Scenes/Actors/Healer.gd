@@ -18,6 +18,7 @@ var max_spell1_cd = 0.0
 var max_spell2_cd = 0.0
 var max_spell3_cd = 0.0
 var max_spell4_cd = 0.0
+onready var cast_range_tween = get_node("CastRangeTween")
 signal healer_death
 
 func get_ability(i):
@@ -158,3 +159,28 @@ func attack(t):
 
 func _on_ActorBase_death( pos ):
 	emit_signal("healer_death")
+
+func _on_start_dragging(a):
+	var cr = get_node("CastRange")
+	print(cr.get_opacity())
+	var s = a.cast_range / cr.get_texture().get_size().x
+	cr.set_scale(Vector2(s * 2, s * 2))
+	if cr.get_opacity() == 0.1:
+		return
+	cast_range_tween.interpolate_property(
+		cr, "visibility/opacity", cr.get_opacity(), 0.1, (0.1 - cr.get_opacity()) * 5, 0, 0)
+	cast_range_tween.start()
+
+
+func _on_stop_dragging():
+	var cr = get_node("CastRange")
+	print(cr.get_opacity())
+	if cr.get_opacity() == 0:
+		return
+	if cast_range_tween.is_active():
+		cast_range_tween.stop(cr, "visibility/opacity")
+	cast_range_tween.interpolate_property(
+		cr, "visibility/opacity", cr.get_opacity(), 0, cr.get_opacity() * 5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	cast_range_tween.start()
+	add_child(cast_range_tween)
+	print(cast_range_tween)

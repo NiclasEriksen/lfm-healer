@@ -4,14 +4,11 @@ var active = false
 export(int, 0, 3) var slot = 0
 export(float, 0, 60, 0.1) var cooldown = 0.5
 export(float, 0, 500) var cost = 0
+export(int, 25, 500) var cast_range = 200
 export(String, "target", "instant") var ability_type = "target"
 var z_offset = 0
 var prev_highlighted = []
 export(Texture) var ability_icon = null setget set_icon, get_icon
-
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 
 func get_cooldown():
 	return cooldown

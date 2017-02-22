@@ -9,6 +9,8 @@ onready var cam = get_node("Camera2D")
 var map = null
 var userdata = preload("res://Scripts/UserDataManager.gd").new()
 var healer = null
+signal cleared_ability
+signal dragging_ability(a)
 
 func get_actor_types():
 	var l = []
@@ -74,6 +76,8 @@ func spawn_healer():
 	hn.set_healer(true)
 	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
 	hn.connect("healer_death", self, "_on_Healer_death")
+	connect("cleared_ability", hn, "_on_stop_dragging")
+	connect("dragging_ability", hn, "_on_start_dragging")
 	hn.set_name("Healer")
 	add_child(hn)
 	healer = hn
@@ -144,6 +148,7 @@ func get_path_to_end(pos):
 func cleanup():
 	print("Resetting game state and clearing objects...")
 	dragged_ability = null
+	emit_signal("cleared_ability")
 	get_node("HUD").clear()
 	if Globals.get("debug_mode"):
 		print("Freeing ", get_node("Objects").get_child_count())
@@ -203,14 +208,17 @@ func _unhandled_input(event):
 			var hit = dragged_ability.trigger()
 			if hit and not Globals.get("debug_mode"):
 				healer.set_cooldown(i, dragged_ability.get_cooldown())
-			dragged_ability = false
+			dragged_ability = null
+			emit_signal("cleared_ability")
 		if event.pressed:
 			select_actor(event.pos)
 	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
 			if not dragged_ability.active:
 				dragged_ability.set_active(true)
-			dragged_ability.set_pos(event.pos)
+			var hpos = healer.get_body_pos()
+			if not hpos.distance_to(event.pos) > dragged_ability.cast_range:
+				dragged_ability.set_pos(event.pos)
 	elif event.type == InputEvent.KEY:
 		if event.pressed and event.scancode == KEY_F12:
 			Globals.set("debug_mode", not Globals.get("debug_mode"))
@@ -295,6 +303,7 @@ func get_game_pos(p):
 func spawn_ability(ability, pos):
 	if ability.ability_type == "target":
 		dragged_ability = ability
+		emit_signal("dragging_ability", dragged_ability)
 		self.dragged_ability.set_pos(pos)
 		self.dragged_ability.set_active(false)
 		
