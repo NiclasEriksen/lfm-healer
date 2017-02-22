@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://Scenes/Maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Maps/mountainside.png" type="Texture" id=2]
@@ -6,38 +6,38 @@
 [ext_resource path="res://addons/spawn_point/icon.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Effects/fallingdirt.png" type="Texture" id=5]
 
-[sub_resource type="NavigationPolygon" id=9]
+[sub_resource type="NavigationPolygon" id=1]
 
 vertices = Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 405.39, 191.796, 358.46, 180.966, 325.068, 202.626, 211.353, 183.674, 39.8778, 288.364, -1.63722, 289.266, 75.9778, 258.581, 221.28, 201.724, 185.18, 181.869, 164.423, 208.041, 177.96, 220.676 )
-polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 0, 4, 5, 6 ), IntArray( 7, 8, 0, 9 ), IntArray( 5, 10, 6 ), IntArray( 0, 6, 11 ), IntArray( 9, 0, 11, 12 ), IntArray( 9, 12, 13 ), IntArray( 5, 9, 13 ), IntArray( 5, 13, 10 ) ]
+polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 0, 4, 5, 6 ), IntArray( 7, 8, 0, 9 ), IntArray( 5, 10, 6 ), IntArray( 0, 6, 11 ), IntArray( 9, 0, 11, 12 ), IntArray( 9, 12, 13 ), IntArray( 5, 9, 13 ), IntArray( 5, 13, 10 ), IntArray( -29, 8, -8, 20, 21, 8, 23, -11, 6, -22, -27, -10 ), IntArray( -49, 12, 46, 11, 29, -17, -38, -16 ) ]
 outlines = [ Vector2Array( 185.18, 181.869, 211.353, 183.674, 221.28, 201.724, 177.96, 220.676, 164.423, 208.041 ), Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 405.39, 191.796, 358.46, 180.966, 325.068, 202.626, 75.9778, 258.581, 39.8778, 288.364, -1.63722, 289.266 ) ]
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 160, 40 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 130, 40 )
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 100 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 30, 20 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=6]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 60 )
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=7]
 
 custom_solver_bias = 0.0
 extents = Vector2( 120, 40 )
@@ -47,18 +47,6 @@ extents = Vector2( 120, 40 )
 offsets = FloatArray( 0, 0.878261, 1 )
 colors = ColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="CapsuleShape2D" id=9]
-
-custom_solver_bias = 0.0
-radius = 10.0
-height = 20.0
-
-[sub_resource type="CapsuleShape2D" id=10]
-
-custom_solver_bias = 0.0
-radius = 12.0
-height = 40.0
-
 [node name="Map" type="Navigation2D"]
 
 script/script = ExtResource( 1 )
@@ -67,7 +55,7 @@ map_title = "Fjedla"
 
 [node name="MainNav" type="NavigationPolygonInstance" parent="."]
 
-navpoly = SubResource( 9 )
+navpoly = SubResource( 1 )
 enabled = true
 
 [node name="EnemySpawn" type="Position2D" parent="."]
@@ -88,7 +76,7 @@ __meta__ = { "_edit_lock_":true }
 
 transform/pos = Vector2( 616.051, 250.706 )
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1.17791, 0, 0, 1, 114.949, 26.294 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -102,7 +90,7 @@ bounce = 0.0
 
 transform/pos = Vector2( 114.949, 26.294 )
 transform/scale = Vector2( 1.17791, 1 )
-shape = SubResource( 10 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -110,7 +98,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 376.153, 251.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 6.84698, 3.976 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -123,7 +111,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 
 transform/pos = Vector2( 6.84698, 3.976 )
-shape = SubResource( 10 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -131,7 +119,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 616.153, 60.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1.19632, 0, 0, 1, 109.847, 32.976 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -145,7 +133,7 @@ bounce = 0.0
 
 transform/pos = Vector2( 109.847, 32.976 )
 transform/scale = Vector2( 1.19632, 1 )
-shape = SubResource( 10 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -153,7 +141,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 376.153, 60.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.153015, 30.976 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -166,7 +154,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
 
 transform/pos = Vector2( -0.153015, 30.976 )
-shape = SubResource( 10 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -174,7 +162,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 127.153, 60.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 11 )
+shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -1.153, 30.976 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -187,7 +175,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7"]
 
 transform/pos = Vector2( -1.153, 30.976 )
-shape = SubResource( 11 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
@@ -195,7 +183,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( -22.8469, 190.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 12 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 2, 9 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -208,7 +196,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8"]
 
 transform/pos = Vector2( 2, 9 )
-shape = SubResource( 12 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
@@ -216,7 +204,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 21, 319 )
 input/pickable = false
-shapes/0/shape = SubResource( 13 )
+shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 3, 7 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -229,7 +217,7 @@ bounce = 0.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9"]
 
 transform/pos = Vector2( 3, 7 )
-shape = SubResource( 13 )
+shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
@@ -237,7 +225,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 857, 179 )
 input/pickable = false
-shapes/0/shape = SubResource( 14 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1.37302, 79, 0.499997 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -251,7 +239,7 @@ bounce = 0.0
 
 transform/pos = Vector2( 79, 0.499997 )
 transform/scale = Vector2( 1, 1.37302 )
-shape = SubResource( 14 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 
@@ -259,7 +247,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 158.153, 289.024 )
 input/pickable = false
-shapes/0/shape = SubResource( 15 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Matrix32( 0.939693, -0.34202, 0.34202, 0.939693, 10.1361, 3.45127 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -273,7 +261,7 @@ bounce = 0.0
 
 transform/pos = Vector2( 10.1361, 3.45127 )
 transform/rot = 20.0
-shape = SubResource( 15 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
@@ -417,9 +405,6 @@ transform/pos = Vector2( 196, 203 )
 [node name="StaticBody2D" type="StaticBody2D" parent="Mid/TestStone"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 9 )
-shapes/0/transform = Matrix32( 0.258819, 0.965926, -0.965926, 0.258819, -2, -1 )
-shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 constant_linear_velocity = Vector2( 0, 0 )
@@ -431,12 +416,12 @@ bounce = 0.0
 
 transform/pos = Vector2( -2, -1 )
 transform/rot = 285.0
-shape = SubResource( 9 )
 trigger = false
 _update_shape_index = 0
 
 [node name="Nav" type="Polygon2D" parent="Mid/TestStone"]
 
+visibility/visible = false
 polygon = Vector2Array( -29.5264, 8.0802, -8.44475, 20.4657, 21.8601, 8.60724, 23.9682, -11.9473, 6.04886, -22.2246, -27.6817, -10.3662 )
 uv = Vector2Array(  )
 color = Color( 1, 0.830196, 0.732392, 0.420588 )
@@ -456,8 +441,8 @@ transform/pos = Vector2( 371, 200 )
 [node name="StaticBody2D" type="StaticBody2D" parent="Mid/TestStone2"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
-shapes/0/transform = Matrix32( -4.37114e-08, -1, 1, -4.37114e-08, -2, -1 )
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( -4.37114e-008, -1, 1, -4.37114e-008, 5.00001, 178 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -468,14 +453,15 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mid/TestStone2/StaticBody2D"]
 
-transform/pos = Vector2( -2, -1 )
+transform/pos = Vector2( 5.00001, 178 )
 transform/rot = 90.0
-shape = SubResource( 10 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
 [node name="Nav" type="Polygon2D" parent="Mid/TestStone2"]
 
+visibility/visible = false
 polygon = Vector2Array( -49.034, 12.6437, 46.0333, 11.3233, 29.7487, -17.725, -38.9111, -16.4046 )
 uv = Vector2Array(  )
 color = Color( 1, 0.830196, 0.732392, 0.420588 )
