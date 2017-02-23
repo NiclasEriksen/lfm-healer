@@ -22,7 +22,7 @@ script/script = ExtResource( 1 )
 slot = 1
 cooldown = 1.5
 cost = 30.0
-cast_range = 200
+cast_range = 180
 ability_type = "target"
 ability_icon = ExtResource( 2 )
 
