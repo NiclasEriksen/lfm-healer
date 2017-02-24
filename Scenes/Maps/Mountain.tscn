@@ -9,7 +9,7 @@
 [sub_resource type="NavigationPolygon" id=1]
 
 vertices = Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 409.551, 201.945, 211.353, 183.674, 39.8778, 288.364, -1.63722, 289.266, 75.9778, 258.581, 221.28, 201.724, 315.345, 202.608, 185.18, 181.869, 164.423, 208.041, 177.96, 220.676, 359.131, 203.935 )
-polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 5, 6, 0, 7 ), IntArray( 8, 4, 3, 9 ), IntArray( 0, 4, 10 ), IntArray( 7, 0, 10, 11 ), IntArray( 7, 11, 12 ), IntArray( 9, 7, 12 ), IntArray( 9, 12, 8 ), IntArray( 9, 3, 13 ) ]
+polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 5, 6, 0, 7 ), IntArray( 8, 4, 3, 9 ), IntArray( 0, 4, 10 ), IntArray( 7, 0, 10, 11 ), IntArray( 7, 11, 12 ), IntArray( 9, 7, 12 ), IntArray( 9, 12, 8 ), IntArray( 9, 3, 13 ), IntArray( -49, 12, 46, 11, 29, -17, -38, -16 ) ]
 outlines = [ Vector2Array( 185.18, 181.869, 211.353, 183.674, 221.28, 201.724, 177.96, 220.676, 164.423, 208.041 ), Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 409.551, 201.945, 359.131, 203.935, 315.345, 202.608, 75.9778, 258.581, 39.8778, 288.364, -1.63722, 289.266 ) ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -296,7 +296,7 @@ spawn_delay = 0
 
 [node name="SpawnPoint5" type="Position2D" parent="."]
 
-transform/pos = Vector2( 678.545, 171.824 )
+transform/pos = Vector2( 671.897, 164.068 )
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }
 actor_scene = "res://Scenes/Actors/Member.tscn"
