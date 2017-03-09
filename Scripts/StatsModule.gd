@@ -21,6 +21,8 @@ export(int) var base_spirit = 0
 export(int) var base_stamina = 0
 export(float) var max_hp = 10.0 # Replace with base
 export(float) var max_mp = 5.0  # Replace with base
+export(float) var hp_regen = 0.0
+export(float) var mp_regen = 0.5
 export(float) var base_damage = 1.0
 export(float) var base_spell_power = 0.0
 export(float) var base_phys_crit = 0.0
@@ -144,6 +146,14 @@ func scale_stat(stat, scal):
 		bonus *= pow(scal, level - 1)
 	return bonus
 
+func apply_mp_cost(amount):
+	if mp < amount:
+		mp = 0
+		print("We used negative mana, oh god.")
+		return
+	mp -= amount
+
+
 func update_final_stats():
 	self.final_stats = {
 		hp=scale_stat(max_hp, get_sta_scale()),
@@ -192,7 +202,12 @@ func on_levelup():
 	hp = get_actual("max_hp")
 	mp = get_actual("max_mp")
 
+func handle_regen(dt):
+	hp += hp_regen * dt
+	mp += mp_regen * dt
+
 func _process(delta):
+	handle_regen(delta)
 	if hp > get_actual("max_hp"):
 		hp = get_actual("max_hp")
 	if mp > get_actual("max_mp"):

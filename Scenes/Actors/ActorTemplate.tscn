@@ -20,13 +20,17 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+actor_name = "Unnamed"
 alliance = "friendly"
 projectile = null
 hit_effect = null
+ATTACK_OF_OPPORTUNITY = false
+party = null
+party_index = -1
 
 [node name="StatsModule" parent="." instance=ExtResource( 2 )]
 
-base_attack_range = 40
+base_attack_range = 20.0
 
 [node name="HPBarPos" type="Position2D" parent="."]
 

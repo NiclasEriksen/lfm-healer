@@ -9,7 +9,7 @@
 [sub_resource type="NavigationPolygon" id=1]
 
 vertices = Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 409.551, 201.945, 211.353, 183.674, 39.8778, 288.364, -1.63722, 289.266, 75.9778, 258.581, 221.28, 201.724, 315.345, 202.608, 185.18, 181.869, 164.423, 208.041, 177.96, 220.676, 359.131, 203.935 )
-polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 5, 6, 0, 7 ), IntArray( 8, 4, 3, 9 ), IntArray( 0, 4, 10 ), IntArray( 7, 0, 10, 11 ), IntArray( 7, 11, 12 ), IntArray( 9, 7, 12 ), IntArray( 9, 12, 8 ), IntArray( 9, 3, 13 ), IntArray( -49, 12, 46, 11, 29, -17, -38, -16 ) ]
+polygons = [ IntArray( 0, 1, 2, 3, 4 ), IntArray( 5, 6, 0, 7 ), IntArray( 8, 4, 3, 9 ), IntArray( 0, 4, 10 ), IntArray( 7, 0, 10, 11 ), IntArray( 7, 11, 12 ), IntArray( 9, 7, 12 ), IntArray( 9, 12, 8 ), IntArray( 9, 3, 13 ), IntArray( -49, 12, 46, 11, 29, -17, -38, -16 ), IntArray( -49, 12, 46, 11, 29, -17, -38, -16 ) ]
 outlines = [ Vector2Array( 185.18, 181.869, 211.353, 183.674, 221.28, 201.724, 177.96, 220.676, 164.423, 208.041 ), Vector2Array( 1.07028, 97.0338, 734.803, 99.7413, 735.705, 216.164, 409.551, 201.945, 359.131, 203.935, 315.345, 202.608, 75.9778, 258.581, 39.8778, 288.364, -1.63722, 289.266 ) ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -47,7 +47,7 @@ extents = Vector2( 120, 40 )
 offsets = FloatArray( 0, 0.878261, 1 )
 colors = ColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="CapsuleShape2D" id=10]
+[sub_resource type="CapsuleShape2D" id=9]
 
 custom_solver_bias = 0.0
 radius = 14.0
@@ -349,7 +349,7 @@ transform/pos = Vector2( 371, 230 )
 [node name="StaticBody2D" type="StaticBody2D" parent="Mid/TestStone2"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 9 )
 shapes/0/transform = Matrix32( -4.37114e-08, -1, 1, -4.37114e-08, -2, 7 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -363,7 +363,7 @@ bounce = 0.0
 
 transform/pos = Vector2( -2, 7 )
 transform/rot = 90.0
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 trigger = false
 _update_shape_index = 0
 

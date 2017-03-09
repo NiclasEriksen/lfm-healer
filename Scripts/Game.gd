@@ -75,6 +75,7 @@ func spawn_healer():
 	var hn = actory.actors["healer"].instance()
 	hn.set_healer(true)
 	hn.connect("spell_cd_changed", get_node("HUD"), "_on_Healer_spell_cd_changed")
+	hn.connect("mp_changed", get_node("HUD"), "_on_Healer_mp_changed")
 	hn.connect("healer_death", self, "_on_Healer_death")
 	connect("cleared_ability", hn, "_on_stop_dragging")
 	connect("dragging_ability", hn, "_on_start_dragging")
@@ -207,7 +208,7 @@ func _unhandled_input(event):
 				i = 0	# No cooldowns.
 			var hit = dragged_ability.trigger()
 			if hit and not Globals.get("debug_mode"):
-				healer.set_cooldown(i, dragged_ability.get_cooldown())
+				healer.cast(dragged_ability)
 			dragged_ability = null
 			emit_signal("cleared_ability")
 		if event.pressed:
@@ -315,7 +316,7 @@ func spawn_ability(ability, pos):
 		self.get_node("Effects").add_child(ability)
 		ability.trigger()
 		if not Globals.get("debug_mode"):
-			healer.set_cooldown(ability.get_slot(), ability.get_cooldown())
+			healer.cast(ability)
 
 
 func _on_HUD_kill_pressed():

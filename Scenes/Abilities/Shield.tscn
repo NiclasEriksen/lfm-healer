@@ -9,7 +9,8 @@
 script/script = ExtResource( 1 )
 slot = 0
 cooldown = 30.0
-cost = 0
+cost = 16.0
+cast_range = 200
 ability_type = "instant"
 ability_icon = ExtResource( 2 )
 

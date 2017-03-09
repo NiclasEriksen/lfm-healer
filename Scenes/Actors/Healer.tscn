@@ -46,6 +46,8 @@ level = 3
 primary_stat = "int"
 max_hp = 25.0
 max_mp = 40.0
+hp_regen = 0.0
+mp_regen = 0.5
 base_movement_speed = 70.0
 
 [node name="ActorBase" parent="." instance=ExtResource( 4 )]

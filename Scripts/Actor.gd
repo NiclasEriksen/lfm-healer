@@ -137,6 +137,7 @@ func attack(target):
 		if Globals.get("debug_mode"):
 			print(self, " attacking ", target)
 		target.stats_node.apply_effect(attack_node, stats_node)
+		target.stats_node.apply_effect(attack_node, stats_node)
 		emit_signal("attack", target)
 
 func get_body_pos():

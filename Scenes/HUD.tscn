@@ -1,12 +1,15 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=5]
-[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=7]
+[ext_resource path="res://Assets/UI/mp_flat_bot.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/mp_flat_top.png" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/mp_flat_mid.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=8]
+[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=10]
 
 [sub_resource type="GDScript" id=1]
 
@@ -166,13 +169,38 @@ margin/top = 620.0
 margin/right = 890.0
 margin/bottom = 720.0
 
+[node name="ManaBar" type="TextureProgress" parent="."]
+
+anchor/left = 3
+anchor/right = 3
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 200.0
+margin/top = 595.0
+margin/right = -200.0
+margin/bottom = 625.0
+range/min = 0.0
+range/max = 100.0
+range/step = 1.0
+range/page = 0.0
+range/value = 100.0
+range/exp_edit = false
+range/rounded = false
+texture/under = ExtResource( 5 )
+texture/over = ExtResource( 6 )
+texture/progress = ExtResource( 7 )
+radial_fill/fill_degrees = 360.0
+radial_fill/center_offset = Vector2( 0, 0 )
+
 [node name="Allegiance" type="OptionButton" parent="."]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 5 )
+theme/theme = ExtResource( 8 )
 margin/left = 900.0
 margin/top = 10.0
 margin/right = 1060.0
@@ -192,7 +220,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 5 )
+theme/theme = ExtResource( 8 )
 margin/left = 1063.0
 margin/top = 10.0
 margin/right = 1223.0
@@ -238,7 +266,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 
-[node name="Settings" parent="SettingsLayer" instance=ExtResource( 6 )]
+[node name="Settings" parent="SettingsLayer" instance=ExtResource( 9 )]
 
 visibility/visible = false
 
@@ -252,7 +280,7 @@ margin/left = 0.0
 margin/top = 100.0
 margin/right = 160.0
 margin/bottom = 145.0
-custom_fonts/font = ExtResource( 7 )
+custom_fonts/font = ExtResource( 10 )
 text = "0"
 align = 1
 valign = 1

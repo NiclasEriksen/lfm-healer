@@ -14,12 +14,15 @@ var spell1_cd = 0.0
 var spell2_cd = 0.0
 var spell3_cd = 0.0
 var spell4_cd = 0.0
+var last_mp = 100.0
+var last_max_mp = 100.0
 var max_spell1_cd = 0.0
 var max_spell2_cd = 0.0
 var max_spell3_cd = 0.0
 var max_spell4_cd = 0.0
 onready var cast_range_tween = get_node("CastRangeTween")
 signal healer_death
+signal mp_changed(new_val)
 
 func get_ability(i):
 	if i == 1:
@@ -75,6 +78,15 @@ func _ready():
 		tmp.free()
 	set_process(true)
 
+func check_mp():
+	if not stats_node:
+		return
+	var max_mp = stats_node.get_actual("max_mp")
+	var mp = stats_node.get("mp")
+	if mp != last_mp or max_mp != last_max_mp:
+		var val = mp / max_mp * 100
+		emit_signal("mp_changed", val)
+
 func reset():
 	spell1_cd = 0.0
 	spell2_cd = 0.0
@@ -95,12 +107,12 @@ func _process(dt):
 	else:
 		get_tree().get_root().get_node("Game/Camera2D").set_pos(get_global_pos())
 	update_cooldowns(dt)
+	check_mp()
 
-func use_ability(i):
-	var ability = get_ability(i)
-	if not ability:
-		return
-	ability = ability.instance()
+func cast(a):
+	set_cooldown(a.get_slot(), a.get_cooldown())
+	if stats_node:
+		stats_node.apply_mp_cost(a.get_cost())
 
 func get_cooldown(i):
 	if i == 1:

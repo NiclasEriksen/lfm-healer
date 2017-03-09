@@ -121,3 +121,6 @@ func _on_Settings_load_map(m):
 func _on_Healer_spell_cd_changed( spell_id, pts ):
 	if ability_bar:
 		ability_bar.update_spell_cd(spell_id, pts)
+
+func _on_Healer_mp_changed(val):
+	get_node("ManaBar").set_value(val)
