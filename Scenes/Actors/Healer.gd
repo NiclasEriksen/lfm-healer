@@ -114,6 +114,13 @@ func cast(a):
 	if stats_node:
 		stats_node.apply_mp_cost(a.get_cost())
 
+func can_afford(s):
+	if not stats_node:
+		return true
+	if s.get_cost() <= stats_node.get("mp"):
+		return true
+	return false
+
 func get_cooldown(i):
 	if i == 1:
 		return spell1_cd

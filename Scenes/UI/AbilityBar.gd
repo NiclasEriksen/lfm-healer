@@ -24,6 +24,7 @@ func update_spell_cd(id, val):
 		a_node.get_node("ProgressBar").set_val(val)
 		if val == 0:
 			a_node.get_node("AnimationPlayer").play("ready")
+
 func _on_Ability1_button_down():
 	emit_signal("ability_tapped", 1)
 

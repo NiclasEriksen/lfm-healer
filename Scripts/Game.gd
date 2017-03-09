@@ -293,12 +293,13 @@ func _on_AbilityBar_ability_tapped(slot):
 	if healer.get_cooldown(slot) > 0:
 		return
 
-#	var spell = self.spells[slot - 1]
 	var spell = healer.get_ability(slot)
 	if spell:
 		spell = spell.instance()
-		spell.set_slot(slot)
-		spawn_ability(spell, pos)
+
+		if healer.can_afford(spell):
+			spell.set_slot(slot)
+			spawn_ability(spell, pos)
 
 func get_game_pos(p):
 	var t = get_node("Camera2D").get_global_transform()
@@ -317,7 +318,6 @@ func spawn_ability(ability, pos):
 		ability.trigger()
 		if not Globals.get("debug_mode"):
 			healer.cast(ability)
-
 
 func _on_HUD_kill_pressed():
 	var allactors = get_tree().get_nodes_in_group("friendly") + get_tree().get_nodes_in_group("enemy")
