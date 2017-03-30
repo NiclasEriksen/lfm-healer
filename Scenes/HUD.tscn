@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/UI/mp_flat_bot.png" type="Texture" id=5]
-[ext_resource path="res://Assets/UI/mp_flat_top.png" type="Texture" id=6]
-[ext_resource path="res://Assets/UI/mp_flat_mid.png" type="Texture" id=7]
-[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=8]
-[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=10]
+[ext_resource path="res://Scenes/ShaderLayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/DrawLines.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/UI/AbilityBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/UI/mp_flat_bot.png" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/mp_flat_top.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/mp_flat_mid.png" type="Texture" id=8]
+[ext_resource path="res://Assets/UI/ui_pixel.tres" type="Theme" id=9]
+[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Fonts/pixel_med_white.fnt" type="BitmapFont" id=11]
 
 [sub_resource type="GDScript" id=1]
 
@@ -24,6 +25,11 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 script/script = ExtResource( 1 )
 fps_refresh_delay = 0.5
+
+[node name="ShaderLayer" parent="." instance=ExtResource( 2 )]
+
+z/z = 0
+z/relative = true
 
 [node name="Button2" type="Button" parent="."]
 
@@ -44,7 +50,7 @@ flat = false
 [node name="Sprite" type="Sprite" parent="Button2"]
 
 transform/pos = Vector2( 4, 4 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 offset = Vector2( 33, 33 )
 vframes = 10
 hframes = 11
@@ -69,7 +75,7 @@ flat = false
 [node name="Sprite" type="Sprite" parent="RestartButton"]
 
 transform/pos = Vector2( 4, 0 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 offset = Vector2( 33, 33 )
 vframes = 10
 hframes = 11
@@ -94,7 +100,7 @@ flat = false
 [node name="Sprite" type="Sprite" parent="Button"]
 
 transform/pos = Vector2( 32, 32 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 vframes = 10
 hframes = 11
 frame = 18
@@ -119,7 +125,7 @@ script/script = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="Kill"]
 
 transform/pos = Vector2( 32, 32 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 vframes = 10
 hframes = 11
 frame = 57
@@ -145,7 +151,7 @@ flat = false
 
 transform/pos = Vector2( -0.902499, 0 )
 transform/scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 offset = Vector2( 25, 25 )
 vframes = 10
 hframes = 11
@@ -160,9 +166,9 @@ scale = Vector2( 1, 1 )
 
 [node name="LineDisplay" type="Node2D" parent="."]
 
-script/script = ExtResource( 3 )
+script/script = ExtResource( 4 )
 
-[node name="AbilityBar" parent="." instance=ExtResource( 4 )]
+[node name="AbilityBar" parent="." instance=ExtResource( 5 )]
 
 margin/left = 390.0
 margin/top = 620.0
@@ -188,9 +194,9 @@ range/page = 0.0
 range/value = 100.0
 range/exp_edit = false
 range/rounded = false
-texture/under = ExtResource( 5 )
-texture/over = ExtResource( 6 )
-texture/progress = ExtResource( 7 )
+texture/under = ExtResource( 6 )
+texture/over = ExtResource( 7 )
+texture/progress = ExtResource( 8 )
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
 
@@ -200,7 +206,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 8 )
+theme/theme = ExtResource( 9 )
 margin/left = 900.0
 margin/top = 10.0
 margin/right = 1060.0
@@ -220,7 +226,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 8 )
+theme/theme = ExtResource( 9 )
 margin/left = 1063.0
 margin/top = 10.0
 margin/right = 1223.0
@@ -254,7 +260,7 @@ flat = false
 
 transform/pos = Vector2( 25, 25 )
 transform/scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 vframes = 10
 hframes = 11
 frame = 20
@@ -266,7 +272,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 
-[node name="Settings" parent="SettingsLayer" instance=ExtResource( 9 )]
+[node name="Settings" parent="SettingsLayer" instance=ExtResource( 10 )]
 
 visibility/visible = false
 
@@ -280,7 +286,7 @@ margin/left = 0.0
 margin/top = 100.0
 margin/right = 160.0
 margin/bottom = 145.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 11 )
 text = "0"
 align = 1
 valign = 1

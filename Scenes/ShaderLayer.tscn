@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://Scenes/ShaderLayer.gd" type="Script" id=1]
+[ext_resource path="res://CRTDisplayShader.shd" type="Shader" id=2]
+[ext_resource path="res://white.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+shader/shader = ExtResource( 2 )
+shader/shading_mode = 0
+shader_param/screen_width = 1280.0
+shader_param/screen_height = 720.0
+shader_param/BarrelPower = 1.1
+shader_param/color_bleeding = 1.2
+shader_param/bleeding_range_x = 3.0
+shader_param/bleeding_range_y = 3.0
+shader_param/lines_distance = 3.0
+shader_param/scan_size = 1.0
+shader_param/scanline_alpha = 0.9
+shader_param/lines_velocity = 0.5
+
+[node name="ShaderLayer" type="Node2D"]
+
+visibility/visible = false
+z/z = 1000
+z/relative = false
+script/script = ExtResource( 1 )
+size = Vector2( 1280, 720 )
+
+[node name="TextureFrame" type="TextureFrame" parent="."]
+
+material/material = SubResource( 1 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 1280.0
+margin/bottom = 720.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 0
+
+
