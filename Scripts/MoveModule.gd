@@ -9,6 +9,8 @@ export(float, 0, 1, 0.1) var STALL_TRESHOLD = 0.1 setget set_stall_treshold, get
 var SEEK_TRESHOLD = 100
 var SLOW_RADIUS = 32
 var max_velocity = 50
+var nudge_vector = Vector2()
+var NUDGE_DEC_AMOUNT = 100
 export(float) var PATH_REACH_TRESHOLD = 4.0 setget set_reach_treshold, get_reach_treshold
 signal stalled
 signal moved
@@ -30,6 +32,9 @@ func get_direction():
 
 func is_stalling():
 	return stalling
+
+func nudge(v):
+	nudge_vector = v
 
 func set_avoid_collision(val):
 	AVOID_COLLISION = val
@@ -92,7 +97,17 @@ func _ready():
 	if stats_node:
 		stats = get_node(stats_node)
 	setup_raycast()
-#	set_fixed_process(true)
+	set_fixed_process(true)
+
+func _fixed_process(dt):
+	var l = nudge_vector.length()
+	if l > 0:
+		if l <= NUDGE_DEC_AMOUNT * dt:
+			nudge_vector = Vector2()
+		else:
+			nudge_vector = nudge_vector.clamped(nudge_vector.length() - NUDGE_DEC_AMOUNT * dt)
+	else:
+		nudge_vector = Vector2()
 
 func _draw():
 	if Globals.get("debug_mode") and not get_tree().is_editor_hint():
@@ -126,7 +141,7 @@ func move(dir, dt, vel=0):
 				moving = false
 				emit_signal("stalled")
 		if moving:
-			var moved = parent.move_and_slide(dir)
+			var moved = parent.move_and_slide(dir + nudge_vector)
 			if moved.length() > dir.length() * STALL_TRESHOLD:
 				emit_signal("moved")
 			else:

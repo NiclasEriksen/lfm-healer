@@ -1,6 +1,8 @@
 extends Node2D
 
 var dragged_ability = false
+var drag_start = null
+var drag_end = Vector2()
 var maplist_node = preload("res://Scripts/MapList.gd").new()
 export(int, 2, 50, 1) var select_sensitivity = 20
 var actory = preload("res://Scripts/ActorFactory.gd").new()
@@ -212,7 +214,16 @@ func _unhandled_input(event):
 			dragged_ability = null
 			emit_signal("cleared_ability")
 		if event.pressed:
-			select_actor(event.pos)
+			if not select_actor(event.pos):
+				drag_start = event.pos
+		elif drag_start != null and drag_end != null:
+			var nudge = drag_end - drag_start
+			for pm in get_tree().get_nodes_in_group("party"):
+				if pm.is_leader() and pm.move_node:
+					pm.move_node.nudge(nudge)
+			print(nudge.angle(), nudge.length())
+			drag_start = null
+			drag_end = null
 	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
 			if not dragged_ability.active:
@@ -223,6 +234,8 @@ func _unhandled_input(event):
 			else:
 				var newpos = hpos + (event.pos - hpos).clamped(dragged_ability.cast_range)
 				dragged_ability.set_pos(newpos)
+		elif drag_start != null:
+			drag_end = event.pos
 	elif event.type == InputEvent.KEY:
 		if event.pressed and event.scancode == KEY_F12:
 			Globals.set("debug_mode", not Globals.get("debug_mode"))
@@ -250,6 +263,8 @@ func select_actor(p):
 			closest_dist = p.distance_to(actor.get_pos())
 	if closest:
 		closest.set_selected(true)
+		return true
+	return false
 
 func spawn_actor(actor_type, alliance):
 	actory.spawn_actor(actor_type, alliance)
