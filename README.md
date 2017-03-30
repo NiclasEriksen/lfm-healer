@@ -1,15 +1,38 @@
-# lfm-healer
+![Logo](https://dl.dropboxusercontent.com/s/z0ir0ihobnzp65f/godot_git_control_logo.png?dl=0)
 
-An android game where you act as the healer, keeping your party alive from onslaughts of different enemies. The actors are autonomous and stupid, they *will* stand in fire and you just have to deal with it.
+# Godot Git Control #
 
-The game uses a custom RPG ruleset, mainly inspired by the warcraft series but with additional stats from different MMORPGs. The game will reward pre-game tactical decisions, and poor performance will be punished. The game may allow for grinding and permanent loss of characters on death, but most metagame decisions haven't been made yet. As of now the focus is on getting the base mechanics down.
+This is a simple Git Integration plugin for @godotengine
 
-Some of the things that are implemented:
+![ScreenShot](https://dl.dropboxusercontent.com/s/pwulhqvnymn7dvh/screenshot_godot_git_control.png?dl=0)
 
-- XP and level scaling
-- Stealth mechanics
-- Stun/slow/invulnerability
-- Projectiles
-- Buffs/debuffs
-- Map loader, debug tools
-- Unit formations
+Currently this plugin is in alpha, but does not mean it's not currently usable, if you encounter any bug, please let me know.
+
+This plugin plugin should work on linux (tested), mac and windows(tested).
+But was tested extensively on linux (git v2.7.4)
+
+If you encounter any Bug on any Platform please let me know.
+
+## Description ##
+This plugin makes it easier to use git in your project by providing commonly used commands in form of easy to access control without the need of typing any commands
+It can also be configured (at minimal) to suit your preference. Plugin configuration is available in user_settings.cfg (located in plugin root folder)
+
+## Requirement ##
+1. Git (obviously): Installed correctly on your machine
+
+## Notice
+1. Make sure your git email and name has been set correctly
+2. Make sure your project directory is a git directory (clone or init)
+
+## Reason for keeping plugin in Alpha ##
+1. Bug checking
+2. Addition of more features
+
+## What missing ##
+1. Push: This was not added due to some known issues but i may consider adding them in the future if i find a workaround
+2. Some commands i may not remember to add :D
+
+Hope you find it useful.
+
+
+
