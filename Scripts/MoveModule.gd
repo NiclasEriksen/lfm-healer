@@ -11,6 +11,7 @@ var SLOW_RADIUS = 32
 var max_velocity = 50
 var nudge_vector = Vector2()
 var NUDGE_DEC_AMOUNT = 100
+export(int, 0, 1000) var MAX_NUDGE_FORCE = 250
 export(float) var PATH_REACH_TRESHOLD = 4.0 setget set_reach_treshold, get_reach_treshold
 signal stalled
 signal moved
@@ -34,7 +35,7 @@ func is_stalling():
 	return stalling
 
 func nudge(v):
-	nudge_vector = v
+	nudge_vector = v.clamped(MAX_NUDGE_FORCE)
 
 func set_avoid_collision(val):
 	AVOID_COLLISION = val
@@ -129,10 +130,8 @@ func move(dir, dt, vel=0):
 	max_velocity = get_node(get_stat_node()).get_actual("movement_speed") * 10
 	if vel:
 		dir = dir.normalized() * vel
-	elif stats:
-		dir *= max_velocity * dt
 	else:
-		dir *= BASE_MOVEMENT_SPEED * dt
+		dir *= max_velocity * dt
 
 	if parent:
 		var moving = true
@@ -141,7 +140,8 @@ func move(dir, dt, vel=0):
 				moving = false
 				emit_signal("stalled")
 		if moving:
-			var moved = parent.move_and_slide(dir + nudge_vector)
+			var nudged = (dir + nudge_vector).clamped(max_velocity * dt)
+			var moved = parent.move_and_slide(nudged)
 			if moved.length() > dir.length() * STALL_TRESHOLD:
 				emit_signal("moved")
 			else:

@@ -21,10 +21,6 @@ select_sensitivity = 20
 
 editor/display_folded = true
 
-[node name="ShaderLayer" parent="HUD"]
-
-visibility/visible = false
-
 [node name="EffectModule" parent="." instance=ExtResource( 3 )]
 
 amount = -1.0
