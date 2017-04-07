@@ -1,7 +1,7 @@
 extends Node2D
 
 var dragged_ability = false
-var drag_start = null
+var drag_start = Vector2()
 var drag_end = Vector2()
 var maplist_node = preload("res://Scripts/MapList.gd").new()
 export(int, 2, 50, 1) var select_sensitivity = 20
@@ -216,14 +216,13 @@ func _unhandled_input(event):
 		if event.pressed:
 			if not select_actor(event.pos):
 				drag_start = event.pos
-		elif drag_start != null and drag_end != null:
+		elif drag_start != Vector2() and drag_end != Vector2():
 			var nudge = drag_end - drag_start
 			for pm in get_tree().get_nodes_in_group("party"):
 				if pm.is_leader() and pm.move_node:
 					pm.move_node.nudge(nudge)
-			print(nudge.angle(), nudge.length())
-			drag_start = null
-			drag_end = null
+			drag_start = Vector2()
+			drag_end = Vector2()
 	elif event.type == InputEvent.SCREEN_DRAG:
 		if dragged_ability:
 			if not dragged_ability.active:
@@ -234,7 +233,7 @@ func _unhandled_input(event):
 			else:
 				var newpos = hpos + (event.pos - hpos).clamped(dragged_ability.cast_range)
 				dragged_ability.set_pos(newpos)
-		elif drag_start != null:
+		elif drag_start != Vector2():
 			drag_end = event.pos
 	elif event.type == InputEvent.KEY:
 		if event.pressed and event.scancode == KEY_F12:

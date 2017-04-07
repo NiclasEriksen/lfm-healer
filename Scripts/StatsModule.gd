@@ -224,9 +224,9 @@ func _process(delta):
 func handle_status(wr, dt):
 	var status_result = wr.status_update(dt)
 	if status_result:
-		if wr.get_effect_type() == "stun":
+		if wr.get_status_type() == "stun":
 			set_stunned(true)
-		elif wr.get_effect_type() == "invulnerable":
+		elif wr.get_status_type() == "invulnerable":
 			invulnerable = true
 	else:
 		if Globals.get("debug_mode"):
@@ -324,8 +324,14 @@ func get_actual(stat):
 		return_stat = final_stats[stat]
 		var total_change = 0
 		for effect in get_children():
-			if effect.is_status and effect.get_effect_type() == stat:
-				total_change += effect.get_effect_amount(return_stat)
+			if effect.is_status:
+				if effect.get_status_type() == stat:
+					total_change += effect.get_amount()
+			elif effect.is_buff:
+				if effect.get_effect_stat() == stat:
+					total_change += effect.get_amount()
+					
+
 		return_stat += total_change
 		if return_stat < 0:
 			return_stat = 0

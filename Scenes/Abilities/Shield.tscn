@@ -16,9 +16,9 @@ ability_icon = ExtResource( 2 )
 
 [node name="StatusEffect" parent="." instance=ExtResource( 3 )]
 
-effect_type = "invulnerable"
+status_type = "invulnerable"
 apply_as = "percentage"
 stacking = false
-time = 5.0
+time = 3.0
 
 

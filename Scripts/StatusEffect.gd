@@ -1,6 +1,6 @@
 extends Node
 
-export(String, "movement_speed", "stun", "invulnerable") var effect_type = "movement_speed" setget set_effect_type, get_effect_type
+export(String, "movement_speed", "stun", "invulnerable") var status_type = "movement_speed" setget set_status_type, get_status_type
 export(String, "percentage", "flat") var apply_as = "percentage" setget set_apply_as, get_apply_as
 export(float) var amount = 0.0 setget set_amount, get_amount
 var unique_ref = null setget set_unique_ref, get_unique_ref
@@ -16,11 +16,11 @@ func set_time(val):
 func get_time():
 	return time
 
-func set_effect_type(t):
-	effect_type = t
+func set_status_type(t):
+	status_type = t
 
-func get_effect_type():
-	return effect_type
+func get_status_type():
+	return status_type
 
 func set_unique_ref(val):
 	unique_ref = val
