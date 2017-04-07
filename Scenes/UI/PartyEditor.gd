@@ -55,6 +55,8 @@ func populate_data(d):
 		content_root.get_node("ActorInfo/VBoxContainer/Container").add_child(sli)
 
 func _on_partymember_selected(a):
+	if active_actor == a:
+		return
 	active_actor = a
 	for c in content_root.get_node("ActorList").get_children():
 		c.select(false)

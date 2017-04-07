@@ -3,19 +3,18 @@
 [ext_resource path="res://Scenes/UI/StatListItem.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/sheet_white1x.png" type="Texture" id=2]
 
-[sub_resource type="ColorRamp" id=3]
+[sub_resource type="ColorRamp" id=1]
 
 offsets = FloatArray( 0, 0.173913, 1 )
-colors = ColorArray( 1, 0.140625, 0, 1, 0.976562, 0.366211, 0.366211, 1, 1, 1, 1, 0 )
+colors = ColorArray( 1, 0.140625, 0, 1, 0.976562, 0.366211, 0.366211, 1, 1, 0, 0, 0 )
 
-[sub_resource type="ColorRamp" id=4]
+[sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.26087, 1 )
 colors = ColorArray( 1, 1, 1, 1, 0.466604, 0.886719, 0.419113, 1, 0.101562, 1, 0, 0 )
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=3]
 
-resource/name = "decrease"
 length = 1.0
 loop = false
 step = 0.05
@@ -25,9 +24,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 0.3 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ true, false ] }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 
-resource/name = "increase"
 length = 1.0
 loop = false
 step = 0.05
@@ -162,7 +160,7 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color = Color( 0.888118, 0.945312, 0.745911, 1 )
-color/color_ramp = SubResource( 3 )
+color/color_ramp = SubResource( 1 )
 
 [node name="ParticleAttractor2D" type="ParticleAttractor2D" parent="HBoxContainer/Amount"]
 
@@ -224,15 +222,15 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color = Color( 0.888118, 0.945312, 0.745911, 1 )
-color/color_ramp = SubResource( 4 )
+color/color_ramp = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/decrease = SubResource( 1 )
-anims/increase = SubResource( 2 )
+anims/decrease = SubResource( 3 )
+anims/increase = SubResource( 4 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

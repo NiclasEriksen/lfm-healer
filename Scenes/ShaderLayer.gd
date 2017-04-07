@@ -16,6 +16,12 @@ func set_size(s):
 func get_size():
 	return size
 
+func enable():
+	pass
+
+func disable():
+	pass
+
 func _ready():
 	if get_tree().is_editor_hint():
 		hide()
